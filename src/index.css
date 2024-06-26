@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #141414;
+}
+
+body {
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.sidebar,
+.sidebar_inner {
+  padding: 1em;
+}
+
+.sidebar_inner {
+  background-color: #141414;
+  border-radius: 15px;
+  gap: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100vh;
+}
