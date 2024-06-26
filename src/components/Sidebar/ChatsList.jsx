@@ -23,18 +23,6 @@ export default function ChatsList() {
       <ScrollArea>
         <div className="chats_list">
           <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
-          <ChatTab />
         </div>
       </ScrollArea>
     </div>

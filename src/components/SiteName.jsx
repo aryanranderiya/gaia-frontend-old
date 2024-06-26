@@ -1,17 +1,30 @@
 import { Tooltip } from "@nextui-org/tooltip";
-import { GlobalIcon } from "../components/icons";
+import { Button } from "@nextui-org/button";
+import { GlobalIcon, SidebarLeftIcon } from "../components/icons";
 
 export default function SiteName() {
   return (
-    <Tooltip
-      content="general artificial intelligence assistant"
-      placement="right"
-      offset={-120}
-    >
-      <div className="flex gap-2 items-center w-full p-2">
-        <GlobalIcon color="white" width="19" />
-        <span>gaia</span>
-      </div>
-    </Tooltip>
+    <div className="flex items-center justify-between">
+      <Tooltip
+        content="general artificial intelligence assistant"
+        placement="bottom"
+        offset={+0}
+      >
+        <div className="flex gap-2 items-center p-2">
+          <GlobalIcon color="white" width="22" />
+          <span>gaia</span>
+        </div>
+      </Tooltip>
+
+      <Button
+        isIconOnly
+        variant="light"
+        aria-label="Send message"
+        className="p-0"
+        size="sm"
+      >
+        <SidebarLeftIcon height="24" />
+      </Button>
+    </div>
   );
 }

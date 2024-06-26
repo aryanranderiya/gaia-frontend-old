@@ -2,21 +2,16 @@ import {
   DiscoverCircleIcon,
   PinIcon,
   CalendarIcon,
-  StarsIcon,
-  ThreeDotsMenu,
+  GlobalSearchIcon,
 } from "../icons";
 import { Button } from "@nextui-org/button";
 
 export default function SidebarTopButtons() {
   return (
     <div className="sidebar_inner">
-      <Button
-        variant="shadow"
-        color="primary"
-        className="w-full flex justify-between"
-      >
-        Coming Soon
-        <StarsIcon />
+      <Button className="w-full flex justify-between">
+        Search
+        <GlobalSearchIcon />
       </Button>
 
       <Button className="w-full flex justify-between">
@@ -35,9 +30,9 @@ export default function SidebarTopButtons() {
       </Button>
 
       <div>
-        <Button isIconOnly aria-label="Like">
+        {/* <Button isIconOnly aria-label="Like">
           <ThreeDotsMenu />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
