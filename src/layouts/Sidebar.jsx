@@ -11,7 +11,7 @@ import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
 export default function Sidebar({ sidebarref, toggleSidebar }) {
   return (
     <>
-    <div className="sidebar" ref={sidebarref}>
+      <div className="sidebar" ref={sidebarref}>
         <div className="p-4">
           <div className="flex items-center justify-between">
             <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
@@ -26,7 +26,6 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
                 <span>gaia</span>
               </div>
             </Tooltip>
-
           </div>
 
           <div className="px-1">

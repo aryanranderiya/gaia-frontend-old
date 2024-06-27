@@ -9,7 +9,7 @@ import { ScrollArea } from "../components/ScrollArea";
 export function WebsiteName() {
   return (
     <div>
-      <div className="flex gap-2 items-center p-2 flex-col">
+      <div className="flex gap-2 items-center pb-3 flex-col">
         <div className="flex gap-2">
           <GlobalIcon color="white" width="15" />
           <span>g.a.i.a</span>

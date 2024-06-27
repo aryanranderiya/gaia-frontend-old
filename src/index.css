@@ -108,6 +108,8 @@ body {
 .searchbar_container {
   width: 100%;
   background-color: #111111;
+  display: flex;
+  justify-content: center;
 }
 
 .searchbar {
@@ -223,9 +225,6 @@ body {
     width: 100%;
     position: absolute;
     bottom: 0;
-    backdrop-filter: 100%;
-    display: flex;
-    justify-content: center;
   }
 
   .searchbar {
