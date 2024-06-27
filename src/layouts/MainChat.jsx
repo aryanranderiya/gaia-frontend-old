@@ -5,6 +5,9 @@ import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
 import { GlobalIcon, ChatBotIcon, Task01Icon } from "../components/icons";
 import { toast } from "sonner";
 import { ScrollArea } from "../components/ScrollArea";
+import api from "axios";
+import * as React from "react";
+import { Spinner } from "@nextui-org/spinner";
 
 export function WebsiteName() {
   return (
@@ -41,7 +44,7 @@ export function ChatBubbleUser({ text }) {
   );
 }
 
-export function ChatBubbleBot({ text }) {
+export function ChatBubbleBot({ text, loading = false }) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard", {
@@ -59,19 +62,23 @@ export function ChatBubbleBot({ text }) {
 
   return (
     !!text && (
-      <div className="flex items-center gap-3">
+      <div className="chatbubblebot_parent">
         <div className="chatbubble_bot_avatar">
           <ChatBotIcon color="white" />
         </div>
         <div className="chat_bubble_container ">
-          <div className="chat_bubble">{text}</div>
-          <div className="flex p-2">
-            <Task01Icon
-              height="19"
-              onClick={copyToClipboard}
-              className="cursor-pointer"
-            />
+          <div className="chat_bubble">
+            {loading ? <Spinner size="sm" color="primary" /> : text}
           </div>
+          {!loading && (
+            <div className="flex p-2">
+              <Task01Icon
+                height="20"
+                onClick={copyToClipboard}
+                className="cursor-pointer"
+              />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -79,6 +86,13 @@ export function ChatBubbleBot({ text }) {
 }
 
 export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
+  const [conversationHistory, setConversationHistory] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log(conversationHistory);
+  }, [conversationHistory]);
+
   return (
     <div className="main_chat" onClick={hideSidebar} ref={mainChatRef}>
       <div className="chat_sidebar_toggle_btn">
@@ -87,41 +101,35 @@ export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
 
       <WebsiteName />
 
-      {/* 
-      <div className="starter_container">
-         <StarterEmoji /> 
-        <StarterText />
-      </div>
-       */}
-
       <ScrollArea>
         <div className="flex justify-center w-full items-center">
           <div className="conversation_history">
-            <ChatBubbleUser text={"hey my name is aryan"} />
-            <ChatBubbleBot
-              text={"Hey! I am gaia, your personal AI assistant"}
-            />
-            <ChatBubbleBot
-              text={`
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.`}
-            />
-            <ChatBubbleUser text={":)"} />
-            <ChatBubbleUser text={":)"} />
-            <ChatBubbleUser text={":)"} />
-            <ChatBubbleUser text={":)"} />
+            {!!conversationHistory && conversationHistory.length > 0 ? (
+              conversationHistory.map((message) =>
+                message.type === "bot" ? (
+                  <ChatBubbleBot text={message.response} />
+                ) : (
+                  <ChatBubbleUser text={message.response} />
+                )
+              )
+            ) : (
+              <div className="starter_container">
+                <StarterEmoji />
+                <StarterText />
+              </div>
+            )}
+
+            {loading && <ChatBubbleBot loading={loading} text={" "} />}
           </div>
         </div>
       </ScrollArea>
 
-      <MainSearchbar />
+      <MainSearchbar
+        conversationHistory={conversationHistory}
+        setConversationHistory={setConversationHistory}
+        loading={loading}
+        setLoading={setLoading}
+      />
     </div>
   );
 }
