@@ -18,7 +18,6 @@ import smiley23 from "../Smileys/23.webp";
 import smiley24 from "../Smileys/24.webp";
 import * as React from "react";
 import { Tooltip } from "@nextui-org/tooltip";
-import { WavingHand01Icon } from "../icons";
 
 export default function StarterEmoji() {
   const smileys = [
@@ -52,9 +51,9 @@ export default function StarterEmoji() {
 
   React.useEffect(() => {
     const timer = setTimeout(changeSmiley, 5000);
-
     return () => clearTimeout(timer);
   }, [currentSmiley]);
+
   return (
     <Tooltip
       content="My name is gaia, I am your personal AI assistant!"
