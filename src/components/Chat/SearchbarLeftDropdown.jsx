@@ -27,33 +27,83 @@ import {
 } from "@nextui-org/modal";
 import Lottie from "react-lottie";
 import recordingAnimation from "../lotties/recording.json";
-// import SpeechRecognition, {
-//   useSpeechRecognition,
-// } from "react-speech-recognition";
 import React from "react";
+import { toast } from "sonner";
 
 export function MicrophoneBtn() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const {
-  //   transcript,
-  //   listening,
-  //   resetTranscript,
-  //   browserSupportsSpeechRecognition,
-  // } = useSpeechRecognition();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [recording, setRecording] = React.useState(false);
+  const [mediaRecorder, setMediaRecorder] = React.useState(null);
+  const [audioChunks, setAudioChunks] = React.useState([]);
 
-  // React.useEffect(() => {
-  // resetTranscript();
-  // if (!browserSupportsSpeechRecognition) {
-  //   console.log("No Support for Speech Recognition");
-  //   return;
-  // }
-  // if (isOpen) SpeechRecognition.startListening();
-  // else if (!isOpen) SpeechRecognition.stopListening();
-  // }, [isOpen]);
+  React.useEffect(() => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("getUserMedia is not supported in this browser.");
+      return;
+    }
+
+    async function setupRecorder() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        const recorder = new MediaRecorder(stream);
+
+        recorder.ondataavailable = (e) => {
+          setAudioChunks([...audioChunks, e.data]);
+        };
+
+        setMediaRecorder(recorder);
+      } catch (err) {
+        console.error("Error accessing microphone:", err);
+      }
+    }
+
+    setupRecorder();
+
+    return () => {
+      if (mediaRecorder) {
+        mediaRecorder.stop();
+      }
+    };
+  }, [audioChunks, mediaRecorder]);
+
+  const startRecording = () => {
+    if (mediaRecorder) {
+      setAudioChunks([]);
+      mediaRecorder.start();
+      setRecording(true);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder && recording) {
+      mediaRecorder.stop();
+      setRecording(false);
+      playRecording();
+    }
+  };
+
+  const playRecording = () => {
+    if (audioChunks.length > 0) {
+      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  };
 
   return (
     <>
-      <Button isIconOnly radius="full" aria-label="Microphone" onPress={onOpen}>
+      <Button
+        isIconOnly
+        radius="full"
+        aria-label="Microphone"
+        onPress={() => {
+          onOpen();
+          startRecording();
+        }}
+      >
         <Mic01Icon />
       </Button>
       <Modal
@@ -61,6 +111,8 @@ export function MicrophoneBtn() {
         onOpenChange={onOpenChange}
         backdrop="blur"
         classNames={{ base: "w-fit p-4 dark text-white" }}
+        onClose={stopRecording}
+        hideCloseButton
       >
         <ModalContent>
           {(onClose) => (

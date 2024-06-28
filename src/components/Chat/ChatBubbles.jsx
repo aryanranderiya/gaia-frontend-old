@@ -21,7 +21,7 @@ export function ChatBubbleBot({ text, loading = false }) {
     toast.success("Copied to clipboard", {
       unstyled: true,
       classNames: {
-        toast: "flex items-center p-3 rounded-xl gap-3 w-[300px] toast",
+        toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast",
         title: "text-black text-sm",
         description: "text-sm text-black",
       },

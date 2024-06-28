@@ -244,6 +244,10 @@ body {
   box-shadow: 0px -5px 10px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
+.toast_error {
+  background-color: maroon !important;
+}
+
 .smiley_avatar {
   max-width: 40px;
   min-width: 40px;
