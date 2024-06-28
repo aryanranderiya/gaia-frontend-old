@@ -38,7 +38,7 @@ export function ChatBubbleBot({ text, loading = false }) {
         <div className="chat_bubble_container ">
           <div className="chat_bubble">
             {loading ? (
-              <Spinner size="md" color="primary" />
+              <Spinner size="sm" color="primary" />
             ) : (
               <Markdown className="select-text">{text}</Markdown>
             )}

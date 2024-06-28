@@ -12,7 +12,7 @@ export default function SearchbarRightSendBtn({ loading }) {
         aria-label="Send message"
         color="primary"
         type="submit"
-        className={`${loading && "cursor-wait"}`}
+        className={`${loading && "cursor-wait"} mx-2`}
       >
         <SentIcon color="black" fill="#ffffff40" />
       </Button>

@@ -61,7 +61,7 @@ function App() {
             element={<MainChat toggleSidebar={toggleSidebar} />}
           />
 
-          <Route path="/explore" element={<Explore />} />
+          <Route path="/explore/*" element={<Explore />} />
         </Routes>
       </div>
     </div>

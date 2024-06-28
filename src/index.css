@@ -183,6 +183,7 @@ body {
   height: fit-content;
   overflow: hidden;
   max-width: 30vw;
+  min-width: fit-content;
 }
 
 .chat_bubble span strong,
@@ -299,10 +300,30 @@ body {
     margin-left: -0.5em;
   }
 
+  .chat_bubble {
+    max-width: 70vw;
+  }
+
   .toast {
     margin-bottom: 100px;
   }
+
+  .starter_container2 {
+    margin-top: 5vh;
+  }
+
+  .rounded_class {
+    border-radius: 20px !important;
+  }
 }
+
+.chat_sidebar_toggle_btn {
+  z-index: 5;
+}
+.rounded_class {
+  border-radius: 1000px;
+}
+
 .searchbar input:disabled {
   cursor: wait;
 }

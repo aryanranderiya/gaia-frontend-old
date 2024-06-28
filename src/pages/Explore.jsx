@@ -68,11 +68,11 @@ export default function Explore() {
         <Tabs
           aria-label="Options"
           classNames={{
-            base: "w-full flex justify-center ",
-            tabList: "rounded-full",
+            base: "w-full flex justify-center px-0 ",
+            tabList: "rounded_class flex-wrap justify-center px-0",
             cursor:
-              "w-full bg-[#22d3ee] rounded-full group-data-[selected=true]:bg-[#00bbff]",
-            tab: "rounded-full",
+              "w-full bg-[#22d3ee] rounded_class group-data-[selected=true]:bg-[#00bbff]",
+            tab: "w-fit",
             tabContent:
               "group-data-[selected=true]:text-[black] font-bold rounded-full",
             panel: "h-full",

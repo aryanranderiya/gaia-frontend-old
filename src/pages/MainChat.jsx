@@ -50,11 +50,8 @@ export default function MainChat({ toggleSidebar }) {
         Accept: "text/event-stream",
       },
       body: JSON.stringify({ message: searchbarText }),
-      onopen(event) {
-        console.log("Connection opened");
-      },
+      onopen(event) {},
       onmessage(event) {
-        console.log(event.data);
         if (event.data === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, event.data]);
         setLoading(false);
@@ -82,7 +79,6 @@ export default function MainChat({ toggleSidebar }) {
 
   return (
     <>
-    
       <ScrollArea>
         <div className="flex justify-center w-full items-center">
           <div className="conversation_history">
