@@ -29,22 +29,22 @@ export default function MainSearchbar({
       const updatedHistory = [...conversationHistory];
       const lastItemIndex = updatedHistory.length - 1;
       const lastItem = updatedHistory[lastItemIndex];
+      const lastResponse = lastItem.response;
+      const joinedData = data.join("");
 
       if (lastItem.type === "bot") {
-        lastItem.response = data;
+        if (lastResponse !== joinedData) lastItem.response = joinedData;
         setConversationHistory(updatedHistory);
       }
     }
-
-    console.log("data", data);
-    console.log("conversationHistory", conversationHistory);
   }, [data]);
 
   const fetchData = async (searchbarText) => {
-    const userEntry = { type: "user", response: searchbarText };
-    setConversationHistory((prevHistory) => [...prevHistory, userEntry]);
-    const botEntry = { type: "bot", response: "" };
-    setConversationHistory((prevHistory) => [...prevHistory, botEntry]);
+    setConversationHistory((prevHistory) => [
+      ...prevHistory,
+      { type: "user", response: searchbarText },
+      { type: "bot", response: "" },
+    ]);
 
     await fetchEventSource(`http://127.0.0.1:8000/chat`, {
       method: "POST",
@@ -53,19 +53,9 @@ export default function MainSearchbar({
         Accept: "text/event-stream",
       },
       body: JSON.stringify({ message: searchbarText }),
-      onopen(res) {
-        if (res.ok && res.status === 200) {
-          console.log("Connection made ", res);
-        } else if (
-          res.status >= 400 &&
-          res.status < 500 &&
-          res.status !== 429
-        ) {
-          console.log("Client-side error ", res);
-        }
-      },
       onmessage(event) {
-        setData((data) => [...data, event.data]);
+        if (event.data === "") setData((data) => [...data, "\n"]);
+        else setData((data) => [...data, event.data]);
         setLoading(false);
       },
       onclose() {

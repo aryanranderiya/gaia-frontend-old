@@ -171,6 +171,21 @@ body {
   border-bottom-left-radius: 0;
   user-select: text;
   height: fit-content;
+  overflow: hidden;
+  max-width: 30vw;
+}
+
+
+
+.chat_bubble span strong,
+.chat_bubble span em,
+.chat_bubble span a {
+  margin: 0 3px;
+}
+
+.chat_bubble span a {
+  color: rgb(0, 153, 255);
+  text-decoration: underline;
 }
 
 .chat_bubble::selection {

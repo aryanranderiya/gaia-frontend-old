@@ -15,6 +15,8 @@ import * as React from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { Avatar } from "@nextui-org/avatar";
 import smiley from "../components/Smileys/2.webp";
+import Markdown from "markdown-to-jsx";
+// import remarkGfm from "remark-gfm";
 
 export function WebsiteName() {
   return (
@@ -73,7 +75,11 @@ export function ChatBubbleBot({ text, loading = false }) {
         <Avatar src={smiley} size="md" className="smiley_avatar" />
         <div className="chat_bubble_container ">
           <div className="chat_bubble">
-            {loading ? <Spinner size="sm" color="primary" /> : text}
+            {loading ? (
+              <Spinner size="md" color="primary" />
+            ) : (
+              <Markdown>{text}</Markdown>
+            )}
           </div>
           {!loading && (
             <div className="flex py-2 gap-1">
