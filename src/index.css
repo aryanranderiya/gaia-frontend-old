@@ -196,16 +196,22 @@ body {
   align-items: flex-end;
 }
 
-.chatbubble_bot_avatar {
-  background-color: rgba(236, 236, 236, 0.2);
-  padding: 0.43em;
-  border-radius: 1000px;
-}
-
 .chatbubblebot_parent {
   display: flex;
   align-items: center;
   gap: 0.5em;
+}
+
+.toast {
+  background-color: #00bbff !important;
+  box-shadow: 0px -5px 10px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.smiley_avatar {
+  max-width: 40px;
+  min-width: 40px;
+  max-height: 40px;
+  min-height: 40px;
 }
 @media only screen and (max-width: 600px) {
   .starter_text {
@@ -251,6 +257,10 @@ body {
 
   .chatbubblebot_parent {
     margin-left: -0.5em;
+  }
+
+  .toast {
+    margin-bottom: 100px;
   }
 }
 .searchbar input:disabled {

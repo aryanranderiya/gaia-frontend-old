@@ -2,12 +2,19 @@ import MainSearchbar from "../components/Chat/MainSearchbar";
 import StarterText from "../components/Chat/StarterText";
 import StarterEmoji from "../components/Chat/StarterEmoji";
 import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
-import { GlobalIcon, ChatBotIcon, Task01Icon } from "../components/icons";
+import {
+  GlobalIcon,
+  ChatBotIcon,
+  Task01Icon,
+  PinIcon,
+} from "../components/icons";
 import { toast } from "sonner";
 import { ScrollArea } from "../components/ScrollArea";
 import api from "axios";
 import * as React from "react";
 import { Spinner } from "@nextui-org/spinner";
+import { Avatar } from "@nextui-org/avatar";
+import smiley from "../components/Smileys/2.webp";
 
 export function WebsiteName() {
   return (
@@ -50,33 +57,33 @@ export function ChatBubbleBot({ text, loading = false }) {
     toast.success("Copied to clipboard", {
       unstyled: true,
       classNames: {
-        toast: "flex items-center p-3 rounded-xl gap-3 w-[300px] ",
-        title: "text-white text-sm",
-        description: "text-sm text-gray-400",
+        toast: "flex items-center p-3 rounded-xl gap-3 w-[300px] toast",
+        title: "text-black text-sm",
+        description: "text-sm text-black",
       },
       duration: 3000,
       description: `${text.substring(0, 35)}...`,
-      icon: <Task01Icon height="23" />,
+      icon: <Task01Icon height="23" color="black" />,
     });
   };
 
   return (
     !!text && (
       <div className="chatbubblebot_parent">
-        <div className="chatbubble_bot_avatar">
-          <ChatBotIcon color="white" />
-        </div>
+        <Avatar src={smiley} size="md" className="smiley_avatar" />
         <div className="chat_bubble_container ">
           <div className="chat_bubble">
             {loading ? <Spinner size="sm" color="primary" /> : text}
           </div>
           {!loading && (
-            <div className="flex p-2">
+            <div className="flex py-2 gap-1">
               <Task01Icon
                 height="20"
                 onClick={copyToClipboard}
                 className="cursor-pointer"
               />
+
+              <PinIcon height="20" className="cursor-pointer" />
             </div>
           )}
         </div>
@@ -88,10 +95,6 @@ export function ChatBubbleBot({ text, loading = false }) {
 export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
   const [conversationHistory, setConversationHistory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-
-  React.useEffect(() => {
-    console.log(conversationHistory);
-  }, [conversationHistory]);
 
   return (
     <div className="main_chat" onClick={hideSidebar} ref={mainChatRef}>

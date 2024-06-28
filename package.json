@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hugeicons/react-pro": "^0.3.2",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@nextui-org/avatar": "^2.0.30",
     "@nextui-org/button": "2.0.34",
     "@nextui-org/code": "2.0.29",
