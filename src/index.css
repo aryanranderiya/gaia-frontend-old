@@ -10,7 +10,6 @@ body {
 
 * {
   user-select: none;
-  /* text-transform: lowercase !important; */
 }
 
 body {
@@ -26,13 +25,16 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
   z-index: 1;
-  width: 300px;
+  min-width: 270px;
+  max-width: 270px;
   background-color: #020202;
   height: 100vh;
 }
 
 .sidebar.hide {
   width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
 }
 
 .hr_container {
@@ -116,13 +118,21 @@ body {
   width: 50%;
 }
 
-.starter_container {
+.starter_container,
+.starter_container2 {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1em;
   height: 100vh;
   padding-top: 10vh;
+  justify-content: flex-start;
+}
+
+.starter_container2 {
+  padding-bottom: 2vh;
+  padding-top: 1vh;
+  height: fit-content;
   justify-content: flex-start;
 }
 
@@ -138,7 +148,7 @@ body {
   font-size: 1.4em;
 }
 
-.sidebar_chat_container {
+.main_container {
   display: flex;
   flex-direction: row;
   width: 100vw;
@@ -175,12 +185,23 @@ body {
   max-width: 30vw;
 }
 
-
-
 .chat_bubble span strong,
 .chat_bubble span em,
 .chat_bubble span a {
   margin: 0 3px;
+}
+
+.chat_bubble p pre {
+  margin-top: 20px;
+  padding: 20px;
+  background: #000000ab;
+  border-radius: 15px;
+}
+
+.chat_bubble code {
+  padding: 3px 10px;
+  background: #000000ab;
+  border-radius: 5px;
 }
 
 .chat_bubble span a {
@@ -227,6 +248,10 @@ body {
   min-width: 40px;
   max-height: 40px;
   min-height: 40px;
+}
+
+.lottie_container svg {
+  cursor: default !important;
 }
 @media only screen and (max-width: 600px) {
   .starter_text {

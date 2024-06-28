@@ -1,14 +1,12 @@
 import MainSearchbar from "../components/Chat/MainSearchbar";
 import StarterText from "../components/Chat/StarterText";
 import StarterEmoji from "../components/Chat/StarterEmoji";
-import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
 import { ScrollArea } from "../components/ScrollArea";
 import * as React from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import WebsiteName from "../components/Chat/TopWebsiteName";
 import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";
 
-export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
+export default function MainChat({ toggleSidebar }) {
   const [conversationHistory, setConversationHistory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [searchbarText, setSearchbarText] = React.useState("");
@@ -52,7 +50,11 @@ export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
         Accept: "text/event-stream",
       },
       body: JSON.stringify({ message: searchbarText }),
+      onopen(event) {
+        console.log("Connection opened");
+      },
       onmessage(event) {
+        console.log(event.data);
         if (event.data === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, event.data]);
         setLoading(false);
@@ -72,19 +74,15 @@ export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (!searchbarText) return;
     setLoading(true);
-    if (!!searchbarText) fetchData(searchbarText);
+    fetchData(searchbarText);
     setSearchbarText("");
   };
 
   return (
-    <div className="main_chat" onClick={hideSidebar} ref={mainChatRef}>
-      <div className="chat_sidebar_toggle_btn">
-        <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
-      </div>
-
-      <WebsiteName />
-
+    <>
+    
       <ScrollArea>
         <div className="flex justify-center w-full items-center">
           <div className="conversation_history">
@@ -115,6 +113,6 @@ export default function MainChat({ toggleSidebar, hideSidebar, mainChatRef }) {
         searchbarText={searchbarText}
         setSearchbarText={setSearchbarText}
       />
-    </div>
+    </>
   );
 }

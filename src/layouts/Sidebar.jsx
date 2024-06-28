@@ -32,7 +32,7 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
             <Button
               variant="shadow"
               color="primary"
-              className="w-full flex justify-between my-4"
+              className="w-full flex justify-between my-4 font-bold"
             >
               Coming Soon?
               <StarsIcon />

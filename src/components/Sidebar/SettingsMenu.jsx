@@ -18,7 +18,7 @@ export default function SettingsMenu() {
       key: "settings",
       label: (
         <div className="flex items-center gap-4">
-          <Settings01Icon width={20} color="black" />
+          <Settings01Icon width={20} color="text-foreground" />
           Settings
         </div>
       ),
@@ -27,7 +27,7 @@ export default function SettingsMenu() {
       key: "customise",
       label: (
         <div className="flex items-center gap-4">
-          <BlushBrush02Icon width={20} color="black" />
+          <BlushBrush02Icon width={20} color="text-foreground" />
           Customisation
         </div>
       ),
@@ -45,7 +45,7 @@ export default function SettingsMenu() {
   ];
 
   return (
-    <Dropdown>
+    <Dropdown className="dark text-foreground">
       <DropdownTrigger>
         <Button isIconOnly variant="light" aria-label="Three Dots Menu">
           <ThreeDotsMenu />

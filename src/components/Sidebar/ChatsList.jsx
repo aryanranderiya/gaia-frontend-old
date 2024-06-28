@@ -1,11 +1,19 @@
 import { ScrollArea } from "../ScrollArea";
 import { PencilEdit02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
+import { useNavigate } from "react-router-dom";
 
 export function ChatTab() {
+  const navigate = useNavigate();
+
   return (
     <div>
-      <Button variant="light" className="w-full flex justify-start" size="md">
+      <Button
+        variant="light"
+        className="w-full flex justify-start"
+        size="md"
+        onClick={() => navigate("/")}
+      >
         Chat 1
       </Button>
     </div>

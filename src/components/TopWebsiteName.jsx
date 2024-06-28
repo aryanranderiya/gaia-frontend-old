@@ -1,4 +1,4 @@
-import { GlobalIcon } from "../icons";
+import { GlobalIcon } from "./icons";
 
 export default function WebsiteName() {
   return (
