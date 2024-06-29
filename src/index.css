@@ -124,8 +124,8 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1em;
-  height: 100vh;
-  padding-top: 10vh;
+  height: 100%;
+  padding-bottom: 10vh;
   justify-content: flex-start;
 }
 
@@ -169,11 +169,10 @@ body {
   padding: 4em 2em;
   gap: 1em;
   width: 40vw;
-  height: 100%;
+  height: 80vh;
 }
 
 .chat_bubble {
-  background-color: #27272a;
   border-radius: 30px;
   padding: 10px 20px;
   color: rgb(255, 255, 255);
@@ -311,8 +310,8 @@ body {
 .pdf_container {
   max-width: 330px;
   min-width: 330px;
-  max-height: 100px;
-  min-height: 100px;
+  max-height: 150px;
+  min-height: 150px;
   overflow: hidden;
   border-radius: 10px;
 }

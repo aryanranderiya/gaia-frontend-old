@@ -1,46 +1,58 @@
 import * as React from "react";
-import { Pdf02Icon, NoteDoneIcon } from "../icons";
+import {  NoteDoneIcon, Cancel01Icon, SentIcon } from "../icons";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Document, Page, pdfjs } from "react-pdf";
-import { Spinner } from "@nextui-org/spinner";
+import { PdfContainer } from "./PdfComponent";
 
-export default function FileUpload() {
-  const fileInputRef = React.useRef(null);
-  const [fileName, setFileName] = React.useState("");
+export default function FileUpload({ setConversationHistory, fileInputRef }) {
   const [file, setFile] = React.useState(null);
+  const [textContent, setTextContent] = React.useState("");
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url
-  ).toString();
-
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const chooseFile = () => {
-    fileInputRef.current.click();
+  const closeModal = () => {
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    setIsModalOpen(false);
+    setTextContent("");
+    setFile(null);
   };
 
   const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setFile(file);
-    if (file) {
-      setFileName(file.name);
-      onOpen();
+    console.log("handling file select");
+    const selectedFile = event.target.files[0];
+    if (selectedFile) setIsModalOpen(true);
+    setFile(selectedFile);
+  };
+
+  const submitPdf = () => {
+    if (textContent.trim() === "") return;
+    setConversationHistory((prevHistory) => [
+      ...prevHistory,
+      { type: "user", response: textContent, subtype: "pdf", file: file },
+    ]);
+    closeModal();
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && event.shiftKey) {
+      event.preventDefault();
+      setTextContent((text) => text + "\n");
+    } else if (event.key === "Enter" && textContent.trim() !== "") {
+      submitPdf();
     }
   };
 
+  React.useEffect(() => {
+    console.log(file);
+  }, [file]);
   return (
-    <>
+    <form>
       <input
         type="file"
         id="fileInput"
@@ -50,66 +62,53 @@ export default function FileUpload() {
         onChange={handleFileSelect}
       />
 
-      <Pdf02Icon color="#00bbff" onClick={chooseFile} />
-
       <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
         className="dark text-foreground w-[400px]"
-        onClose={() => setFileName("")}
+        isOpen={isModalOpen}
+        onClose={closeModal}
       >
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Your File Upload
-              </ModalHeader>
-              <ModalBody>
-                <div className="flex w-full rounded-xl bg-zinc-700 flex-col p-3 items-center">
-                  {!!file && (
-                    <div className="pdf_container">
-                      <Document
-                        file={file}
-                        onLoadSuccess={() => console.log("loaded")}
-                      >
-                        <Page
-                          pageNumber={1}
-                          width={350}
-                          loading={<Spinner color="primary" />}
-                        />
-                      </Document>
-                    </div>
-                  )}
+          <ModalHeader className="flex flex-col gap-1">
+            Your File Upload
+          </ModalHeader>
+          <ModalBody>
+            <PdfContainer file={file} />
+            <Textarea
+              label="What do you want to do with this file?"
+              placeholder="e.g - Summarise this pdf"
+              startContent={<NoteDoneIcon />}
+              maxRows={3}
+              minRows={1}
+              isRequired
+              value={textContent}
+              onValueChange={(e) => setTextContent(e)}
+              errorMessage="This is a required input field."
+              isInvalid={textContent.trim() === ""}
+              spellCheck={false}
+              onKeyDown={handleKeyDown}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="danger"
+              variant="ghost"
+              onClick={closeModal}
+              endContent={<Cancel01Icon width="20" color="danger" />}
+            >
+              Cancel
+            </Button>
 
-                  <div className="h-[50px] flex w-full items-center gap-2 pt-2">
-                    <Pdf02Icon color="zinc-600" width="25" height="25" />
-                    <div className="flex flex-col">
-                      <span className="font-[500] text-small w-[270px] text-ellipsis whitespace-nowrap overflow-hidden">
-                        {fileName}
-                      </span>
-                      <span className="text-xs">application/pdf</span>
-                    </div>
-                  </div>
-                </div>
-                <Textarea
-                  label="What do you want to do with this file?"
-                  placeholder="e.g - Summarise this pdf"
-                  startContent={<NoteDoneIcon />}
-                  maxRows={3}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Cancel
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Submit
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+            <Button
+              color="primary"
+              onClick={submitPdf}
+              disabled={textContent.trim() === ""}
+              endContent={<SentIcon color="black" width="20" />}
+            >
+              Send
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </form>
   );
 }

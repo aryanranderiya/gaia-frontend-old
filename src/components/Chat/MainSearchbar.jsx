@@ -10,6 +10,7 @@ export default function MainSearchbar({
   handleFormSubmit,
   searchbarText,
   setSearchbarText,
+  setConversationHistory,
 }) {
   const [currentHeight, setHeight] = React.useState(24);
 
@@ -34,7 +35,12 @@ export default function MainSearchbar({
             value={searchbarText}
             ref={inputRef}
             autoFocus
-            startContent={<SearchbarLeftDropdown loading={loading} />}
+            startContent={
+              <SearchbarLeftDropdown
+                loading={loading}
+                setConversationHistory={setConversationHistory}
+              />
+            }
             endContent={<SearchbarRightSendBtn loading={loading} />}
             minRows={1}
             maxRows={13}

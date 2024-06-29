@@ -43,6 +43,10 @@ export default function MainChat() {
       { type: "bot", response: "" },
     ]);
 
+    setData(["My name is gaia, your personal A.I. assistant!"]);
+    setLoading(false);
+    return;
+
     await fetchEventSource(`http://127.0.0.1:8000/chat`, {
       method: "POST",
       headers: {
@@ -52,6 +56,7 @@ export default function MainChat() {
       body: JSON.stringify({ message: searchbarText }),
       onopen(event) {},
       onmessage(event) {
+        console.log(event.data);
         if (event.data === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, event.data]);
         setLoading(false);
@@ -87,7 +92,12 @@ export default function MainChat() {
                 message.type === "bot" ? (
                   <ChatBubbleBot text={message.response} key={index} />
                 ) : (
-                  <ChatBubbleUser text={message.response} key={index} />
+                  <ChatBubbleUser
+                    text={message.response}
+                    key={index}
+                    subtype={message.subtype || null}
+                    file={message.file || null}
+                  />
                 )
               )
             ) : (
@@ -108,6 +118,7 @@ export default function MainChat() {
         handleFormSubmit={handleFormSubmit}
         searchbarText={searchbarText}
         setSearchbarText={setSearchbarText}
+        setConversationHistory={setConversationHistory}
       />
     </>
   );
