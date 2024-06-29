@@ -35,7 +35,7 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
               className="w-full flex justify-between my-4 font-bold"
             >
               Coming Soon?
-              <StarsIcon />
+              <StarsIcon color="black" fill="black" />
             </Button>
           </div>
 

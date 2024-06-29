@@ -6,7 +6,7 @@ import * as React from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";
 
-export default function MainChat({ toggleSidebar }) {
+export default function MainChat() {
   const [conversationHistory, setConversationHistory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [searchbarText, setSearchbarText] = React.useState("");
