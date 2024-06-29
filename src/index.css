@@ -362,7 +362,8 @@ body {
     margin-left: -0.5em;
   }
 
-  .chat_bubble {
+  .chat_bubble,
+  .chat_bubble.user div {
     max-width: 70vw;
   }
 

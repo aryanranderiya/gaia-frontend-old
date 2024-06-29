@@ -9,7 +9,7 @@ import {
 import Lottie from "react-lottie";
 import recordingAnimation from "../lotties/recording.json";
 import { toast } from "sonner";
-import { Mic01Icon, Cancel01Icon, Tick02Icon } from "../icons";
+import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
 import * as React from "react";
 
@@ -109,12 +109,12 @@ export default function MicrophoneBtn() {
           // startRecording();
         }}
       >
-        <Mic01Icon />
+        <Mic02Icon />
       </Button>
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        backdrop="blur"
+        backdrop="opaque"
         classNames={{ base: "w-fit p-4 dark text-white" }}
         onClose={stopRecording}
         hideCloseButton

@@ -11,9 +11,9 @@ import {
 import {
   AttachmentIcon,
   Image02Icon,
-  Pdf02Icon,
+  DocumentAttachmentIcon,
   BlushBrush02Icon,
-  CalendarAdd01Icon,
+  Calendar01Icon,
 } from "../icons";
 
 export default function SearchbarLeftDropdown({
@@ -44,15 +44,11 @@ export default function SearchbarLeftDropdown({
         shouldCloseOnInteractOutside={true}
       >
         <DropdownTrigger>
-          <Button
-            disabled={loading}
-            isIconOnly
-            radius="full"
-            aria-label="Attach files"
-            className={`${loading && "cursor-wait"}`}
+          <div
+            className={`${loading ? "cursor-wait" : "cursor-pointer"} group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-full px-0  transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground min-w-10 w-10 h-10 data-[hover=true]:opacity-hover z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased false`}
           >
             <AttachmentIcon />
-          </Button>
+          </div>
         </DropdownTrigger>
 
         <DropdownMenu
@@ -76,21 +72,21 @@ export default function SearchbarLeftDropdown({
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
             isReadOnly
           >
-            <Image02Icon color="#00bbff" onClick={chooseFile} />
+            <Image02Icon color="#00bbff" />
           </DropdownItem>
 
           <DropdownItem
             key="image"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >
-            <Pdf02Icon color="#00bbff" onClick={chooseFile} />
+            <DocumentAttachmentIcon color="#00bbff" onClick={chooseFile} />
           </DropdownItem>
 
           <DropdownItem
             key="calendar"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >
-            <CalendarAdd01Icon color="#00bbff" />
+            <Calendar01Icon color="#00bbff" />
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
