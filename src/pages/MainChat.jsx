@@ -15,9 +15,7 @@ export default function MainChat() {
 
   const focusInput = () => {
     setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+      if (inputRef.current) inputRef.current.focus();
     }, 10);
   };
 
@@ -34,7 +32,7 @@ export default function MainChat() {
         setConversationHistory(updatedHistory);
       }
     }
-  }, [data]);
+  }, [data, conversationHistory]);
 
   const fetchData = async (searchbarText) => {
     setConversationHistory((prevHistory) => [
@@ -43,9 +41,9 @@ export default function MainChat() {
       { type: "bot", response: "" },
     ]);
 
-    setData(["My name is gaia, your personal A.I. assistant!"]);
-    setLoading(false);
-    return;
+    // setData(["My name is gaia, your personal A.I. assistant!"]);
+    // setLoading(false);
+    // return;
 
     await fetchEventSource(`http://127.0.0.1:8000/chat`, {
       method: "POST",
@@ -54,7 +52,6 @@ export default function MainChat() {
         Accept: "text/event-stream",
       },
       body: JSON.stringify({ message: searchbarText }),
-      onopen(event) {},
       onmessage(event) {
         console.log(event.data);
         if (event.data === "") setData((data) => [...data, "\n"]);
@@ -62,9 +59,11 @@ export default function MainChat() {
         setLoading(false);
       },
       onclose() {
-        console.log("Connection closed by the server");
-        focusInput();
-        setData([]);
+        setTimeout(() => {
+          console.log("Connection closed by the server");
+          focusInput();
+          setData([]);
+        }, 500);
       },
       onerror(err) {
         console.log("There was an error from server", err);
