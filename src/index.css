@@ -344,11 +344,7 @@ main {
 .landing_page {
   overflow: hidden;
   min-height: 100vh;
-}
-
-.test {
-  min-height: 400vw;
-  min-width: 100vw;
+  z-index: 1;
 }
 
 .navbar {
@@ -375,6 +371,7 @@ main {
 .landingpage_maintext {
   font-size: clamp(2.8em, 10vw, 7em);
   margin: 0 !important;
+  z-index: 1;
 }
 
 .arrow_diagonal_btn {
@@ -388,6 +385,29 @@ main {
   font-weight: 500;
   font-size: 1.6em;
 }
+
+.landing_img_parent {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing_img_container {
+  width: 90vw;
+  outline: 1px solid #00bbff;
+  border-radius: 20px;
+  -webkit-box-shadow: 1px -66px 108px -49px rgba(0, 187, 255, 0.71);
+  -moz-box-shadow: 1px -66px 108px -49px rgba(0, 187, 255, 0.71);
+  box-shadow: 1px -66px 108px -49px rgba(0, 187, 255, 0.71);
+}
+
+.landing_img_container img {
+  border-radius: 20px;
+  position: relative;
+  z-index: 1 !important;
+}
+
 @media only screen and (max-width: 600px) {
   .starter_text {
     font-size: 1em;

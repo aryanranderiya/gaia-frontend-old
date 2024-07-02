@@ -12,6 +12,7 @@
   "dependencies": {
     "@hugeicons/react-pro": "^0.3.2",
     "@microsoft/fetch-event-source": "^2.0.1",
+    "@motionone/utils": "^10.18.0",
     "@nextui-org/autocomplete": "^2.1.2",
     "@nextui-org/avatar": "^2.0.30",
     "@nextui-org/button": "2.0.34",
@@ -33,6 +34,7 @@
     "@nextui-org/user": "^2.0.31",
     "@radix-ui/react-scroll-area": "^1.1.0",
     "@react-aria/visually-hidden": "3.8.12",
+    "@studio-freight/react-lenis": "^0.0.47",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer-motion": "~11.1.1",

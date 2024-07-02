@@ -13,6 +13,7 @@ module.exports = {
     extend: {
       animation: {
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
+        grid: "grid 15s linear infinite",
       },
       keyframes: {
         orbit: {
@@ -24,6 +25,10 @@ module.exports = {
             transform:
               "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
           },
+        },
+        grid: {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
         },
       },
     },
