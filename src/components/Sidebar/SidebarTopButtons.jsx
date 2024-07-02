@@ -19,7 +19,7 @@ export default function SidebarTopButtons() {
 
       <Button
         className="w-full flex justify-between"
-        onClick={() => navigate("/explore")}
+        onClick={() => navigate("/try/explore")}
       >
         Explore
         <DiscoverCircleIcon />

@@ -4,8 +4,7 @@
 
 html,
 body {
-  background-color: #111111;
-  overflow: hidden;
+  background-color: #080808;
 }
 
 * {
@@ -13,9 +12,15 @@ body {
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
+  /* overflow-y: hidden; */
+  overflow-x: hidden;
 }
 
+main {
+  overflow-x: hidden !important;
+}
 .sidebar {
   display: flex;
   gap: 1em;
@@ -109,7 +114,7 @@ body {
 
 .searchbar_container {
   width: 100%;
-  background-color: #111111;
+  background-color: #080808;
   display: flex;
   justify-content: center;
 }
@@ -125,7 +130,7 @@ body {
   align-items: center;
   gap: 1em;
   height: 100%;
-  padding-bottom: 10vh;
+  padding-bottom: 40vh;
   justify-content: flex-start;
 }
 
@@ -166,10 +171,11 @@ body {
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-  padding: 4em 2em;
+  padding: 2em;
   gap: 1em;
   width: 40vw;
-  height: 80vh;
+  height: fit-content;
+  min-height: 10vh;
 }
 
 .chat_bubble {
@@ -316,6 +322,72 @@ body {
   border-radius: 10px;
 }
 
+.arrow_diagonal {
+  transition: all 0.3s ease;
+}
+.arrow_diagonal_btn:hover .arrow_diagonal {
+  transform: translateY(-10%);
+}
+
+.chat_sidebar_toggle_btn {
+  z-index: 5;
+}
+
+.rounded_class {
+  border-radius: 1000px;
+}
+
+.searchbar input:disabled {
+  cursor: wait;
+}
+
+.landing_page {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.test {
+  min-height: 400vw;
+  min-width: 100vw;
+}
+
+.navbar {
+  width: 100vw;
+  position: fixed;
+  z-index: 10;
+}
+
+.navbar_content {
+  background-color: rgba(85, 85, 85, 0.1);
+  height: 45px;
+  border-radius: 1000px;
+  margin: 20px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 3px;
+  outline: 2px rgba(255, 255, 255, 0.1) solid;
+}
+
+.landingpage_maintext {
+  font-size: clamp(2.8em, 10vw, 7em);
+  margin: 0 !important;
+}
+
+.arrow_diagonal_btn {
+  width: fit-content;
+  text-wrap: nowrap;
+  width: 210px;
+  max-width: 100%;
+}
+
+.navbar_title {
+  font-weight: 500;
+  font-size: 1.6em;
+}
 @media only screen and (max-width: 600px) {
   .starter_text {
     font-size: 1em;
@@ -378,15 +450,4 @@ body {
   .rounded_class {
     border-radius: 20px !important;
   }
-}
-
-.chat_sidebar_toggle_btn {
-  z-index: 5;
-}
-.rounded_class {
-  border-radius: 1000px;
-}
-
-.searchbar input:disabled {
-  cursor: wait;
 }
