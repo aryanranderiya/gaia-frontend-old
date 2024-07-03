@@ -13,7 +13,7 @@ export default function MainInfo() {
         <div className="flex flex-col justify-center items-center gap-2 pt-32 ">
           <GradualSpacing
             text="Introducing G.A.I.A"
-            className="bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-slate-900/10 landingpage_maintext"
+            className="bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-900 landingpage_maintext"
           />
 
           <div className=""></div>

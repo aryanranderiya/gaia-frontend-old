@@ -2,20 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  user-select: none;
+}
+
 html,
 body {
   background-color: #080808;
 }
 
-* {
-  user-select: none;
+html {
+  overflow: hidden;
 }
 
 body {
   min-height: 100vh;
   height: fit-content;
-  /* overflow-y: hidden; */
-  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 main {
@@ -357,7 +364,7 @@ main {
   background-color: rgba(85, 85, 85, 0.1);
   height: 45px;
   border-radius: 1000px;
-  margin: 20px;
+  margin: 20px 10px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   display: flex;
@@ -391,7 +398,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1% 0;
+  margin: 7% 0;
 }
 
 .landing_img_container {
@@ -412,31 +419,64 @@ main {
 .feedback_form_container {
   height: 100vh;
   width: 100vw;
-  padding: 5% 10%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  place-items: center;
 }
 
 .feedback_form {
-  height: 85vh;
-  margin-top: 35px;
+  min-height: fit-content;
+  height: 88vh;
   width: 100vw;
-  padding: 2% 5%;
-
+  margin: 5% 10%;
+  padding: 0 5% 130px 5%;
+  position: relative;
   flex-direction: column;
-  padding: 3em;
-  gap: 3em;
   display: flex;
-  border-radius: 20px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  background-color: rgba(85, 85, 85, 0.2);
+  align-items: center;
+  justify-content: center;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
+.orbiting_circles_mid {
+  width: 45px;
+  height: 45px;
+}
+
+.orbiting_circles_inner {
+  width: 40px;
+  height: 40px;
+}
+
+.orbiting_circles_outer {
+  width: 60px;
+  height: 60px;
+}
+.next_prev_buttons {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  bottom: 2vh;
+}
+
+.lucide-x {
+  top: 100px !important;
+  right: 100px !important;
+}
 @media only screen and (max-width: 600px) {
+  .next_prev_buttons {
+    bottom: 50px;
+    width: 90vw;
+  }
+
+  .feedback_form_container {
+    padding: 0;
+  }
+  .feedback_form {
+    margin: 0;
+    margin-top: 80px;
+  }
   .starter_text {
     font-size: 1em;
   }

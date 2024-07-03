@@ -28,7 +28,7 @@ export default function MainSearchbar({
           <Textarea
             disabled={loading}
             radius="full"
-            size="lg"
+            size="sm"
             placeholder={"Ask gaia something..."}
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}

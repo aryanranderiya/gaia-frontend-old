@@ -4,16 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { CommentAdd01Icon } from "../icons";
 import useMediaQuery from "../../hooks/MediaQuery";
 import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem,
-} from "@nextui-org/dropdown";
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetDescription,
+  SheetHeader,
+  SheetTrigger,
+} from "../Sheet";
+import * as React from "react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="navbar">
@@ -59,46 +63,69 @@ export default function Navbar() {
             </Button>
           </div>
         ) : (
-          <Dropdown
-            classNames={{
-              base: "dark text-foreground",
-            }}
-            backdrop="opaque"
-          >
-            <DropdownTrigger>
-              <Button variant="light" isIconOnly radius="full">
+          <Sheet onOpenChange={setOpen} open={open}>
+            <SheetTrigger>
+              <div className="rounded-full p-3">
                 <Menu01Icon color="foreground" />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions" color="primary">
-              <DropdownItem
-                key="home"
-                endContent={
-                  <Home01Icon color="primary" width="20" height="20" />
-                }
-              >
-                Home
-              </DropdownItem>
+              </div>
+            </SheetTrigger>
+            <SheetContent className="dark text-foreground max-w-[200px]">
+              <SheetHeader>
+                <SheetTitle>
+                  <VisuallyHidden.Root>Menu</VisuallyHidden.Root>
+                </SheetTitle>
+                <SheetDescription className="pt-12 gap-3 flex flex-col">
+                  <Button
+                    className="w-full flex justify-between"
+                    color="default"
+                    variant="flat"
+                    onPress={() => {
+                      navigate("/");
+                      setOpen(false);
+                    }}
+                  >
+                    <Home01Icon color="foreground" width="20" height="20" />
+                    Home
+                  </Button>
 
-              <DropdownItem
-                key="new"
-                endContent={
-                  <CommentAdd01Icon color="primary" width="20" height="20" />
-                }
-              >
-                Feedback Form
-              </DropdownItem>
+                  <Button
+                    className="w-full flex justify-between"
+                    variant="flat"
+                    color="primary"
+                    onPress={() => {
+                      navigate("/feedback");
+                      setOpen(false);
+                    }}
+                  >
+                    <CommentAdd01Icon
+                      color="foreground"
+                      width="20"
+                      height="20"
+                    />
+                    Feedback
+                  </Button>
 
-              <DropdownItem
-                key="new"
-                endContent={
-                  <ArrowUpRight01Icon color="primary" width="20" height="20" />
-                }
-              >
-                Signup for Waitlist
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+                  <Button
+                    className="w-full flex justify-between"
+                    variant="flat"
+                    color="success"
+                    asChild
+                    onPress={() => {
+                      navigate("/");
+                      setOpen(false);
+                    }}
+                  >
+                    <ArrowUpRight01Icon
+                      color="foreground"
+                      width="20"
+                      height="20"
+                    />
+                    Waitlist Signup
+                  </Button>
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
         )}
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function CloseOpenSidebarBtn({ toggleSidebar }) {
       variant="light"
       aria-label="Send message"
       className="p-0"
-      size="sm"
+      size="md"
       onClick={toggleSidebar}
     >
       {isMobileScreen ? (

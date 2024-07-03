@@ -1,5 +1,4 @@
 import { ScrollArea } from "../components/ScrollArea";
-import { ReactLenis } from "@studio-freight/react-lenis";
 import Navbar from "../components/LandingPage/Navbar";
 import MainInfo from "../components/LandingPage/MainInfo";
 import IntegrationCircles from "../components/LandingPage/IntegrationCircles";
@@ -18,16 +17,14 @@ export default function Landing() {
           index
           element={
             <>
-              <ReactLenis root>
-                <ScrollArea>
-                  <div className="landing_page">
-                    <MainInfo />
-                    <ImagePreview />
-                    {/* <ScrollingText /> */}
-                    <IntegrationCircles />
-                  </div>
-                </ScrollArea>
-              </ReactLenis>
+              <ScrollArea>
+                <div className="landing_page">
+                  <MainInfo />
+                  <ImagePreview />
+                  {/* <ScrollingText /> */}
+                  <IntegrationCircles />
+                </div>
+              </ScrollArea>
             </>
           }
         />
