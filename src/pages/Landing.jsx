@@ -23,7 +23,7 @@ export default function Landing() {
                   <div className="landing_page">
                     <MainInfo />
                     <ImagePreview />
-                    <ScrollingText />
+                    {/* <ScrollingText /> */}
                     <IntegrationCircles />
                   </div>
                 </ScrollArea>
