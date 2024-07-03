@@ -5,21 +5,35 @@ import MainInfo from "../components/LandingPage/MainInfo";
 import IntegrationCircles from "../components/LandingPage/IntegrationCircles";
 import ImagePreview from "../components/LandingPage/ImagePreview";
 import ScrollingText from "../components/LandingPage/ScrollingText";
-import ReviewForm from "../components/LandingPage/ReviewForm";
+import { Route, Routes } from "react-router-dom";
+import FeedbackForm from "./FeedbackForm";
+import PageNotFound from "./PageNotFound";
 
 export default function Landing() {
   return (
-    <ReactLenis root>
-      <ScrollArea>
-        <div className="landing_page">
-          <Navbar />
-          <MainInfo />
-          <ImagePreview />
-          <ScrollingText />
-          <IntegrationCircles />
-          <ReviewForm />
-        </div>
-      </ScrollArea>
-    </ReactLenis>
+    <>
+      <Navbar />
+      <Routes>
+        <Route
+          index
+          element={
+            <>
+              <ReactLenis root>
+                <ScrollArea>
+                  <div className="landing_page">
+                    <MainInfo />
+                    <ImagePreview />
+                    <ScrollingText />
+                    <IntegrationCircles />
+                  </div>
+                </ScrollArea>
+              </ReactLenis>
+            </>
+          }
+        />
+        <Route path="/feedback" element={<FeedbackForm />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </>
   );
 }

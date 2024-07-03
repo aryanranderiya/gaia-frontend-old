@@ -1,8 +1,10 @@
 import TypingAnimation from "../MagicUI/typing-animation";
 import GradualSpacing from "../MagicUI/gradual-spacing";
-import JoinButtons from "./JoinButtons";
 import Particles from "../MagicUI/particles";
 import RetroGrid from "../MagicUI/retro-grid";
+import { Button } from "@nextui-org/button";
+import { FallingStarIcon } from "../icons";
+import WaitListButton from "./WaitlistModal";
 
 export default function MainInfo() {
   return (
@@ -24,7 +26,23 @@ export default function MainInfo() {
         </div>
 
         <div className="flex gap-3 flex-wrap w-screen justify-center">
-          <JoinButtons />
+          <WaitListButton />
+          <Button
+            color="default"
+            radius="full"
+            variant="ghost"
+            className="arrow_diagonal_btn font-medium"
+            endContent={
+              <FallingStarIcon
+                className="arrow_diagonal"
+                color="primary"
+                width="15"
+                height="15"
+              />
+            }
+          >
+            Get early access
+          </Button>
         </div>
       </div>
     </>
