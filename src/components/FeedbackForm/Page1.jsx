@@ -1,6 +1,9 @@
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import * as React from "react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const occupations = [
   { key: "student", label: "Student" },
@@ -85,21 +88,38 @@ const EmailInput = ({ formData, handleDataChange }) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return regex.test(value);
   };
+  const [value, setValue] = React.useState();
 
   return (
-    <Input
-      type="email"
-      label="Enter your Email"
-      isRequired
-      isClearable
-      size="md"
-      color={!validateEmail(formData.email) ? "danger" : "primary"}
-      variant="underlined"
-      value={formData.email}
-      onValueChange={(value) => handleDataChange("email", value)}
-      isInvalid={!validateEmail(formData.email)}
-      errorMessage={"Please enter a valid email address"}
-    />
+    <>
+      <Input
+        type="email"
+        label="Enter your Email"
+        isRequired
+        isClearable
+        size="md"
+        color={!validateEmail(formData.email) ? "danger" : "primary"}
+        variant="underlined"
+        value={formData.email}
+        onValueChange={(value) => handleDataChange("email", value)}
+        isInvalid={!validateEmail(formData.email)}
+        errorMessage={"Please enter a valid email address"}
+      />
+
+      <PhoneInput
+        defaultCountry="IN"
+        placeholder="Enter phone number"
+        value={formData.phone}
+        onChange={(value) => {
+          if (!value) {
+            handleDataChange("phone", "");
+            return;
+          }
+          if (isValidPhoneNumber(value)) handleDataChange("phone", value);
+          else handleDataChange("phone", "");
+        }}
+      />
+    </>
   );
 };
 

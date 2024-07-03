@@ -79,7 +79,7 @@ function FrequencySelect({ formData, handleDataChange }) {
       variant="underlined"
       size="md"
       classNames={{ label: "text-left" }}
-      defaultSelectedKeys={formData.interactionFrequency}
+      defaultSelectedKeys={[formData.interactionFrequency]}
       onSelectionChange={(value) =>
         handleDataChange("interactionFrequency", Array.from(value)[0])
       }
