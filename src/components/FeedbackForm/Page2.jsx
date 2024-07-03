@@ -3,7 +3,7 @@ import ScaleSlider from "./ScaleSlider";
 import { Checkbox, CheckboxGroup } from "@nextui-org/checkbox";
 import { Select, SelectItem } from "@nextui-org/select";
 
-const UsageScaleSliders = ({ formData, handleSliderChange }) => (
+const UsageScaleSliders = ({ formData, handleDataChange }) => (
   <>
     <ScaleSlider
       title={
@@ -12,7 +12,7 @@ const UsageScaleSliders = ({ formData, handleSliderChange }) => (
         </>
       }
       value={formData.openAIUsage}
-      onChange={(value) => handleSliderChange("openAIUsage", value)}
+      onChange={(value) => handleDataChange("openAIUsage", value)}
     />
     <ScaleSlider
       title={
@@ -21,12 +21,12 @@ const UsageScaleSliders = ({ formData, handleSliderChange }) => (
         </>
       }
       value={formData.googleBardUsage}
-      onChange={(value) => handleSliderChange("googleBardUsage", value)}
+      onChange={(value) => handleDataChange("googleBardUsage", value)}
     />
   </>
 );
 
-const DigitalAssistantUsage = ({ formData, handleRadioChange }) => (
+const DigitalAssistantUsage = ({ formData, handleDataChange }) => (
   <>
     <RadioGroup
       isRequired
@@ -40,9 +40,7 @@ const DigitalAssistantUsage = ({ formData, handleRadioChange }) => (
       orientation="horizontal"
       value={formData.usesDigitalAssistant}
       className="w-full text-sm"
-      onValueChange={(value) =>
-        handleRadioChange("usesDigitalAssistant", value)
-      }
+      onValueChange={(value) => handleDataChange("usesDigitalAssistant", value)}
     >
       <Radio value="yes">Yes</Radio>
       <Radio value="no">No</Radio>
@@ -56,9 +54,7 @@ const DigitalAssistantUsage = ({ formData, handleRadioChange }) => (
       color="primary"
       className="w-full text-sm"
       value={formData.digitalAssistantDetails}
-      onChange={(value) =>
-        handleCheckboxChange("digitalAssistantDetails", value)
-      }
+      onChange={(value) => handleDataChange("digitalAssistantDetails", value)}
     >
       <Checkbox value="Siri">Siri</Checkbox>
       <Checkbox value="Assistant">Google Assistant</Checkbox>
@@ -68,7 +64,7 @@ const DigitalAssistantUsage = ({ formData, handleRadioChange }) => (
   </>
 );
 
-function FrequencySelect({ formData, handleSelectChange }) {
+function FrequencySelect({ formData, handleDataChange }) {
   const interactionFrequency = [
     { key: "less_than_once", label: "Less than once a day" },
     { key: "1_2_times", label: "1-2 times a day" },
@@ -82,11 +78,11 @@ function FrequencySelect({ formData, handleSelectChange }) {
       label="How often do you interact with your digital assistant?"
       variant="underlined"
       size="md"
-      value={formData.interactionFrequency}
-      onValueChange={(value) =>
-        handleSelectChange("interactionFrequency", value)
-      }
       classNames={{ label: "text-left" }}
+      defaultSelectedKeys={formData.interactionFrequency}
+      onSelectionChange={(value) =>
+        handleDataChange("interactionFrequency", Array.from(value)[0])
+      }
     >
       {interactionFrequency.map((frequency) => (
         <SelectItem key={frequency.key} value={frequency.key}>
@@ -97,26 +93,21 @@ function FrequencySelect({ formData, handleSelectChange }) {
   );
 }
 
-export default function Page2({
-  formData,
-  handleSliderChange,
-  handleRadioChange,
-  handleSelectChange,
-}) {
+export default function Page2({ formData, handleDataChange }) {
   if (formData.currentPage === 2)
     return (
       <>
         <UsageScaleSliders
           formData={formData}
-          handleSliderChange={handleSliderChange}
+          handleDataChange={handleDataChange}
         />
         <DigitalAssistantUsage
           formData={formData}
-          handleRadioChange={handleRadioChange}
+          handleDataChange={handleDataChange}
         />
         <FrequencySelect
           formData={formData}
-          handleSelectChange={handleSelectChange}
+          handleDataChange={handleDataChange}
         />
       </>
     );

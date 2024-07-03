@@ -2,7 +2,7 @@ import ScaleSlider from "./ScaleSlider";
 
 import { RadioGroup, Radio } from "@nextui-org/radio";
 
-const CustomisationScaleSlider = ({ formData, handleSliderChange }) => (
+const CustomisationScaleSlider = ({ formData, handleDataChange }) => (
   <ScaleSlider
     title={
       <>
@@ -11,13 +11,13 @@ const CustomisationScaleSlider = ({ formData, handleSliderChange }) => (
       </>
     }
     value={formData.customisationLevel}
-    onChange={(value) => handleSliderChange("customisationLevel", value)}
+    onChange={(value) => handleDataChange("customisationLevel", value)}
     lowest="minimal customisation"
     highest="full customisation"
   />
 );
 
-const MobileAppDownloadScaleSlider = ({ formData, handleSliderChange }) => (
+const MobileAppDownloadScaleSlider = ({ formData, handleDataChange }) => (
   <ScaleSlider
     title={
       <>
@@ -25,11 +25,11 @@ const MobileAppDownloadScaleSlider = ({ formData, handleSliderChange }) => (
       </>
     }
     value={formData.mobileAppLikelihood}
-    onChange={(value) => handleSliderChange("mobileAppLikelihood", value)}
+    onChange={(value) => handleDataChange("mobileAppLikelihood", value)}
   />
 );
 
-const AccountCreationScaleSlider = ({ formData, handleSliderChange }) => (
+const AccountCreationScaleSlider = ({ formData, handleDataChange }) => (
   <ScaleSlider
     title={
       <>
@@ -38,29 +38,25 @@ const AccountCreationScaleSlider = ({ formData, handleSliderChange }) => (
       </>
     }
     value={formData.accountCreation}
-    onChange={(value) => handleSliderChange("accountCreation", value)}
+    onChange={(value) => handleDataChange("accountCreation", value)}
   />
 );
 
-export default function Page5({
-  formData,
-  handleSliderChange,
-  handleRadioChange,
-}) {
+export default function Page5({ formData, handleDataChange }) {
   if (formData.currentPage === 5)
     return (
       <>
         <CustomisationScaleSlider
           formData={formData}
-          handleSliderChange={handleSliderChange}
+          handleDataChange={handleDataChange}
         />
         <MobileAppDownloadScaleSlider
           formData={formData}
-          handleSliderChange={handleSliderChange}
+          handleDataChange={handleDataChange}
         />
         <AccountCreationScaleSlider
           formData={formData}
-          handleSliderChange={handleSliderChange}
+          handleDataChange={handleDataChange}
         />
       </>
     );

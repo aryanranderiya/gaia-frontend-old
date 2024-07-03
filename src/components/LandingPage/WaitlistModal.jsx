@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import api from "../../apiaxios";
 import PartySmiley from "../Smileys/20.webp";
 
-export default function WaitListButton() {
+export default function WaitListButton({ props }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   return (
@@ -31,7 +31,7 @@ export default function WaitListButton() {
         color="primary"
         radius="full"
         variant="shadow"
-        className="arrow_diagonal_btn font-medium"
+        className="arrow_diagonal_btn  font-medium"
         onClick={onOpen}
         endContent={
           <ArrowUpRight01Icon
@@ -41,6 +41,7 @@ export default function WaitListButton() {
             height="15"
           />
         }
+        {...props}
       >
         Join the waitlist
       </Button>

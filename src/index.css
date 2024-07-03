@@ -358,9 +358,13 @@ main {
   width: 100vw;
   position: fixed;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar_content {
+  width: 90%;
   background-color: rgba(85, 85, 85, 0.1);
   height: 45px;
   border-radius: 1000px;
@@ -384,7 +388,6 @@ main {
 .arrow_diagonal_btn {
   width: fit-content;
   text-wrap: nowrap;
-  width: 210px;
   max-width: 100%;
 }
 
@@ -426,14 +429,14 @@ main {
 .feedback_form {
   min-height: fit-content;
   height: 88vh;
-  width: 100vw;
+  width: 80vw;
   margin: 5% 10%;
-  padding: 0 5% 130px 5%;
+  padding: 5% 5% 130px 5%;
   position: relative;
   flex-direction: column;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -457,7 +460,7 @@ main {
   display: flex;
   justify-content: space-between;
   width: 70vw;
-  bottom: 2vh;
+  bottom: 5vh;
 }
 
 .lucide-x {
@@ -476,6 +479,8 @@ main {
   .feedback_form {
     margin: 0;
     margin-top: 80px;
+    width: 100vw;
+    justify-content: center;
   }
   .starter_text {
     font-size: 1em;
@@ -537,5 +542,9 @@ main {
 
   .rounded_class {
     border-radius: 20px !important;
+  }
+
+  .navbar_content {
+    width: 100%;
   }
 }

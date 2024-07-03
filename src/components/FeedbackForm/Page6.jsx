@@ -1,7 +1,7 @@
 import { Textarea } from "@nextui-org/input";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 
-const LearningBehaviorRadioGroup = (formData, handleRadioChange) => (
+const LearningBehaviorRadioGroup = ({ formData, handleDataChange }) => (
   <RadioGroup
     isRequired
     className="w-full"
@@ -10,7 +10,7 @@ const LearningBehaviorRadioGroup = (formData, handleRadioChange) => (
     orientation="horizontal"
     value={formData.learningBehaviourComfortable}
     onValueChange={(value) =>
-      handleRadioChange("learningBehaviourComfortable", value)
+      handleDataChange("learningBehaviourComfortable", value)
     }
   >
     <Radio value="yes">Yes</Radio>
@@ -19,14 +19,14 @@ const LearningBehaviorRadioGroup = (formData, handleRadioChange) => (
   </RadioGroup>
 );
 
-const CalendarServiceUsage = ({ formData, handleRadioChange }) => (
+const CalendarServiceUsage = ({ formData, handleDataChange }) => (
   <RadioGroup
     isRequired
     label="Which calendar service do you primarily use?"
     size="md"
     orientation="horizontal"
     value={formData.calendarServiceUsage}
-    onValueChange={(value) => handleRadioChange("calendarServiceUsage", value)}
+    onValueChange={(value) => handleDataChange("calendarServiceUsage", value)}
     className="w-full"
   >
     <Radio value="google">Google Calendar</Radio>
@@ -36,22 +36,18 @@ const CalendarServiceUsage = ({ formData, handleRadioChange }) => (
   </RadioGroup>
 );
 
-export default function Page6({
-  formData,
-  handleInputChange,
-  handleRadioChange,
-}) {
+export default function Page6({ formData, handleDataChange }) {
   if (formData.currentPage === 6)
     return (
       <>
         <CalendarServiceUsage
           formData={formData}
-          handleRadioChange={handleRadioChange}
+          handleDataChange={handleDataChange}
         />
 
         <LearningBehaviorRadioGroup
           formData={formData}
-          handleRadioChange={handleRadioChange}
+          handleDataChange={handleDataChange}
         />
 
         <Textarea
@@ -64,7 +60,7 @@ export default function Page6({
           minRows={1}
           maxRows={4}
           value={formData.integrations}
-          onValueChange={(value) => handleInputChange("integrations", value)}
+          onValueChange={(value) => handleDataChange("integrations", value)}
         />
       </>
     );

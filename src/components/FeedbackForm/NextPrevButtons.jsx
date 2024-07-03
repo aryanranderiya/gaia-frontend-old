@@ -1,10 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { ArrowLeft01Icon, ArrowRight01Icon, SentIcon } from "../icons";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationCursor,
-} from "@nextui-org/pagination";
+import { Pagination } from "@nextui-org/pagination";
+import { toast } from "sonner";
 
 export default function NextPrevButtons({ formData, setFormData }) {
   const nextPage = () => {
@@ -23,8 +20,29 @@ export default function NextPrevButtons({ formData, setFormData }) {
     setFormData({ ...formData, currentPage: value });
   };
 
+  const validateForm = () => {
+    for (const key in formData)
+      if (formData[key] === "" || formData[key].length === 0) return false;
+
+    return true;
+  };
+
   const handleSubmit = () => {
-    console.log(formData);
+    const isValid = validateForm();
+
+    if (isValid) {
+      console.log("Form is valid:", formData);
+    } else {
+      toast.error("Error. Could not submit form.", {
+        classNames: {
+          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
+          title: " text-sm",
+          description: "text-sm",
+        },
+        duration: 3000,
+        description: "Please fill out all the form fields",
+      });
+    }
   };
 
   return (

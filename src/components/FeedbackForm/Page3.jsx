@@ -1,6 +1,6 @@
 import { Textarea } from "@nextui-org/input";
 
-const TextAreaGroup = ({ formData, handleInputChange }) => (
+const TextAreaGroup = ({ formData, handleDataChange }) => (
   <>
     <Textarea
       isRequired
@@ -13,7 +13,7 @@ const TextAreaGroup = ({ formData, handleInputChange }) => (
       maxRows={4}
       value={formData.currentUsefulFeatures}
       onValueChange={(value) =>
-        handleInputChange("currentUsefulFeatures", value)
+        handleDataChange("currentUsefulFeatures", value)
       }
     />
     <Textarea
@@ -26,7 +26,7 @@ const TextAreaGroup = ({ formData, handleInputChange }) => (
       size="md"
       maxRows={4}
       value={formData.desiredFeatures}
-      onValueChange={(value) => handleInputChange("desiredFeatures", value)}
+      onValueChange={(value) => handleDataChange("desiredFeatures", value)}
     />
     <Textarea
       isRequired
@@ -38,18 +38,18 @@ const TextAreaGroup = ({ formData, handleInputChange }) => (
       minRows={1}
       maxRows={4}
       value={formData.challenges}
-      onValueChange={(value) => handleInputChange("challenges", value)}
+      onValueChange={(value) => handleDataChange("challenges", value)}
     />
   </>
 );
 
-export default function Page3({ formData, handleInputChange }) {
+export default function Page3({ formData, handleDataChange }) {
   if (formData.currentPage === 3)
     return (
       <>
         <TextAreaGroup
           formData={formData}
-          handleInputChange={handleInputChange}
+          handleDataChange={handleDataChange}
         />
       </>
     );

@@ -1,6 +1,6 @@
 import { Textarea } from "@nextui-org/input";
 
-const AdditionalTextAreas = ({ formData, handleInputChange }) => (
+const AdditionalTextAreas = ({ formData, handleDataChange }) => (
   <>
     <Textarea
       isRequired
@@ -12,7 +12,7 @@ const AdditionalTextAreas = ({ formData, handleInputChange }) => (
       minRows={1}
       maxRows={4}
       value={formData.concerns}
-      onValueChange={(value) => handleInputChange("concerns", value)}
+      onValueChange={(value) => handleDataChange("concerns", value)}
     />
     <Textarea
       isRequired
@@ -24,18 +24,18 @@ const AdditionalTextAreas = ({ formData, handleInputChange }) => (
       minRows={1}
       maxRows={4}
       value={formData.factorsToUse}
-      onValueChange={(value) => handleInputChange("factorsToUse", value)}
+      onValueChange={(value) => handleDataChange("factorsToUse", value)}
     />
   </>
 );
 
-export default function Page7({ formData, handleInputChange }) {
+export default function Page7({ formData, handleDataChange }) {
   if (formData.currentPage === 7)
     return (
       <>
         <AdditionalTextAreas
           formData={formData}
-          handleInputChange={handleInputChange}
+          handleDataChange={handleDataChange}
         />
         <Textarea
           label="Any additional comments or suggestions?"
@@ -47,7 +47,7 @@ export default function Page7({ formData, handleInputChange }) {
           maxRows={5}
           value={formData.additionalComments}
           onValueChange={(value) =>
-            handleInputChange("additionalComments", value)
+            handleDataChange("additionalComments", value)
           }
         />
       </>

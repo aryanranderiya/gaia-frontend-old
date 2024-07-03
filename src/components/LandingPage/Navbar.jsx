@@ -13,6 +13,7 @@ import {
 } from "../Sheet";
 import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import WaitListButton from "./WaitlistModal";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -45,22 +46,7 @@ export default function Navbar() {
               Feedback Form
             </Button>
 
-            <Button
-              color="primary"
-              radius="full"
-              className="px-3 font-medium"
-              variant="shadow"
-              endContent={
-                <ArrowUpRight01Icon
-                  className="arrow_diagonal"
-                  color="primary"
-                  width="15"
-                  height="15"
-                />
-              }
-            >
-              Join the waitlist
-            </Button>
+            <WaitListButton className="p-0" />
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>
@@ -69,7 +55,7 @@ export default function Navbar() {
                 <Menu01Icon color="foreground" />
               </div>
             </SheetTrigger>
-            <SheetContent className="dark text-foreground max-w-[200px]">
+            <SheetContent className="dark text-foreground max-w-[200px] bg-zinc-950">
               <SheetHeader>
                 <SheetTitle>
                   <VisuallyHidden.Root>Menu</VisuallyHidden.Root>

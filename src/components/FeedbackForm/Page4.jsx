@@ -1,6 +1,6 @@
 import { Checkbox, CheckboxGroup } from "@nextui-org/checkbox";
 
-const SituationsCheckboxGroup = ({ formData, handleCheckboxChange }) => (
+const SituationsCheckboxGroup = ({ formData, handleDataChange }) => (
   <CheckboxGroup
     isRequired
     label="In what situations would you find a personalized AI assistant most helpful? (Select all that apply)"
@@ -8,7 +8,7 @@ const SituationsCheckboxGroup = ({ formData, handleCheckboxChange }) => (
     size="md"
     color="primary"
     value={formData.helpfulSituations}
-    onValueChange={(value) => handleCheckboxChange("helpfulSituations", value)}
+    onValueChange={(value) => handleDataChange("helpfulSituations", value)}
   >
     <Checkbox value="planning">Planning events</Checkbox>
     <Checkbox value="organizing">Organizing files or information</Checkbox>
@@ -25,13 +25,13 @@ const SituationsCheckboxGroup = ({ formData, handleCheckboxChange }) => (
   </CheckboxGroup>
 );
 
-export default function Page4({ formData, handleCheckboxChange }) {
+export default function Page4({ formData, handleDataChange }) {
   if (formData.currentPage === 4)
     return (
       <>
         <SituationsCheckboxGroup
           formData={formData}
-          handleCheckboxChange={handleCheckboxChange}
+          handleDataChange={handleDataChange}
         />
       </>
     );

@@ -1,5 +1,6 @@
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
+import * as React from "react";
 
 const occupations = [
   { key: "student", label: "Student" },
@@ -10,13 +11,13 @@ const occupations = [
 ];
 
 const ageRanges = [
-  { key: "under_18", label: "Under 18" },
-  { key: "18_24", label: "18-24" },
-  { key: "25_34", label: "25-34" },
-  { key: "35_44", label: "35-44" },
-  { key: "45_54", label: "45-54" },
-  { key: "55_64", label: "55-64" },
-  { key: "65_over", label: "65 and over" },
+  { key: "under-18", label: "Under 18" },
+  { key: "18-24", label: "18-24" },
+  { key: "25-34", label: "25-34" },
+  { key: "35-44", label: "35-44" },
+  { key: "45-54", label: "45-54" },
+  { key: "55-64", label: "55-64" },
+  { key: "65-and-over", label: "65 and over" },
 ];
 
 const devices = [
@@ -39,16 +40,18 @@ const operatingSystems = [
   { key: "other", label: "Other" },
 ];
 
-const AgeOccupationSelects = ({ formData, handleSelectChange }) => (
+const AgeOccupationSelects = ({ formData, handleDataChange }) => (
   <div className="flex w-full md:gap-7 md:flex-row flex-col gap-8">
     <Select
       isRequired
       label="Select your age range"
       variant="underlined"
       size="md"
-      value={formData.ageRange}
-      onValueChange={(value) => handleSelectChange("ageRange", value)}
       classNames={{ label: "text-left" }}
+      defaultSelectedKeys={[formData.ageRange]}
+      onSelectionChange={(value) =>
+        handleDataChange("ageRange", Array.from(value)[0] || null)
+      }
     >
       {ageRanges.map((age) => (
         <SelectItem key={age.key} value={age.key}>
@@ -62,9 +65,11 @@ const AgeOccupationSelects = ({ formData, handleSelectChange }) => (
       label="Select your occupation"
       variant="underlined"
       size="md"
-      value={formData.occupation}
-      onValueChange={(value) => handleSelectChange("occupation", value)}
       classNames={{ label: "text-left" }}
+      defaultSelectedKeys={[formData.occupation]}
+      onSelectionChange={(value) =>
+        handleDataChange("occupation", Array.from(value)[0] || null)
+      }
     >
       {occupations.map((occupation) => (
         <SelectItem key={occupation.key} value={occupation.key}>
@@ -75,25 +80,34 @@ const AgeOccupationSelects = ({ formData, handleSelectChange }) => (
   </div>
 );
 
-const EmailInput = ({ formData, handleInputChange }) => (
-  <Input
-    type="email"
-    label="Email"
-    isRequired
-    placeholder="Enter your email"
-    isClearable
-    size="md"
-    color="primary"
-    variant="underlined"
-    value={formData.email}
-    onValueChange={(value) => handleInputChange("email", value)}
-  />
-);
+const EmailInput = ({ formData, handleDataChange }) => {
+  const validateEmail = (value) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return regex.test(value);
+  };
+
+  return (
+    <Input
+      type="email"
+      label="Enter your Email"
+      isRequired
+      isClearable
+      size="md"
+      color={!validateEmail(formData.email) ? "danger" : "primary"}
+      variant="underlined"
+      value={formData.email}
+      onValueChange={(value) => handleDataChange("email", value)}
+      isInvalid={!validateEmail(formData.email)}
+      errorMessage={"Please enter a valid email address"}
+    />
+  );
+};
 
 const DevicesOperatingSystemsSelects = ({
   devices,
   operatingSystems,
   formData,
+  handleDataChange,
 }) => (
   <div className="flex w-full md:gap-7 md:flex-row flex-col gap-8">
     <Select
@@ -103,8 +117,10 @@ const DevicesOperatingSystemsSelects = ({
       variant="underlined"
       size="md"
       aria-label="Select devices you use regularly"
-      value={formData.devices}
-      onValueChange={(value) => handleSelectChange("devices", value)}
+      defaultSelectedKeys={formData.devices}
+      onSelectionChange={(value) =>
+        handleDataChange("devices", Array.from(value))
+      }
       classNames={{ label: "text-left" }}
     >
       {devices.map((device) => (
@@ -119,8 +135,10 @@ const DevicesOperatingSystemsSelects = ({
       variant="underlined"
       size="md"
       aria-label="Select operating systems you use"
-      value={formData.operatingSystems}
-      onValueChange={(value) => handleSelectChange("operatingSystems", value)}
+      defaultSelectedKeys={formData.operatingSystems}
+      onSelectionChange={(value) =>
+        handleDataChange("operatingSystems", Array.from(value))
+      }
       classNames={{ label: "text-left" }}
     >
       {operatingSystems.map((os) => (
@@ -130,25 +148,31 @@ const DevicesOperatingSystemsSelects = ({
   </div>
 );
 
-export default function Page1({
-  formData,
-  handleInputChange,
-  handleSelectChange,
-}) {
+export default function Page1({ formData, handleDataChange }) {
   if (formData.currentPage === 1)
     return (
       <>
-        <EmailInput formData={formData} handleInputChange={handleInputChange} />
+        <div className="flex flex-col gap-2 w-full mb-2">
+          <span className="font-bold text-xl">Feedback Form</span>
+          <span>
+            Help us create the perfect personalized AI assistant by sharing your
+            preferences, needs, and usage habits. Your feedback will shape the
+            future of our AI assistant to better serve you!
+          </span>
+        </div>
+
+        <EmailInput formData={formData} handleDataChange={handleDataChange} />
 
         <AgeOccupationSelects
           formData={formData}
-          handleSelectChange={handleSelectChange}
+          handleDataChange={handleDataChange}
         />
 
         <DevicesOperatingSystemsSelects
           devices={devices}
           operatingSystems={operatingSystems}
           formData={formData}
+          handleDataChange={handleDataChange}
         />
       </>
     );
