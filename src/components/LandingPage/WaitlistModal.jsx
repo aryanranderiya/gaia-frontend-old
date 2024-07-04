@@ -99,7 +99,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
 
   function validateEmail(value) {
     if (value === "") return false;
-    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
     return regex.test(value);
   }
 

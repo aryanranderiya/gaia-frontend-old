@@ -1,111 +1,140 @@
-import { RadioGroup, Radio } from "@nextui-org/radio";
-import ScaleSlider from "./ScaleSlider";
-import { Checkbox, CheckboxGroup } from "@nextui-org/checkbox";
 import { Select, SelectItem } from "@nextui-org/select";
 
-const UsageScaleSliders = ({ formData, handleDataChange }) => (
+const devices = [
+  { key: "smartphone", label: "Smartphone" },
+  { key: "tablet", label: "Tablet" },
+  { key: "laptop", label: "Laptop" },
+  { key: "desktop", label: "Desktop" },
+  { key: "smartwatch", label: "Smartwatch" },
+];
+
+const operatingSystems = [
+  {
+    key: "ios",
+    label: "iOS",
+  },
+  { key: "android", label: "Android" },
+  { key: "windows", label: "Windows" },
+  { key: "macos", label: "macOS" },
+  { key: "linux", label: "Linux" },
+  { key: "other", label: "Other" },
+];
+
+const DevicesOperatingSystemsSelects = ({
+  devices,
+  operatingSystems,
+  formData,
+  handleDataChange,
+}) => (
   <>
-    <ScaleSlider
-      title={
-        <>
-          How often do you use <b>Open AI's ChatGPT</b>?
-        </>
-      }
-      value={formData.openAIUsage}
-      onChange={(value) => handleDataChange("openAIUsage", value)}
-    />
-    <ScaleSlider
-      title={
-        <>
-          How often do you use <b>Google's Bard</b>?
-        </>
-      }
-      value={formData.googleBardUsage}
-      onChange={(value) => handleDataChange("googleBardUsage", value)}
-    />
-  </>
-);
-
-const DigitalAssistantUsage = ({ formData, handleDataChange }) => (
-  <>
-    <RadioGroup
-      isRequired
-      label={
-        <>
-          Do you currently use any <b>digital assistant</b> services? (e.g.,
-          Siri, Google Assistant, Alexa)
-        </>
-      }
-      size="md"
-      orientation="horizontal"
-      value={formData.usesDigitalAssistant}
-      className="w-full text-sm"
-      onValueChange={(value) => handleDataChange("usesDigitalAssistant", value)}
-    >
-      <Radio value="yes">Yes</Radio>
-      <Radio value="no">No</Radio>
-    </RadioGroup>
-
-    <CheckboxGroup
-      isRequired
-      label="If yes, which one(s) do you use? (Select all that apply)"
-      orientation="horizontal"
-      size="md"
-      color="primary"
-      className="w-full text-sm"
-      value={formData.digitalAssistantDetails}
-      onChange={(value) => handleDataChange("digitalAssistantDetails", value)}
-    >
-      <Checkbox value="Siri">Siri</Checkbox>
-      <Checkbox value="Assistant">Google Assistant</Checkbox>
-      <Checkbox value="Alexa">Alexa</Checkbox>
-      <Checkbox value="Cortana">Cortana</Checkbox>
-    </CheckboxGroup>
-  </>
-);
-
-function FrequencySelect({ formData, handleDataChange }) {
-  const interactionFrequency = [
-    { key: "less_than_once", label: "Less than once a day" },
-    { key: "1_2_times", label: "1-2 times a day" },
-    { key: "3_5_times", label: "3-5 times a day" },
-    { key: "more_than_5_times", label: "More than 5 times a day" },
-  ];
-
-  return (
     <Select
       isRequired
-      label="How often do you interact with your digital assistant?"
+      label="Which devices do you use regularly? (Select all that apply)"
+      selectionMode="multiple"
+      variant="underlined"
+      size="md"
+      aria-label="Select devices you use regularly"
+      defaultSelectedKeys={formData.devices}
+      onSelectionChange={(value) =>
+        handleDataChange("devices", Array.from(value))
+      }
+      classNames={{ label: "text-left" }}
+    >
+      {devices.map((device) => (
+        <SelectItem key={device.key}>{device.label}</SelectItem>
+      ))}
+    </Select>
+
+    <Select
+      isRequired
+      label="Which operating systems do you use? (Select all that apply)"
+      selectionMode="multiple"
+      variant="underlined"
+      size="md"
+      aria-label="Select operating systems you use"
+      defaultSelectedKeys={formData.operatingSystems}
+      onSelectionChange={(value) =>
+        handleDataChange("operatingSystems", Array.from(value))
+      }
+      classNames={{ label: "text-left" }}
+    >
+      {operatingSystems.map((os) => (
+        <SelectItem key={os.key}>{os.label}</SelectItem>
+      ))}
+    </Select>
+  </>
+);
+
+const occupations = [
+  { key: "student", label: "Student" },
+  { key: "professional", label: "Professional" },
+  { key: "self_employed", label: "Self-employed" },
+  { key: "unemployed", label: "Unemployed" },
+  { key: "retired", label: "Retired" },
+];
+
+const ageRanges = [
+  { key: "under-18", label: "Under 18" },
+  { key: "18-24", label: "18-24" },
+  { key: "25-34", label: "25-34" },
+  { key: "35-44", label: "35-44" },
+  { key: "45-54", label: "45-54" },
+  { key: "55-64", label: "55-64" },
+  { key: "65-and-over", label: "65 and over" },
+];
+
+const AgeOccupationSelects = ({ formData, handleDataChange }) => (
+  <>
+    <Select
+      isRequired
+      label="Select your age range"
       variant="underlined"
       size="md"
       classNames={{ label: "text-left" }}
-      defaultSelectedKeys={[formData.interactionFrequency]}
+      defaultSelectedKeys={[formData.ageRange]}
       onSelectionChange={(value) =>
-        handleDataChange("interactionFrequency", Array.from(value)[0])
+        handleDataChange("ageRange", Array.from(value)[0] || null)
       }
     >
-      {interactionFrequency.map((frequency) => (
-        <SelectItem key={frequency.key} value={frequency.key}>
-          {frequency.label}
+      {ageRanges.map((age) => (
+        <SelectItem key={age.key} value={age.key}>
+          {age.label}
         </SelectItem>
       ))}
     </Select>
-  );
-}
+
+    <Select
+      isRequired
+      label="Select your occupation"
+      variant="underlined"
+      size="md"
+      classNames={{ label: "text-left" }}
+      defaultSelectedKeys={[formData.occupation]}
+      onSelectionChange={(value) =>
+        handleDataChange("occupation", Array.from(value)[0] || null)
+      }
+    >
+      {occupations.map((occupation) => (
+        <SelectItem key={occupation.key} value={occupation.key}>
+          {occupation.label}
+        </SelectItem>
+      ))}
+    </Select>
+  </>
+);
 
 export default function Page2({ formData, handleDataChange }) {
   if (formData.currentPage === 2)
     return (
       <>
-        <UsageScaleSliders
+        <DevicesOperatingSystemsSelects
+          devices={devices}
+          operatingSystems={operatingSystems}
           formData={formData}
           handleDataChange={handleDataChange}
         />
-        <DigitalAssistantUsage
-          formData={formData}
-          handleDataChange={handleDataChange}
-        />
-        <FrequencySelect
+
+        <AgeOccupationSelects
           formData={formData}
           handleDataChange={handleDataChange}
         />
