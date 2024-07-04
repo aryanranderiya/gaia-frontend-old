@@ -1,7 +1,17 @@
-export default function Hr() {
+export const ColoredLine = ({ color, width }) => (
+  <hr
+    style={{
+      height: 2,
+      borderColor: color,
+      width: width,
+    }}
+  />
+);
+
+export default function Hr({ width = "95%" }) {
   return (
     <div className="hr_container">
-      <hr />
+      <ColoredLine color={"rgba(128, 128, 128, 0.2)"} width={width} />
     </div>
   );
 }

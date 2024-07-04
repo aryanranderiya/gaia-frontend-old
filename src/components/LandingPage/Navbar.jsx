@@ -14,6 +14,7 @@ import {
 import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import WaitListButton from "./WaitlistModal";
+import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -29,24 +30,9 @@ export default function Navbar() {
 
         {!isMobileScreen ? (
           <div className="flex gap-3">
-            <Button
-              radius="full"
-              className="px-3 font-medium"
-              variant="light"
-              onClick={() => navigate("/feedback")}
-              endContent={
-                <CommentAdd01Icon
-                  className="arrow_diagonal"
-                  color="primary"
-                  width="20"
-                  height="20"
-                />
-              }
-            >
-              Feedback Form
-            </Button>
+            <FeedbackFormBtn props={{ size: "md" }} />
 
-            <WaitListButton className="p-0" />
+            <WaitListButton className="p-0" props={{ size: "md" }} />
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>

@@ -5,8 +5,11 @@ import RetroGrid from "../MagicUI/retro-grid";
 import { Button } from "@nextui-org/button";
 import { FallingStarIcon } from "../icons";
 import WaitListButton from "./WaitlistModal";
+import { useNavigate } from "react-router-dom";
 
 export default function MainInfo() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="flex flex-col w-screen justify-start items-center gap-8 pt-40">
@@ -27,11 +30,12 @@ export default function MainInfo() {
 
         <div className="flex gap-3 flex-wrap w-screen justify-center">
           <WaitListButton />
-          <Button
+          {/* <Button
             color="default"
             radius="full"
             variant="ghost"
             className="arrow_diagonal_btn font-medium"
+            onPress={() => navigate("/early-access")}
             endContent={
               <FallingStarIcon
                 className="arrow_diagonal"
@@ -42,7 +46,7 @@ export default function MainInfo() {
             }
           >
             Get early access
-          </Button>
+          </Button> */}
         </div>
       </div>
     </>

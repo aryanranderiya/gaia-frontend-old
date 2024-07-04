@@ -1,6 +1,6 @@
 import * as React from "react";
 import MainInterface from "./pages/MainInterface";
-import Landing from "./pages/Landing";
+import Landing from "./layouts/Landing";
 import { Route, Routes, Navigate } from "react-router-dom";
 function App() {
   return (

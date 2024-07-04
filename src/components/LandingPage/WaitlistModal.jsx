@@ -16,7 +16,6 @@ import {
   SquareLock02Icon,
   Calendar01Icon,
   Cancel01Icon,
-  CheckmarkBadge01Icon,
 } from "../icons";
 import { toast } from "sonner";
 import api from "../../apiaxios";
@@ -41,6 +40,7 @@ export default function WaitListButton({ props }) {
             height="15"
           />
         }
+        size="lg"
         {...props}
       >
         Join the waitlist
@@ -90,6 +90,7 @@ function createConfetti() {
 }
 
 export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
+  const [loading, setLoading] = React.useState(false);
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -127,6 +128,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
   }
 
   const SubmitForm = async () => {
+    setLoading(true);
     setSubmitted(true);
     if (
       validateEmail(email) &&
@@ -144,6 +146,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
         clearInputs();
         createConfetti();
         setSuccessfullySubmitted(true);
+        setLoading(false);
       } catch (error) {
         toast.error("Uh oh! Something went wrong.", {
           classNames: {
@@ -262,7 +265,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
               <>
                 <Button
                   color="danger"
-                  variant="flat"
+                  variant="light"
                   onPress={onClose}
                   startContent={<Cancel01Icon color="foreground" width="20" />}
                 >
@@ -274,6 +277,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
                   color="primary"
                   onPress={SubmitForm}
                   endContent={<Calendar01Icon color="foreground" width="20" />}
+                  isLoading={loading}
                 />
               </>
             )}
