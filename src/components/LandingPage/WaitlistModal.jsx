@@ -4,7 +4,7 @@ import { Input } from "@nextui-org/input";
 import { toast } from "sonner";
 import api from "../../apiaxios";
 import PartySmiley from "../Smileys/20.webp";
-import createConfestti from "./CreateConfetti";
+import createConfetti from "./CreateConfetti";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ import {
   Calendar01Icon,
   Cancel01Icon,
 } from "../icons";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export default function WaitListButton({ props, text = "Join the waitlist" }) {
   const [open, setOpen] = React.useState(false);
@@ -64,9 +65,22 @@ export function WaitListModal({ open, setOpen }) {
     return regex.test(value);
   }
 
+  function isOnlyLetters(text) {
+    if (text === "") return false;
+    return /^[A-Za-z]+$/.test(text);
+  }
+
   const isInvalidEmail = React.useMemo(() => {
     return !validateEmail(email);
   }, [email]);
+
+  const isFirstNameInvalid = React.useMemo(() => {
+    return !isOnlyLetters(firstName);
+  }, [firstName]);
+
+  const isLastNameInvalid = React.useMemo(() => {
+    return !isOnlyLetters(lastName);
+  }, [lastName]);
 
   function clearInputs() {
     setEmail("");
@@ -76,7 +90,11 @@ export function WaitListModal({ open, setOpen }) {
 
   const SubmitForm = async () => {
     setLoading(true);
-    if (validateEmail(email)) {
+    if (
+      validateEmail(email) &&
+      isOnlyLetters(firstName) &&
+      isOnlyLetters(lastName)
+    ) {
       try {
         const response = await api.post("/waitlistSignup", {
           email,
@@ -115,140 +133,123 @@ export function WaitListModal({ open, setOpen }) {
   };
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="bg-zinc-900 text-white border-none "
-          aria-describedby={"Join the waitlist"}
-        >
-          <DialogHeader>
-            <DialogTitle className="flex flex-col pb-3 text-center">
-              {successfullySubmitted
-                ? "Thank You for joining the Waitlist!"
-                : "Join the Waitlist"}
-              <span className="text-sm font-normal" id="waitlist-description">
-                We'll be sending you an email once we launch, featuring
-                exclusive perks including a Pro subscription for free!
-              </span>
-            </DialogTitle>
-
-            {successfullySubmitted ? (
-              <>
-                <div className="w-full flex justify-center">
-                  <img
-                    src={PartySmiley}
-                    alt="Smiley face party"
-                    width={230}
-                    height={230}
-                  />
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="bg-zinc-900 text-white border-none ">
+        <DialogHeader>
+          <DialogTitle className="text-center">
+            {successfullySubmitted
+              ? "Thank You for joining the Waitlist!"
+              : "Join the Waitlist"}
+          </DialogTitle>
+          <DialogDescription className="pb-3 text-center">
+            We'll be sending you an email once we launch, featuring exclusive
+            perks including a Pro subscription for free!
+          </DialogDescription>
+          {successfullySubmitted ? (
+            <>
+              <div className="w-full flex justify-center">
+                <img
+                  src={PartySmiley}
+                  alt="Smiley face party"
+                  width={230}
+                  height={230}
+                />
+              </div>
+              <DialogClose asChild>
+                <div className="flex justify-center w-full">
+                  <Button
+                    color="success"
+                    variant="flat"
+                    onPress={() => setOpen(false)}
+                    startContent={
+                      <Cancel01Icon color="foreground" width="20" />
+                    }
+                    radius="full"
+                    className="w-fit"
+                  >
+                    Close
+                  </Button>
                 </div>
-                <DialogClose asChild>
-                  <div className="flex justify-center w-full">
-                    <Button
-                      color="success"
-                      variant="flat"
-                      onPress={() => setOpen(false)}
-                      startContent={
-                        <Cancel01Icon color="foreground" width="20" />
-                      }
-                      radius="full"
-                      className="w-fit"
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </DialogClose>
-              </>
-            ) : (
-              <>
-                <div className="flex gap-3 dark pb-2">
-                  <Input
-                    isRequired
-                    type="text"
-                    label="First Name"
-                    variant="faded"
-                    value={firstName}
-                    onValueChange={setFirstName}
-                    color={"primary"}
-                    onKeyDown={handleKeyDown}
-                  />
-
-                  <Input
-                    isRequired
-                    type="text"
-                    label="Last Name"
-                    variant="faded"
-                    value={lastName}
-                    onValueChange={setLastName}
-                    color={"primary"}
-                    onKeyDown={handleKeyDown}
-                  />
-                </div>
+              </DialogClose>
+            </>
+          ) : (
+            <>
+              <div className="flex gap-3 dark pb-2">
+                <Input
+                  isRequired
+                  type="text"
+                  label="First Name"
+                  variant="faded"
+                  value={firstName}
+                  onValueChange={setFirstName}
+                  isInvalid={submitted && isFirstNameInvalid}
+                  color={submitted && isFirstNameInvalid ? "danger" : "primary"}
+                  errorMessage="Please only enter letters"
+                  onKeyDown={handleKeyDown}
+                />
 
                 <Input
                   isRequired
-                  type="email"
-                  label="Email"
+                  type="text"
+                  label="Last Name"
                   variant="faded"
-                  placeholder="name@example.com"
-                  startContent={<Mail01Icon height="21" />}
-                  value={email}
-                  onValueChange={setEmail}
-                  isInvalid={submitted && isInvalidEmail}
-                  color={submitted && isInvalidEmail ? "danger" : "primary"}
-                  errorMessage="Please enter a valid email"
+                  value={lastName}
+                  onValueChange={setLastName}
+                  isInvalid={submitted && isLastNameInvalid}
+                  color={submitted && isLastNameInvalid ? "danger" : "primary"}
+                  errorMessage="Please only enter letters"
                   onKeyDown={handleKeyDown}
-                  className="dark"
                 />
+              </div>
 
-                <div className="flex text-xs text-zinc-500 items-center justify-center mt-4">
-                  <SquareLock02Icon height="15" /> Your data is safe and secure
-                  with us.
-                </div>
+              <Input
+                isRequired
+                type="email"
+                label="Email"
+                variant="faded"
+                placeholder="name@example.com"
+                startContent={<Mail01Icon height="21" />}
+                value={email}
+                onValueChange={setEmail}
+                isInvalid={submitted && isInvalidEmail}
+                color={submitted && isInvalidEmail ? "danger" : "primary"}
+                errorMessage="Please enter a valid email"
+                onKeyDown={handleKeyDown}
+                className="dark"
+              />
 
-                <div className="flex w-full justify-center pt-3 gap-3">
-                  <DialogClose asChild>
-                    <Button
-                      color="danger"
-                      variant="light"
-                      startContent={
-                        <Cancel01Icon color="foreground" width="20" />
-                      }
-                      radius="full"
-                    >
-                      Cancel
-                    </Button>
-                  </DialogClose>
+              <div className="flex text-xs text-zinc-500 items-center justify-center mt-4">
+                <SquareLock02Icon height="15" /> Your data is safe and secure
+                with us.
+              </div>
 
+              <div className="flex w-full justify-center pt-3 gap-3">
+                <DialogClose asChild>
                   <Button
-                    children={"Signup"}
-                    color="primary"
-                    onPress={SubmitForm}
-                    endContent={
-                      <Calendar01Icon color="foreground" width="20" />
+                    color="danger"
+                    variant="light"
+                    startContent={
+                      <Cancel01Icon color="foreground" width="20" />
                     }
                     radius="full"
-                    isLoading={loading}
-                  />
-                </div>
-              </>
-            )}
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-      {/* 
-      <Modal
-        className="dark text-foreground"
-        backdrop="opaque"
-        placement="center"
-        shouldBlockScroll
-      >
-        <ModalContent>
-          <ModalHeader className="flex flex-col gap-1 items-center text-center"></ModalHeader>
+                  >
+                    Cancel
+                  </Button>
+                </DialogClose>
 
-          <ModalFooter className="justify-center"></ModalFooter>
-        </ModalContent>
-      </Modal> */}
-    </>
+                <Button
+                  children={"Signup"}
+                  color="primary"
+                  onPress={SubmitForm}
+                  endContent={<Calendar01Icon color="foreground" width="20" />}
+                  radius="full"
+                  isLoading={loading}
+                />
+              </div>
+            </>
+          )}
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }

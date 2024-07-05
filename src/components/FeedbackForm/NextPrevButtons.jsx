@@ -130,7 +130,7 @@ export default function NextPrevButtons({ formData, setFormData }) {
         showShadow
         onChange={setCurrentPage}
         size="md"
-        className="max-w-[155px] md:max-w-full justify-start overflow-x-scroll"
+        className="max-w-[158px] md:max-w-full justify-start overflow-x-scroll"
       />
 
       {formData.currentPage === 8 ? (

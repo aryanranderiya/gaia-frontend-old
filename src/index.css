@@ -482,6 +482,7 @@ main {
   .next_prev_buttons {
     width: 100vw;
     padding: 0 5%;
+    bottom: 3vh;
   }
 
   .feedback_form_container {
