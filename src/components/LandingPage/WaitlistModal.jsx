@@ -90,6 +90,7 @@ export function WaitListModal({ open, setOpen }) {
 
   const SubmitForm = async () => {
     setLoading(true);
+    setSubmitted(false);
     if (
       validateEmail(email) &&
       isOnlyLetters(firstName) &&
@@ -104,10 +105,8 @@ export function WaitListModal({ open, setOpen }) {
         console.log(response.data.message);
 
         clearInputs();
-        setSubmitted(true);
         createConfetti();
         setSuccessfullySubmitted(true);
-        setLoading(false);
       } catch (error) {
         console.log(error);
         toast.error("Uh oh! Something went wrong.", {
@@ -121,12 +120,18 @@ export function WaitListModal({ open, setOpen }) {
           description: "There was a problem signing up.\n",
         });
       }
-    } else {
-      console.log("invalid form");
-      setSubmitted(true);
-      setLoading(false);
-    }
+    } else console.log("invalid form");
+
+    setLoading(false);
+    setSubmitted(true);
   };
+
+  React.useEffect(() => {
+    if (open) {
+      setSubmitted(false);
+      setSuccessfullySubmitted(false);
+    }
+  }, [open]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") SubmitForm();
