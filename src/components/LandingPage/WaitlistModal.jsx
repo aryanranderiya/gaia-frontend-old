@@ -21,7 +21,7 @@ import { toast } from "sonner";
 import api from "../../apiaxios";
 import PartySmiley from "../Smileys/20.webp";
 
-export default function WaitListButton({ props }) {
+export default function WaitListButton({ props, text = "Join the waitlist" }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   return (
@@ -43,7 +43,7 @@ export default function WaitListButton({ props }) {
         size="lg"
         {...props}
       >
-        Join the waitlist
+        {text}
       </Button>
       <WaitListModal
         onOpen={onOpen}
@@ -176,6 +176,7 @@ export function WaitListModal({ onOpen, isOpen, onOpenChange, onClose }) {
         className="dark text-foreground"
         backdrop="blur"
         placement="center"
+        shouldBlockScroll
       >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1 items-center text-center">

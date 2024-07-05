@@ -1,7 +1,7 @@
 import * as React from "react";
 import MainInterface from "./pages/MainInterface";
 import Landing from "./layouts/Landing";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 function App() {
   return (
     <>

@@ -55,45 +55,41 @@ export default function Navbar() {
                       navigate("/");
                       setOpen(false);
                     }}
+                    endContent={
+                      <Home01Icon color="foreground" width="20" height="20" />
+                    }
                   >
-                    <Home01Icon color="foreground" width="20" height="20" />
                     Home
                   </Button>
 
                   <Button
                     className="w-full flex justify-between"
                     variant="flat"
-                    color="primary"
+                    color="success"
                     onPress={() => {
                       navigate("/feedback");
                       setOpen(false);
                     }}
+                    endContent={
+                      <CommentAdd01Icon
+                        color="foreground"
+                        width="20"
+                        height="20"
+                      />
+                    }
                   >
-                    <CommentAdd01Icon
-                      color="foreground"
-                      width="20"
-                      height="20"
-                    />
                     Feedback
                   </Button>
 
-                  <Button
-                    className="w-full flex justify-between"
-                    variant="flat"
-                    color="success"
-                    asChild
-                    onPress={() => {
-                      navigate("/");
-                      setOpen(false);
+                  <WaitListButton
+                    props={{
+                      variant: "flat",
+                      size: "md",
+                      radius: "md",
+                      className: "font-normal",
                     }}
-                  >
-                    <ArrowUpRight01Icon
-                      color="foreground"
-                      width="20"
-                      height="20"
-                    />
-                    Waitlist Signup
-                  </Button>
+                    text="Waitlist Signup"
+                  />
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
