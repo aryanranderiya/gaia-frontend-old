@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hugeicons/react-pro": "^0.3.2",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@motionone/utils": "^10.18.0",
     "@nextui-org/autocomplete": "^2.1.2",

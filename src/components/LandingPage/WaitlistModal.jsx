@@ -52,8 +52,6 @@ export default function WaitListButton({ props, text = "Join the waitlist" }) {
 
 export function WaitListModal({ open, setOpen }) {
   const [loading, setLoading] = React.useState(false);
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [successfullySubmitted, setSuccessfullySubmitted] =
@@ -62,45 +60,23 @@ export function WaitListModal({ open, setOpen }) {
   function validateEmail(value) {
     if (value === "") return false;
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
-    return regex.test(value);
+    return regex.test(value.trim());
   }
-
-  function isOnlyLetters(text) {
-    if (text === "") return false;
-    return /^[A-Za-z]+$/.test(text);
-  }
-
   const isInvalidEmail = React.useMemo(() => {
     return !validateEmail(email);
   }, [email]);
 
-  const isFirstNameInvalid = React.useMemo(() => {
-    return !isOnlyLetters(firstName);
-  }, [firstName]);
-
-  const isLastNameInvalid = React.useMemo(() => {
-    return !isOnlyLetters(lastName);
-  }, [lastName]);
-
   function clearInputs() {
     setEmail("");
-    setFirstName("");
-    setLastName("");
   }
 
   const SubmitForm = async () => {
     setLoading(true);
     setSubmitted(false);
-    if (
-      validateEmail(email) &&
-      isOnlyLetters(firstName) &&
-      isOnlyLetters(lastName)
-    ) {
+    if (validateEmail(email)) {
       try {
         const response = await api.post("/waitlistSignup", {
           email,
-          firstName,
-          lastName,
         });
         console.log(response.data.message);
 
@@ -139,7 +115,7 @@ export function WaitListModal({ open, setOpen }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="bg-zinc-900 text-white border-none ">
+      <DialogContent className="bg-zinc-900 text-white border-none max-w-md flex justify-center items-center">
         <DialogHeader>
           <DialogTitle className="text-center">
             {successfullySubmitted
@@ -178,35 +154,7 @@ export function WaitListModal({ open, setOpen }) {
               </DialogClose>
             </>
           ) : (
-            <>
-              <div className="flex gap-3 dark pb-2">
-                <Input
-                  isRequired
-                  type="text"
-                  label="First Name"
-                  variant="faded"
-                  value={firstName}
-                  onValueChange={setFirstName}
-                  isInvalid={submitted && isFirstNameInvalid}
-                  color={submitted && isFirstNameInvalid ? "danger" : "primary"}
-                  errorMessage="Please only enter letters"
-                  onKeyDown={handleKeyDown}
-                />
-
-                <Input
-                  isRequired
-                  type="text"
-                  label="Last Name"
-                  variant="faded"
-                  value={lastName}
-                  onValueChange={setLastName}
-                  isInvalid={submitted && isLastNameInvalid}
-                  color={submitted && isLastNameInvalid ? "danger" : "primary"}
-                  errorMessage="Please only enter letters"
-                  onKeyDown={handleKeyDown}
-                />
-              </div>
-
+            <div className="flex w-full flex-col items-center">
               <Input
                 isRequired
                 type="email"
@@ -215,18 +163,13 @@ export function WaitListModal({ open, setOpen }) {
                 placeholder="name@example.com"
                 startContent={<Mail01Icon height="21" />}
                 value={email}
-                onValueChange={setEmail}
+                onValueChange={(value) => setEmail(value.trim ())}
                 isInvalid={submitted && isInvalidEmail}
                 color={submitted && isInvalidEmail ? "danger" : "primary"}
                 errorMessage="Please enter a valid email"
                 onKeyDown={handleKeyDown}
-                className="dark"
+                className="dark max-w-sm"
               />
-
-              <div className="flex text-xs text-zinc-500 items-center justify-center mt-4">
-                <SquareLock02Icon height="15" /> Your data is safe and secure
-                with us.
-              </div>
 
               <div className="flex w-full justify-center pt-3 gap-3">
                 <DialogClose asChild>
@@ -251,7 +194,7 @@ export function WaitListModal({ open, setOpen }) {
                   isLoading={loading}
                 />
               </div>
-            </>
+            </div>
           )}
         </DialogHeader>
       </DialogContent>
