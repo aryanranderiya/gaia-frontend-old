@@ -7,6 +7,7 @@ import TextInformation from "../components/LandingPage/TextInformation";
 import WaitListButton from "../components/LandingPage/WaitlistModal";
 import MadeBy from "../components/LandingPage/MadeBy";
 import FeedbackFormBtn from "../components/FeedbackForm/FeedbackFormBtn";
+import FeatureList from "../components/LandingPage/FeatureList";
 
 export default function LandingPage() {
   return (
@@ -28,6 +29,8 @@ export default function LandingPage() {
               />
             }
           />
+
+          <FeatureList />
 
           <TextInformation
             alignleft={false}
