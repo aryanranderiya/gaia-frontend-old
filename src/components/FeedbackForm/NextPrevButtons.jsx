@@ -31,11 +31,14 @@ export default function NextPrevButtons({ formData, setFormData }) {
   };
 
   const validateForm = () => {
-    for (const key in formData)
-      if (formData[key] === "" || formData[key].length === 0) {
+    for (const key in formData) {
+      if (key === "additionalComments" && formData["additionalComments"] === "")
+        setFormData({ ...formData, additionalComments: "none" });
+      else if (formData[key] === "" || formData[key].length === 0) {
         console.log(key, formData[key]);
         return false;
       }
+    }
 
     return true;
   };

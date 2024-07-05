@@ -39,6 +39,12 @@ const DevicesOperatingSystemsSelects = ({
         handleDataChange("devices", Array.from(value))
       }
       classNames={{ label: "text-left" }}
+      color="primary"
+      popoverProps={{
+        classNames: {
+          base: "dark text-foreground",
+        },
+      }}
     >
       {devices.map((device) => (
         <SelectItem key={device.key}>{device.label}</SelectItem>
@@ -57,6 +63,12 @@ const DevicesOperatingSystemsSelects = ({
         handleDataChange("operatingSystems", Array.from(value))
       }
       classNames={{ label: "text-left" }}
+      color="primary"
+      popoverProps={{
+        classNames: {
+          base: "dark text-foreground",
+        },
+      }}
     >
       {operatingSystems.map((os) => (
         <SelectItem key={os.key}>{os.label}</SelectItem>
@@ -95,6 +107,12 @@ const AgeOccupationSelects = ({ formData, handleDataChange }) => (
       onSelectionChange={(value) =>
         handleDataChange("ageRange", Array.from(value)[0] || null)
       }
+      color="primary"
+      popoverProps={{
+        classNames: {
+          base: "dark text-foreground",
+        },
+      }}
     >
       {ageRanges.map((age) => (
         <SelectItem key={age.key} value={age.key}>
@@ -113,6 +131,12 @@ const AgeOccupationSelects = ({ formData, handleDataChange }) => (
       onSelectionChange={(value) =>
         handleDataChange("occupation", Array.from(value)[0] || null)
       }
+      color="primary"
+      popoverProps={{
+        classNames: {
+          base: "dark text-foreground",
+        },
+      }}
     >
       {occupations.map((occupation) => (
         <SelectItem key={occupation.key} value={occupation.key}>

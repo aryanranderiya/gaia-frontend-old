@@ -50,6 +50,7 @@ export default function FeedbackForm() {
 
   React.useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
+    console.log(formData);
   }, [formData]);
 
   return (

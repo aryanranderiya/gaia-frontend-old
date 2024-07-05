@@ -6,6 +6,7 @@ const LearningBehaviorRadioGroup = ({ formData, handleDataChange }) => (
     isRequired
     className="w-full"
     label="Would you be comfortable with your AI assistant learning from your behavior to offer more personalized suggestions and assistance?"
+    color="primary"
     size="md"
     orientation="horizontal"
     value={formData.learningBehaviourComfortable}
@@ -24,6 +25,7 @@ const CalendarServiceUsage = ({ formData, handleDataChange }) => (
     isRequired
     label="Which calendar service do you primarily use?"
     size="md"
+    color="primary"
     orientation="horizontal"
     value={formData.calendarServiceUsage}
     onValueChange={(value) => handleDataChange("calendarServiceUsage", value)}

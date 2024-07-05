@@ -83,6 +83,12 @@ function FrequencySelect({ formData, handleDataChange }) {
       onSelectionChange={(value) =>
         handleDataChange("interactionFrequency", Array.from(value)[0])
       }
+      color="primary"
+      popoverProps={{
+        classNames: {
+          base: "dark text-foreground",
+        },
+      }}
     >
       {interactionFrequency.map((frequency) => (
         <SelectItem key={frequency.key} value={frequency.key}>

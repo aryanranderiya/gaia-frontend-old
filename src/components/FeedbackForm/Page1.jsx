@@ -15,6 +15,7 @@ const EmailInput = ({ formData, handleDataChange }) => {
           type="text"
           label="First Name"
           variant="underlined"
+          color="primary"
           value={formData.firstName}
           onValueChange={(value) => handleDataChange("firstName", value)}
         />
@@ -22,6 +23,7 @@ const EmailInput = ({ formData, handleDataChange }) => {
         <Input
           isRequired
           type="text"
+          color="primary"
           label="Last Name"
           variant="underlined"
           value={formData.lastName}
