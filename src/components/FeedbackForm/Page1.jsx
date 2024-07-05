@@ -1,5 +1,4 @@
 import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
 import * as React from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -13,6 +12,26 @@ const EmailInput = ({ formData, handleDataChange }) => {
 
   return (
     <>
+      <div className="flex w-full gap-4">
+        <Input
+          isRequired
+          type="text"
+          label="First Name"
+          variant="underlined"
+          value={formData.firstName}
+          onValueChange={(value) => handleDataChange("firstName", value)}
+        />
+
+        <Input
+          isRequired
+          type="text"
+          label="Last Name"
+          variant="underlined"
+          value={formData.lastName}
+          onValueChange={(value) => handleDataChange("lastName", value)}
+        />
+      </div>
+
       <Input
         type="email"
         label="Enter your Email"

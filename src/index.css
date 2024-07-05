@@ -23,6 +23,7 @@ body {
   position: fixed;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
 }
 
 main {
@@ -133,12 +134,10 @@ main {
   align-items: center;
   gap: 1em;
   height: 100%;
-  padding-bottom: 40vh;
   justify-content: flex-start;
 }
 
 .starter_container2 {
-  padding-bottom: 2vh;
   padding-top: 1vh;
   height: fit-content;
   justify-content: flex-start;
@@ -186,7 +185,6 @@ main {
   padding: 10px 20px;
   color: rgb(255, 255, 255);
   width: fit-content;
-  border-bottom-left-radius: 0;
   user-select: text;
   height: fit-content;
   overflow: hidden;
@@ -227,8 +225,6 @@ main {
   /* background-color: rgba(0, 187, 255, 0.4); */
   background-color: #00bbff;
   color: black;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 30px;
 }
 
 .chat_bubble_container {
@@ -420,21 +416,23 @@ main {
   width: 100vw;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .feedback_form {
   min-height: fit-content;
-  height: 88vh;
-  width: 81vw;
-  margin: 5% 10%;
-  padding: 5% 5% 130px 5%;
+  width: 100vw;
+  height: fit-content;
   position: relative;
   flex-direction: column;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 1% 10%;
+  /* padding-top: 10em; */
+  /* padding-top: 20vh; */
 }
 
 .orbiting_circles_mid {
@@ -452,11 +450,12 @@ main {
   height: 60px;
 }
 .next_prev_buttons {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
-  width: 70vw;
-  bottom: 5vh;
+  overflow: hidden;
+  width: 50vw;
+  bottom: 10vh;
 }
 
 .lucide-x {
@@ -472,17 +471,17 @@ main {
 .PhoneInputInput {
   background-color: transparent;
   transition: all 0.1s ease;
-  border-bottom: 2px solid rgb(56, 56, 56);
 }
 
 .PhoneInputInput:focus {
   outline: none;
   border-color: #00bbff;
 }
+
 @media only screen and (max-width: 600px) {
   .next_prev_buttons {
-    bottom: 50px;
-    width: 90vw;
+    width: 100vw;
+    padding: 0 5%;
   }
 
   .feedback_form_container {
@@ -490,8 +489,9 @@ main {
   }
   .feedback_form {
     margin: 0;
-    margin-top: 80px;
     width: 100vw;
+    height: 70vh;
+    overflow-y: scroll;
     justify-content: center;
   }
   .starter_text {
@@ -500,7 +500,6 @@ main {
 
   .sidebar {
     min-width: 70vw !important;
-    padding-bottom: 60px;
   }
 
   .sidebar.hide {
@@ -512,18 +511,15 @@ main {
     left: 0;
     min-width: 100vw;
     padding: 1em;
-    padding-bottom: 110px;
   }
 
   .searchbar_container {
     width: 100%;
     position: absolute;
-    bottom: 0;
   }
 
   .searchbar {
     width: 93%;
-    padding-bottom: 75px;
   }
 
   .main_chat.hide {
@@ -545,7 +541,6 @@ main {
   }
 
   .toast {
-    margin-bottom: 100px;
   }
 
   .starter_container2 {

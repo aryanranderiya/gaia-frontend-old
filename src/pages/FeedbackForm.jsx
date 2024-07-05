@@ -10,6 +10,8 @@ import Page8 from "../components/FeedbackForm/Page8";
 import NextPrevButtons from "../components/FeedbackForm/NextPrevButtons";
 
 export const initialFormData = {
+  firstName: "",
+  lastName: "",
   currentPage: 1,
   ageRange: "",
   occupation: "",
@@ -62,8 +64,8 @@ export default function FeedbackForm() {
         <Page6 formData={formData} handleDataChange={handleDataChange} />
         <Page7 formData={formData} handleDataChange={handleDataChange} />
         <Page8 formData={formData} handleDataChange={handleDataChange} />
-        <NextPrevButtons formData={formData} setFormData={setFormData} />
       </div>
+      <NextPrevButtons formData={formData} setFormData={setFormData} />
     </div>
   );
 }
