@@ -8,6 +8,7 @@ const TextAreaGroup = ({ formData, handleDataChange }) => (
       labelPlacement="outside"
       placeholder="Enter features you find most useful..."
       variant="underlined"
+      color="primary"
       minRows={1}
       size="md"
       maxRows={4}
@@ -23,6 +24,7 @@ const TextAreaGroup = ({ formData, handleDataChange }) => (
       placeholder="Enter desired features..."
       variant="underlined"
       minRows={1}
+      color="primary"
       size="md"
       maxRows={4}
       value={formData.desiredFeatures}
@@ -34,6 +36,7 @@ const TextAreaGroup = ({ formData, handleDataChange }) => (
       labelPlacement="outside"
       placeholder="Enter challenges faced..."
       variant="underlined"
+      color="primary"
       size="md"
       minRows={1}
       maxRows={4}

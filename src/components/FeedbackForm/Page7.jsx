@@ -56,6 +56,7 @@ export default function Page7({ formData, handleDataChange }) {
           labelPlacement="outside"
           placeholder="Enter integrations or services you'd like..."
           variant="underlined"
+          color="primary"
           size="md"
           minRows={1}
           maxRows={4}

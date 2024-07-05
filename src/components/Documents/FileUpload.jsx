@@ -80,6 +80,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               maxRows={3}
               minRows={1}
               isRequired
+              color="primary"
               value={textContent}
               onValueChange={(e) => setTextContent(e)}
               errorMessage="This is a required input field."

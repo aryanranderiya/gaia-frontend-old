@@ -31,8 +31,11 @@ export default function Navbar() {
         {!isMobileScreen ? (
           <div className="flex gap-3">
             <FeedbackFormBtn props={{ size: "md" }} />
-
-            <WaitListButton className="p-0" props={{ size: "md" }} />
+            <WaitListButton
+              className="p-0"
+              props={{ size: "md" }}
+              text="Waitlist Signup"
+            />
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>
@@ -82,13 +85,13 @@ export default function Navbar() {
                   </Button>
 
                   <WaitListButton
+                    text="Waitlist Signup"
                     props={{
                       variant: "flat",
                       size: "md",
                       radius: "md",
                       className: "font-normal",
                     }}
-                    text="Waitlist Signup"
                   />
                 </SheetDescription>
               </SheetHeader>

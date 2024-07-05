@@ -1,8 +1,5 @@
 import { Input } from "@nextui-org/input";
 import * as React from "react";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
-import { isValidPhoneNumber } from "react-phone-number-input";
 
 const EmailInput = ({ formData, handleDataChange }) => {
   const validateEmail = (value) => {
@@ -44,20 +41,6 @@ const EmailInput = ({ formData, handleDataChange }) => {
         onValueChange={(value) => handleDataChange("email", value)}
         isInvalid={!validateEmail(formData.email)}
         errorMessage={"Please enter a valid email address"}
-      />
-
-      <PhoneInput
-        defaultCountry="IN"
-        placeholder="Enter phone number"
-        value={formData.phone}
-        onChange={(value) => {
-          if (!value) {
-            handleDataChange("phone", "");
-            return;
-          }
-          if (isValidPhoneNumber(value)) handleDataChange("phone", value);
-          else handleDataChange("phone", "");
-        }}
       />
     </>
   );

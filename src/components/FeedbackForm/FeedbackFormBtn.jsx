@@ -12,7 +12,7 @@ export default function FeedbackFormBtn({ props }) {
       endContent={<CommentAdd01Icon color="primary" width="20" height="20" />}
       {...props}
     >
-      Feedback Form
+      Fill the Survey
     </Button>
   );
 }

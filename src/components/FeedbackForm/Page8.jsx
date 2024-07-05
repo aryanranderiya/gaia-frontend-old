@@ -10,6 +10,7 @@ const AdditionalTextAreas = ({ formData, handleDataChange }) => (
       variant="underlined"
       size="md"
       minRows={1}
+      color="primary"
       maxRows={4}
       value={formData.concerns}
       onValueChange={(value) => handleDataChange("concerns", value)}
@@ -21,6 +22,7 @@ const AdditionalTextAreas = ({ formData, handleDataChange }) => (
       placeholder="Enter factors..."
       variant="underlined"
       size="md"
+      color="primary"
       minRows={1}
       maxRows={4}
       value={formData.factorsToUse}
@@ -42,6 +44,7 @@ export default function Page8({ formData, handleDataChange }) {
           labelPlacement="outside"
           placeholder="Enter comments/suggestions..."
           variant="underlined"
+          color="primary"
           size="md"
           minRows={3}
           maxRows={5}

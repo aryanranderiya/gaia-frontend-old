@@ -21,7 +21,10 @@ import {
 } from "../icons";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
-export default function WaitListButton({ props, text = "Join the waitlist" }) {
+export default function WaitListButton({
+  props,
+  text = "Signup for the Waitlist",
+}) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -163,7 +166,7 @@ export function WaitListModal({ open, setOpen }) {
                 placeholder="name@example.com"
                 startContent={<Mail01Icon height="21" />}
                 value={email}
-                onValueChange={(value) => setEmail(value.trim ())}
+                onValueChange={(value) => setEmail(value.trim())}
                 isInvalid={submitted && isInvalidEmail}
                 color={submitted && isInvalidEmail ? "danger" : "primary"}
                 errorMessage="Please enter a valid email"

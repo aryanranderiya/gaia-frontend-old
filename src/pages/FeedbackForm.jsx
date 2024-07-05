@@ -16,7 +16,6 @@ export const initialFormData = {
   ageRange: "",
   occupation: "",
   email: "",
-  phone: "",
   devices: "",
   operatingSystems: [],
   openAIUsage: 1,

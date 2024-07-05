@@ -7,11 +7,11 @@ import {
 } from "../icons";
 import { Pagination } from "@nextui-org/pagination";
 import { toast } from "sonner";
-import { isValidPhoneNumber } from "react-phone-number-input";
 import api from "../../apiaxios";
 import * as React from "react";
 import { initialFormData } from "../../pages/FeedbackForm";
 import { useNavigate } from "react-router-dom";
+
 export default function NextPrevButtons({ formData, setFormData }) {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
@@ -84,17 +84,7 @@ export default function NextPrevButtons({ formData, setFormData }) {
 
   const handleSubmit = () => {
     const isValid = validateForm();
-
-    if (!isValidPhoneNumber(formData["phone"]) || !formData["phone"])
-      toast.error("Invalid Phone Number.", {
-        classNames: {
-          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
-          title: " text-sm",
-          description: "text-sm",
-        },
-        duration: 3000,
-      });
-    else if (isValid) {
+    if (isValid) {
       console.log("Form is valid:", formData);
       submitFeedbackForm();
     } else {
