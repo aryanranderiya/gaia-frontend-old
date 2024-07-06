@@ -28,7 +28,7 @@ export default function MainSearchbar({
           <Textarea
             disabled={loading}
             radius="full"
-            size="sm"
+            size="lg"
             placeholder={"Ask gaia something..."}
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}
@@ -45,7 +45,7 @@ export default function MainSearchbar({
             minRows={1}
             maxRows={13}
             classNames={{
-              inputWrapper: ["px-1"],
+              inputWrapper: "p-2 data-[hover=true]:bg-zinc-900",
               innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
             }}
             onHeightChange={(height) => setHeight(height)}

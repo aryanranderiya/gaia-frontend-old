@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  NoteDoneIcon, Cancel01Icon, SentIcon } from "../icons";
+import { NoteDoneIcon, Cancel01Icon, SentIcon } from "../icons";
 import {
   Modal,
   ModalContent,
@@ -48,9 +48,6 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
     }
   };
 
-  React.useEffect(() => {
-    console.log(file);
-  }, [file]);
   return (
     <form>
       <input

@@ -108,6 +108,7 @@ export default function MicrophoneBtn() {
           recordSpeech();
           // startRecording();
         }}
+        variant="light"
       >
         <Mic02Icon />
       </Button>

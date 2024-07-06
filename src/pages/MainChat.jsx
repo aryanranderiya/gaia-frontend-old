@@ -44,18 +44,28 @@ export default function MainChat() {
     // setData(["My name is gaia, your personal A.I. assistant!"]);
     // setLoading(false);
     // return;
-
-    await fetchEventSource(`http://127.0.0.1:8000/chat`, {
+    const controller = new AbortController();
+    await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "text/event-stream",
       },
+      signal: controller.signal,
       body: JSON.stringify({ message: searchbarText }),
       onmessage(event) {
-        console.log(event.data);
-        if (event.data === "") setData((data) => [...data, "\n"]);
-        else setData((data) => [...data, event.data]);
+        if (event.data == "[DONE]") {
+          setTimeout(() => {
+            focusInput();
+            setData([]);
+            controller.abort();
+          }, 500);
+          return;
+        }
+        let dataJson = JSON.parse(event.data);
+        let responseData = dataJson.response;
+        if (responseData === "") setData((data) => [...data, "\n"]);
+        else setData((data) => [...data, responseData]);
         setLoading(false);
       },
       onclose() {

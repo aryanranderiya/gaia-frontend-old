@@ -163,7 +163,7 @@ main {
 
 .chat_sidebar_toggle_btn {
   position: fixed;
-  top: 20px;
+  top: 16px;
   left: 16px;
   z-index: 0;
 }
@@ -512,15 +512,16 @@ main {
     left: 0;
     min-width: 100vw;
     padding: 1em;
+    height: 100%;
   }
 
   .searchbar_container {
-    width: 100%;
-    position: absolute;
+    width: 100vw;
+    /* position: absolute; */
   }
 
   .searchbar {
-    width: 93%;
+    width: 95%;
   }
 
   .main_chat.hide {
@@ -539,9 +540,6 @@ main {
   .chat_bubble,
   .chat_bubble.user div {
     max-width: 70vw;
-  }
-
-  .toast {
   }
 
   .starter_container2 {

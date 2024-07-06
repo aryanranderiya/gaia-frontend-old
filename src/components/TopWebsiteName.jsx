@@ -8,7 +8,7 @@ export default function WebsiteName() {
           <GlobalIcon color="white" width="15" />
           <span>g.a.i.a</span>
         </div>
-        <span className="text-gray-500 flex gap-1">
+        <span className="text-gray-500 flex gap-1 min-w-fit flex-nowrap text-nowrap">
           Your
           <div>
             <span className="text-gray-400">G</span>

@@ -45,7 +45,7 @@ export default function SearchbarLeftDropdown({
       >
         <DropdownTrigger>
           <div
-            className={`${loading ? "cursor-wait" : "cursor-pointer"} group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-full px-0  transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground min-w-10 w-10 h-10 data-[hover=true]:opacity-hover z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased false`}
+            className={`${loading ? "cursor-wait" : "cursor-pointer"} z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-transparent text-small gap-2 rounded-full px-0 !gap-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10`}
           >
             <AttachmentIcon />
           </div>
@@ -91,7 +91,6 @@ export default function SearchbarLeftDropdown({
         </DropdownMenu>
       </Dropdown>
 
-      <MicrophoneBtn />
       <FileUpload
         fileInputRef={fileInputRef}
         setConversationHistory={setConversationHistory}
