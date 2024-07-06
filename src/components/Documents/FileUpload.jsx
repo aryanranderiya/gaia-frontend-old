@@ -14,6 +14,7 @@ import { PdfContainer } from "./PdfComponent";
 export default function FileUpload({ setConversationHistory, fileInputRef }) {
   const [file, setFile] = React.useState(null);
   const [textContent, setTextContent] = React.useState("");
+  const [isValid, setIsValid] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const closeModal = () => {
@@ -24,13 +25,13 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
   };
 
   const handleFileSelect = (event) => {
-    console.log("handling file select");
     const selectedFile = event.target.files[0];
     if (selectedFile) setIsModalOpen(true);
     setFile(selectedFile);
   };
 
   const submitPdf = () => {
+    setIsValid(textContent.trim() === "");
     if (textContent.trim() === "") return;
     setConversationHistory((prevHistory) => [
       ...prevHistory,
@@ -75,32 +76,31 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               placeholder="e.g - Summarise this pdf"
               startContent={<NoteDoneIcon />}
               maxRows={3}
-              minRows={1}
+              minRows={2}
+              labelPlacement="outside"
               isRequired
               variant="shadow"
               color="primary"
               value={textContent}
-              onValueChange={(e) => setTextContent(e)}
+              onValueChange={(e) => {
+                setTextContent(e);
+                setIsValid(textContent.trim() === "");
+              }}
               errorMessage="This is a required input field."
-              isInvalid={textContent.trim() === ""}
+              isInvalid={isValid}
               spellCheck={false}
+              size="large"
               onKeyDown={handleKeyDown}
             />
           </ModalBody>
           <ModalFooter>
-            <Button
-              color="danger"
-              variant="ghost"
-              onClick={closeModal}
-              endContent={<Cancel01Icon width="20" color="danger" />}
-            >
+            <Button color="danger" variant="flat" onClick={closeModal}>
               Cancel
             </Button>
 
             <Button
               color="primary"
               onClick={submitPdf}
-              disabled={textContent.trim() === ""}
               endContent={<SentIcon color="black" width="20" />}
             >
               Send

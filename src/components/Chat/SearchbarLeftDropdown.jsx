@@ -103,6 +103,7 @@ export default function SearchbarLeftDropdown({
       <GenerateImage
         setOpenImageDialog={setOpenImageDialog}
         openImageDialog={openImageDialog}
+        setConversationHistory={setConversationHistory}
       />
     </div>
   );

@@ -23,20 +23,42 @@ export function ChatBubbleUser({ text, subtype = null, file = null }) {
   );
 }
 
-export function ChatBubbleBot({ text, loading = false }) {
+export function ChatBubbleBot({
+  text,
+  loading = false,
+  isImage = false,
+  image = null,
+}) {
+  console.log("Test", image);
+  console.log("test", isImage);
+
   return (
-    !!text && (
+    (!!text || isImage) && (
       <div className="chatbubblebot_parent ">
         <Avatar src={smiley} size="md" className="smiley_avatar" />
         <div className="chat_bubble_container ">
-          <div className="chat_bubble bg-zinc-600">
-            {loading ? (
-              <Spinner size="sm" color="primary" />
-            ) : (
-              <Markdown className="select-text">{text}</Markdown>
-            )}
-          </div>
-          <ChatBubble_Actions loading={loading} text={text} />
+          {isImage ? (
+            <div className="chat_bubble  bg-zinc-600">
+              <img
+                src={image}
+                width={"200 px"}
+                height={"200px"}
+                content-type="image/png"
+                className="rounded-3xl my-2"
+              />
+            </div>
+          ) : (
+            <>
+              <div className="chat_bubble bg-zinc-600">
+                {loading ? (
+                  <Spinner size="sm" color="primary" />
+                ) : (
+                  <Markdown className="select-text">{text}</Markdown>
+                )}
+              </div>
+              <ChatBubble_Actions loading={loading} text={text} />
+            </>
+          )}
         </div>
       </div>
     )

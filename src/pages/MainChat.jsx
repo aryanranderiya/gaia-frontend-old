@@ -28,10 +28,13 @@ export default function MainChat() {
       const joinedData = data.join("");
 
       if (lastItem.type === "bot") {
-        if (lastResponse !== joinedData) lastItem.response = joinedData;
+        if (lastResponse !== joinedData && !lastItem.isImage)
+          lastItem.response = joinedData;
         setConversationHistory(updatedHistory);
       }
     }
+
+    console.log(conversationHistory);
   }, [data, conversationHistory]);
 
   const fetchData = async (searchbarText) => {
@@ -99,7 +102,12 @@ export default function MainChat() {
             {!!conversationHistory && conversationHistory.length > 0 ? (
               conversationHistory.map((message, index) =>
                 message.type === "bot" ? (
-                  <ChatBubbleBot text={message.response} key={index} />
+                  <ChatBubbleBot
+                    text={message.response}
+                    key={index}
+                    isImage={message.isImage}
+                    image={message.imageUrl}
+                  />
                 ) : (
                   <ChatBubbleUser
                     text={message.response}
