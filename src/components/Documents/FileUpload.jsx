@@ -77,6 +77,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               maxRows={3}
               minRows={1}
               isRequired
+              variant="shadow"
               color="primary"
               value={textContent}
               onValueChange={(e) => setTextContent(e)}

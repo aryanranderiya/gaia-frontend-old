@@ -1,7 +1,5 @@
 import React from "react";
-import MicrophoneBtn from "../Audio/MicrophoneBtn";
 import FileUpload from "../Documents/FileUpload";
-import { Button } from "@nextui-org/button";
 import {
   Dropdown,
   DropdownTrigger,
@@ -10,11 +8,12 @@ import {
 } from "@nextui-org/dropdown";
 import {
   AttachmentIcon,
-  Image02Icon,
+  ImageAdd02Icon,
   DocumentAttachmentIcon,
   BlushBrush02Icon,
   Calendar01Icon,
 } from "../icons";
+import GenerateImage from "./GenerateImage";
 
 export default function SearchbarLeftDropdown({
   loading,
@@ -22,6 +21,7 @@ export default function SearchbarLeftDropdown({
 }) {
   const dropdownRef = React.useRef(null);
   const fileInputRef = React.useRef(null);
+  const [openImageDialog, setOpenImageDialog] = React.useState(false);
 
   const chooseFile = () => {
     fileInputRef.current.click();
@@ -45,7 +45,7 @@ export default function SearchbarLeftDropdown({
       >
         <DropdownTrigger>
           <div
-            className={`${loading ? "cursor-wait" : "cursor-pointer"} z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-transparent text-small gap-2 rounded-full px-0 !gap-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10`}
+            className={`${loading ? "cursor-wait" : "cursor-pointer"} z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-transparent text-small gap-2 rounded-full px-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10`}
           >
             <AttachmentIcon />
           </div>
@@ -70,16 +70,20 @@ export default function SearchbarLeftDropdown({
           <DropdownItem
             key="pdf"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
-            isReadOnly
           >
-            <Image02Icon color="#00bbff" />
+            <DocumentAttachmentIcon
+              color="#00bbff"
+              onClick={chooseFile}
+              children
+            />
           </DropdownItem>
 
           <DropdownItem
             key="image"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
+            onPress={() => setOpenImageDialog(true)}
           >
-            <DocumentAttachmentIcon color="#00bbff" onClick={chooseFile} />
+            <ImageAdd02Icon color="#00bbff" />
           </DropdownItem>
 
           <DropdownItem
@@ -94,6 +98,11 @@ export default function SearchbarLeftDropdown({
       <FileUpload
         fileInputRef={fileInputRef}
         setConversationHistory={setConversationHistory}
+      />
+
+      <GenerateImage
+        setOpenImageDialog={setOpenImageDialog}
+        openImageDialog={openImageDialog}
       />
     </div>
   );
