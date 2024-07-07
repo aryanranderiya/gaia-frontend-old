@@ -61,13 +61,6 @@ export default function SearchbarLeftDropdown({
           }}
         >
           <DropdownItem
-            key="brush"
-            className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
-          >
-            <BlushBrush02Icon color="#00bbff" />
-          </DropdownItem>
-
-          <DropdownItem
             key="pdf"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >

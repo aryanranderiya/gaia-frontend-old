@@ -9,7 +9,13 @@ import {
 import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { toast } from "sonner";
 
-export function ChatBubble_Actions({ loading, text }) {
+export function ChatBubble_Actions({
+  loading,
+  text,
+  setConversationHistory,
+  conversationHistory,
+  index,
+}) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard", {
@@ -49,6 +55,10 @@ export function ChatBubble_Actions({ loading, text }) {
           </Button>
 
           <TranslateDropdown
+            text={text}
+            setConversationHistor={setConversationHistory}
+            conversationHistory={conversationHistory}
+            index={index}
             trigger={
               <Button
                 variant="light"

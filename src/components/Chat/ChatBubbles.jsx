@@ -28,10 +28,13 @@ export function ChatBubbleUser({ text, subtype = null, file = null }) {
 }
 
 export function ChatBubbleBot({
+  index,
   text,
   loading = false,
   isImage = false,
   image = null,
+  setConversationHistory,
+  conversationHistory,
 }) {
   return (
     (!!text || isImage) && (
@@ -72,7 +75,13 @@ export function ChatBubbleBot({
                   <Markdown className="select-text">{text}</Markdown>
                 )}
               </div>
-              <ChatBubble_Actions loading={loading} text={text} />
+              <ChatBubble_Actions
+                loading={loading}
+                text={text}
+                setConversationHistory={setConversationHistory}
+                conversationHistory={conversationHistory}
+                index={index}
+              />
             </>
           )}
         </div>

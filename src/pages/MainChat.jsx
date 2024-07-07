@@ -6,6 +6,26 @@ import * as React from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";
 
+async function LoadTranslationModel() {
+  try {
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/facebook/m2m100_1.2B",
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_HUGGING_FACE}`,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ inputs: "hi" }),
+      }
+    );
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function MainChat() {
   const [conversationHistory, setConversationHistory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -20,6 +40,12 @@ export default function MainChat() {
   };
 
   React.useEffect(() => {
+    LoadTranslationModel();
+  }, []);
+
+  React.useEffect(() => {
+    console.log(conversationHistory);
+
     if (conversationHistory.length > 0 && data.length > 0) {
       const updatedHistory = [...conversationHistory];
       const lastItemIndex = updatedHistory.length - 1;
@@ -103,8 +129,11 @@ export default function MainChat() {
                   <ChatBubbleBot
                     text={message.response}
                     key={index}
+                    index={index}
                     isImage={message.isImage}
+                    setConversationHistory={setConversationHistory}
                     image={message.imageUrl}
+                    conversationHistory={conversationHistory}
                   />
                 ) : (
                   <ChatBubbleUser
