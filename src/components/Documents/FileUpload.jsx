@@ -10,10 +10,12 @@ import {
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
 import { PdfContainer } from "./PdfComponent";
-
+import { toast } from "sonner";
+import api from "../../apiaxios";
 export default function FileUpload({ setConversationHistory, fileInputRef }) {
   const [file, setFile] = React.useState(null);
   const [textContent, setTextContent] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -30,14 +32,45 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
     setFile(selectedFile);
   };
 
-  const submitPdf = () => {
+  const submitPdf = async () => {
+    setLoading(true);
     setIsValid(textContent.trim() === "");
     if (textContent.trim() === "") return;
-    setConversationHistory((prevHistory) => [
-      ...prevHistory,
-      { type: "user", response: textContent, subtype: "pdf", file: file },
-    ]);
-    closeModal();
+
+    const formData = new FormData();
+    formData.append("message", textContent);
+    formData.append("file", file);
+
+    try {
+      const response = await api.post("/document", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(response);
+
+      setConversationHistory((prevHistory) => [
+        ...prevHistory,
+        { type: "user", response: textContent, subtype: "pdf", file: file },
+        { type: "bot", response: response.data.response },
+      ]);
+
+      closeModal();
+    } catch (error) {
+      console.error(error);
+      toast.error("Uh oh! Something went wrong.", {
+        classNames: {
+          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
+          title: " text-sm",
+          description: "text-sm",
+        },
+        duration: 3000,
+        description:
+          "There was a problem with uploading documents. Please try again later.\n",
+      });
+    }
+    setLoading(false);
   };
 
   const handleKeyDown = (event) => {
@@ -102,6 +135,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               color="primary"
               onClick={submitPdf}
               endContent={<SentIcon color="black" width="20" />}
+              isLoading={loading}
             >
               Send
             </Button>

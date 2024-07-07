@@ -17,7 +17,7 @@ export default function GenerateImage({
   setOpenImageDialog,
   setConversationHistory,
 }) {
-  const [textContent, setTextContent] = React.useState("");
+  const [imagePrompt, setImagePrompt] = React.useState("");
   const [isValid, setIsValid] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -28,18 +28,18 @@ export default function GenerateImage({
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
-      setTextContent((text) => text + "\n");
+      setImagePrompt((text) => text + "\n");
     } else if (event.key === "Enter") handleButtonClick();
   };
 
   const handleInputChange = (value) => {
-    setTextContent(value);
+    setImagePrompt(value);
     setIsValid(true);
   };
 
   const handleButtonClick = () => {
-    setIsValid(textContent.trim() !== "");
-    if (textContent.trim() !== "") {
+    setIsValid(imagePrompt.trim() !== "");
+    if (imagePrompt.trim() !== "") {
       SubmitForm();
     }
   };
@@ -50,7 +50,7 @@ export default function GenerateImage({
       const response = await api.post(
         "/image",
         {
-          message: textContent,
+          message: imagePrompt,
         },
         {
           responseType: "arraybuffer",
@@ -66,11 +66,16 @@ export default function GenerateImage({
 
       setConversationHistory((prevHistory) => [
         ...prevHistory,
-        { type: "user", response: "Generate Image: \n" + textContent },
-        { type: "bot", response: "", imageUrl: imageUrl, isImage: true },
+        { type: "user", response: "Generate Image: \n" + imagePrompt },
+        {
+          type: "bot",
+          response: `${imagePrompt}`,
+          imageUrl: imageUrl,
+          isImage: true,
+        },
       ]);
 
-      setTextContent("");
+      setImagePrompt("");
       setOpenImageDialog(false);
     } catch (error) {
       console.error(error);
@@ -82,7 +87,7 @@ export default function GenerateImage({
         },
         duration: 3000,
         description:
-          "There was a problem with generating images. Try again later.\n",
+          "There was a problem with generating images. Please try again later.\n",
       });
     }
 
@@ -109,12 +114,12 @@ export default function GenerateImage({
             startContent={<BrushIcon />}
             maxRows={5}
             isDisabled={loading}
-            minRows={3}
+            minRows={1}
             isRequired
             variant="faded"
             size="lg"
             color="primary"
-            value={textContent}
+            value={imagePrompt}
             onValueChange={handleInputChange}
             errorMessage="This is a required input field."
             isInvalid={!isValid}
