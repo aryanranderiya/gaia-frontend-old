@@ -33,9 +33,6 @@ export function ChatBubbleBot({
   isImage = false,
   image = null,
 }) {
-  console.log("Test", image);
-  console.log("test", isImage);
-
   return (
     (!!text || isImage) && (
       <div className="chatbubblebot_parent ">
@@ -44,25 +41,25 @@ export function ChatBubbleBot({
           {isImage ? (
             <>
               <div className="chat_bubble bg-zinc-800">
+                <div className="text-md font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
+                  <span>Here is your generated image:</span>
 
-                <div className="text-sm font-medium w-full flex justify-center items-center flex-col gap-2 flex-wrap max-w-[350px] mb-5">
-                  <span>Generated Image</span>
+                  <img
+                    src={image}
+                    width={"350px"}
+                    height={"350px"}
+                    content-type="image/png"
+                    className="rounded-3xl my-2"
+                  />
+
                   <div className="flex gap-1 justify-center flex-wrap">
                     {text.split(",").map((keyword) => (
                       <Chip color="default" size="sm">
-                        {keyword}
+                        {keyword.trim()}
                       </Chip>
                     ))}
                   </div>
                 </div>
-
-                <img
-                  src={image}
-                  width={"350px"}
-                  height={"350px"}
-                  content-type="image/png"
-                  className="rounded-3xl my-2"
-                />
               </div>
               <ChatBubble_Actions_Image src={image} />
             </>

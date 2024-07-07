@@ -14,87 +14,47 @@ import { Button } from "@nextui-org/button";
 import * as React from "react";
 
 export default function MicrophoneBtn() {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [transcript, setTranscript] = React.useState("");
-  const [recognition, setRecognition] = React.useState(null);
-  // const [mediaRecorder, setMediaRecorder] = React.useState(null);
-  // const [audioChunks, setAudioChunks] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [finalTranscript, setFinalTranscript] = React.useState("");
 
-  // React.useEffect(() => {
-  //   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-  //     alert("getUserMedia is not supported in this browser.");
-  //     return;
-  //   }
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
 
-  //   async function setupRecorder() {
-  //     try {
-  //       const stream = await navigator.mediaDevices.getUserMedia({
-  //         audio: true,
-  //       });
-  //       const recorder = new MediaRecorder(stream);
+  recognition.lang = "en-US";
+  recognition.continuous = true;
+  recognition.interimResults = true;
 
-  //       recorder.ondataavailable = (e) => {
-  //         setAudioChunks([...audioChunks, e.data]);
-  //       };
+  recognition.onerror = (event) => {
+    console.error("Recognition error:", event.error);
+  };
 
-  //       setMediaRecorder(recorder);
-  //     } catch (err) {
-  //       console.error("Error accessing microphone:", err);
-  //     }
-  //   }
+  recognition.onspeechend = () => {
+    recognition.stop();
+    setFinalTranscript("speech ended");
+  };
 
-  //   setupRecorder();
+  recognition.onresult = (event) => {
+    let interimTranscript = "";
+    let final = "";
 
-  //   return () => {
-  //     if (mediaRecorder) {
-  //       mediaRecorder.stop();
-  //     }
-  //   };
-  // }, [audioChunks, mediaRecorder]);
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) final += transcript + " ";
+      else interimTranscript += transcript;
+    }
 
-  // const startRecording = () => {
-  //   if (mediaRecorder) {
-  //     setAudioChunks([]);
-  //     mediaRecorder.start();
-  //     setRecording(true);
-  //   }
-  // };
-
-  // const stopRecording = () => {
-  //   if (mediaRecorder && recording) {
-  //     mediaRecorder.stop();
-  //     setRecording(false);
-  //     playRecording();
-  //   }
-  // };
-
-  // const playRecording = () => {
-  //   if (audioChunks.length > 0) {
-  //     const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-  //     const audioUrl = URL.createObjectURL(audioBlob);
-  //     const audio = new Audio(audioUrl);
-  //     audio.play();
-  //   }
-  // };
-
-  React.useEffect(() => {
-    // console.log(transcript);
-  }, [transcript]);
+    setFinalTranscript(final.trim());
+  };
 
   const recordSpeech = () => {
-    // let SpeechRecognition =
-    //   window.webkitSpeechRecognition || window.SpeechRecognition;
-    // let speechRecognition = new SpeechRecognition();
-    // setRecognition(speechRecognition);
-    // speechRecognition.start();
-    // speechRecognition.onresult = async (event) => {
-    //   setTranscript(event.results[0][0].transcript);
-    //   alert(event.results[0][0].transcript);
-    // };
+    setFinalTranscript("Starting");
+    recognition.start();
   };
 
   const stopRecording = () => {
-    // recognition.stop();
+    recognition.stop();
+    setFinalTranscript("stopped");
   };
 
   return (
@@ -104,17 +64,16 @@ export default function MicrophoneBtn() {
         radius="full"
         aria-label="Microphone"
         onPress={() => {
-          onOpen();
+          setOpen(true);
           recordSpeech();
-          // startRecording();
         }}
         variant="light"
       >
         <Mic02Icon />
       </Button>
       <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        isOpen={open}
+        onOpenChange={setOpen}
         backdrop="opaque"
         classNames={{ base: "w-fit p-4 dark text-white" }}
         onClose={stopRecording}
@@ -140,6 +99,7 @@ export default function MicrophoneBtn() {
                   height={50}
                   width={100}
                 />
+                <span>{finalTranscript}</span>
               </ModalBody>
               <ModalFooter className="flex w-full justify-center">
                 <Button
@@ -153,8 +113,8 @@ export default function MicrophoneBtn() {
                 <Button
                   color="success"
                   onPress={() => {
-                    onClose();
-                    console.log(transcript);
+                    // onClose();
+                    stopRecording();
                   }}
                   isIconOnly
                   variant="flat"

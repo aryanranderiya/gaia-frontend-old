@@ -58,7 +58,6 @@
     "react-lottie": "^1.2.4",
     "react-pdf": "^9.0.0",
     "react-router-dom": "6.23.0",
-    "react-speech": "^1.0.2",
     "react-speech-recognition": "^3.10.0",
     "react-voice-recorder-player": "^1.2.0",
     "sonner": "^1.5.0",

@@ -1,19 +1,45 @@
-import Speech from "react-speech";
-import { VoiceIcon } from "../icons";
+import { VoiceIcon, VolumeHighIcon } from "../icons";
+import * as React from "react";
+import { Button } from "@nextui-org/button";
 
 export default function TextToSpeech({ text }) {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  for (const voice of synth.getVoices())
+    if (voice.name === "Google UK English Female") utterance.voice = voice;
+
+  utterance.addEventListener("end", () => {
+    synth.cancel();
+    setIsPlaying(false);
+  });
+
+  const togglePlayback = () => {
+    if (synth.speaking) {
+      synth.pause();
+      setIsPlaying(false);
+    } else if (synth.paused) {
+      synth.resume();
+      setIsPlaying(true);
+    } else {
+      synth.cancel();
+      synth.speak(utterance);
+      setIsPlaying(true);
+    }
+  };
+
   return (
-    <Speech
-      className="tts_button"
-      text={text}
-      textAsButton={true}
-      pause={true}
-      resume={true}
-      rate="1.1"
-      pitch="1.05"
-      lang="en-GB"
-      voice="Google UK English Female"
-      displayText={<VoiceIcon height="22" className="cursor-pointer" />}
-    />
+    <Button
+      onPress={togglePlayback}
+      variant={isPlaying ? "shadow" : "light"}
+      size="sm"
+      className="w-fit p-0 h-fit rounded-md"
+      style={{ minWidth: "22px" }}
+      color="primary"
+    >
+      {isPlaying ? <VolumeHighIcon color="foreground" /> : <VoiceIcon />}
+    </Button>
   );
 }

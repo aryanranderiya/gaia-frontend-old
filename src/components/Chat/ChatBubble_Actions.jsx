@@ -31,7 +31,7 @@ export function ChatBubble_Actions({ loading, text }) {
         <div className="flex py-2 w-fit gap-2 items-center">
           <Button
             variant="light"
-            className="w-fit p-0 h-fit rounded-md bg-transparent  data-[hover=true]:bg-transparent"
+            className="w-fit p-0 h-fit rounded-md"
             isIconOnly
             style={{ minWidth: "22px" }}
             onClick={copyToClipboard}
@@ -41,7 +41,7 @@ export function ChatBubble_Actions({ loading, text }) {
 
           <Button
             variant="light"
-            className="w-fit p-0 h-fit rounded-md bg-transparent data-[hover=true]:bg-transparent"
+            className="w-fit p-0 h-fit rounded-md"
             isIconOnly
             style={{ minWidth: "22px" }}
           >
@@ -52,7 +52,7 @@ export function ChatBubble_Actions({ loading, text }) {
             trigger={
               <Button
                 variant="light"
-                className="w-fit p-0 h-fit rounded-md bg-transparent data-[hover=true]:bg-transparent"
+                className="w-fit p-0 h-fit rounded-md"
                 isIconOnly
                 style={{ minWidth: "22px" }}
               >
@@ -67,6 +67,7 @@ export function ChatBubble_Actions({ loading, text }) {
     </>
   );
 }
+import { Tooltip } from "@nextui-org/tooltip";
 
 export function ChatBubble_Actions_Image({ src }) {
   const downloadFromSrc = () => {
@@ -79,15 +80,22 @@ export function ChatBubble_Actions_Image({ src }) {
   };
   return (
     <div className="flex py-2 w-fit gap-2 items-center">
-      <Button
-        variant="light"
-        className="w-fit p-0 h-fit rounded-md bg-transparent data-[hover=true]:bg-transparent"
-        isIconOnly
-        style={{ minWidth: "22px" }}
-        onPress={downloadFromSrc}
+      <Tooltip
+        content="Download Image"
+        placement="right"
+        size="md"
+        color="primary"
       >
-        <DownloadSquare01Icon height="22" className="cursor-pointer" />
-      </Button>
+        <Button
+          variant="light"
+          className="w-fit p-0 h-fit rounded-md bg-transparent data-[hover=true]:bg-transparent"
+          isIconOnly
+          style={{ minWidth: "22px" }}
+          onPress={downloadFromSrc}
+        >
+          <DownloadSquare01Icon height="22" className="cursor-pointer" />
+        </Button>
+      </Tooltip>
     </div>
   );
 }

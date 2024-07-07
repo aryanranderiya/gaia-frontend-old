@@ -33,8 +33,6 @@ export default function MainChat() {
         setConversationHistory(updatedHistory);
       }
     }
-
-    console.log(conversationHistory);
   }, [data, conversationHistory]);
 
   const fetchData = async (searchbarText) => {
@@ -65,6 +63,7 @@ export default function MainChat() {
           }, 500);
           return;
         }
+
         let dataJson = JSON.parse(event.data);
         let responseData = dataJson.response;
         if (responseData === "") setData((data) => [...data, "\n"]);
@@ -73,7 +72,6 @@ export default function MainChat() {
       },
       onclose() {
         setTimeout(() => {
-          console.log("Connection closed by the server");
           focusInput();
           setData([]);
         }, 500);
