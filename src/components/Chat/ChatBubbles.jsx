@@ -8,45 +8,41 @@ import {
 } from "./ChatBubble_Actions";
 import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
-import "ldrs/jelly";
+import "ldrs/ping";
 
 export function ChatBubbleUser({ text, subtype = null, file = null }) {
   return (
     (!!text || !!file) && (
       <div className="chat_bubble_container user">
         <div className="chat_bubble user">
-          {!!text && !file && (
-            <div className="flex select-text text-wrap max-w-[30vw]">
-              {text}
-            </div>
-          )}
-
-          {subtype === "image" && (
-            <>
-              <span className="font-medium">Uploaded Image</span>
-
-              <div className="mb-1">
-                <img
-                  src={file}
-                  width={"250px"}
-                  height={"250px"}
-                  content-type="image/png"
-                  className="rounded-2xl mt-3"
-                />
-              </div>
-
-              <Chip color="default" size="sm">
+          {subtype === "image" ? (
+            <div className="flex flex-col items-center gap-2 max-w-[250px] whitespace-nowrap text-ellipsis overflow-hidden">
+              <img
+                src={file}
+                width={"250px"}
+                height={"250px"}
+                content-type="image/png"
+                className="rounded-2xl mt-3"
+              />
+              <Chip
+                color="default"
+                size="sm"
+                className="text-white bg-opacity-70"
+              >
                 {text}
               </Chip>
-            </>
+            </div>
+          ) : (
+            !!text &&
+            !file && (
+              <div className="flex select-text text-wrap max-w-[30vw]">
+                {text}
+              </div>
+            )
           )}
-        </div>
 
-        {subtype === "pdf" && (
-          <div className="mb-5">
-            <PdfContainer file={file} chat_bubble={true} />
-          </div>
-        )}
+          {subtype === "pdf" && <PdfContainer file={file} chat_bubble={true} />}
+        </div>
       </div>
     )
   );
@@ -93,7 +89,7 @@ export function ChatBubbleBot({
     <>
       <div className="chat_bubble bg-zinc-800">
         {loading ? (
-          <l-jelly size="30" speed="0.6" color="#00bbff" />
+          <l-ping size="30" speed="1.5" color="#00bbff" />
         ) : (
           <div className="flex flex-col gap-3">
             <Markdown className="select-text">{text.toString()}</Markdown>

@@ -13,12 +13,16 @@ import { PdfContainer } from "./PdfComponent";
 import { toast } from "sonner";
 import api from "../../apiaxios";
 
-export default function FileUpload({ setConversationHistory, fileInputRef }) {
+export default function FileUpload({
+  setConversationHistory,
+  fileInputRef,
+  conversationHistory,
+}) {
   const [file, setFile] = React.useState(null);
   const [textContent, setTextContent] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [botResponse, setBotResponse] = React.useState(null);
 
   const closeModal = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -29,14 +33,46 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
 
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
-    if (selectedFile) setIsModalOpen(true);
+    if (!selectedFile) return;
+    setIsModalOpen(true);
     setFile(selectedFile);
   };
 
+  function updateWithResponse() {
+    if (conversationHistory.length > 0 && !!botResponse) {
+      const updatedHistory = [...conversationHistory];
+      const lastItemIndex = updatedHistory.length - 1;
+      const lastItem = updatedHistory[lastItemIndex];
+
+      if (lastItem.type === "bot") {
+        lastItem.response = botResponse;
+        lastItem.loading = false;
+        setConversationHistory(updatedHistory);
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    updateWithResponse();
+  }, [botResponse]);
+
   const submitPdf = async () => {
-    setLoading(true);
     setIsValid(textContent.trim() === "");
     if (textContent.trim() === "") return;
+
+    console.log(textContent);
+
+    closeModal();
+    setConversationHistory((prevHistory) => [
+      ...prevHistory,
+      { type: "user", response: textContent, subtype: "pdf", file: file },
+      {
+        type: "bot",
+        loading: true,
+        disclaimer: "GAIA can make mistakes. Check important info.",
+        response: "",
+      },
+    ]);
 
     const formData = new FormData();
     formData.append("message", textContent);
@@ -48,20 +84,8 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
           "Content-Type": "multipart/form-data",
         },
       });
-
       console.log(response);
-
-      setConversationHistory((prevHistory) => [
-        ...prevHistory,
-        { type: "user", response: textContent, subtype: "pdf", file: file },
-        {
-          type: "bot",
-          text: response.data.response,
-          disclaimer: "Document Information may not always be accurate.",
-        },
-      ]);
-
-      closeModal();
+      setBotResponse(response.data.response);
     } catch (error) {
       console.error(error);
       toast.error("Uh oh! Something went wrong.", {
@@ -75,7 +99,6 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
           "There was a problem with uploading documents. Please try again later.\n",
       });
     }
-    setLoading(false);
   };
 
   const handleKeyDown = (event) => {
@@ -83,6 +106,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
       event.preventDefault();
       setTextContent((text) => text + "\n");
     } else if (event.key === "Enter" && textContent.trim() !== "") {
+      event.preventDefault();
       submitPdf();
     }
   };
@@ -122,7 +146,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               value={textContent}
               onValueChange={(e) => {
                 setTextContent(e);
-                setIsValid(textContent.trim() === "");
+                setIsValid(textContent.trim() == "");
               }}
               errorMessage="This is a required input field."
               isInvalid={isValid}
@@ -140,7 +164,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
               color="primary"
               onClick={submitPdf}
               endContent={<SentIcon color="black" width="20" />}
-              isLoading={loading}
+              disabled={isValid}
             >
               Send
             </Button>

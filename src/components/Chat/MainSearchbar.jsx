@@ -36,6 +36,7 @@ export default function MainSearchbar({
             value={searchbarText}
             ref={inputRef}
             autoFocus
+            isInvalid={searchbarText.length > 4500}
             startContent={
               <SearchbarLeftDropdown
                 loading={loading}
@@ -53,6 +54,9 @@ export default function MainSearchbar({
             onHeightChange={(height) => setHeight(height)}
           />
         </form>
+        <div className="flex w-full justify-end text-sm mt-1 text-gray-500">
+          {searchbarText.length}/4500 words
+        </div>
       </div>
     </div>
   );

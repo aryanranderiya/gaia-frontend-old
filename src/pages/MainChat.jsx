@@ -13,12 +13,17 @@ export default function MainChat() {
   const [searchbarText, setSearchbarText] = React.useState("");
   const [data, setData] = React.useState([]);
   const inputRef = React.useRef(null);
+  const convoRef = React.useRef(null);
 
   const focusInput = () => {
     setTimeout(() => {
       if (inputRef.current) inputRef.current.focus();
     }, 10);
   };
+
+  React.useEffect(() => {
+    convoRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [conversationHistory]);
 
   React.useEffect(() => {
     LoadTranslationModel();
@@ -99,38 +104,36 @@ export default function MainChat() {
   return (
     <>
       <ScrollArea>
-        <div className="flex justify-center w-full items-center">
-          <div className="conversation_history">
-            {!!conversationHistory && conversationHistory.length > 0 ? (
-              conversationHistory.map((message, index) =>
-                message.type === "bot" ? (
-                  <ChatBubbleBot
-                    text={message.response}
-                    key={index}
-                    loading={message.loading}
-                    index={index}
-                    isImage={message.isImage}
-                    setConversationHistory={setConversationHistory}
-                    image={message.imageUrl}
-                    conversationHistory={conversationHistory}
-                    disclaimer={message.disclaimer}
-                  />
-                ) : (
-                  <ChatBubbleUser
-                    text={message.response}
-                    key={index}
-                    subtype={message.subtype || null}
-                    file={message.file || null}
-                  />
-                )
+        <div className="conversation_history" ref={convoRef}>
+          {!!conversationHistory && conversationHistory.length > 0 ? (
+            conversationHistory.map((message, index) =>
+              message.type === "bot" ? (
+                <ChatBubbleBot
+                  text={message.response}
+                  key={index}
+                  loading={message.loading}
+                  index={index}
+                  isImage={message.isImage}
+                  setConversationHistory={setConversationHistory}
+                  image={message.imageUrl}
+                  conversationHistory={conversationHistory}
+                  disclaimer={message.disclaimer}
+                />
+              ) : (
+                <ChatBubbleUser
+                  text={message.response}
+                  key={index}
+                  subtype={message.subtype || null}
+                  file={message.file || null}
+                />
               )
-            ) : (
-              <div className="starter_container">
-                <StarterEmoji />
-                <StarterText />
-              </div>
-            )}
-          </div>
+            )
+          ) : (
+            <div className="starter_container">
+              <StarterEmoji />
+              <StarterText />
+            </div>
+          )}
         </div>
       </ScrollArea>
 
