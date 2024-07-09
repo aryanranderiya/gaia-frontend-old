@@ -30,13 +30,21 @@ export default function MainSearchbar({
             disabled={loading}
             radius="full"
             size="lg"
-            placeholder={"Ask gaia something..."}
+            placeholder={"Ask gaia..."}
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}
             value={searchbarText}
             ref={inputRef}
             autoFocus
             isInvalid={searchbarText.length > 4500}
+            onHeightChange={(height) => setHeight(height)}
+            minRows={1}
+            maxRows={13}
+            endContent={<SearchbarRightSendBtn loading={loading} />}
+            classNames={{
+              inputWrapper: "p-2 data-[hover=true]:bg-zinc-900",
+              innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
+            }}
             startContent={
               <SearchbarLeftDropdown
                 loading={loading}
@@ -44,14 +52,6 @@ export default function MainSearchbar({
                 conversationHistory={conversationHistory}
               />
             }
-            endContent={<SearchbarRightSendBtn loading={loading} />}
-            minRows={1}
-            maxRows={13}
-            classNames={{
-              inputWrapper: "p-2 data-[hover=true]:bg-zinc-900",
-              innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
-            }}
-            onHeightChange={(height) => setHeight(height)}
           />
         </form>
         <div className="flex w-full justify-end text-sm mt-1 text-gray-500">

@@ -7,8 +7,11 @@ import ChatsList from "../components/Sidebar/ChatsList";
 import UserContainer from "../components/Sidebar/UserContainer";
 import SidebarTopButtons from "../components/Sidebar/SidebarTopButtons";
 import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
+import ComingSoonModal from "../components/ComingSoon.jsx/ComingSoonModal";
 
 export default function Sidebar({ sidebarref, toggleSidebar }) {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <>
       <div className="sidebar" ref={sidebarref}>
@@ -33,6 +36,7 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
               variant="shadow"
               color="primary"
               className="w-full flex justify-between my-4 font-bold"
+              onPress={() => setOpen(true)}
             >
               Coming Soon?
               <StarsIcon color="black" fill="black" />
@@ -45,6 +49,8 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
         </div>
         <UserContainer />
       </div>
+
+      <ComingSoonModal open={open} setOpen={setOpen} />
     </>
   );
 }
