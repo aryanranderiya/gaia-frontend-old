@@ -48,7 +48,7 @@ export default function GenerateImage({
     setLoading(true);
     try {
       const response = await api.post(
-        "/image",
+        "/generate_image",
         {
           message: imagePrompt,
         },
@@ -59,6 +59,8 @@ export default function GenerateImage({
           },
         }
       );
+
+      console.log(response);
 
       const arrayBuffer = response.data;
       const blob = new Blob([arrayBuffer], { type: "image/png" });

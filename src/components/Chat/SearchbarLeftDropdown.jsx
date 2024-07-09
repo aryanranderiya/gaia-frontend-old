@@ -8,29 +8,35 @@ import {
 } from "@nextui-org/dropdown";
 import {
   AttachmentIcon,
-  ImageAdd02Icon,
-  DocumentAttachmentIcon,
-  BlushBrush02Icon,
+  ImageUploadIcon,
+  FileUploadIcon,
+  AiImageIcon,
   Calendar01Icon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
+import ImageUpload from "../Documents/ImageUpload";
 
 export default function SearchbarLeftDropdown({
   loading,
   setConversationHistory,
+  conversationHistory,
 }) {
-  const dropdownRef = React.useRef(null);
   const fileInputRef = React.useRef(null);
+  const imageInputRef = React.useRef(null);
   const [openImageDialog, setOpenImageDialog] = React.useState(false);
 
   const chooseFile = () => {
     fileInputRef.current.click();
   };
 
+  const chooseImage = () => {
+    imageInputRef.current.click();
+  };
+
   return (
-    <div className="flex gap-1 mr-2 flex-row flex-nowrap">
+    <>
       <Dropdown
-        className="dark rounded-full"
+        className="dark text-foreground w-full"
         placement="top"
         offset={0}
         closeOnSelect={true}
@@ -40,7 +46,6 @@ export default function SearchbarLeftDropdown({
         }}
         backdrop="opaque"
         isDismissable={true}
-        ref={dropdownRef}
         shouldCloseOnInteractOutside={true}
       >
         <DropdownTrigger>
@@ -54,39 +59,57 @@ export default function SearchbarLeftDropdown({
         <DropdownMenu
           variant="faded"
           aria-label="Static Actions"
-          classNames={{
-            base: "flex flex-row w-fit",
-            list: "w-fit flex-row",
-            content: "w-fit min-w-[100px]",
+          itemClasses={{
+            content: "w-full",
           }}
         >
           <DropdownItem
-            key="pdf"
-            className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
+            key="image"
+            className="w-full transition-all"
+            onPress={chooseImage}
           >
-            <DocumentAttachmentIcon
-              color="#00bbff"
-              onClick={chooseFile}
-              children
-            />
+            <div className="flex justify-between items-center">
+              Upload Image
+              <ImageUploadIcon color="#00bbff" />
+            </div>
           </DropdownItem>
 
           <DropdownItem
-            key="image"
-            className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
+            key="pdf"
+            className="w-full darktransition-all"
+            onPress={chooseFile}
+          >
+            <div className="flex justify-between items-center">
+              Upload Document
+              <FileUploadIcon color="#00bbff" />
+            </div>
+          </DropdownItem>
+
+          <DropdownItem
+            key="generate_image"
+            className="w-full transition-all"
             onPress={() => setOpenImageDialog(true)}
           >
-            <ImageAdd02Icon color="#00bbff" />
+            <div className="flex justify-between items-center">
+              Generate Image
+              <AiImageIcon color="#00bbff" />
+            </div>
           </DropdownItem>
 
-          <DropdownItem
+          {/* <DropdownItem
             key="calendar"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >
             <Calendar01Icon color="#00bbff" />
-          </DropdownItem>
+          </DropdownItem> */}
         </DropdownMenu>
       </Dropdown>
+
+      <ImageUpload
+        imageInputRef={imageInputRef}
+        setConversationHistory={setConversationHistory}
+        conversationHistory={conversationHistory}
+      />
 
       <FileUpload
         fileInputRef={fileInputRef}
@@ -98,6 +121,6 @@ export default function SearchbarLeftDropdown({
         openImageDialog={openImageDialog}
         setConversationHistory={setConversationHistory}
       />
-    </div>
+    </>
   );
 }

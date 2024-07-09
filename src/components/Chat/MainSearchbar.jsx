@@ -11,6 +11,7 @@ export default function MainSearchbar({
   searchbarText,
   setSearchbarText,
   setConversationHistory,
+  conversationHistory,
 }) {
   const [currentHeight, setHeight] = React.useState(24);
 
@@ -39,6 +40,7 @@ export default function MainSearchbar({
               <SearchbarLeftDropdown
                 loading={loading}
                 setConversationHistory={setConversationHistory}
+                conversationHistory={conversationHistory}
               />
             }
             endContent={<SearchbarRightSendBtn loading={loading} />}

@@ -1,6 +1,7 @@
 import { User } from "@nextui-org/user";
 import SettingsMenu from "./SettingsMenu";
 import { UserCircleIcon } from "../icons";
+
 export default function UserContainer() {
   return (
     <div className="user_container p-4">

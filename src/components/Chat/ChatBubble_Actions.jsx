@@ -8,6 +8,7 @@ import {
 } from "../icons";
 import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { toast } from "sonner";
+import { Tooltip } from "@nextui-org/tooltip";
 
 export function ChatBubble_Actions({
   loading,
@@ -77,7 +78,6 @@ export function ChatBubble_Actions({
     </>
   );
 }
-import { Tooltip } from "@nextui-org/tooltip";
 
 export function ChatBubble_Actions_Image({ src }) {
   const downloadFromSrc = () => {

@@ -12,6 +12,7 @@ import { Textarea } from "@nextui-org/input";
 import { PdfContainer } from "./PdfComponent";
 import { toast } from "sonner";
 import api from "../../apiaxios";
+
 export default function FileUpload({ setConversationHistory, fileInputRef }) {
   const [file, setFile] = React.useState(null);
   const [textContent, setTextContent] = React.useState("");
@@ -53,7 +54,11 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
       setConversationHistory((prevHistory) => [
         ...prevHistory,
         { type: "user", response: textContent, subtype: "pdf", file: file },
-        { type: "bot", response: response.data.response },
+        {
+          type: "bot",
+          text: response.data.response,
+          disclaimer: "Document Information may not always be accurate.",
+        },
       ]);
 
       closeModal();
@@ -83,7 +88,7 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
   };
 
   return (
-    <form>
+    <>
       <input
         type="file"
         id="fileInput"
@@ -142,6 +147,6 @@ export default function FileUpload({ setConversationHistory, fileInputRef }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </form>
+    </>
   );
 }

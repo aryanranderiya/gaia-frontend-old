@@ -60,12 +60,12 @@ export default function StarterEmoji() {
       placement="top"
       color="primary"
     >
-      <img
+      {/* <img
         src={smileys[currentSmiley]}
         alt="Smiley"
         className="starter_emoji"
         onClick={changeSmiley}
-      />
+      /> */}
     </Tooltip>
   );
 }
