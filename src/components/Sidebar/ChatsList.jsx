@@ -1,4 +1,4 @@
-import { ScrollArea } from "../ScrollArea";
+import { ScrollArea } from "../Shadcn/ScrollArea";
 import { PencilEdit02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
 import { useNavigate } from "react-router-dom";

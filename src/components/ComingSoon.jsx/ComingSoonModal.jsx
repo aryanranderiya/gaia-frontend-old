@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "../Dialog";
+} from "../Shadcn/Dialog";
 import * as React from "react";
 import { StarsIcon } from "../icons";
 import { Button } from "@nextui-org/button";
@@ -14,7 +14,7 @@ import { Button } from "@nextui-org/button";
 export default function ComingSoonModal({ open, setOpen }) {
   return (
     <Dialog open={open} onOpenChange={setOpen} className="rounded-full">
-      <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 md:rounded-2xl rounded-2xl max-w-[600px]">
+      <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 md:rounded-2xl rounded-2xl max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl  select-text">
             Coming Soon!
@@ -27,7 +27,7 @@ export default function ComingSoonModal({ open, setOpen }) {
         <img
           src="https://media.licdn.com/dms/image/D4D22AQEXAhBLeOGz8Q/feedshare-shrink_2048_1536/0/1720402539349?e=1723680000&v=beta&t=WWA3AWiaM--K0fgi24FTObeCZWGBVnwrOkZ5X9gmrI0"
           alt="Coming Soon Image"
-          className="rounded-xl max-w-[600px] object-cover max-h-[200px]"
+          className="rounded-xl max-w-[500px] object-cover max-h-[350px]"
           loading="eager"
         />
 
@@ -40,7 +40,7 @@ export default function ComingSoonModal({ open, setOpen }) {
         </span>
 
         <div className="flex justify-between mt-2 w-full">
-          <DialogClose>
+          <DialogClose asChild>
             <Button size="sm" variant="light" color="danger">
               Close
             </Button>

@@ -187,8 +187,9 @@ main {
 }
 
 .chat_bubble {
+  display: flex;
   border-radius: 30px;
-  padding: 10px 20px;
+  padding: 7px 15px;
   color: rgb(255, 255, 255);
   width: fit-content;
   user-select: text;

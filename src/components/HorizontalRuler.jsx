@@ -1,10 +1,11 @@
-export const ColoredLine = ({ color, width }) => (
+export const ColoredLine = ({ color = "white", width = "100%", className }) => (
   <hr
     style={{
       height: 2,
       borderColor: color,
       width: width,
     }}
+    className={className}
   />
 );
 

@@ -35,11 +35,11 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
             <Button
               variant="shadow"
               color="primary"
-              className="w-full flex justify-between my-4 font-bold"
+              className="w-full flex justify-between my-4 font-medium text-zinc-900"
               onPress={() => setOpen(true)}
             >
-              Coming Soon?
-              <StarsIcon color="black" fill="black" />
+              Coming Soon!
+              <StarsIcon color="zinc-900" fill="zinc-900" />
             </Button>
           </div>
 

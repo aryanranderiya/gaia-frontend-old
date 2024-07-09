@@ -1,7 +1,7 @@
 import MainSearchbar from "../components/Chat/MainSearchbar";
 import StarterText from "../components/Chat/StarterText";
 import StarterEmoji from "../components/Chat/StarterEmoji";
-import { ScrollArea } from "../components/ScrollArea";
+import { ScrollArea } from "../components/Shadcn/ScrollArea";
 import * as React from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";

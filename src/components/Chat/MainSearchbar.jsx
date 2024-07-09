@@ -42,7 +42,7 @@ export default function MainSearchbar({
             maxRows={13}
             endContent={<SearchbarRightSendBtn loading={loading} />}
             classNames={{
-              inputWrapper: "p-2 data-[hover=true]:bg-zinc-900",
+              inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
               innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
             }}
             startContent={

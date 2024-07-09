@@ -7,7 +7,7 @@ export default function ImagePreview() {
       <div className="landing_img_container">
         <img
           src={image_png}
-          srcset={image_webp}
+          srcSet={image_webp}
           type="image/webp"
           alt="Homepage Image with screenshots of GAIA"
         />

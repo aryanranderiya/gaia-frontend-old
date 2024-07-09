@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "../Dialog";
+} from "../Shadcn/Dialog";
 import {
   ArrowUpRight01Icon,
   Mail01Icon,

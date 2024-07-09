@@ -1,4 +1,4 @@
-import { ScrollArea } from "../components/ScrollArea";
+import { ScrollArea } from "../components/Shadcn/ScrollArea";
 import MainInfo from "../components/LandingPage/MainInfo";
 import IntegrationCircles from "../components/LandingPage/IntegrationCircles";
 import ImagePreview from "../components/LandingPage/ImagePreview";

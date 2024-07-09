@@ -10,7 +10,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTrigger,
-} from "../Sheet";
+} from "../Shadcn/Sheet";
 import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import WaitListButton from "./WaitlistModal";
