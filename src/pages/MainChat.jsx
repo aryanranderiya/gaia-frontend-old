@@ -69,6 +69,7 @@ export default function MainChat() {
             focusInput();
             setData([]);
             controller.abort();
+            setLoading(false);
           }, 500);
           return;
         }
@@ -77,7 +78,6 @@ export default function MainChat() {
         let responseData = dataJson.response;
         if (responseData === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, responseData]);
-        setLoading(false);
       },
       onclose() {
         setTimeout(() => {

@@ -37,7 +37,7 @@ export default function SearchbarLeftDropdown({
   return (
     <>
       <Dropdown
-        className="dark text-foreground w-full"
+        className={`dark text-foreground w-full ${loading ? "cursor-wait" : "cursor-pointer"}`}
         placement="top"
         offset={0}
         closeOnSelect={true}
@@ -47,6 +47,7 @@ export default function SearchbarLeftDropdown({
         }}
         backdrop="opaque"
         isDismissable={true}
+        isDisabled={loading}
         shouldCloseOnInteractOutside={true}
       >
         <DropdownTrigger>

@@ -13,7 +13,7 @@ import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
 import * as React from "react";
 
-export default function MicrophoneBtn() {
+export default function MicrophoneBtn({ loading }) {
   const [open, setOpen] = React.useState(false);
   const [finalTranscript, setFinalTranscript] = React.useState("");
 
@@ -63,11 +63,12 @@ export default function MicrophoneBtn() {
         isIconOnly
         radius="full"
         aria-label="Microphone"
+        variant="light"
+        isDisabled={loading}
         onPress={() => {
           setOpen(true);
           recordSpeech();
         }}
-        variant="light"
       >
         <Mic02Icon />
       </Button>

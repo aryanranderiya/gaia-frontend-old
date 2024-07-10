@@ -5,7 +5,7 @@ import MicrophoneBtn from "../Audio/MicrophoneBtn";
 export default function SearchbarRightSendBtn({ loading }) {
   return (
     <div className="ml-2 flex items-center gap-1">
-      <MicrophoneBtn />
+      <MicrophoneBtn loading={loading} />
 
       <Tooltip content="Send message" placement="right">
         <Button
