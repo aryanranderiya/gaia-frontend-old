@@ -139,13 +139,13 @@ export default function LoginSignup({ isLogin = false }) {
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto">
-      <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 py-[3%]">
+      <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 p-[1.5em]">
         <span className="text-4xl font-medium mb-5">
           {isLogin ? "Login" : "Create an Account"}
         </span>
 
         {!isLogin && (
-          <div className="flex w-full md:gap-2 gap-3 md:flex-row flex-col mb-1">
+          <div className="flex w-full gap-2 flex-row mb-1">
             <Input
               label="First Name"
               fullWidth

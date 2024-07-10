@@ -8,7 +8,6 @@ import {
 } from "./ChatBubble_Actions";
 import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
-import "ldrs/ping";
 
 export function ChatBubbleUser({ text, subtype = null, file = null }) {
   return (
@@ -88,23 +87,19 @@ export function ChatBubbleBot({
   const ComponentsIfNotImage = () => (
     <>
       <div className="chat_bubble bg-zinc-800">
-        {loading ? (
-          <l-ping size="30" speed="1.5" color="#00bbff" />
-        ) : (
-          <div className="flex flex-col gap-3">
-            <Markdown className="select-text">{text.toString()}</Markdown>
+        <div className="flex flex-col gap-3">
+          <Markdown className="select-text">{text.toString()}</Markdown>
 
-            {!!disclaimer && (
-              <Chip
-                size="sm"
-                className="text-xs font-medium text-foreground-700"
-                startContent={<Alert01Icon height="17" />}
-              >
-                {disclaimer}
-              </Chip>
-            )}
-          </div>
-        )}
+          {!!disclaimer && (
+            <Chip
+              size="sm"
+              className="text-xs font-medium text-foreground-700"
+              startContent={<Alert01Icon height="17" />}
+            >
+              {disclaimer}
+            </Chip>
+          )}
+        </div>
       </div>
 
       <ChatBubble_Actions
@@ -120,10 +115,15 @@ export function ChatBubbleBot({
   return (
     (!!text || loading || isImage) && (
       <div className="chatbubblebot_parent ">
-        <Avatar src={smiley} size="md" className="smiley_avatar" />
-        <div className="chat_bubble_container ">
-          {isImage ? <ComponentIfImage /> : <ComponentsIfNotImage />}
-        </div>
+        <Avatar src={smiley} className="smiley_avatar" />
+
+        {loading ? (
+          <div className="pingspinner" />
+        ) : (
+          <div className="chat_bubble_container ">
+            {isImage ? <ComponentIfImage /> : <ComponentsIfNotImage />}
+          </div>
+        )}
       </div>
     )
   );
