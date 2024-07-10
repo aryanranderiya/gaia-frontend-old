@@ -1,7 +1,6 @@
 import confetti from "canvas-confetti";
 
 export default function CreateConfetti(duration = 4000) {
-  console.log(duration);
   const animationEnd = Date.now() + duration;
   const defaults = {
     startVelocity: 30,

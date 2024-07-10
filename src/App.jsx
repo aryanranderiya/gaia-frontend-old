@@ -2,8 +2,24 @@ import * as React from "react";
 import MainInterface from "./pages/MainInterface";
 import Landing from "./layouts/Landing";
 import { Route, Routes } from "react-router-dom";
+import api from "./apiaxios";
 
 function App() {
+  // React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await api.post("/refreshToken", {
+  //         withCredentials: true,
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   return (
     <>
       <Routes>

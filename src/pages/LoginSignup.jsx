@@ -11,12 +11,14 @@ import {
   GoogleColoured,
   Alert02Icon,
   Tick02Icon,
+  Cancel01Icon,
 } from "../components/icons";
 import * as React from "react";
 import { ColoredLine } from "../components/HorizontalRuler";
 import CreateConfetti from "../components/LandingPage/CreateConfetti";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import api from "../apiaxios";
 
 async function CheckCommonPassword(password) {
   try {
@@ -67,24 +69,10 @@ export default function LoginSignup({ isLogin = false }) {
     return passRegex.test(password);
   };
 
-  // React.useEffect(() => {
-  //   setFormData({
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     password: "",
-  //   });
-  //   setEmailValid(true);
-  //   setFirstNameValid(true);
-  //   setLastNameValid(true);
-  //   setPasswordValid(true);
-  // }, [isLogin]);
-
   const capsLockCheck = (event) => {
     const capsLockEnabled =
       event.getModifierState && event.getModifierState("CapsLock");
     setCapsLockOn(capsLockEnabled);
-    console.log(capsLockEnabled);
   };
 
   const handleKeyDown = (event) => {
@@ -94,8 +82,6 @@ export default function LoginSignup({ isLogin = false }) {
       handleSubmit();
     }
   };
-
-  const handleLogin = async () => {};
 
   const handleSubmit = async () => {
     if (!isLogin) {
@@ -112,29 +98,55 @@ export default function LoginSignup({ isLogin = false }) {
       if (findCommonPassword) return;
     }
 
-    if (
-      !validateEmail(formData.email) &&
-      !validateName(formData.firstName) &&
-      !validateName(formData.lastName) &&
-      !validatePassword(formData.password)
-    )
-      return;
+    const emailpasswordvalid =
+      !validateEmail(formData.email) || !validatePassword(formData.password);
 
-    navigate(isLogin ? "/try/chat" : "/login");
+    const namesvalid =
+      !validateName(formData.firstName) || !validateName(formData.lastName);
 
-    toast.success("Welcome to GAIA!", {
-      unstyled: true,
-      classNames: {
-        toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast",
-        title: "text-black text-sm",
-        description: "text-sm text-black",
-      },
-      duration: 3000,
-      icon: <Tick02Icon height="23" color="black" />,
-      description: `Successfully ${isLogin ? "logged in" : "created an account"}.`,
-    });
+    if (isLogin && emailpasswordvalid) return;
+    if (!isLogin && (namesvalid || emailpasswordvalid)) return;
 
-    CreateConfetti(2000);
+    try {
+      const response = await api.post(isLogin ? "/login" : "/signup", formData);
+      console.log(response);
+      const accessTokenCookie = document.cookie
+        .split("; ")
+        .find((cookie) => cookie.startsWith("access_token="));
+
+      if (!accessTokenCookie) throw new Error("Something went wrong.");
+      const accessToken = accessTokenCookie.split("=")[1];
+      console.log("Access token:", accessToken);
+
+      navigate(isLogin ? "/try/chat" : "/login");
+      toast.success("Welcome to GAIA!", {
+        unstyled: true,
+        classNames: {
+          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast",
+          title: "text-black text-sm",
+          description: "text-sm text-black",
+        },
+        duration: 3000,
+        icon: <Tick02Icon height="23" color="black" />,
+        description: `Successfully ${isLogin ? "logged in" : "created an account"}.`,
+      });
+
+      CreateConfetti(2000);
+    } catch (e) {
+      console.error(e);
+      const errorMessage = e.response ? e.response.data.detail : e.toString();
+      toast.error("Login failed", {
+        unstyled: true,
+        classNames: {
+          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
+          title: "text-sm",
+          description: "text-sm ",
+        },
+        duration: 3000,
+        icon: <Cancel01Icon height="23" color="foreground" />,
+        description: errorMessage,
+      });
+    }
   };
 
   return (
