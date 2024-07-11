@@ -37,6 +37,7 @@ async function CheckCommonPassword(password) {
 
 export default function LoginSignup({ isLogin = false }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
   const [emailValid, setEmailValid] = React.useState(true);
   const [passwordValid, setPasswordValid] = React.useState(true);
@@ -84,6 +85,8 @@ export default function LoginSignup({ isLogin = false }) {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     if (!isLogin) {
       setEmailValid(validateEmail(formData.email));
       setFirstNameValid(validateName(formData.firstName));
@@ -95,7 +98,10 @@ export default function LoginSignup({ isLogin = false }) {
       const findCommonPassword = await CheckCommonPassword(formData.password);
       setPasswordValid(!findCommonPassword);
       setIsCommonPassword(findCommonPassword);
-      if (findCommonPassword) return;
+      if (findCommonPassword) {
+        setLoading(false);
+        return;
+      }
     }
 
     const emailpasswordvalid =
@@ -104,20 +110,29 @@ export default function LoginSignup({ isLogin = false }) {
     const namesvalid =
       !validateName(formData.firstName) || !validateName(formData.lastName);
 
-    if (isLogin && emailpasswordvalid) return;
-    if (!isLogin && (namesvalid || emailpasswordvalid)) return;
+    if (
+      (!isLogin && (namesvalid || emailpasswordvalid)) ||
+      (isLogin && emailpasswordvalid)
+    ) {
+      setLoading(false);
+      return;
+    }
 
     try {
-      const response = await api.post(isLogin ? "/login" : "/signup", formData);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      const response = await api.post(
+        isLogin ? "/login" : "/signup",
+        formData,
+        config
+      );
+
       console.log(response);
-      const accessTokenCookie = document.cookie
-        .split("; ")
-        .find((cookie) => cookie.startsWith("access_token="));
-
-      if (!accessTokenCookie) throw new Error("Something went wrong.");
-      const accessToken = accessTokenCookie.split("=")[1];
-      console.log("Access token:", accessToken);
-
       navigate(isLogin ? "/try/chat" : "/login");
       toast.success("Welcome to GAIA!", {
         unstyled: true,
@@ -147,6 +162,7 @@ export default function LoginSignup({ isLogin = false }) {
         description: errorMessage,
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -295,6 +311,7 @@ export default function LoginSignup({ isLogin = false }) {
           variant="shadow"
           className="w-full max-w-[200px] font-medium"
           onPress={handleSubmit}
+          isLoading={loading}
         >
           {isLogin ? "Login" : "Signup"}
         </Button>
@@ -304,7 +321,7 @@ export default function LoginSignup({ isLogin = false }) {
         <Button
           color="default"
           variant="shadow"
-          startContent={<GoogleColoured width="20px" />}
+          startContent={<GoogleColoured width="20px" height="20px" />}
           className="bg-zinc-300 text-black w-full max-w-[200px] font-medium"
         >
           {isLogin ? "Signup" : "Login"}

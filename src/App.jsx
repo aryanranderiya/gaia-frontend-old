@@ -5,20 +5,20 @@ import { Route, Routes } from "react-router-dom";
 import api from "./apiaxios";
 
 function App() {
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await api.post("/refreshToken", {
-  //         withCredentials: true,
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/refreshToken", {
+          withCredentials: true,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   return (
     <>
