@@ -11,15 +11,18 @@ import { Textarea } from "@nextui-org/input";
 import * as React from "react";
 import { toast } from "sonner";
 import api from "../../apiaxios";
+import fetchDate from "../Chat/fetchDate";
 
 export default function GenerateImage({
   openImageDialog,
   setOpenImageDialog,
   setConversationHistory,
+  conversationHistory,
 }) {
   const [imagePrompt, setImagePrompt] = React.useState("");
   const [isValid, setIsValid] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [botResponse, setBotResponse] = React.useState(null);
 
   React.useEffect(() => {
     setIsValid(true);
@@ -39,13 +42,46 @@ export default function GenerateImage({
 
   const handleButtonClick = () => {
     setIsValid(imagePrompt.trim() !== "");
-    if (imagePrompt.trim() !== "") {
-      SubmitForm();
-    }
+    if (imagePrompt.trim() !== "") SubmitForm();
   };
+
+  React.useEffect(() => {
+    updateWithResponse();
+  }, [botResponse]);
+
+  function updateWithResponse() {
+    if (conversationHistory.length > 0 && !!botResponse) {
+      const updatedHistory = [...conversationHistory];
+      const lastItemIndex = updatedHistory.length - 1;
+      const lastItem = updatedHistory[lastItemIndex];
+
+      if (lastItem.type === "bot") {
+        lastItem.imageUrl = botResponse;
+        lastItem.loading = false;
+        lastItem.isImage = true;
+        lastItem.date = fetchDate();
+        setConversationHistory(updatedHistory);
+      }
+    }
+  }
 
   const SubmitForm = async () => {
     setLoading(true);
+    setConversationHistory((prevHistory) => [
+      ...prevHistory,
+      {
+        type: "user",
+        response: "Generate Image: \n" + imagePrompt,
+        date: fetchDate(),
+      },
+      {
+        type: "bot",
+        loading: true,
+        response: imagePrompt,
+      },
+    ]);
+    setOpenImageDialog(false);
+
     try {
       const response = await api.post(
         "/generate_image",
@@ -65,20 +101,8 @@ export default function GenerateImage({
       const arrayBuffer = response.data;
       const blob = new Blob([arrayBuffer], { type: "image/png" });
       const imageUrl = URL.createObjectURL(blob);
-
-      setConversationHistory((prevHistory) => [
-        ...prevHistory,
-        { type: "user", response: "Generate Image: \n" + imagePrompt },
-        {
-          type: "bot",
-          response: `${imagePrompt}`,
-          imageUrl: imageUrl,
-          isImage: true,
-        },
-      ]);
-
+      setBotResponse(imageUrl);
       setImagePrompt("");
-      setOpenImageDialog(false);
     } catch (error) {
       console.error(error);
       toast.error("Uh oh! Something went wrong.", {

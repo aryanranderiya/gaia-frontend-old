@@ -6,6 +6,7 @@ import * as React from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";
 import LoadTranslationModel from "../components/Translation/LoadTranslationModel";
+import fetchDate from "../components/Chat/fetchDate";
 
 export default function MainChat() {
   const [conversationHistory, setConversationHistory] = React.useState([]);
@@ -30,6 +31,7 @@ export default function MainChat() {
   }, []);
 
   React.useEffect(() => {
+    console.log("test", conversationHistory);
     if (conversationHistory.length > 0 && data.length > 0) {
       const updatedHistory = [...conversationHistory];
       const lastItemIndex = updatedHistory.length - 1;
@@ -50,8 +52,17 @@ export default function MainChat() {
   const fetchData = async (searchbarText) => {
     setConversationHistory((prevHistory) => [
       ...prevHistory,
-      { type: "user", response: searchbarText },
-      { type: "bot", response: "", loading: true },
+      {
+        type: "user",
+        response: searchbarText,
+        date: fetchDate(),
+      },
+      {
+        type: "bot",
+        response: "",
+        loading: true,
+        date: fetchDate(),
+      },
     ]);
 
     const controller = new AbortController();
@@ -118,6 +129,7 @@ export default function MainChat() {
                   image={message.imageUrl}
                   conversationHistory={conversationHistory}
                   disclaimer={message.disclaimer}
+                  date={message.date}
                 />
               ) : (
                 <ChatBubbleUser
@@ -125,6 +137,8 @@ export default function MainChat() {
                   key={index}
                   subtype={message.subtype || null}
                   file={message.file || null}
+                  filename={message.filename || null}
+                  date={message.date}
                 />
               )
             )

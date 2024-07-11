@@ -7,7 +7,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 export function PdfContainer({ file, chat_bubble = false }) {
   return (
     <div
-      className={`flex w-full rounded-2xl flex-col p-4 my-1 mt-2 items-center  ${chat_bubble ? "mt-0 text-white bg-black bg-opacity-80" : "bg-zinc-600 text-foreground"}`}
+      className={`flex w-full rounded-2xl flex-col justify-center p-2 my-1 items-center text-white bg-black bg-opacity-70`}
     >
       {!!file && (
         <div className="pdf_container">
@@ -15,8 +15,8 @@ export function PdfContainer({ file, chat_bubble = false }) {
         </div>
       )}
 
-      <div className="h-[50px] flex w-full items-center gap-2 pt-2 ">
-        <Pdf02Icon color="zinc-600" width="30" height="30" />
+      <div className="h-[50px] flex w-full items-center gap-2 px-2">
+        <Pdf02Icon color="zinc-600" width="25" height="25" />
         <div className="flex flex-col">
           <span className="font-[500] text-small w-[270px] text-ellipsis whitespace-nowrap overflow-hidden">
             {file?.name}

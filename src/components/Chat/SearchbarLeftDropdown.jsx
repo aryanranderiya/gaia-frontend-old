@@ -7,7 +7,6 @@ import {
   DropdownItem,
 } from "@nextui-org/dropdown";
 import {
-  AttachmentIcon,
   ImageUploadIcon,
   FileUploadIcon,
   PlusSignIcon,
@@ -15,7 +14,6 @@ import {
   Calendar01Icon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
-import ImageUpload from "../Documents/ImageUpload";
 
 export default function SearchbarLeftDropdown({
   loading,
@@ -23,16 +21,26 @@ export default function SearchbarLeftDropdown({
   conversationHistory,
 }) {
   const fileInputRef = React.useRef(null);
-  const imageInputRef = React.useRef(null);
   const [openImageDialog, setOpenImageDialog] = React.useState(false);
+  const [isImage, setIsImage] = React.useState(false);
+  const [triggerClick, setTriggerClick] = React.useState(false);
 
   const chooseFile = () => {
-    fileInputRef.current.click();
+    setIsImage(false);
+    setTriggerClick(true);
   };
 
   const chooseImage = () => {
-    imageInputRef.current.click();
+    setIsImage(true);
+    setTriggerClick(true);
   };
+
+  React.useEffect(() => {
+    if (triggerClick) {
+      fileInputRef.current.click();
+      setTriggerClick(false);
+    }
+  }, [triggerClick]);
 
   return (
     <>
@@ -98,22 +106,17 @@ export default function SearchbarLeftDropdown({
             </div>
           </DropdownItem>
 
-          {/* <DropdownItem
+          <DropdownItem
             key="calendar"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >
             <Calendar01Icon color="#00bbff" />
-          </DropdownItem> */}
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
-      <ImageUpload
-        imageInputRef={imageInputRef}
-        setConversationHistory={setConversationHistory}
-        conversationHistory={conversationHistory}
-      />
-
       <FileUpload
+        isImage={isImage}
         fileInputRef={fileInputRef}
         setConversationHistory={setConversationHistory}
         conversationHistory={conversationHistory}
@@ -123,6 +126,7 @@ export default function SearchbarLeftDropdown({
         setOpenImageDialog={setOpenImageDialog}
         openImageDialog={openImageDialog}
         setConversationHistory={setConversationHistory}
+        conversationHistory={conversationHistory}
       />
     </>
   );

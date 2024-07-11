@@ -188,6 +188,7 @@ main {
 
 .chat_bubble {
   display: flex;
+  flex-direction: column;
   border-radius: 25px;
   border-bottom-left-radius: 0px;
   padding: 8px 17px;
@@ -235,6 +236,8 @@ main {
   color: black;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 25px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat_bubble_container {
@@ -249,7 +252,7 @@ main {
 
 .chatbubblebot_parent {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.5em;
 }
 

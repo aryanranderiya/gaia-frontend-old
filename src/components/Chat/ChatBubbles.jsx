@@ -9,38 +9,50 @@ import {
 import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
 
-export function ChatBubbleUser({ text, subtype = null, file = null }) {
+export function ChatBubbleUser({
+  text,
+  subtype = null,
+  file = null,
+  filename,
+  date,
+}) {
   return (
     (!!text || !!file) && (
       <div className="chat_bubble_container user">
         <div className="chat_bubble user">
-          {subtype === "image" ? (
+          {!!text && (
+            <div className="flex select-text text-wrap max-w-[30vw]">
+              {text}
+            </div>
+          )}
+
+          {subtype === "image" && (
             <div className="flex flex-col items-center gap-2 max-w-[250px] whitespace-nowrap text-ellipsis overflow-hidden">
               <img
                 src={file}
                 width={"250px"}
                 height={"250px"}
                 content-type="image/png"
-                className="rounded-2xl mt-3"
+                className="rounded-2xl mt-1"
               />
-              <Chip
-                color="default"
-                size="sm"
-                className="text-white bg-opacity-70"
-              >
-                {text}
-              </Chip>
+              {filename && (
+                <Chip
+                  color="default"
+                  size="sm"
+                  className="text-white bg-opacity-70 max-w-[250px]"
+                >
+                  {filename}
+                </Chip>
+              )}
             </div>
-          ) : (
-            !!text &&
-            !file && (
-              <div className="flex select-text text-wrap max-w-[30vw]">
-                {text}
-              </div>
-            )
           )}
 
           {subtype === "pdf" && <PdfContainer file={file} chat_bubble={true} />}
+        </div>
+        <div className="flex justify-end">
+          <span className="text-xs text-white text-opacity-45 flex flex-col select-text pt-[2px]">
+            {date}
+          </span>
         </div>
       </div>
     )
@@ -56,11 +68,12 @@ export function ChatBubbleBot({
   setConversationHistory,
   conversationHistory,
   disclaimer,
+  date,
 }) {
   const ComponentIfImage = () => (
     <>
       <div className="chat_bubble bg-zinc-800">
-        <div className="text-md font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
+        <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
           <span>Here is your generated image:</span>
 
           <img
@@ -71,7 +84,7 @@ export function ChatBubbleBot({
             className="rounded-3xl my-2"
           />
 
-          <div className="flex gap-1 justify-center flex-wrap">
+          <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
             {text.split(",").map((keyword) => (
               <Chip color="default" size="sm">
                 {keyword.trim()}
@@ -80,7 +93,9 @@ export function ChatBubbleBot({
           </div>
         </div>
       </div>
-      <ChatBubble_Actions_Image src={image} />
+      <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
+        {date}
+      </span>
     </>
   );
 
@@ -102,28 +117,40 @@ export function ChatBubbleBot({
         </div>
       </div>
 
-      <ChatBubble_Actions
-        loading={loading}
-        text={text}
-        setConversationHistory={setConversationHistory}
-        conversationHistory={conversationHistory}
-        index={index}
-      />
+      <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
+        {date}
+      </span>
     </>
   );
 
   return (
     (!!text || loading || isImage) && (
-      <div className="chatbubblebot_parent ">
-        <Avatar src={smiley} className="smiley_avatar" />
+      <div>
+        <div className="chatbubblebot_parent ">
+          <Avatar src={smiley} className="smiley_avatar" />
 
-        {loading ? (
-          <div className="pingspinner" />
-        ) : (
-          <div className="chat_bubble_container ">
-            {isImage ? <ComponentIfImage /> : <ComponentsIfNotImage />}
-          </div>
-        )}
+          {loading ? (
+            <div className="pingspinner" />
+          ) : (
+            <div className="chat_bubble_container ">
+              {isImage ? <ComponentIfImage /> : <ComponentsIfNotImage />}
+            </div>
+          )}
+        </div>
+
+        <div className="pl-12">
+          {isImage ? (
+            <ChatBubble_Actions_Image src={image} />
+          ) : (
+            <ChatBubble_Actions
+              loading={loading}
+              text={text}
+              setConversationHistory={setConversationHistory}
+              conversationHistory={conversationHistory}
+              index={index}
+            />
+          )}
+        </div>
       </div>
     )
   );

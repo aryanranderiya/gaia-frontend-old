@@ -35,7 +35,7 @@ export function ChatBubble_Actions({
   return (
     <>
       {!loading && (
-        <div className="flex py-2 w-fit gap-2 items-center">
+        <div className="flex w-fit gap-2 items-center">
           <Button
             variant="light"
             className="w-fit p-0 h-fit rounded-md"

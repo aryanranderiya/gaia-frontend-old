@@ -1,41 +1,67 @@
 import * as React from "react";
 import { NoteDoneIcon, Cancel01Icon, SentIcon } from "../icons";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@nextui-org/modal";
+import { Spinner } from "@nextui-org/spinner";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
 import { PdfContainer } from "./PdfComponent";
 import { toast } from "sonner";
 import api from "../../apiaxios";
+import imageCompression from "browser-image-compression";
+import fetchDate from "../Chat/fetchDate";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../Shadcn/Dialog";
 
 export default function FileUpload({
+  isImage,
   setConversationHistory,
   fileInputRef,
   conversationHistory,
 }) {
   const [file, setFile] = React.useState(null);
+  const [fileLoading, setFileLoading] = React.useState(false);
   const [textContent, setTextContent] = React.useState("");
   const [isValid, setIsValid] = React.useState(false);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const [botResponse, setBotResponse] = React.useState(null);
+
+  React.useEffect(() => {
+    if (open === false) closeModal();
+  }, [open]);
 
   const closeModal = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
-    setIsModalOpen(false);
     setTextContent("");
     setFile(null);
   };
 
-  const handleFileSelect = (event) => {
+  const handleFileSelect = async (event) => {
+    setFileLoading(true);
     const selectedFile = event.target.files[0];
     if (!selectedFile) return;
-    setIsModalOpen(true);
-    setFile(selectedFile);
+    setOpen(true);
+
+    console.log(selectedFile);
+    if (isImage && selectedFile.size > 2000000) {
+      try {
+        const compressedFile = await imageCompression(selectedFile, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        });
+        setFile(compressedFile);
+        setFileLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setFile(selectedFile);
+      setFileLoading(false);
+    }
   };
 
   function updateWithResponse() {
@@ -56,20 +82,27 @@ export default function FileUpload({
     updateWithResponse();
   }, [botResponse]);
 
-  const submitPdf = async () => {
+  const submitForm = async () => {
     setIsValid(textContent.trim() === "");
     if (textContent.trim() === "") return;
 
-    console.log(textContent);
-
     closeModal();
+    setOpen(false);
     setConversationHistory((prevHistory) => [
       ...prevHistory,
-      { type: "user", response: textContent, subtype: "pdf", file: file },
+      {
+        type: "user",
+        response: textContent,
+        subtype: isImage ? "image" : "pdf",
+        file: isImage ? URL.createObjectURL(file) : file,
+        date: fetchDate(),
+        filename: file.name,
+      },
       {
         type: "bot",
         loading: true,
         disclaimer: "GAIA can make mistakes. Check important info.",
+        date: fetchDate(),
         response: "",
       },
     ]);
@@ -79,11 +112,15 @@ export default function FileUpload({
     formData.append("file", file);
 
     try {
-      const response = await api.post("/document", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await api.post(
+        isImage ? "/image" : "/document",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log(response);
       setBotResponse(response.data.response);
     } catch (error) {
@@ -107,7 +144,7 @@ export default function FileUpload({
       setTextContent((text) => text + "\n");
     } else if (event.key === "Enter" && textContent.trim() !== "") {
       event.preventDefault();
-      submitPdf();
+      submitForm();
     }
   };
 
@@ -116,26 +153,35 @@ export default function FileUpload({
       <input
         type="file"
         id="fileInput"
-        accept="application/pdf"
+        accept={isImage ? "image/png,image/jpeg" : "application/pdf"}
         style={{ display: "none" }}
         ref={fileInputRef}
         onChange={handleFileSelect}
       />
 
-      <Modal
-        className="dark text-foreground w-[400px]"
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      >
-        <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">
-            Your File Upload
-          </ModalHeader>
-          <ModalBody>
-            <PdfContainer file={file} />
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="bg-zinc-900 text-white w-[400px] md:rounded-2xl rounded-2xl border-none">
+          <DialogHeader>
+            <DialogTitle> Your File Upload</DialogTitle>
+          </DialogHeader>
+          <div>
+            {fileLoading ? (
+              <div className="h-[250px] w-[350px] bg-black bg-opacity-40 rounded-3xl flex justify-center items-center">
+                <Spinner size="lg" color="primary" />
+              </div>
+            ) : isImage && !!file ? (
+              <img
+                src={URL.createObjectURL(file)}
+                className="rounded-3xl my-2 object-cover h-[250px] w-[350px]"
+              />
+            ) : (
+              <PdfContainer file={file} />
+            )}
+
             <Textarea
-              label="What do you want to do with this file?"
-              placeholder="e.g - Summarise this pdf"
+              className="dark mt-4"
+              label={`What do you want to do with this ${isImage ? "image" : "file"}?`}
+              placeholder={`e.g - ${isImage ? "What is in this image?" : "Summarise this document"}`}
               startContent={<NoteDoneIcon />}
               maxRows={3}
               minRows={2}
@@ -144,33 +190,38 @@ export default function FileUpload({
               variant="shadow"
               color="primary"
               value={textContent}
-              onValueChange={(e) => {
-                setTextContent(e);
-                setIsValid(textContent.trim() == "");
-              }}
               errorMessage="This is a required input field."
               isInvalid={isValid}
               spellCheck={false}
               size="large"
               onKeyDown={handleKeyDown}
+              onValueChange={(value) => {
+                setTextContent(value);
+                setIsValid(value.trim() == "");
+              }}
             />
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" variant="flat" onClick={closeModal}>
+          </div>
+          <DialogFooter className="flex flex-row !justify-between w-full">
+            <Button
+              color="danger"
+              variant="flat"
+              onClick={() => setOpen(false)}
+              startContent={<Cancel01Icon color="danger" width="20" />}
+            >
               Cancel
             </Button>
 
             <Button
               color="primary"
-              onClick={submitPdf}
+              onClick={submitForm}
               endContent={<SentIcon color="black" width="20" />}
               disabled={isValid}
             >
               Send
             </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
