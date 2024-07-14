@@ -8,7 +8,7 @@ import {
 } from "./ChatBubble_Actions";
 import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
-
+import * as React from "react";
 export function ChatBubbleUser({
   text,
   subtype = null,
@@ -69,76 +69,97 @@ export function ChatBubbleBot({
   conversationHistory,
   disclaimer,
   date,
+  userinputType,
 }) {
-  const ComponentIfImage = () => (
-    <>
-      <div className="chat_bubble bg-zinc-800">
-        <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
-          <span>Here is your generated image:</span>
+  const [component, setComponent] = React.useState(<></>);
+  React.useEffect(() => {
+    if (isImage)
+      setComponent(
+        <>
+          <div className="chat_bubble bg-zinc-800">
+            <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
+              <span>Here is your generated image:</span>
 
-          <img
-            src={image}
-            width={"250px"}
-            height={"250px"}
-            content-type="image/png"
-            className="rounded-3xl my-2"
-          />
+              <img
+                src={image}
+                width={"250px"}
+                height={"250px"}
+                content-type="image/png"
+                className="rounded-3xl my-2"
+              />
 
-          <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
-            {text.split(",").map((keyword) => (
-              <Chip color="default" size="sm">
-                {keyword.trim()}
-              </Chip>
-            ))}
+              <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
+                {text.split(",").map((keyword) => (
+                  <Chip color="default" size="sm">
+                    {keyword.trim()}
+                  </Chip>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
-        {date}
-      </span>
-    </>
-  );
+          <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
+            {date}
+          </span>
+        </>
+      );
+    else if (userinputType === "generate_image")
+      setComponent(<div className="chat_bubble bg-zinc-800"></div>);
+    else
+      setComponent(
+        <>
+          <div className="chat_bubble bg-zinc-800">
+            <div className="flex flex-col gap-3">
+              <Markdown className="select-text">{text.toString()}</Markdown>
 
-  const ComponentsIfNotImage = () => (
-    <>
-      <div className="chat_bubble bg-zinc-800">
-        <div className="flex flex-col gap-3">
-          <Markdown className="select-text">{text.toString()}</Markdown>
+              {!!disclaimer && (
+                <Chip
+                  size="sm"
+                  className="text-xs font-medium text-foreground-700"
+                  startContent={<Alert01Icon height="17" />}
+                >
+                  {disclaimer}
+                </Chip>
+              )}
+            </div>
+          </div>
 
-          {!!disclaimer && (
-            <Chip
-              size="sm"
-              className="text-xs font-medium text-foreground-700"
-              startContent={<Alert01Icon height="17" />}
-            >
-              {disclaimer}
-            </Chip>
-          )}
-        </div>
-      </div>
+          <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
+            {date}
+          </span>
+        </>
+      );
+  }, [isImage, text, image, date, userinputType, disclaimer]);
 
-      <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
-        {date}
-      </span>
-    </>
-  );
+  const actionsRef = React.useRef(null);
+  const handleMouseOver = () => {
+    if (loading) return;
+    actionsRef.current.style.opacity = 1;
+    actionsRef.current.style.visibility = "visible";
+  };
+
+  const handleMouseOut = () => {
+    actionsRef.current.style.opacity = 0;
+    actionsRef.current.style.visibility = "hidden";
+  };
 
   return (
     (!!text || loading || isImage) && (
-      <div>
-        <div className="chatbubblebot_parent ">
+      <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+        <div className="chatbubblebot_parent">
           <Avatar src={smiley} className="smiley_avatar" />
 
           {loading ? (
             <div className="pingspinner" />
           ) : (
-            <div className="chat_bubble_container ">
-              {isImage ? <ComponentIfImage /> : <ComponentsIfNotImage />}
-            </div>
+            <div className="chat_bubble_container ">{component}</div>
           )}
         </div>
 
-        <div className="pl-12">
+        <div
+          className="pl-12 transition-all"
+          ref={actionsRef}
+          style={{ opacity: 0 }}
+        >
           {isImage ? (
             <ChatBubble_Actions_Image src={image} />
           ) : (

@@ -203,22 +203,23 @@ main {
 
 .chat_bubble span strong,
 .chat_bubble span em,
-.chat_bubble span a {
+.chat_bubble a {
   margin: 0 3px;
 }
 
-.chat_bubble p pre {
-  margin-top: 20px;
+.chat_bubble pre {
+  margin: 20px 0;
   padding: 20px;
   background: #000000ab;
   border-radius: 15px;
+  text-wrap: wrap;
 }
 
-.chat_bubble code {
+/* .chat_bubble code {
   padding: 3px 10px;
   background: #000000ab;
   border-radius: 5px;
-}
+} */
 
 .chat_bubble span a {
   color: rgb(0, 153, 255);

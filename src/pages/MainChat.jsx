@@ -8,6 +8,24 @@ import { ChatBubbleBot, ChatBubbleUser } from "../components/Chat/ChatBubbles";
 import LoadTranslationModel from "../components/Translation/LoadTranslationModel";
 import fetchDate from "../components/Chat/fetchDate";
 
+function setLastBotItem(conversationHistory, setConversationHistory, data) {
+  if (conversationHistory.length > 0 && data.length > 0) {
+    const updatedHistory = [...conversationHistory];
+    const lastItemIndex = updatedHistory.length - 1;
+    const lastItem = updatedHistory[lastItemIndex];
+    const lastResponse = lastItem.response;
+    if (typeof data === "object") data = data.join("");
+
+    if (lastItem.type === "bot") {
+      if (lastResponse !== data && !lastItem.isImage) {
+        lastItem.response = data;
+        lastItem.loading = false;
+      }
+      setConversationHistory(updatedHistory);
+    }
+  }
+}
+
 export default function MainChat() {
   const [conversationHistory, setConversationHistory] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -23,7 +41,7 @@ export default function MainChat() {
   };
 
   React.useEffect(() => {
-    convoRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    convoRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [conversationHistory]);
 
   React.useEffect(() => {
@@ -31,23 +49,23 @@ export default function MainChat() {
   }, []);
 
   React.useEffect(() => {
-    console.log("test", conversationHistory);
-    if (conversationHistory.length > 0 && data.length > 0) {
-      const updatedHistory = [...conversationHistory];
-      const lastItemIndex = updatedHistory.length - 1;
-      const lastItem = updatedHistory[lastItemIndex];
-      const lastResponse = lastItem.response;
-      const joinedData = data.join("");
-
-      if (lastItem.type === "bot") {
-        if (lastResponse !== joinedData && !lastItem.isImage) {
-          lastItem.response = joinedData;
-          lastItem.loading = false;
-        }
-        setConversationHistory(updatedHistory);
-      }
-    }
+    console.log(conversationHistory);
+    setLastBotItem(conversationHistory, setConversationHistory, data);
   }, [data, conversationHistory]);
+
+  function checkIntent(message, controller) {
+    console.log(message);
+    const type = message?.type;
+
+    switch (type.toLowerCase()) {
+      case "image":
+        setData("this is an image");
+        return;
+
+      default:
+        break;
+    }
+  }
 
   const fetchData = async (searchbarText) => {
     setConversationHistory((prevHistory) => [
@@ -81,14 +99,16 @@ export default function MainChat() {
             setData([]);
             controller.abort();
             setLoading(false);
-          }, 500);
+          }, 50);
           return;
         }
 
         let dataJson = JSON.parse(event.data);
-        let responseData = dataJson.response;
-        if (responseData === "") setData((data) => [...data, "\n"]);
-        else setData((data) => [...data, responseData]);
+        let response = dataJson.response;
+
+        if (typeof response === "object") checkIntent(response, controller);
+        else if (response === "") setData((data) => [...data, "\n"]);
+        else setData((data) => [...data, response]);
       },
       onclose() {
         setTimeout(() => {
@@ -129,6 +149,7 @@ export default function MainChat() {
                   image={message.imageUrl}
                   conversationHistory={conversationHistory}
                   disclaimer={message.disclaimer}
+                  userinputType={message.userinputType}
                   date={message.date}
                 />
               ) : (

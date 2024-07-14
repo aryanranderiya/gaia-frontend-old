@@ -106,12 +106,12 @@ export default function SearchbarLeftDropdown({
             </div>
           </DropdownItem>
 
-          <DropdownItem
+          {/* <DropdownItem
             key="calendar"
             className="w-fit rounded-full dark hover:bg-zinc-800 transition-all"
           >
             <Calendar01Icon color="#00bbff" />
-          </DropdownItem>
+          </DropdownItem> */}
         </DropdownMenu>
       </Dropdown>
 

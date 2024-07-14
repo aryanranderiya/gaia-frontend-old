@@ -8,10 +8,10 @@ import {
   LockPasswordIcon,
   IdentityCardIcon,
   Mail01Icon,
-  GoogleColoured,
   Alert02Icon,
   Tick02Icon,
   Cancel01Icon,
+  GoogleColoured,
 } from "../components/icons";
 import * as React from "react";
 import { ColoredLine } from "../components/HorizontalRuler";
@@ -119,17 +119,12 @@ export default function LoginSignup({ isLogin = false }) {
     }
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      };
-
       const response = await api.post(
         isLogin ? "/login" : "/signup",
         formData,
-        config
+        {
+          withCredentials: true,
+        }
       );
 
       console.log(response);
@@ -316,9 +311,9 @@ export default function LoginSignup({ isLogin = false }) {
           {isLogin ? "Login" : "Signup"}
         </Button>
 
-        <ColoredLine color="#262626" className="my-4" width="100%" />
+        {/* <ColoredLine color="#262626" className="my-4" width="100%" /> */}
 
-        <Button
+        {/* <Button
           color="default"
           variant="shadow"
           startContent={<GoogleColoured width="20px" height="20px" />}
@@ -326,7 +321,7 @@ export default function LoginSignup({ isLogin = false }) {
         >
           {isLogin ? "Signup" : "Login"}
           &nbsp;with Google
-        </Button>
+        </Button> */}
       </div>
     </form>
   );
