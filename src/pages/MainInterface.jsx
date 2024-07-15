@@ -13,14 +13,7 @@ import Sidebar from "../layouts/Sidebar";
 import MainChat from "./MainChat";
 import Explore from "./Explore";
 import { apiauth } from "../apiaxios";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "../components/Shadcn/Dialog";
-import { Button } from "@nextui-org/button";
+import { useNotLoggedDialogOpen } from "../contexts/NotLoggedDialogOpen";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -28,8 +21,9 @@ export default function MainInterface() {
   const sidebarRef = React.useRef(null);
   const contentContainerRef = React.useRef(null);
   const [isSidebarVisible, setSidebarVisible] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
+
+  const { setNotLoggedDialogOpen } = useNotLoggedDialogOpen();
 
   React.useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
@@ -62,61 +56,34 @@ export default function MainInterface() {
   React.useEffect(() => {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
 
+    // formData = new FormData();
+    // formData.append("myfield", "myvalue");
+
+    // config = {
+    //   url: "http://somedomain",
+    //   method: "post",
+    //   withCredentials: true,
+    //   data: formData,
+    // };
+    // axios
+    //   .request(config)
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {});
+
     apiauth
-      .post("http://127.0.0.1:8000/refreshToken")
-      .then((response) => {
-        console.log(response);
-      })
+      .get("/isTokenValid")
+      .then((response) => {})
       .catch((error) => {
         const status = error?.response?.status;
-        if (status === 401 || status > 400) setOpen(true);
+        if (status === 401 || status > 400) setNotLoggedDialogOpen(true);
         console.error("Error fetching data:", error);
       });
   }, []);
 
   return (
     <>
-      <Dialog
-        open={open}
-        onOpenChange={(e) => {
-          if (!e) navigate("/login");
-        }}
-        className="rounded-full"
-      >
-        <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 md:rounded-2xl rounded-2xl max-w-[350px]">
-          <DialogHeader>
-            <DialogTitle className="text-center text-2xl  select-text">
-              Log in
-            </DialogTitle>
-            <DialogDescription className="text-center select-text text-sm">
-              You have been Signed out.
-              <br />
-              Please login again to use GAIA!
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="flex justify-center mt-2 gap-2">
-            <Button
-              size="md"
-              variant="flat"
-              color="primary"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </Button>
-
-            <Button
-              size="md"
-              variant="flat"
-              color="primary"
-              onClick={() => navigate("/signup")}
-            >
-              Signup
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       <div className="main_container">
         <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 

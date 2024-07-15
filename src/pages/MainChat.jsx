@@ -49,7 +49,7 @@ export default function MainChat() {
   }, []);
 
   React.useEffect(() => {
-    console.log(conversationHistory);
+    // console.log(conversationHistory);
     setLastBotItem(conversationHistory, setConversationHistory, data);
   }, [data, conversationHistory]);
 

@@ -45,7 +45,7 @@ export default function LoginSignup({ isLogin = false }) {
   const [lastNameValid, setLastNameValid] = React.useState(true);
   const [isCommonPassword, setIsCommonPassword] = React.useState(false);
   const [capsLockOn, setCapsLockOn] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [data, setData] = React.useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -85,17 +85,24 @@ export default function LoginSignup({ isLogin = false }) {
   };
 
   const handleSubmit = async () => {
+    const formData = new FormData();
+
     setLoading(true);
 
     if (!isLogin) {
-      setEmailValid(validateEmail(formData.email));
-      setFirstNameValid(validateName(formData.firstName));
+      setFirstNameValid(validateName(data.firstName));
+      setLastNameValid(validateName(data.lastName));
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
     }
-    setLastNameValid(validateName(formData.lastName));
-    setPasswordValid(validatePassword(formData.password));
 
-    if (validatePassword(formData.password)) {
-      const findCommonPassword = await CheckCommonPassword(formData.password);
+    setEmailValid(validateEmail(data.email));
+    setPasswordValid(validatePassword(data.password));
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    if (validatePassword(data.password)) {
+      const findCommonPassword = await CheckCommonPassword(data.password);
       setPasswordValid(!findCommonPassword);
       setIsCommonPassword(findCommonPassword);
       if (findCommonPassword) {
@@ -105,10 +112,10 @@ export default function LoginSignup({ isLogin = false }) {
     }
 
     const emailpasswordvalid =
-      !validateEmail(formData.email) || !validatePassword(formData.password);
+      !validateEmail(data.email) || !validatePassword(data.password);
 
     const namesvalid =
-      !validateName(formData.firstName) || !validateName(formData.lastName);
+      !validateName(data.firstName) || !validateName(data.lastName);
 
     if (
       (!isLogin && (namesvalid || emailpasswordvalid)) ||
@@ -144,7 +151,9 @@ export default function LoginSignup({ isLogin = false }) {
       CreateConfetti(2000);
     } catch (e) {
       console.error(e);
-      const errorMessage = e.response ? e.response.data.detail : e.toString();
+
+      const errorMessage = e?.response ? e?.response?.data?.detail : e;
+
       toast.error("Login failed", {
         unstyled: true,
         classNames: {
@@ -154,7 +163,7 @@ export default function LoginSignup({ isLogin = false }) {
         },
         duration: 3000,
         icon: <Cancel01Icon height="23" color="foreground" />,
-        description: errorMessage,
+        description: errorMessage.toString(),
       });
     }
     setLoading(false);
@@ -181,10 +190,10 @@ export default function LoginSignup({ isLogin = false }) {
               size="lg"
               color="primary"
               isInvalid={!firstNameValid}
-              value={formData["firstName"]}
+              value={data["firstName"]}
               onValueChange={(value) => {
                 setFirstNameValid(validateName(value.trim()));
-                setFormData((oldFormData) => ({
+                setData((oldFormData) => ({
                   ...oldFormData,
                   firstName: value.trim(),
                 }));
@@ -193,7 +202,7 @@ export default function LoginSignup({ isLogin = false }) {
 
             <Input
               label="Last Name"
-              value={formData["lastName"]}
+              value={data["lastName"]}
               fullWidth
               placeholder="Doe"
               variant="faded"
@@ -206,7 +215,7 @@ export default function LoginSignup({ isLogin = false }) {
               isInvalid={!lastNameValid}
               onValueChange={(value) => {
                 setLastNameValid(validateName(value.trim()));
-                setFormData((oldFormData) => ({
+                setData((oldFormData) => ({
                   ...oldFormData,
                   lastName: value.trim(),
                 }));
@@ -233,7 +242,7 @@ export default function LoginSignup({ isLogin = false }) {
           isInvalid={!emailValid}
           onValueChange={(value) => {
             setEmailValid(validateEmail(value.trim()));
-            setFormData((oldFormData) => ({
+            setData((oldFormData) => ({
               ...oldFormData,
               email: value.trim(),
             }));
@@ -261,7 +270,7 @@ export default function LoginSignup({ isLogin = false }) {
           onKeyDown={handleKeyDown}
           onValueChange={(value) => {
             setPasswordValid(validatePassword(value));
-            setFormData((oldFormData) => ({
+            setData((oldFormData) => ({
               ...oldFormData,
               password: value,
             }));
