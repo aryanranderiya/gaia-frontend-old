@@ -1,13 +1,13 @@
 import * as React from "react";
-import Page1 from "../components/FeedbackForm/Page1";
-import Page2 from "../components/FeedbackForm/Page2";
-import Page3 from "../components/FeedbackForm/Page3";
-import Page4 from "../components/FeedbackForm/Page4";
-import Page5 from "../components/FeedbackForm/Page5";
-import Page6 from "../components/FeedbackForm/Page6";
-import Page7 from "../components/FeedbackForm/Page7";
-import Page8 from "../components/FeedbackForm/Page8";
-import NextPrevButtons from "../components/FeedbackForm/NextPrevButtons";
+import Page1 from "@/components/FeedbackForm/Page1";
+import Page2 from "@/components/FeedbackForm/Page2";
+import Page3 from "@/components/FeedbackForm/Page3";
+import Page4 from "@/components/FeedbackForm/Page4";
+import Page5 from "@/components/FeedbackForm/Page5";
+import Page6 from "@/components/FeedbackForm/Page6";
+import Page7 from "@/components/FeedbackForm/Page7";
+import Page8 from "@/components/FeedbackForm/Page8";
+import NextPrevButtons from "@/components/FeedbackForm/NextPrevButtons";
 
 export const initialFormData = {
   firstName: "",

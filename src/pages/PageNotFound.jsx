@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/button";
 import { useNavigate } from "react-router-dom";
-import { LinkBackwardIcon } from "../components/icons";
+import { LinkBackwardIcon } from "@/components/icons";
 
 export default function PageNotFound() {
   const navigate = useNavigate();

@@ -10,13 +10,7 @@ import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { toast } from "sonner";
 import { Tooltip } from "@nextui-org/tooltip";
 
-export function ChatBubble_Actions({
-  loading,
-  text,
-  setConversationHistory,
-  conversationHistory,
-  index,
-}) {
+export function ChatBubble_Actions({ loading, text, index }) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard", {
@@ -57,8 +51,6 @@ export function ChatBubble_Actions({
 
           <TranslateDropdown
             text={text}
-            setConversationHistor={setConversationHistory}
-            conversationHistory={conversationHistory}
             index={index}
             trigger={
               <Button

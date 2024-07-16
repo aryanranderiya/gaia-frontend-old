@@ -4,7 +4,7 @@ import { UserCircleIcon } from "../icons";
 
 export default function UserContainer() {
   return (
-    <div className="user_container p-4">
+    <div className="user_container p-4 absolute bottom-0 left-0">
       <div className="user_container_inner">
         <User
           name="Aryan"

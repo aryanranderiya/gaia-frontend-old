@@ -1,4 +1,4 @@
-import Navbar from "../components/LandingPage/Navbar";
+import Navbar from "@/components/LandingPage/Navbar";
 import LandingPage from "../pages/LandingPage";
 import { Route, Routes } from "react-router-dom";
 import FeedbackForm from "../pages/FeedbackForm";

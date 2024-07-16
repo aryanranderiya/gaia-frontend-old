@@ -15,13 +15,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../Shadcn/Dialog";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function FileUpload({
-  isImage,
-  setConversationHistory,
-  fileInputRef,
-  conversationHistory,
-}) {
+export default function FileUpload({ isImage, fileInputRef }) {
+  const { conversationHistory, setConversationHistory } = useConvoHistory();
+
   const [file, setFile] = React.useState(null);
   const [fileLoading, setFileLoading] = React.useState(false);
   const [textContent, setTextContent] = React.useState("");

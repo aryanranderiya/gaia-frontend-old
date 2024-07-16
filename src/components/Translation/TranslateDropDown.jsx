@@ -16,14 +16,11 @@ import { Avatar } from "@nextui-org/avatar";
 import { toast } from "sonner";
 import { languages } from "./Languages";
 import axios from "axios";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function TranslateDropdown({
-  trigger,
-  text,
-  setConversationHistory,
-  conversationHistory,
-  index,
-}) {
+export default function TranslateDropdown({ trigger, text, index }) {
+  const { conversationHistory, setConversationHistory } = useConvoHistory();
+
   const [sourceLang, setSourceLang] = React.useState("english");
   const [targetLang, setTargetLang] = React.useState("en");
 

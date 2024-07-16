@@ -7,35 +7,25 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
 import LoadTranslationModel from "@/components/Translation/LoadTranslationModel";
 import fetchDate from "@/components/Chat/fetchDate";
+import { useChatsListContext } from "@/contexts/ChatsList";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 import api from "@/apiaxios";
 import { useNavigate, useParams } from "react-router-dom";
 
-function setLastBotItem(
-  conversationHistory,
-  setConversationHistory,
-  data_array,
-  conversationID
-) {
-  if (!!conversationHistory && data_array.length > 0) {
-    const previousHistory = { ...conversationHistory };
-    const currentConvo = previousHistory[conversationID];
-    const messages = currentConvo.messages;
-    const lastItemIndex = messages.length - 1;
-    const lastItem = messages[lastItemIndex];
-    if (typeof data_array === "object") data_array = data_array.join("");
+function setLastBotItem(conversationHistory, setConversationHistory, data) {
+  if (conversationHistory.length > 0 && data.length > 0) {
+    const updatedHistory = [...conversationHistory];
+    const lastItemIndex = updatedHistory.length - 1;
+    const lastItem = updatedHistory[lastItemIndex];
+    const lastResponse = lastItem.response;
+    if (typeof data === "object") data = data.join("");
 
     if (lastItem.type === "bot") {
-      if (
-        (lastItem?.response !== data_array || !lastItem?.response) &&
-        !lastItem.isImage
-      ) {
-        console.log("THIS IS A TESTHASJKDXHADSULH", lastItem?.response);
-        lastItem.response = data_array;
+      if (lastResponse !== data && !lastItem.isImage) {
+        lastItem.response = data;
         lastItem.loading = false;
       }
-
-      setConversationHistory(previousHistory);
+      setConversationHistory(updatedHistory);
     }
   }
 }
@@ -49,15 +39,8 @@ export default function MainChat() {
   const inputRef = React.useRef(null);
   const effectHasRunRef = React.useRef(false);
   const convoRef = React.useRef(null);
+  // const { setChatsList, chatsList } = useChatsListContext();
   const navigate = useNavigate();
-  const { convoIdParam } = useParams();
-  const [convoIdParamState, setConvoIdParamState] = React.useState(null);
-
-  React.useEffect(() => {
-    setConvoIdParamState(convoIdParam);
-    // if (!conversationHistory.includes(convoIdParam) && !!convoIdParam)
-    //   navigate("/404");
-  }, [convoIdParam]);
 
   const focusInput = () => {
     setTimeout(() => {
@@ -65,11 +48,13 @@ export default function MainChat() {
     }, 10);
   };
 
-  const fetchConversationDescription = async (searchbarText) => {
+  let { conversationID } = useParams();
+
+  const fetchConversationName = async () => {
     const response = await api.post(
       "/chatNoStream",
       {
-        message: `Summarise what the message/question '${searchbarText}' is about, in under 4-5 words. Just respond with the summary.`,
+        message: `Summarise what the message/question '${conversationHistory[0].response}' is about, in under 4-5 words. Just respond with the summary.`,
       },
       {
         headers: {
@@ -78,78 +63,76 @@ export default function MainChat() {
       }
     );
 
-    console.log(response?.data?.response.toString());
+    console.log(response);
     return response?.data?.response.toString().replace('"', "") || "New Chat";
   };
 
   React.useEffect(() => {
     convoRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    setConversationMessages(conversationHistory[conversationID]?.messages);
   }, [conversationHistory]);
-
-  React.useEffect(() => {
-    if (!!convoIdParamState && !!conversationHistory)
-      setConversationMessages(conversationHistory[convoIdParamState]?.messages);
-  }, [conversationHistory, convoIdParamState]);
 
   React.useEffect(() => {
     LoadTranslationModel();
   }, []);
 
   React.useEffect(() => {
-    setLastBotItem(
-      conversationHistory,
-      setConversationHistory,
-      data,
-      convoIdParamState
-    );
+    console.log(conversationHistory);
+    setLastBotItem(conversationHistory, setConversationHistory, data);
   }, [data, conversationHistory]);
-  
+
+  function checkIntent(message, controller) {
+    //   const type = message?.type;
+    //   switch (type.toLowerCase()) {
+    //     case "image":
+    //       setData("this is an image");
+    //       return;
+    //     default:
+    //       break;
+    //   }
+  }
+
   const fetchData = async (searchbarText) => {
-    const currentMessages = [
+    await (async () => {
+      if (
+        !effectHasRunRef.current &&
+        conversationHistory.length > 1 &&
+        !loading
+      ) {
+        try {
+          const name = await fetchConversationName();
+          const convoID = crypto.randomUUID();
+          setChatsList((oldlist) => [...oldlist, { id: convoID, name: name }]);
+          navigate(`/try/chat/${convoID}`);
+          effectHasRunRef.current = true;
+        } catch (err) {
+          console.log("Error occured when fetching books");
+        }
+      }
+    })();
+
+    setConversationHistory((prevHistory) => [
+      ...prevHistory,
       {
-        type: "user",
-        response: searchbarText,
-        date: fetchDate(),
-      },
-      {
-        type: "bot",
-        loading: true,
-      },
-    ];
-
-    if (!effectHasRunRef.current && !loading) {
-      const convoID = crypto.randomUUID();
-      navigate(`/try/chat/${convoID}`);
-
-      setConversationHistory((oldHistory) => ({
-        ...oldHistory,
-        [convoID]: {
-          description: "New Chat",
-          messages: currentMessages,
-        },
-      }));
-
-      fetchConversationDescription(searchbarText).then((description) => {
-        setConversationHistory((oldHistory) => ({
-          ...oldHistory,
-          [convoID]: {
-            ...oldHistory[convoID],
-            description: description || "New Chat",
-          },
-        }));
-      });
-    } else {
-      setConversationHistory((oldHistory) => ({
-        ...oldHistory,
-        [convoIdParamState]: {
-          ...oldHistory[convoIdParamState],
+        [conversationID]: {
+          description: "",
           messages: [
-            ...(oldHistory[convoIdParamState]?.messages || []),
-            ...currentMessages,
+            ...prevHistory[conversationID]?.messages,
+            {
+              type: "user",
+              response: searchbarText,
+              date: fetchDate(),
+            },
+            {
+              type: "bot",
+              response: "",
+              loading: true,
+              date: fetchDate(),
+            },
           ],
         },
-      }));
-    }
+      },
+    ]);
 
     const controller = new AbortController();
     await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat`, {
@@ -160,7 +143,6 @@ export default function MainChat() {
       },
       signal: controller.signal,
       body: JSON.stringify({ message: searchbarText }),
-
       onmessage(event) {
         if (event.data == "[DONE]") {
           setTimeout(() => {
@@ -171,20 +153,20 @@ export default function MainChat() {
           }, 50);
           return;
         }
+
         let dataJson = JSON.parse(event.data);
         let response = dataJson.response;
+
         if (typeof response === "object") checkIntent(response, controller);
         else if (response === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, response]);
       },
-
       onclose() {
         setTimeout(() => {
           focusInput();
           setData([]);
         }, 500);
       },
-
       onerror(err) {
         console.log("There was an error from server", err);
         focusInput();

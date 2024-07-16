@@ -1,4 +1,4 @@
-import StarterEmoji from "../components/Chat/StarterEmoji";
+import StarterEmoji from "@/components/Chat/StarterEmoji";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import {
   GoogleDriveIcon,
@@ -6,7 +6,7 @@ import {
   Timer02Icon,
   WorkflowSquare03Icon,
   Calendar01Icon,
-} from "../components/icons";
+} from "@/components/icons";
 
 export function OptionsTab(key, icon, title, content) {
   return (

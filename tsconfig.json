@@ -6,7 +6,12 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@shadcn/*": ["./src/components/Shadcn*"]
     },
 
     /* Bundler mode */
@@ -16,6 +21,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+
+    "types": ["node"],
 
     /* Linting */
     "strict": true,

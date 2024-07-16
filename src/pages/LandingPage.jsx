@@ -1,13 +1,13 @@
-import { ScrollArea } from "../components/Shadcn/ScrollArea";
-import MainInfo from "../components/LandingPage/MainInfo";
-import IntegrationCircles from "../components/LandingPage/IntegrationCircles";
-import ImagePreview from "../components/LandingPage/ImagePreview";
-import ScrollingText from "../components/LandingPage/ScrollingText";
-import TextInformation from "../components/LandingPage/TextInformation";
-import WaitListButton from "../components/LandingPage/WaitlistModal";
-import MadeBy from "../components/LandingPage/MadeBy";
-import FeedbackFormBtn from "../components/FeedbackForm/FeedbackFormBtn";
-import FeatureList from "../components/LandingPage/FeatureList";
+import { ScrollArea } from "@/components/Shadcn/ScrollArea";
+import MainInfo from "@/components/LandingPage/MainInfo";
+import IntegrationCircles from "@/components/LandingPage/IntegrationCircles";
+import ImagePreview from "@/components/LandingPage/ImagePreview";
+import ScrollingText from "@/components/LandingPage/ScrollingText";
+import TextInformation from "@/components/LandingPage/TextInformation";
+import WaitListButton from "@/components/LandingPage/WaitlistModal";
+import MadeBy from "@/components/LandingPage/MadeBy";
+import FeedbackFormBtn from "@/components/FeedbackForm/FeedbackFormBtn";
+import FeatureList from "@/components/LandingPage/FeatureList";
 
 export default function LandingPage() {
   return (

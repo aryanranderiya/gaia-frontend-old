@@ -2,7 +2,7 @@ import * as React from "react";
 import MainInterface from "./pages/MainInterface";
 import Landing from "./layouts/Landing";
 import { Route, Routes } from "react-router-dom";
-import NotLoggedIn from "./components/NotLoggedInDialog";
+import NotLoggedIn from "@/components/NotLoggedInDialog";
 
 function App() {
   return (

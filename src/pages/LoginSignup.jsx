@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Button as ShadcnButton } from "../components/Shadcn/Button";
+import { Button as ShadcnButton } from "@/components/Shadcn/Button";
 import { Link } from "react-router-dom";
 import {
   ViewIcon,
@@ -12,10 +12,10 @@ import {
   Tick02Icon,
   Cancel01Icon,
   GoogleColoured,
-} from "../components/icons";
+} from "@/components/icons";
 import * as React from "react";
-import { ColoredLine } from "../components/HorizontalRuler";
-import CreateConfetti from "../components/LandingPage/CreateConfetti";
+import { ColoredLine } from "@/components/HorizontalRuler";
+import CreateConfetti from "@/components/LandingPage/CreateConfetti";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import api from "../apiaxios";

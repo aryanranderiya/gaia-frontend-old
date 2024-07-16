@@ -4,9 +4,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "../components/Shadcn/Dialog";
+} from "@/components/Shadcn/Dialog";
 import { Button } from "@nextui-org/button";
-import { useNotLoggedDialogOpen } from "../contexts/NotLoggedDialogOpen";
+import { useNotLoggedDialogOpen } from "@/contexts/NotLoggedDialogOpen";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 

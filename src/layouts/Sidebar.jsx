@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
-import { StarsIcon, GlobalIcon } from "../components/icons";
-import Hr from "../components/HorizontalRuler";
-import ChatsList from "../components/Sidebar/ChatsList";
-import UserContainer from "../components/Sidebar/UserContainer";
-import SidebarTopButtons from "../components/Sidebar/SidebarTopButtons";
-import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
-import ComingSoonModal from "../components/ComingSoon.jsx/ComingSoonModal";
+import { StarsIcon, GlobalIcon } from "@/components/icons";
+import Hr from "@/components/HorizontalRuler";
+import ChatsList from "@/components/Sidebar/ChatsList";
+import UserContainer from "@/components/Sidebar/UserContainer";
+import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import ComingSoonModal from "@/components/ComingSoon.jsx/ComingSoonModal";
 
 export default function Sidebar({ sidebarref, toggleSidebar }) {
   const [open, setOpen] = React.useState(false);

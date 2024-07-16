@@ -7,13 +7,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
-import CloseOpenSidebarBtn from "../components/Sidebar/CloseOpenSidebar";
-import WebsiteName from "../components/TopWebsiteName";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import WebsiteName from "@/components/TopWebsiteName";
 import Sidebar from "../layouts/Sidebar";
 import MainChat from "./MainChat";
 import Explore from "./Explore";
 import { apiauth } from "../apiaxios";
-import { useNotLoggedDialogOpen } from "../contexts/NotLoggedDialogOpen";
+import { useNotLoggedDialogOpen } from "@/contexts/NotLoggedDialogOpen";
+import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -22,7 +23,6 @@ export default function MainInterface() {
   const contentContainerRef = React.useRef(null);
   const [isSidebarVisible, setSidebarVisible] = React.useState(true);
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
-
   const { setNotLoggedDialogOpen } = useNotLoggedDialogOpen();
 
   React.useEffect(() => {
@@ -56,22 +56,6 @@ export default function MainInterface() {
   React.useEffect(() => {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
 
-    // formData = new FormData();
-    // formData.append("myfield", "myvalue");
-
-    // config = {
-    //   url: "http://somedomain",
-    //   method: "post",
-    //   withCredentials: true,
-    //   data: formData,
-    // };
-    // axios
-    //   .request(config)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {});
-
     apiauth
       .get("/isTokenValid")
       .then((response) => {})
@@ -83,7 +67,7 @@ export default function MainInterface() {
   }, []);
 
   return (
-    <>
+    <ConversationHistoryProvider>
       <div className="main_container">
         <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
@@ -99,6 +83,11 @@ export default function MainInterface() {
 
           <Routes>
             <Route
+              path="chat/:convoIdParam"
+              element={<MainChat toggleSidebar={toggleSidebar} />}
+            />
+
+            <Route
               path="chat"
               element={<MainChat toggleSidebar={toggleSidebar} />}
             />
@@ -108,6 +97,6 @@ export default function MainInterface() {
           </Routes>
         </div>
       </div>
-    </>
+    </ConversationHistoryProvider>
   );
 }

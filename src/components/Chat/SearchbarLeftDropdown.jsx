@@ -14,12 +14,10 @@ import {
   Calendar01Icon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function SearchbarLeftDropdown({
-  loading,
-  setConversationHistory,
-  conversationHistory,
-}) {
+export default function SearchbarLeftDropdown({ loading }) {
+
   const fileInputRef = React.useRef(null);
   const [openImageDialog, setOpenImageDialog] = React.useState(false);
   const [isImage, setIsImage] = React.useState(false);
@@ -115,18 +113,11 @@ export default function SearchbarLeftDropdown({
         </DropdownMenu>
       </Dropdown>
 
-      <FileUpload
-        isImage={isImage}
-        fileInputRef={fileInputRef}
-        setConversationHistory={setConversationHistory}
-        conversationHistory={conversationHistory}
-      />
+      <FileUpload isImage={isImage} fileInputRef={fileInputRef} />
 
       <GenerateImage
         setOpenImageDialog={setOpenImageDialog}
         openImageDialog={openImageDialog}
-        setConversationHistory={setConversationHistory}
-        conversationHistory={conversationHistory}
       />
     </>
   );

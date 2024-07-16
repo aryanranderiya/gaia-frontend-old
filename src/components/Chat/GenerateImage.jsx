@@ -12,13 +12,11 @@ import * as React from "react";
 import { toast } from "sonner";
 import api from "../../apiaxios";
 import fetchDate from "../Chat/fetchDate";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function GenerateImage({
-  openImageDialog,
-  setOpenImageDialog,
-  setConversationHistory,
-  conversationHistory,
-}) {
+export default function GenerateImage({ openImageDialog, setOpenImageDialog }) {
+  const { conversationHistory, setConversationHistory } = useConvoHistory();
+
   const [imagePrompt, setImagePrompt] = React.useState("");
   const [isValid, setIsValid] = React.useState(false);
   const [loading, setLoading] = React.useState(false);

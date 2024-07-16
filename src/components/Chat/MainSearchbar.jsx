@@ -3,6 +3,7 @@ import * as React from "react";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 import { Textarea } from "@nextui-org/input";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
 export default function MainSearchbar({
   loading,
@@ -10,8 +11,6 @@ export default function MainSearchbar({
   handleFormSubmit,
   searchbarText,
   setSearchbarText,
-  setConversationHistory,
-  conversationHistory,
 }) {
   const [currentHeight, setHeight] = React.useState(24);
 
@@ -45,13 +44,7 @@ export default function MainSearchbar({
               inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
               innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
             }}
-            startContent={
-              <SearchbarLeftDropdown
-                loading={loading}
-                setConversationHistory={setConversationHistory}
-                conversationHistory={conversationHistory}
-              />
-            }
+            startContent={<SearchbarLeftDropdown loading={loading} />}
           />
         </form>
         <div className="flex w-full justify-end text-sm mt-1 text-gray-500">

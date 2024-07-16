@@ -9,6 +9,8 @@ import {
 import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
 import * as React from "react";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
+
 export function ChatBubbleUser({
   text,
   subtype = null,
@@ -65,14 +67,14 @@ export function ChatBubbleBot({
   loading = false,
   isImage = false,
   image = null,
-  setConversationHistory,
-  conversationHistory,
   disclaimer,
   date,
   userinputType,
 }) {
   const [component, setComponent] = React.useState(<></>);
+
   React.useEffect(() => {
+    if (loading) return;
     if (isImage)
       setComponent(
         <>
@@ -131,15 +133,19 @@ export function ChatBubbleBot({
   }, [isImage, text, image, date, userinputType, disclaimer]);
 
   const actionsRef = React.useRef(null);
+
   const handleMouseOver = () => {
-    if (loading) return;
-    actionsRef.current.style.opacity = 1;
-    actionsRef.current.style.visibility = "visible";
+    if (actionsRef.current) {
+      actionsRef.current.style.opacity = 1;
+      actionsRef.current.style.visibility = "visible";
+    }
   };
 
   const handleMouseOut = () => {
-    actionsRef.current.style.opacity = 0;
-    actionsRef.current.style.visibility = "hidden";
+    if (actionsRef.current) {
+      actionsRef.current.style.opacity = 0;
+      actionsRef.current.style.visibility = "hidden";
+    }
   };
 
   return (
@@ -155,23 +161,19 @@ export function ChatBubbleBot({
           )}
         </div>
 
-        <div
-          className="pl-12 transition-all"
-          ref={actionsRef}
-          style={{ opacity: 0 }}
-        >
-          {isImage ? (
-            <ChatBubble_Actions_Image src={image} />
-          ) : (
-            <ChatBubble_Actions
-              loading={loading}
-              text={text}
-              setConversationHistory={setConversationHistory}
-              conversationHistory={conversationHistory}
-              index={index}
-            />
-          )}
-        </div>
+        {!loading && (
+          <div
+            className="pl-12 transition-all"
+            ref={actionsRef}
+            style={{ opacity: 0 }}
+          >
+            {isImage ? (
+              <ChatBubble_Actions_Image src={image} />
+            ) : (
+              <ChatBubble_Actions loading={loading} text={text} index={index} />
+            )}
+          </div>
+        )}
       </div>
     )
   );
