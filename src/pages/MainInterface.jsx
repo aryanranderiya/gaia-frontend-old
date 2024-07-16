@@ -15,6 +15,7 @@ import Explore from "./Explore";
 import { apiauth } from "../apiaxios";
 import { useNotLoggedDialogOpen } from "@/contexts/NotLoggedDialogOpen";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
+import { useUserInfoContext } from "@/contexts/UserInfo";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -24,6 +25,7 @@ export default function MainInterface() {
   const [isSidebarVisible, setSidebarVisible] = React.useState(true);
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
   const { setNotLoggedDialogOpen } = useNotLoggedDialogOpen();
+  const { userInfo, setUserInfo } = useUserInfoContext();
 
   React.useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
@@ -57,8 +59,11 @@ export default function MainInterface() {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
 
     apiauth
-      .get("/isTokenValid")
-      .then((response) => {})
+      .get("/getUserInfo")
+      .then((response) => {
+        console.log(response);
+        setUserInfo(response?.data?.user);
+      })
       .catch((error) => {
         const status = error?.response?.status;
         if (status === 401 || status > 400) setNotLoggedDialogOpen(true);
