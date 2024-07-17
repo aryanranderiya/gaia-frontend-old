@@ -14,8 +14,12 @@ const nth = (date) => {
 
 export default function fetchDate() {
   const now = new Date();
-  const month_year = now.toLocaleString(navigator.language, {
+
+  const month = now.toLocaleString(navigator.language, {
     month: "short",
+  });
+
+  const year = now.toLocaleString(navigator.language, {
     year: "2-digit",
   });
 
@@ -28,6 +32,28 @@ export default function fetchDate() {
     .toUpperCase();
 
   const date = now.getDate();
-  // return `${time}, ${date}${nth(date)} ${month_year}`;
-  return time;
+  return {
+    fullDate: `${time}, ${date}${nth(date)} ${month} ${year}`,
+    time: time,
+    date: date,
+    month: month,
+    year: year,
+  };
+}
+
+export function parseDate(previousDate) {
+  const currentDate = fetchDate();
+  const parsedDate = { ...currentDate };
+
+  if (previousDate && previousDate.month === currentDate.month)
+    parsedDate.month = "";
+
+  if (previousDate && previousDate.year === currentDate.year)
+    parsedDate.year = "";
+
+  if (previousDate && previousDate.date === currentDate.date)
+    parsedDate.date = "";
+
+  previousDate = currentDate;
+  return `${parsedDate.time} ${parsedDate.date}${!!parsedDate.date ? nth(parsedDate.date) : ""} ${parsedDate.month} ${parsedDate.year}`.trim();
 }

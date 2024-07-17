@@ -7,8 +7,8 @@
 }
 
 *::selection {
-  color: black;
-  background: #00bbff;
+  color: #00bbff;
+  background: #00364b;
 }
 
 html,

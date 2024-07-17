@@ -30,9 +30,9 @@ function setLastBotItem(
         (lastItem?.response !== data_array || !lastItem?.response) &&
         !lastItem.isImage
       ) {
-        console.log("THIS IS A TESTHASJKDXHADSULH", lastItem?.response);
         lastItem.response = data_array;
         lastItem.loading = false;
+        lastItem.date = fetchDate();
       }
 
       setConversationHistory(previousHistory);
@@ -103,7 +103,7 @@ export default function MainChat() {
       convoIdParamState
     );
   }, [data, conversationHistory]);
-  
+
   const fetchData = async (searchbarText) => {
     const currentMessages = [
       {

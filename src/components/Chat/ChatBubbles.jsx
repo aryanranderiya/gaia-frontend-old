@@ -10,6 +10,7 @@ import { PdfContainer } from "../Documents/PdfComponent";
 import { Chip } from "@nextui-org/chip";
 import * as React from "react";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
+import fetchDate, { parseDate } from "./fetchDate";
 
 export function ChatBubbleUser({
   text,
@@ -53,7 +54,7 @@ export function ChatBubbleUser({
         </div>
         <div className="flex justify-end">
           <span className="text-xs text-white text-opacity-45 flex flex-col select-text pt-[2px]">
-            {date}
+            {parseDate(date)}
           </span>
         </div>
       </div>
@@ -100,12 +101,12 @@ export function ChatBubbleBot({
             </div>
           </div>
           <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
-            {date}
+            {parseDate(date)}
           </span>
         </>
       );
     else if (userinputType === "generate_image")
-      setComponent(<div className="chat_bubble bg-zinc-800"></div>);
+      setComponent(<div className="chat_bubble bg-zinc-800"></div>); //!TODO
     else
       setComponent(
         <>
@@ -126,7 +127,7 @@ export function ChatBubbleBot({
           </div>
 
           <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
-            {date}
+            {parseDate(date)}
           </span>
         </>
       );
