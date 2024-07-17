@@ -5,6 +5,7 @@ import FeedbackForm from "../pages/FeedbackForm";
 import PageNotFound from "../pages/PageNotFound";
 import EarlyAccess from "../pages/EarlyAccess";
 import LoginSignup from "../pages/LoginSignup";
+import Pricing from "../pages/Pricing";
 
 export default function Landing() {
   return (
@@ -13,9 +14,9 @@ export default function Landing() {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path="/feedback" element={<FeedbackForm />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/early-access" element={<EarlyAccess />} />
         <Route path="*" element={<PageNotFound />} />
-
         <Route path="/login" element={<LoginSignup isLogin={true} />} />
         <Route path="/signup" element={<LoginSignup />} />
       </Routes>

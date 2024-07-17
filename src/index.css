@@ -371,7 +371,7 @@ main {
 }
 
 .navbar_content {
-  width: 90%;
+  width: 70%;
   background-color: rgba(85, 85, 85, 0.1);
   height: 45px;
   border-radius: 1000px;
@@ -530,6 +530,99 @@ main {
   100% {
     transform: scale(1);
     opacity: 0;
+  }
+}
+
+.pricingcards_layout {
+  width: 50vw;
+  padding: 1em 0;
+  height: 60vh;
+  display: grid;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5em;
+}
+
+.pricingcards_layout div:nth-child(2) {
+  border: unset;
+}
+
+.pricingcards_layout div:nth-child(1) {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-right: solid 1px black;
+}
+
+.pricingcards_layout div:nth-child(3) {
+  border-left: solid 2px black;
+  border-right: unset;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.mostpopular_banner2 {
+  visibility: hidden;
+}
+
+@media (max-width: 1024px) {
+  .pricingcards_layout {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1em 0;
+    height: 70vh;
+    width: 90vw;
+  }
+
+  .pricingcards_layout div:nth-child(2) {
+    border-bottom-right-radius: 20px;
+    border-left: solid 2px black;
+    border: unset;
+  }
+
+  .pricingcards_layout div:nth-child(1) {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: unset;
+    border: unset;
+  }
+
+  .pricingcards_layout div:nth-child(3) {
+    border-top: solid 2px black;
+    border-left: unset;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: unset;
+  }
+}
+
+@media (max-width: 600px) {
+  .pricingcards_layout {
+    grid-template-columns: 1fr;
+    padding: 1em 5%;
+    width: 100vw;
+    height: fit-content;
+    gap: 20px;
+    margin-top: unset;
+  }
+
+  .pricingcards_layout div:nth-child(2) {
+    border-radius: 20px;
+    border: unset;
+  }
+
+  .pricingcards_layout div:nth-child(1) {
+    border-radius: 20px;
+    border: unset;
+  }
+
+  .pricingcards_layout div:nth-child(3) {
+    border-radius: 20px;
+    border: unset;
+  }
+  .mostpopular_banner {
+    visibility: hidden;
+  }
+
+  .mostpopular_banner2 {
+    visibility: visible;
   }
 }
 
