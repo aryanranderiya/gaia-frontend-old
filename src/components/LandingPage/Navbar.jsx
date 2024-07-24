@@ -75,7 +75,7 @@ export default function Navbar() {
                   <Button
                     className="w-full flex justify-between"
                     color="default"
-                    variant="flat"
+                    variant="ghost"
                     onPress={() => {
                       navigate("/");
                       setOpen(false);
@@ -88,8 +88,8 @@ export default function Navbar() {
                   </Button>
 
                   <Button
-                    className="w-full flex justify-between"
-                    variant="flat"
+                    className="w-full flex justify-between font-medium"
+                      variant="ghost"
                     color="success"
                     onPress={() => {
                       navigate("/feedback");
@@ -109,7 +109,7 @@ export default function Navbar() {
                   <WaitListButton
                     text="Waitlist Signup"
                     props={{
-                      variant: "flat",
+                      variant: "ghost",
                       size: "md",
                       radius: "md",
                       className: "font-normal",

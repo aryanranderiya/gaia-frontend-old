@@ -386,8 +386,7 @@ main {
 }
 
 .landingpage_maintext {
-  font-size: clamp(2.8em, 10vw, 7em);
-  margin: 0 !important;
+  font-size: clamp(2.8em, 10vw, 6em);
   z-index: 1;
 
   /* background: #ffffff;
