@@ -1,8 +1,12 @@
 import { Button } from "@nextui-org/button";
-import { ArrowUpRight01Icon, Menu01Icon, Home01Icon } from "../icons";
+import { Menu01Icon, Home01Icon } from "../icons";
 import { Link, useNavigate } from "react-router-dom";
 import { CommentAdd01Icon } from "../icons";
 import useMediaQuery from "../../hooks/MediaQuery";
+import * as React from "react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import WaitListButton from "./WaitlistModal";
+import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
 import {
   Sheet,
   SheetContent,
@@ -11,10 +15,6 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "../Shadcn/Sheet";
-import * as React from "react";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import WaitListButton from "./WaitlistModal";
-import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -24,17 +24,39 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar_content">
-        <span className="navbar_title">
-          <Link to="/">gaia</Link>
-        </span>
+        <Button variant="light" radius="full" size="md" onPress={() => navigate("/")}>
+          <span className="navbar_title">
+            gaia
+          </span>
+        </Button>
+        {/* 
+        <div className="flex justify-center w-full items-center">
+          <Button variant="light" radius="none" size="md" onPress={() => navigate("features")}>Features</Button>
+          <Button variant="light" radius="none" size="md" onPress={() => navigate("pricing")}>Pricing</Button>
+          <Button variant="light" radius="none" size="md" onPress={() => navigate("feedback")}>Survey</Button>
+        </div> */}
 
         {!isMobileScreen ? (
-          <div className="flex gap-3">
-            <FeedbackFormBtn props={{ size: "md" }} />
+          <div className="flex items-center gap-1">
+            <FeedbackFormBtn props={{ size: "md" }} text="Survey" />
+
+            {/* <WaitListButton
+              className="p-0"
+              props={{ size: "md", color: "default", variant: "light", endContent: <></> }}
+              text="Login"
+            />
+
+            <WaitListButton
+              className="p-0"
+              props={{ size: "md", endContent: <></> }}
+              text="Signup"
+            /> 
+          */}
+
             <WaitListButton
               className="p-0"
               props={{ size: "md" }}
-              text="Waitlist Signup"
+              text="Signup"
             />
           </div>
         ) : (

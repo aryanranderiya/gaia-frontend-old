@@ -2,7 +2,6 @@ import { ScrollArea } from "@/components/Shadcn/ScrollArea";
 import MainInfo from "@/components/LandingPage/MainInfo";
 import IntegrationCircles from "@/components/LandingPage/IntegrationCircles";
 import ImagePreview from "@/components/LandingPage/ImagePreview";
-import ScrollingText from "@/components/LandingPage/ScrollingText";
 import TextInformation from "@/components/LandingPage/TextInformation";
 import WaitListButton from "@/components/LandingPage/WaitlistModal";
 import MadeBy from "@/components/LandingPage/MadeBy";
@@ -16,7 +15,7 @@ export default function LandingPage() {
         <div className="landing_page">
           <MainInfo />
           <ImagePreview />
-          {/* <ScrollingText /> */}
+          
           <TextInformation
             title={"We're Looking for Feedback!"}
             description={[
@@ -25,7 +24,7 @@ export default function LandingPage() {
             ]}
             button={
               <FeedbackFormBtn
-                props={{ size: "lg", color: "primary", variant: "shadow" }}
+                props={{ size: "lg", color: "primary", variant: "shadow", radius: "md" }}
               />
             }
           />
@@ -40,7 +39,7 @@ export default function LandingPage() {
               "With exclusive perks such as a Pro subscription for free!",
             ]}
             button={
-              <WaitListButton props={{ size: "lg", variant: "shadow" }} />
+              <WaitListButton props={{ size: "lg", variant: "shadow", radius: "md" }} iconsize={21} />
             }
           />
           <IntegrationCircles />

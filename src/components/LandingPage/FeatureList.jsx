@@ -15,7 +15,7 @@ import {
 const list = [
   {
     title: "Personalised",
-    description: "Customised & tailored to your preferences",
+    description: "Tailored to your preferences",
     icon: <AccountSetting02Icon width={35} height={35} />,
   },
   {
@@ -46,7 +46,7 @@ const list = [
   },
   {
     title: "Internet",
-    description: "Connected to the web for better responses",
+    description: "Connected to the web",
     icon: <InternetIcon width={35} height={35} />,
   },
   {
@@ -83,7 +83,7 @@ export default function FeatureList() {
   return (
     <div className="flex justify-center items-center p-5 flex-col min-h-screen ">
       <span className="font-medium text-3xl">Upcoming Feature list</span>
-      <div className="flex rounded-3xl bg-zinc-800 my-6 p-10 flex-wrap gap-2 gap-y-5  justify-around md:w-[60vw] h-fit ">
+      <div className="flex rounded-3xl bg-zinc-800 my-6 p-10 flex-wrap gap-2 gap-y-5 justify-around md:w-[55vw] h-fit ">
         {list.map((item, index) => (
           <Feature
             key={index}

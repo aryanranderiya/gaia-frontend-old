@@ -15,7 +15,6 @@ import {
 import {
   ArrowUpRight01Icon,
   Mail01Icon,
-  SquareLock02Icon,
   Calendar01Icon,
   Cancel01Icon,
 } from "../icons";
@@ -24,6 +23,8 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 export default function WaitListButton({
   props,
   text = "Signup for the Waitlist",
+  secondarytext = "",
+  iconsize = 15
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -33,20 +34,27 @@ export default function WaitListButton({
         color="primary"
         radius="full"
         variant="shadow"
-        className="arrow_diagonal_btn  font-medium"
+        className="arrow_diagonal_btn"
         onPress={() => setOpen(true)}
         endContent={
           <ArrowUpRight01Icon
             className="arrow_diagonal"
             color="primary"
-            width="15"
-            height="15"
+            width={iconsize}
+            height={iconsize}
           />
         }
         size="lg"
         {...props}
       >
-        {text}
+        <div>
+          <span className="font-medium">
+            {text}
+          </span>
+          {secondarytext && <span>
+            {secondarytext}
+          </span>}
+        </div>
       </Button>
       <WaitListModal open={open} setOpen={setOpen} />
     </>
@@ -148,7 +156,7 @@ export function WaitListModal({ open, setOpen }) {
                     startContent={
                       <Cancel01Icon color="foreground" width="20" />
                     }
-                    radius="full"
+                    radius="lg"
                     className="w-fit"
                   >
                     Close
@@ -182,7 +190,7 @@ export function WaitListModal({ open, setOpen }) {
                     startContent={
                       <Cancel01Icon color="foreground" width="20" />
                     }
-                    radius="full"
+                    radius="lg"
                   >
                     Cancel
                   </Button>
@@ -193,7 +201,7 @@ export function WaitListModal({ open, setOpen }) {
                   color="primary"
                   onPress={SubmitForm}
                   endContent={<Calendar01Icon color="foreground" width="20" />}
-                  radius="full"
+                  radius="lg"
                   isLoading={loading}
                 />
               </div>
