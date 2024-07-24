@@ -53,11 +53,11 @@ function FAQAccordion() {
     <div className="sm:py-[1em] px-[5%] w-full py-[1em] flex justify-center items-center">
       <div className="mb-[10vh] faq_container mt-[20px] bg-foreground-50 p-10 rounded-3xl" >
         <div div className="flex flex-col justify-center w-full items-center gap-3 mb-5" >
-          <div className="flex items-center gap-2 -ml-[30px]">
-            <BubbleChatQuestionIcon color="foreground" height="40" width="40" />
-            <span className="font-bold text-5xl" >FAQ</span>
-          </div>
-          <span className="text-foreground-500">Frequently asked questions</span>
+          {/* <div className="flex gap-2 -mr-[15px]"> */}
+          <span className="font-medium text-4xl" >Frequently asked questions</span>
+          {/* <BubbleChatQuestionIcon color="foreground" height="40" width="40" className="-mt-2" /> */}
+          {/* </div> */}
+          {/* <span className="text-foreground-500"></span> */}
         </div >
 
         <Accordion variant="light">

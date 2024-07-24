@@ -372,34 +372,23 @@ main {
 
 .navbar_content {
   width: 60%;
-  background-color: rgba(85, 85, 85, 0.1);
+  background-color: rgba(85, 85, 85, 0.034);
   height: 45px;
   border-radius: 1000px;
-  margin: 20px 10px;
+  margin: 10px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 3px;
-  outline: 2px rgba(255, 255, 255, 0.1) solid;
+  outline: 2px rgba(255, 255, 255, 0.08) solid;
 }
 
 .landingpage_maintext {
   font-size: clamp(2.8em, 10vw, 6em);
+  margin: 0 !important;
   z-index: 1;
-
-  /* background: #ffffff;
-  background: linear-gradient(
-    to bottom right,
-    #ececec 64%,
-    #a5a5a5 89%,
-    #7f7f7f 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 500; */
 }
 
 .arrow_diagonal_btn {
@@ -418,7 +407,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 7% 0;
+  margin: 5% 0;
 }
 
 .landing_img_container {

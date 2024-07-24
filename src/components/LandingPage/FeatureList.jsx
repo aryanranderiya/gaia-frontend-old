@@ -69,7 +69,7 @@ const list = [
 
 export function Feature({ icon, title, description }) {
   return (
-    <div className="md:w-[32%] w-full flex flex-col gap-2 max-h-fit bg-black bg-opacity-40 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all">
+    <div className="md:w-[32%] w-full flex flex-col gap-2 max-h-fit bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all">
       {icon}
       <span className="font-medium text-xl">{title}</span>
       <span className="text-foreground text-opacity-45 text-md">
@@ -83,7 +83,7 @@ export default function FeatureList() {
   return (
     <div className="flex justify-center items-center p-5 flex-col min-h-screen ">
       <span className="font-medium text-3xl">Upcoming Feature list</span>
-      <div className="flex rounded-3xl bg-zinc-800 my-6 p-10 flex-wrap gap-2 gap-y-5 justify-around md:w-[55vw] h-fit ">
+      <div className="flex rounded-3xl bg-foreground-50 my-6 p-10 flex-wrap gap-2 gap-y-5 justify-around md:w-[55vw] h-fit ">
         {list.map((item, index) => (
           <Feature
             key={index}

@@ -2,7 +2,7 @@ import TypingAnimation from "../MagicUI/typing-animation";
 import GradualSpacing from "../MagicUI/gradual-spacing";
 import WaitListButton from "./WaitlistModal";
 import WaitlistOnlyInput from "./WaitListIOnlyInput";
-
+import { Avatar, AvatarGroup } from "@nextui-org/avatar";
 
 export default function MainInfo() {
 
@@ -19,12 +19,33 @@ export default function MainInfo() {
             className="text-lg font-normal py-0 leading-7 sm:text-xl text-foreground-500"
             duration={20}
           />
+          {/* 
+          <TypingAnimation
+            text="Feature 1, Feature 2, Feature 3, Feature 4, Feature 5"
+            className="text-lg font-medium py-0 leading-7 sm:text-xl text-foreground-600 mt-1"
+            duration={20}
+          /> */}
         </div>
 
-        <div className="flex gap-3 flex-wrap w-screen justify-center">
+
+        <div className="flex gap-3 flex-wrap w-screen justify-center my-6">
           <WaitlistOnlyInput />
         </div>
-      </div>
+        {/* 
+        <div className="flex flex-col items-center gap-4">
+          <AvatarGroup isBordered max={10} total={"x"} >
+            <Avatar src="https://github.com/aryanranderiya.png" showFallback />
+            <Avatar src="https://github.com/farzaa.png" showFallback />
+            <Avatar src="https://i.pravatar.cc/150?img=12" showFallback />
+            <Avatar src="https://i.pravatar.cc/150?img=41" showFallback />
+            <Avatar src="https://i.pravatar.cc/150?img=52" showFallback />
+            <Avatar src="https://i.pravatar.cc/150?img=44" showFallback />
+            <Avatar src="https://i.pravatar.cc/150?img=58" showFallback />
+          </AvatarGroup>
+          <p className="text-sm text-foreground-700 ms-2">Join 1000+ users optimizing their daily life!</p>
+        </div> */}
+
+      </div >
     </>
   );
 }
