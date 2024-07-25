@@ -1,14 +1,17 @@
 import { User } from "@nextui-org/user";
 import SettingsMenu from "./SettingsMenu";
-import { useUserInfoContext } from "@/contexts/UserInfo";
+import { SignedIn, UserButton } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 export default function UserContainer() {
-  const { userInfo } = useUserInfoContext();
+
+  const { user } = useUser();
 
   return (
-    <div className="user_container p-4 absolute bottom-0 left-0">
-      <div className="user_container_inner">
-        <User
+    <SignedIn>
+      <div className="user_container p-4 absolute bottom-0 left-0">
+        <div className="user_container_inner">
+          {/* <User
           name={`${userInfo?.firstName} ${userInfo?.lastName}`}
           avatarProps={{
             src: userInfo?.profilePicture,
@@ -23,8 +26,15 @@ export default function UserContainer() {
             size: "sm",
           }}
         />
-        <SettingsMenu />
+        <SettingsMenu /> */}
+
+          <div className="flex items-center gap-2 font-medium text-sm">
+            <UserButton />
+            <p>{user?.firstName} {user?.lastName}</p>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </SignedIn>
   );
 }

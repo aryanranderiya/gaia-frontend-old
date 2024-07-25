@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.2.9",
+    "@clerk/themes": "^2.1.13",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@motionone/utils": "^10.18.0",
     "@nextui-org/accordion": "^2.0.38",

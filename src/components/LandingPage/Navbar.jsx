@@ -1,12 +1,13 @@
 import { Button } from "@nextui-org/button";
 import { Menu01Icon, Home01Icon } from "../icons";
 import { Link, useNavigate } from "react-router-dom";
-import { CommentAdd01Icon } from "../icons";
+import { CommentAdd01Icon, ArrowUpRight01Icon, Chatting01Icon } from "../icons";
 import useMediaQuery from "../../hooks/MediaQuery";
 import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import WaitListButton from "./WaitlistModal";
 import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import {
   Sheet,
   SheetContent,
@@ -15,6 +16,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "../Shadcn/Sheet";
+
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -53,11 +55,31 @@ export default function Navbar() {
             /> 
           */}
 
-            <WaitListButton
+
+            {/* <WaitListButton
               className="p-0"
               props={{ size: "md" }}
               text="Signup"
-            />
+            /> */}
+
+            <SignedIn>
+
+              <Button variant="shadow" color="primary" radius="full" size="md" className="font-medium"
+                endContent={<Chatting01Icon color="foreground" width="17" />
+                }
+                onPress={() => navigate("/try/chat")}
+              >Chat</Button>
+
+              <UserButton />
+            </SignedIn>
+
+            <SignedOut>
+              <SignInButton mode="modal" children={
+                <Button variant="shadow" color="primary" radius="full" size="md" className="font-medium"
+                  endContent={<ArrowUpRight01Icon color="foreground" width="15" />}
+                >Get Started</Button>
+              } />
+            </SignedOut>
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>
@@ -89,7 +111,7 @@ export default function Navbar() {
 
                   <Button
                     className="w-full flex justify-between font-medium"
-                      variant="ghost"
+                    variant="ghost"
                     color="success"
                     onPress={() => {
                       navigate("/feedback");

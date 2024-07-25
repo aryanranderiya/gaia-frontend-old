@@ -567,6 +567,16 @@ main {
   visibility: hidden;
 }
 
+.cl-socialButtonsIconButton,
+.cl-socialButtonsBlockButton {
+  padding: 1em;
+  border-radius: 10px;
+  background-color: #141414;
+}
+.cl-socialButtonsBlockButtonText,
+.cl-socialButtonsBlockButtonText__google {
+  font-weight: normal;
+}
 @media (max-width: 1024px) {
   .pricingcards_layout {
     grid-template-columns: repeat(2, 1fr);

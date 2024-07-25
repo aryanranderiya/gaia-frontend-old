@@ -186,7 +186,6 @@ export default function LoginSignup({ isLogin = false }) {
               type="text"
               startContent={<IdentityCardIcon height="20" />}
               isClearable
-              autoComplete
               size="lg"
               color="primary"
               isInvalid={!firstNameValid}
@@ -210,7 +209,6 @@ export default function LoginSignup({ isLogin = false }) {
               startContent={<IdentityCardIcon height="20" />}
               isClearable
               color="primary"
-              autoComplete
               size="lg"
               isInvalid={!lastNameValid}
               onValueChange={(value) => {
@@ -236,7 +234,6 @@ export default function LoginSignup({ isLogin = false }) {
           description={
             !isLogin && "We'll never share your email with anyone else."
           }
-          autoComplete
           errorMessage="Please enter a valid email"
           size="lg"
           isInvalid={!emailValid}

@@ -16,6 +16,7 @@ import { apiauth } from "../apiaxios";
 import { useNotLoggedDialogOpen } from "@/contexts/NotLoggedDialogOpen";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { useUserInfoContext } from "@/contexts/UserInfo";
+import { useUser } from "@clerk/clerk-react";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -55,21 +56,19 @@ export default function MainInterface() {
     }
   };
 
+
+  const { isLoaded, isSignedIn } = useUser();
+
+  React.useEffect(() => {
+    if (isLoaded)
+      // if (!isSignedIn) setNotLoggedDialogOpen(true);
+      if (!isSignedIn) navigate("/");
+  }, [isLoaded]);
+
   React.useEffect(() => {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
-
-    apiauth
-      .get("/getUserInfo")
-      .then((response) => {
-        console.log(response);
-        setUserInfo(response?.data?.user);
-      })
-      .catch((error) => {
-        const status = error?.response?.status;
-        if (status === 401 || status > 400) setNotLoggedDialogOpen(true);
-        console.error("Error fetching data:", error);
-      });
   }, []);
+
 
   return (
     <ConversationHistoryProvider>

@@ -12,8 +12,6 @@ function App() {
       <Routes>
         <Route path="/try/*" element={<MainInterface />} />
         <Route path="/*" element={<Landing />} />
-
-        
       </Routes>
     </UserInfoProvider>
   );

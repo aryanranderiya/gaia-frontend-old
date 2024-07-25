@@ -47,7 +47,7 @@ export default function Sidebar({ sidebarref, toggleSidebar }) {
           <Hr />
           <ChatsList />
         </div>
-        <UserContainer />
+        <UserContainer/>
       </div>
 
       <ComingSoonModal open={open} setOpen={setOpen} />

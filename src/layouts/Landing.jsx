@@ -6,10 +6,12 @@ import PageNotFound from "../pages/PageNotFound";
 import EarlyAccess from "../pages/EarlyAccess";
 import LoginSignup from "../pages/LoginSignup";
 import Pricing from "../pages/Pricing";
+import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default function Landing() {
   return (
     <>
+      {/* <ReactLenis root> */}
       <Navbar />
       <Routes>
         <Route index element={<LandingPage />} />
@@ -20,6 +22,7 @@ export default function Landing() {
         <Route path="/login" element={<LoginSignup isLogin={true} />} />
         <Route path="/signup" element={<LoginSignup />} />
       </Routes>
+      {/* </ReactLenis> */}
     </>
   );
 }

@@ -92,7 +92,6 @@ export default function WaitlistOnlyInput() {
                         isClearable
                         onKeyDown={handleKeyDown}
                         className="w-full flex-shrink-0"
-                        autoComplete
 
                     />
                     <Button
