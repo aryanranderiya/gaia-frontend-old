@@ -1,6 +1,6 @@
 interface ColoredLineProps {
-  color: string;
-  width: string;
+  color?: string;
+  width?: string;
   className?: string;
 }
 

@@ -1,34 +1,44 @@
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
+// Define the shape of the user object
 interface User {
   firstName: string;
   lastName: string;
-  email: string;
-  token: string;
+  profilePicture: string;
+  id: string;
 }
 
+// Define the shape of the context
 interface UserContextType {
   user: User | null;
-  login: (userData: User) => void;
+  login: (
+    firstName: string,
+    lastName: string,
+    id: string,
+    profilePicture: string
+  ) => void;
   logout: () => void;
 }
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+// Create the context with default values
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-interface UserProviderProps {
-  children: ReactNode;
-}
-
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+// Create a provider component
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (userData: User): void => {
-    setUser(userData);
+  const login = (
+    firstName: string,
+    lastName: string,
+    id: string,
+    profilePicture: string
+  ) => {
+    setUser({ firstName, lastName, id, profilePicture });
   };
 
-  const logout = (): void => {
+  const logout = () => {
     setUser(null);
   };
 
@@ -37,4 +47,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
+};
+
+// Custom hook to use the UserContext
+export const useUser = (): UserContextType => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 };

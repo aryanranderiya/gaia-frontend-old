@@ -372,7 +372,8 @@ main {
 
 .navbar_content {
   width: 60%;
-  background-color: rgba(85, 85, 85, 0.034);
+  /* background-color: rgba(85, 85, 85, 0.034); */
+  background-color: rgba(0, 0, 0, 0.4);
   height: 45px;
   border-radius: 1000px;
   margin: 10px;
@@ -748,4 +749,13 @@ main {
   100% {
     transform: translateX(70%);
   }
+}
+
+.bg-custom-gradient {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 31%,
+    rgba(0, 187, 255, 0.25) 100%
+  );
 }

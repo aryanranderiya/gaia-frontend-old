@@ -15,7 +15,7 @@ export default function LandingPage() {
         <div className="landing_page">
           <MainInfo />
           <ImagePreview />
-          
+
           <TextInformation
             title={"We're Looking for Feedback!"}
             description={[
@@ -24,7 +24,12 @@ export default function LandingPage() {
             ]}
             button={
               <FeedbackFormBtn
-                props={{ size: "lg", color: "primary", variant: "shadow", radius: "md" }}
+                props={{
+                  size: "lg",
+                  color: "primary",
+                  variant: "shadow",
+                  radius: "md",
+                }}
               />
             }
           />
@@ -39,7 +44,10 @@ export default function LandingPage() {
               "With exclusive perks such as a Pro subscription for free!",
             ]}
             button={
-              <WaitListButton props={{ size: "lg", variant: "shadow", radius: "md" }} iconsize={21} />
+              <WaitListButton
+                props={{ size: "lg", variant: "shadow", radius: "md" }}
+                iconsize={21}
+              />
             }
           />
           <IntegrationCircles />

@@ -44,12 +44,20 @@ module.exports = {
               DEFAULT: "#00bbff",
               foreground: "#000000",
             },
+            white: {
+              DEFAULT: "#ffffff",
+              foreground: "#000000",
+            },
           },
         },
         light: {
           colors: {
             primary: {
               DEFAULT: "#00bbff",
+              foreground: "#000000",
+            },
+            white: {
+              DEFAULT: "#ffffff",
               foreground: "#000000",
             },
           },

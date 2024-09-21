@@ -6,7 +6,7 @@ import PageNotFound from "../pages/PageNotFound";
 import EarlyAccess from "../pages/EarlyAccess";
 import LoginSignup from "../pages/LoginSignup";
 import Pricing from "../pages/Pricing";
-import { ReactLenis } from "@studio-freight/react-lenis";
+// import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default function Landing() {
   return (

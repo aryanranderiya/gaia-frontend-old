@@ -1,9 +1,8 @@
+import { useUser } from "@/contexts/UserContext";
 import { User } from "@nextui-org/user";
-import { useContext } from "react";
-import { UserContext } from "@/contexts/UserContext";
 
 const UserContainer: React.FC = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   return (
     <div className="user_container p-4 absolute bottom-0 left-0">

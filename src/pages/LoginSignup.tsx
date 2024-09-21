@@ -19,8 +19,10 @@ import CreateConfetti from "@/components/LandingPage/CreateConfetti";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import api from "../apiaxios";
+import { Spinner } from "@nextui-org/spinner";
+import { AxiosError } from "axios";
 
-async function CheckCommonPassword(password) {
+async function CheckCommonPassword(password: string): Promise<boolean> {
   try {
     const response = await fetch(
       "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt"
@@ -35,49 +37,60 @@ async function CheckCommonPassword(password) {
   }
 }
 
-export default function LoginSignup({ isLogin = false }) {
+interface LoginSignupProps {
+  isLogin?: boolean;
+}
+
+export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(false);
-  const [isPasswordVisible, setPasswordVisible] = React.useState(false);
-  const [emailValid, setEmailValid] = React.useState(true);
-  const [passwordValid, setPasswordValid] = React.useState(true);
-  const [firstNameValid, setFirstNameValid] = React.useState(true);
-  const [lastNameValid, setLastNameValid] = React.useState(true);
-  const [isCommonPassword, setIsCommonPassword] = React.useState(false);
-  const [capsLockOn, setCapsLockOn] = React.useState(false);
-  const [data, setData] = React.useState({
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [isPasswordVisible, setPasswordVisible] =
+    React.useState<boolean>(false);
+  const [emailValid, setEmailValid] = React.useState<boolean>(true);
+  const [passwordValid, setPasswordValid] = React.useState<boolean>(true);
+  const [firstNameValid, setFirstNameValid] = React.useState<boolean>(true);
+  const [lastNameValid, setLastNameValid] = React.useState<boolean>(true);
+  const [isCommonPassword, setIsCommonPassword] =
+    React.useState<boolean>(false);
+  const [capsLockOn, setCapsLockOn] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string): boolean => {
     if (email === "") return false;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return emailRegex.test(email);
   };
 
-  const validateName = (name) => {
+  const validateName = (name: string): boolean => {
     if (name === "") return false;
     const nameRegex = /^[a-zA-Z]+$/;
     return nameRegex.test(name);
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = (password: string): boolean => {
     if (password === "") return false;
     const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     return passRegex.test(password);
   };
 
-  const capsLockCheck = (event) => {
+  const capsLockCheck = (event: KeyboardEvent) => {
     const capsLockEnabled =
       event.getModifierState && event.getModifierState("CapsLock");
     setCapsLockOn(capsLockEnabled);
   };
 
-  const handleKeyDown = (event) => {
-    capsLockCheck(event);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    capsLockCheck(event.nativeEvent);
     if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit();
@@ -86,7 +99,6 @@ export default function LoginSignup({ isLogin = false }) {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-
     setLoading(true);
 
     if (!isLogin) {
@@ -152,7 +164,8 @@ export default function LoginSignup({ isLogin = false }) {
     } catch (e) {
       console.error(e);
 
-      const errorMessage = e?.response ? e?.response?.data?.detail : e;
+      const error = e as AxiosError<{ detail: string }>;
+      const errorMessage = error.response?.data?.detail || error.message;
 
       toast.error("Login failed", {
         unstyled: true,
@@ -170,7 +183,7 @@ export default function LoginSignup({ isLogin = false }) {
   };
 
   return (
-    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto">
+    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient">
       <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 p-[1.5em]">
         <span className="text-4xl font-medium mb-5">
           {isLogin ? "Login" : "Create an Account"}
@@ -186,10 +199,9 @@ export default function LoginSignup({ isLogin = false }) {
               type="text"
               startContent={<IdentityCardIcon height="20" />}
               isClearable
-              size="lg"
               color="primary"
               isInvalid={!firstNameValid}
-              value={data["firstName"]}
+              value={data.firstName}
               onValueChange={(value) => {
                 setFirstNameValid(validateName(value.trim()));
                 setData((oldFormData) => ({
@@ -201,7 +213,7 @@ export default function LoginSignup({ isLogin = false }) {
 
             <Input
               label="Last Name"
-              value={data["lastName"]}
+              value={data.lastName}
               fullWidth
               placeholder="Doe"
               variant="faded"
@@ -209,7 +221,6 @@ export default function LoginSignup({ isLogin = false }) {
               startContent={<IdentityCardIcon height="20" />}
               isClearable
               color="primary"
-              size="lg"
               isInvalid={!lastNameValid}
               onValueChange={(value) => {
                 setLastNameValid(validateName(value.trim()));
@@ -235,7 +246,6 @@ export default function LoginSignup({ isLogin = false }) {
             !isLogin && "We'll never share your email with anyone else."
           }
           errorMessage="Please enter a valid email"
-          size="lg"
           isInvalid={!emailValid}
           onValueChange={(value) => {
             setEmailValid(validateEmail(value.trim()));
@@ -263,71 +273,80 @@ export default function LoginSignup({ isLogin = false }) {
               ? "Your password is too common. Try Again"
               : "Your password should be at least 8 characters long and include a combination of uppercase & lowercase letters, numbers, and special symbols."
           }
-          size="lg"
           onKeyDown={handleKeyDown}
           onValueChange={(value) => {
-            setPasswordValid(validatePassword(value));
+            setPasswordValid(validatePassword(value.trim()));
             setData((oldFormData) => ({
               ...oldFormData,
-              password: value,
+              password: value.trim(),
             }));
           }}
           endContent={
-            <button
-              className="focus:outline-none"
-              type="button"
-              onClick={() => setPasswordVisible((value) => !value)}
-            >
-              {isPasswordVisible ? (
-                <ViewOffSlashIcon className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <ViewIcon className="text-2xl text-default-400 pointer-events-none" />
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => setPasswordVisible(!isPasswordVisible)}
+              >
+                {isPasswordVisible ? (
+                  <ViewOffSlashIcon height="20" />
+                ) : (
+                  <ViewIcon height="20" />
+                )}
+              </button>
+              {capsLockOn && (
+                <div className="text-red-600 flex items-center">
+                  <Alert02Icon height="20" /> Caps Lock is on!
+                </div>
               )}
-            </button>
+            </div>
           }
         />
 
-        {capsLockOn && (
-          <div className="w-full text-sm text-warning flex items-center -mt-3 gap-1">
-            <Alert02Icon color="warning" width="16" />
-            Caps lock is on
-          </div>
-        )}
+        <div className="flex justify-center items-center gap-6 mt-4 flex-col">
+          <Link to={isLogin ? "/signup" : "/login"} className="text-sm">
+            {isLogin ? (
+              <div className="flex gap-2">
+                New here?
+                <span className="underline">Create an account</span>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                Already have an account?
+                <span className="underline">Login here</span>
+              </div>
+            )}
+          </Link>
 
-        <Link to={isLogin ? "/Signup" : "/Login"}>
-          <ShadcnButton
-            variant="link"
-            color="default"
-            className="font-normal"
-            type="button"
+          <Button
+            disabled={loading}
+            className="w-full flex gap-1 flex-row font-semibold"
+            onClick={handleSubmit}
+            color="primary"
+            variant="shadow"
+            size="lg"
           >
-            {isLogin
-              ? "New to GAIA? Create an account."
-              : "Already have an account? Log in here."}
-          </ShadcnButton>
-        </Link>
+            {isLogin ? "Login" : "Sign Up"}
+            {loading && <Spinner />}
+          </Button>
+        </div>
+
+        <ColoredLine color="#303030" className="my-4" />
 
         <Button
-          color="primary"
-          variant="shadow"
-          className="w-full max-w-[200px] font-medium"
-          onPress={handleSubmit}
-          isLoading={loading}
-        >
-          {isLogin ? "Login" : "Signup"}
-        </Button>
-
-        {/* <ColoredLine color="#262626" className="my-4" width="100%" /> */}
-
-        {/* <Button
+          variant="flat"
+          className="w-full"
+          radius="full"
+          size="lg"
           color="default"
-          variant="shadow"
-          startContent={<GoogleColoured width="20px" height="20px" />}
-          className="bg-zinc-300 text-black w-full max-w-[200px] font-medium"
+          onClick={() => {
+            window.open("https://www.google.com", "_self");
+          }}
         >
-          {isLogin ? "Signup" : "Login"}
-          &nbsp;with Google
-        </Button> */}
+          <GoogleColoured width="20" height="20" />
+          <span className="text-sm">
+            {isLogin ? "Login with Google" : "Sign Up with Google"}
+          </span>
+        </Button>
       </div>
     </form>
   );

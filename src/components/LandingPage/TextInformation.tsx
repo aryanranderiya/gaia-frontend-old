@@ -23,13 +23,13 @@ export default function TextInformation({
     </Button>
   ),
 }: {
-  alignleft: boolean;
+  alignleft?: boolean;
   title: string;
-  description: string[];
-  button: React.ReactNode;
-  btntext: string;
-  btnicon: React.ReactNode;
-  btnhref: string;
+  description?: string[];
+  button?: React.ReactNode;
+  btntext?: string;
+  btnicon?: React.ReactNode;
+  btnhref?: string;
 }) {
   return (
     <>

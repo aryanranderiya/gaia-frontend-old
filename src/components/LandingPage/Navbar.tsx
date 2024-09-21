@@ -1,25 +1,31 @@
+import { useUser } from "@/contexts/UserContext";
 import { Button } from "@nextui-org/button";
-import { Menu01Icon, Home01Icon } from "../icons";
-import { useNavigate } from "react-router-dom";
-import { CommentAdd01Icon, ArrowUpRight01Icon, Chatting01Icon } from "../icons";
-import useMediaQuery from "../../hooks/MediaQuery";
-import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import WaitListButton from "./WaitlistModal";
-import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useMediaQuery from "../../hooks/MediaQuery";
+import {
+  Chatting01Icon,
+  CommentAdd01Icon,
+  Home01Icon,
+  Menu01Icon,
+} from "../icons";
 import {
   Sheet,
   SheetContent,
-  SheetTitle,
   SheetDescription,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "../Shadcn/Sheet";
+import WaitListButton from "./WaitlistModal";
 
 export default function Navbar() {
+  const { user } = useUser();
+
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="navbar">
@@ -28,9 +34,10 @@ export default function Navbar() {
           variant="light"
           radius="full"
           size="md"
+          className="text-xl font-medium"
           onPress={() => navigate("/")}
         >
-          <span className="navbar_title">gaia</span>
+          gaia
         </Button>
         {/* 
         <div className="flex justify-center w-full items-center">
@@ -41,50 +48,52 @@ export default function Navbar() {
 
         {!isMobileScreen ? (
           <div className="flex items-center gap-1">
-            <FeedbackFormBtn props={{ size: "md" }} text="Survey" />
-
-            <WaitListButton
+            {/* <FeedbackFormBtn
               props={{
-                className: "p-0",
                 size: "md",
                 color: "default",
                 variant: "light",
-                endContent: <></>,
               }}
-              text="Login"
-            />
+              text="Survey"
+            /> */}
 
-            <WaitListButton
-              props={{
-                size: "md",
-                endContent: <></>,
-                className: "p-0",
-              }}
-              text="Signup"
-            />
+            {!!user ? (
+              <Button
+                variant="shadow"
+                color="primary"
+                radius="full"
+                size="md"
+                className="font-medium text-xl"
+                endContent={<Chatting01Icon color="foreground" width="17" />}
+                onPress={() => navigate("/try/chat")}
+              >
+                Chat
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="light"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  className="p-0 font-semibold"
+                  onPress={() => navigate("/login")}
+                >
+                  Login
+                </Button>
 
-            <Button
-              variant="shadow"
-              color="primary"
-              radius="full"
-              size="md"
-              className="font-medium"
-              endContent={<Chatting01Icon color="foreground" width="17" />}
-              onPress={() => navigate("/try/chat")}
-            >
-              Chat
-            </Button>
-
-            <Button
-              variant="shadow"
-              color="primary"
-              radius="full"
-              size="md"
-              className="font-medium"
-              endContent={<ArrowUpRight01Icon color="foreground" width="15" />}
-            >
-              Get Started
-            </Button>
+                <Button
+                  variant="shadow"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  className="p-0 font-semibold"
+                  onPress={() => navigate("/signup")}
+                >
+                  Signup
+                </Button>
+              </>
+            )}
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>

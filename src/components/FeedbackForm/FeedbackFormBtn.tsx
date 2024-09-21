@@ -7,7 +7,7 @@ export default function FeedbackFormBtn({
   text = "Fill the Survey",
 }: {
   props: any;
-  text: string;
+  text?: string;
 }) {
   const navigate = useNavigate();
   return (
