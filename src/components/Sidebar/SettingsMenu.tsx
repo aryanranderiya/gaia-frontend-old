@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/dropdown";
 
 export default function SettingsMenu() {
-  const items = [
+  const items: { key: string; label: React.ReactNode; color?: "danger" }[] = [
     {
       key: "settings",
       label: (
@@ -55,8 +55,8 @@ export default function SettingsMenu() {
         {(item) => (
           <DropdownItem
             key={item.key}
-            color={!!item.color || "default"}
-            className={!!item.color && "text-danger"}
+            color={!!item.color ? item.color : "default"}
+            className={!!item.color ? item.color : "text-danger"}
             textValue={item.key}
           >
             <span className="font-bold">{item.label}</span>

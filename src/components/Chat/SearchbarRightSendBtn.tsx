@@ -2,7 +2,12 @@ import { Button } from "@nextui-org/button";
 import { SentIcon } from "../icons";
 import { Tooltip } from "@nextui-org/tooltip";
 import MicrophoneBtn from "../Audio/MicrophoneBtn";
-export default function SearchbarRightSendBtn({ loading }) {
+
+export default function SearchbarRightSendBtn({
+  loading,
+}: {
+  loading: boolean;
+}) {
   return (
     <div className="ml-2 flex items-center gap-1">
       <MicrophoneBtn loading={loading} />

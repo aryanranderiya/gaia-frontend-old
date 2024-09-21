@@ -4,18 +4,21 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure,
 } from "@nextui-org/modal";
 import Lottie from "react-lottie";
 import recordingAnimation from "../lotties/recording.json";
-import { toast } from "sonner";
 import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
-import * as React from "react";
+import { useState } from "react";
 
-export default function MicrophoneBtn({ loading }) {
-  const [open, setOpen] = React.useState(false);
-  const [finalTranscript, setFinalTranscript] = React.useState("");
+// Define props type for the MicrophoneBtn component
+interface MicrophoneBtnProps {
+  loading: boolean;
+}
+
+export default function MicrophoneBtn({ loading }: MicrophoneBtnProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const [finalTranscript, setFinalTranscript] = useState<string>("");
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -25,7 +28,7 @@ export default function MicrophoneBtn({ loading }) {
   recognition.continuous = true;
   recognition.interimResults = true;
 
-  recognition.onerror = (event) => {
+  recognition.onerror = (event: SpeechRecognitionError) => {
     console.error("Recognition error:", event.error);
   };
 
@@ -34,7 +37,7 @@ export default function MicrophoneBtn({ loading }) {
     setFinalTranscript("speech ended");
   };
 
-  recognition.onresult = (event) => {
+  recognition.onresult = (event: SpeechRecognitionEvent) => {
     let interimTranscript = "";
     let final = "";
 
@@ -114,7 +117,6 @@ export default function MicrophoneBtn({ loading }) {
                 <Button
                   color="success"
                   onPress={() => {
-                    // onClose();
                     stopRecording();
                   }}
                   isIconOnly

@@ -163,7 +163,7 @@ export default function FileUpload({
   };
 
   const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLTextAreaElement>
+    event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();

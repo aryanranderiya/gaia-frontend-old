@@ -8,7 +8,6 @@ export default function ImagePreview() {
         <img
           src={image_png}
           srcSet={image_webp}
-          type="image/webp"
           alt="Homepage Image with screenshots of GAIA"
         />
       </div>

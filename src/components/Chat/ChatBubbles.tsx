@@ -10,27 +10,10 @@ import {
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
 import { parseDate } from "./fetchDate";
-import { DateType } from "@/contexts/ConversationHistory";
-
-// Define interfaces for component props
-interface ChatBubbleUserProps {
-  text?: string;
-  subtype?: "image" | "pdf" | null;
-  file?: File | null | string;
-  filename?: string;
-  date: string | DateType;
-}
-
-interface ChatBubbleBotProps {
-  index: number;
-  text: string;
-  loading?: boolean;
-  isImage?: boolean;
-  image?: string | null;
-  disclaimer?: string;
-  date: string | DateType;
-  userinputType?: string;
-}
+import {
+  ChatBubbleBotProps,
+  ChatBubbleUserProps,
+} from "@/types/ChatBubbleTypes";
 
 export function ChatBubbleUser({
   text,

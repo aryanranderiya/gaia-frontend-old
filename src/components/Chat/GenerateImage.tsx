@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/button";
-import { BrushIcon, Cancel01Icon, Tick02Icon } from "../icons";
+import { BrushIcon } from "../icons";
 import {
   Modal,
   ModalContent,
@@ -8,79 +8,100 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Textarea } from "@nextui-org/input";
-import * as React from "react";
 import { toast } from "sonner";
 import api from "../../apiaxios";
 import fetchDate from "./fetchDate";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { useEffect, useState } from "react";
+import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
 
-export default function GenerateImage({ openImageDialog, setOpenImageDialog }) {
-  const {
-    convoHistory: conversationHistory,
-    setConvoHistory: setConversationHistory,
-  } = useConvoHistory();
+// Define the props interface
+interface GenerateImageProps {
+  openImageDialog: boolean;
+  setOpenImageDialog: (open: boolean) => void;
+}
 
-  const [imagePrompt, setImagePrompt] = React.useState("");
-  const [isValid, setIsValid] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [botResponse, setBotResponse] = React.useState(null);
+export default function GenerateImage({
+  openImageDialog,
+  setOpenImageDialog,
+}: GenerateImageProps) {
+  const { convoHistory, setConvoHistory } = useConvoHistory();
 
-  React.useEffect(() => {
-    setIsValid(true);
-  }, [openImageDialog]);
+  const [imagePrompt, setImagePrompt] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [botResponse, setBotResponse] = useState<string | null>(null);
 
-  const handleKeyDown = (event) => {
+  useEffect(() => {
+    setIsValid(imagePrompt.trim() !== "");
+  }, [imagePrompt]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
       setImagePrompt((text) => text + "\n");
-    } else if (event.key === "Enter") handleButtonClick();
+    } else if (event.key === "Enter") {
+      handleButtonClick();
+    }
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (value: string) => {
     setImagePrompt(value);
-    setIsValid(true);
+    setIsValid(value.trim() !== "");
   };
 
   const handleButtonClick = () => {
-    setIsValid(imagePrompt.trim() !== "");
-    if (imagePrompt.trim() !== "") SubmitForm();
+    if (isValid) SubmitForm();
   };
 
-  React.useEffect(() => {
-    updateWithResponse();
+  useEffect(() => {
+    if (botResponse) {
+      updateWithResponse();
+    }
   }, [botResponse]);
 
   function updateWithResponse() {
-    if (conversationHistory.length > 0 && !!botResponse) {
-      const updatedHistory = [...conversationHistory];
-      const lastItemIndex = updatedHistory.length - 1;
-      const lastItem = updatedHistory[lastItemIndex];
+    if (Object.keys(convoHistory).length > 0 && botResponse) {
+      const updatedHistory = { ...convoHistory };
+      const lastKey = Object.keys(updatedHistory).pop();
 
-      if (lastItem.type === "bot") {
-        lastItem.imageUrl = botResponse;
-        lastItem.loading = false;
-        lastItem.isImage = true;
-        lastItem.date = fetchDate();
-        setConversationHistory(updatedHistory);
+      if (lastKey) {
+        const lastItem = updatedHistory[lastKey].messages;
+        const lastMessage = lastItem[lastItem.length - 1];
+
+        if (lastMessage.type === "bot") {
+          lastMessage.imageUrl = botResponse;
+          lastMessage.loading = false;
+          lastMessage.isImage = true;
+          lastMessage.date = fetchDate();
+          setConvoHistory(updatedHistory);
+        }
       }
     }
   }
 
   const SubmitForm = async () => {
     setLoading(true);
-    setConversationHistory((prevHistory) => [
+    const newMessage: MessageType = {
+      type: "user",
+      response: "Generate Image: \n" + imagePrompt,
+      date: fetchDate(),
+    };
+
+    const loadingMessage: MessageType = {
+      type: "bot",
+      loading: true,
+      response: imagePrompt,
+      date: "",
+    };
+
+    setConvoHistory((prevHistory: ConversationHistoryType) => ({
       ...prevHistory,
-      {
-        type: "user",
-        response: "Generate Image: \n" + imagePrompt,
-        date: fetchDate(),
+      [Date.now()]: {
+        description: "Image Generation",
+        messages: [newMessage, loadingMessage],
       },
-      {
-        type: "bot",
-        loading: true,
-        response: imagePrompt,
-      },
-    ]);
+    }));
     setOpenImageDialog(false);
 
     try {
@@ -96,8 +117,6 @@ export default function GenerateImage({ openImageDialog, setOpenImageDialog }) {
           },
         }
       );
-
-      console.log(response);
 
       const arrayBuffer = response.data;
       const blob = new Blob([arrayBuffer], { type: "image/png" });

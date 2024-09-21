@@ -1,9 +1,9 @@
-import { VoiceIcon, VolumeHighIcon, PlayIcon } from "../icons";
-import * as React from "react";
 import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/spinner";
+// import { VoiceIcon, VolumeHighIcon, PlayIcon } from "../icons";
+// import * as React from "react";
+// import { Spinner } from "@nextui-org/spinner";
 
-export default function TextToSpeech({ text }) {
+export default function TextToSpeech({ text }: { text: string }) {
   // const [loading, setLoading] = React.useState(false);
   // const [isPaused, setIsPaused] = React.useState(false);
   // const [isPlaying, setIsPlaying] = React.useState(false);

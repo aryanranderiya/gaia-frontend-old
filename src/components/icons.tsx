@@ -1,5 +1,5 @@
 import React from "react";
-interface IconProps extends React.SVGProps<SVGSVGElement> {}
+export interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
 export const GlobalIcon: React.FC<IconProps> = (props) => (
   <svg
@@ -2354,7 +2354,7 @@ export const IdentityCardIcon: React.FC<IconProps> = (props) => (
   </svg>
 );
 
-export const GoogleColoured = ({ props }) => (
+export const GoogleColoured: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"

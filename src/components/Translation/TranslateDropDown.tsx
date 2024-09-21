@@ -121,3 +121,7 @@
 // };
 
 // export default TranslateDropdown;
+
+export default function TranslateDropdown() {
+  return <></>;
+}

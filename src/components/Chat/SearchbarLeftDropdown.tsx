@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FileUpload from "../Documents/FileUpload";
 import {
   Dropdown,
@@ -11,17 +11,18 @@ import {
   FileUploadIcon,
   PlusSignIcon,
   AiImageIcon,
-  Calendar01Icon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function SearchbarLeftDropdown({ loading }) {
-
-  const fileInputRef = React.useRef(null);
-  const [openImageDialog, setOpenImageDialog] = React.useState(false);
-  const [isImage, setIsImage] = React.useState(false);
-  const [triggerClick, setTriggerClick] = React.useState(false);
+export default function SearchbarLeftDropdown({
+  loading,
+}: {
+  loading: boolean;
+}) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [openImageDialog, setOpenImageDialog] = useState(false);
+  const [isImage, setIsImage] = useState(false);
+  const [triggerClick, setTriggerClick] = useState(false);
 
   const chooseFile = () => {
     setIsImage(false);
@@ -33,10 +34,12 @@ export default function SearchbarLeftDropdown({ loading }) {
     setTriggerClick(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (triggerClick) {
-      fileInputRef.current.click();
-      setTriggerClick(false);
+      if (!!fileInputRef.current) {
+        fileInputRef.current?.click();
+        setTriggerClick(false);
+      }
     }
   }, [triggerClick]);
 
@@ -54,7 +57,7 @@ export default function SearchbarLeftDropdown({ loading }) {
         backdrop="opaque"
         isDismissable={true}
         isDisabled={loading}
-        shouldCloseOnInteractOutside={true}
+        shouldCloseOnInteractOutside={() => true}
       >
         <DropdownTrigger>
           <div
@@ -67,9 +70,9 @@ export default function SearchbarLeftDropdown({ loading }) {
         <DropdownMenu
           variant="faded"
           aria-label="Static Actions"
-          itemClasses={{
-            content: "w-full",
-          }}
+          // itemClasses={{
+          //   content: "w-full",
+          // }}
         >
           <DropdownItem
             key="image"

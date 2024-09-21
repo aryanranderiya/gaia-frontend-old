@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { toast } from "sonner";
@@ -19,14 +18,20 @@ import {
   Cancel01Icon,
 } from "../icons";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { useEffect, useMemo, useState } from "react";
 
 export default function WaitListButton({
   props,
   text = "Signup for the Waitlist",
   secondarytext = "",
-  iconsize = 15
+  iconsize = 15,
+}: {
+  props: any;
+  text?: string;
+  secondarytext?: string;
+  iconsize?: number;
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -48,12 +53,8 @@ export default function WaitListButton({
         {...props}
       >
         <div>
-          <span className="font-medium">
-            {text}
-          </span>
-          {secondarytext && <span>
-            {secondarytext}
-          </span>}
+          <span className="font-medium">{text}</span>
+          {secondarytext && <span>{secondarytext}</span>}
         </div>
       </Button>
       <WaitListModal open={open} setOpen={setOpen} />
@@ -61,19 +62,24 @@ export default function WaitListButton({
   );
 }
 
-export function WaitListModal({ open, setOpen }) {
-  const [loading, setLoading] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [submitted, setSubmitted] = React.useState(false);
-  const [successfullySubmitted, setSuccessfullySubmitted] =
-    React.useState(false);
+export function WaitListModal({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [successfullySubmitted, setSuccessfullySubmitted] = useState(false);
 
-  function validateEmail(value) {
+  function validateEmail(value: string) {
     if (value === "") return false;
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
     return regex.test(value.trim());
   }
-  const isInvalidEmail = React.useMemo(() => {
+  const isInvalidEmail = useMemo(() => {
     return !validateEmail(email);
   }, [email]);
 
@@ -113,14 +119,14 @@ export function WaitListModal({ open, setOpen }) {
     setSubmitted(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       setSubmitted(false);
       setSuccessfullySubmitted(false);
     }
   }, [open]);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") SubmitForm();
   };
 

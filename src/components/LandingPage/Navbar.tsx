@@ -44,8 +44,8 @@ export default function Navbar() {
             <FeedbackFormBtn props={{ size: "md" }} text="Survey" />
 
             <WaitListButton
-              className="p-0"
               props={{
+                className: "p-0",
                 size: "md",
                 color: "default",
                 variant: "light",
@@ -55,16 +55,13 @@ export default function Navbar() {
             />
 
             <WaitListButton
-              className="p-0"
-              props={{ size: "md", endContent: <></> }}
+              props={{
+                size: "md",
+                endContent: <></>,
+                className: "p-0",
+              }}
               text="Signup"
             />
-
-            {/* <WaitListButton
-              className="p-0"
-              props={{ size: "md" }}
-              text="Signup"
-            /> */}
 
             <Button
               variant="shadow"

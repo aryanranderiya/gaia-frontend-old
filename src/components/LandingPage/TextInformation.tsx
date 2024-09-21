@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
-import WordPullUp from "../MagicUI/word-pull-up";
-import { ColoredLine } from "../HorizontalRuler";
 import { Link } from "react-router-dom";
+import { ColoredLine } from "../HorizontalRuler";
+import WordPullUp from "../MagicUI/word-pull-up";
 
 export default function TextInformation({
   alignleft = true,
@@ -13,7 +13,7 @@ export default function TextInformation({
   button = (
     <Button
       className="w-fit font-medium text-lg"
-      radius=""
+      radius="md"
       color="primary"
       size="lg"
       endContent={btnicon}
@@ -22,6 +22,14 @@ export default function TextInformation({
       <Link to={btnhref}>{btntext}</Link>
     </Button>
   ),
+}: {
+  alignleft: boolean;
+  title: string;
+  description: string[];
+  button: React.ReactNode;
+  btntext: string;
+  btnicon: React.ReactNode;
+  btnhref: string;
 }) {
   return (
     <>

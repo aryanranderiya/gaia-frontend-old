@@ -67,7 +67,15 @@ const list = [
   },
 ];
 
-export function Feature({ icon, title, description }) {
+export function Feature({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <div className="md:w-[32%] w-full flex flex-col gap-2 max-h-fit bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all">
       {icon}

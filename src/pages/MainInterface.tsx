@@ -17,17 +17,17 @@ import { useEffect, useRef, useState } from "react";
 export default function MainInterface() {
   const location = useLocation();
   const navigate = useNavigate();
-  const sidebarRef = useRef(null);
-  const contentContainerRef = useRef(null);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const contentContainerRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
-  }, [location]);
+  }, [location, navigate]);
 
-  function toggleSidebar() {
-    if (sidebarRef.current) {
+  function toggleSidebar(): void {
+    if (sidebarRef.current && contentContainerRef.current) {
       if (isSidebarVisible) {
         sidebarRef.current.classList.add("hide");
         contentContainerRef.current.classList.remove("hide");
@@ -41,7 +41,7 @@ export default function MainInterface() {
   }
 
   const hideSidebar = () => {
-    if (sidebarRef.current) {
+    if (sidebarRef.current && contentContainerRef.current) {
       if (isSidebarVisible && isMobileScreen) {
         sidebarRef.current.classList.add("hide");
         contentContainerRef.current.classList.remove("hide");
@@ -52,7 +52,7 @@ export default function MainInterface() {
 
   useEffect(() => {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
-  }, []);
+  }, [isMobileScreen, isSidebarVisible]);
 
   return (
     <ConversationHistoryProvider>
@@ -70,16 +70,8 @@ export default function MainInterface() {
           <WebsiteName />
 
           <Routes>
-            <Route
-              path="chat/:convoIdParam"
-              element={<MainChat toggleSidebar={toggleSidebar} />}
-            />
-
-            <Route
-              path="chat"
-              element={<MainChat toggleSidebar={toggleSidebar} />}
-            />
-
+            <Route path="chat/:convoIdParam" element={<MainChat />} />
+            <Route path="chat" element={<MainChat />} />
             <Route path="explore" element={<Explore />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Routes>

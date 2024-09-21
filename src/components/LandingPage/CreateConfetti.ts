@@ -1,14 +1,15 @@
 import confetti from "canvas-confetti";
 
-export default function CreateConfetti(duration = 4000) {
+export default function CreateConfetti(duration: number = 4000): void {
   const animationEnd = Date.now() + duration;
-  const defaults = {
+  const defaults: confetti.Options = {
     startVelocity: 30,
     spread: 360,
     ticks: 60,
     zIndex: 1,
   };
-  const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+  const randomInRange = (min: number, max: number): number => Math.random() * (max - min) + min;
 
   const interval = window.setInterval(() => {
     const timeLeft = animationEnd - Date.now();

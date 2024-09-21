@@ -29,7 +29,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
 };
 
 export default function ChatsList() {
-  const { convoHistory: conversationHistory } = useConvoHistory();
+  const { convoHistory } = useConvoHistory();
   const navigate = useNavigate();
 
   const createNewChat = (): void => {
@@ -48,12 +48,8 @@ export default function ChatsList() {
       </Button>
 
       <div className="chats_list max-h-[40vh]">
-        {Object.keys(conversationHistory).map((key: string) => (
-          <ChatTab
-            key={key}
-            name={conversationHistory[key].description}
-            id={key}
-          />
+        {Object.keys(convoHistory).map((key: string) => (
+          <ChatTab key={key} name={convoHistory[key].description} id={key} />
         ))}
       </div>
     </div>

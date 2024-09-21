@@ -1,9 +1,15 @@
-import { Input } from "@nextui-org/input";
+import { Textarea } from "@nextui-org/input";
 import * as React from "react";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
-import { Textarea } from "@nextui-org/input";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
+
+interface MainSearchbarProps {
+  loading: boolean;
+  inputRef: React.RefObject<HTMLTextAreaElement>;
+  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  searchbarText: string;
+  setSearchbarText: React.Dispatch<React.SetStateAction<string>>;
+}
 
 export default function MainSearchbar({
   loading,
@@ -11,14 +17,16 @@ export default function MainSearchbar({
   handleFormSubmit,
   searchbarText,
   setSearchbarText,
-}) {
+}: MainSearchbarProps) {
   const [currentHeight, setHeight] = React.useState(24);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
       setSearchbarText((text) => text + "\n");
-    } else if (event.key === "Enter") handleFormSubmit(event);
+    }
   };
 
   return (
@@ -29,7 +37,7 @@ export default function MainSearchbar({
             disabled={loading}
             radius="full"
             size="lg"
-            placeholder={"Ask gaia..."}
+            placeholder="Ask gaia..."
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}
             value={searchbarText}

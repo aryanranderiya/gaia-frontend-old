@@ -6,7 +6,7 @@ import ChatsList from "@/components/Sidebar/ChatsList";
 import UserContainer from "@/components/Sidebar/UserContainer";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import ComingSoonModal from "@/components/ComingSoon.jsx/ComingSoonModal";
+import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 import { LegacyRef, useState } from "react";
 
 export default function Sidebar({
@@ -14,7 +14,7 @@ export default function Sidebar({
   toggleSidebar,
 }: {
   sidebarref: LegacyRef<HTMLDivElement>;
-  toggleSidebar: boolean;
+  toggleSidebar: () => void;
 }) {
   const [open, setOpen] = useState(false);
 
