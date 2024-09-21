@@ -1,10 +1,16 @@
 import { Button } from "@nextui-org/button";
 import { SidebarLeftIcon, Menu02Icon } from "../icons";
-import * as React from "react";
-import useMediaQuery from "../../hooks/MediaQuery";
+import useMediaQuery from "@/hooks/MediaQuery";
+import { FC } from "react";
 
-export default function CloseOpenSidebarBtn({ toggleSidebar }) {
-  const isMobileScreen = useMediaQuery("(max-width: 600px)");
+interface CloseOpenSidebarBtnProps {
+  toggleSidebar: () => void;
+}
+
+const CloseOpenSidebarBtn: FC<CloseOpenSidebarBtnProps> = ({
+  toggleSidebar,
+}) => {
+  const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
 
   return (
     <Button
@@ -22,4 +28,6 @@ export default function CloseOpenSidebarBtn({ toggleSidebar }) {
       )}
     </Button>
   );
-}
+};
+
+export default CloseOpenSidebarBtn;

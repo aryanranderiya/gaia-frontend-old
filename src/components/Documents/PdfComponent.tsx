@@ -1,10 +1,22 @@
-import { Document, Page, pdfjs } from "react-pdf";
 import { Spinner } from "@nextui-org/spinner";
-import { Pdf02Icon } from "../icons";
+import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import { Pdf02Icon } from "../icons";
 
-export function PdfContainer({ file, chat_bubble = false }) {
+// Define interfaces for component props
+interface PdfContainerProps {
+  file: File | null;
+  chat_bubble?: boolean;
+}
+
+interface PdfComponentProps {
+  file: File | string; // Allow both File object and string (URL)
+  pageNumber?: number;
+  width?: number;
+}
+
+export function PdfContainer({ file, chat_bubble = false }: PdfContainerProps) {
   return (
     <div
       className={`flex w-full rounded-2xl flex-col justify-center p-2 my-1 items-center text-white bg-black bg-opacity-70`}
@@ -28,7 +40,11 @@ export function PdfContainer({ file, chat_bubble = false }) {
   );
 }
 
-export function PdfComponent({ file, pageNumber = 1, width = 300 }) {
+export function PdfComponent({
+  file,
+  pageNumber = 1,
+  width = 300,
+}: PdfComponentProps) {
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
     import.meta.url

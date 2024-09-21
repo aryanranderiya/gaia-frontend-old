@@ -16,8 +16,8 @@ import smiley15 from "../Smileys/15.webp";
 import smiley16 from "../Smileys/16.webp";
 import smiley23 from "../Smileys/23.webp";
 import smiley24 from "../Smileys/24.webp";
-import * as React from "react";
 import { Tooltip } from "@nextui-org/tooltip";
+import { useEffect, useState } from "react";
 
 export default function StarterEmoji() {
   const smileys = [
@@ -42,14 +42,14 @@ export default function StarterEmoji() {
     smiley23,
     smiley24,
   ];
-  const [currentSmiley, setCurrentSmiley] = React.useState(1);
+  const [currentSmiley, setCurrentSmiley] = useState(1);
 
   const changeSmiley = () => {
     const randomIndex = Math.floor(Math.random() * smileys.length);
     setCurrentSmiley(randomIndex);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(changeSmiley, 5000);
     return () => clearTimeout(timer);
   }, [currentSmiley]);

@@ -1,13 +1,12 @@
 import { Button } from "@nextui-org/button";
 import { Menu01Icon, Home01Icon } from "../icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CommentAdd01Icon, ArrowUpRight01Icon, Chatting01Icon } from "../icons";
 import useMediaQuery from "../../hooks/MediaQuery";
 import * as React from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import WaitListButton from "./WaitlistModal";
 import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +16,6 @@ import {
   SheetTrigger,
 } from "../Shadcn/Sheet";
 
-
 export default function Navbar() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
@@ -26,10 +24,13 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar_content">
-        <Button variant="light" radius="full" size="md" onPress={() => navigate("/")}>
-          <span className="navbar_title">
-            gaia
-          </span>
+        <Button
+          variant="light"
+          radius="full"
+          size="md"
+          onPress={() => navigate("/")}
+        >
+          <span className="navbar_title">gaia</span>
         </Button>
         {/* 
         <div className="flex justify-center w-full items-center">
@@ -42,9 +43,14 @@ export default function Navbar() {
           <div className="flex items-center gap-1">
             <FeedbackFormBtn props={{ size: "md" }} text="Survey" />
 
-            {/* <WaitListButton
+            <WaitListButton
               className="p-0"
-              props={{ size: "md", color: "default", variant: "light", endContent: <></> }}
+              props={{
+                size: "md",
+                color: "default",
+                variant: "light",
+                endContent: <></>,
+              }}
               text="Login"
             />
 
@@ -52,9 +58,7 @@ export default function Navbar() {
               className="p-0"
               props={{ size: "md", endContent: <></> }}
               text="Signup"
-            /> 
-          */}
-
+            />
 
             {/* <WaitListButton
               className="p-0"
@@ -62,24 +66,28 @@ export default function Navbar() {
               text="Signup"
             /> */}
 
-            <SignedIn>
+            <Button
+              variant="shadow"
+              color="primary"
+              radius="full"
+              size="md"
+              className="font-medium"
+              endContent={<Chatting01Icon color="foreground" width="17" />}
+              onPress={() => navigate("/try/chat")}
+            >
+              Chat
+            </Button>
 
-              <Button variant="shadow" color="primary" radius="full" size="md" className="font-medium"
-                endContent={<Chatting01Icon color="foreground" width="17" />
-                }
-                onPress={() => navigate("/try/chat")}
-              >Chat</Button>
-
-              <UserButton />
-            </SignedIn>
-
-            <SignedOut>
-              <SignInButton mode="modal" children={
-                <Button variant="shadow" color="primary" radius="full" size="md" className="font-medium"
-                  endContent={<ArrowUpRight01Icon color="foreground" width="15" />}
-                >Get Started</Button>
-              } />
-            </SignedOut>
+            <Button
+              variant="shadow"
+              color="primary"
+              radius="full"
+              size="md"
+              className="font-medium"
+              endContent={<ArrowUpRight01Icon color="foreground" width="15" />}
+            >
+              Get Started
+            </Button>
           </div>
         ) : (
           <Sheet onOpenChange={setOpen} open={open}>

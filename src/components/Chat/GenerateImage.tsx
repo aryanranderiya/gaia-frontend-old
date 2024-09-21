@@ -11,11 +11,14 @@ import { Textarea } from "@nextui-org/input";
 import * as React from "react";
 import { toast } from "sonner";
 import api from "../../apiaxios";
-import fetchDate from "../Chat/fetchDate";
+import fetchDate from "./fetchDate";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 
 export default function GenerateImage({ openImageDialog, setOpenImageDialog }) {
-  const { conversationHistory, setConversationHistory } = useConvoHistory();
+  const {
+    convoHistory: conversationHistory,
+    setConvoHistory: setConversationHistory,
+  } = useConvoHistory();
 
   const [imagePrompt, setImagePrompt] = React.useState("");
   const [isValid, setIsValid] = React.useState(false);

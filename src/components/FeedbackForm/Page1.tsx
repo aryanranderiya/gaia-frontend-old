@@ -1,8 +1,8 @@
 import { Input } from "@nextui-org/input";
-import * as React from "react";
+import { methodType } from "@/pages/FeedbackForm";
 
-const EmailInput = ({ formData, handleDataChange }) => {
-  const validateEmail = (value) => {
+const EmailInput = ({ formData, handleDataChange }: methodType) => {
+  const validateEmail = (value: string) => {
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
     return regex.test(value);
   };
@@ -48,7 +48,7 @@ const EmailInput = ({ formData, handleDataChange }) => {
   );
 };
 
-export default function Page1({ formData, handleDataChange }) {
+export default function Page1({ formData, handleDataChange }: methodType) {
   if (formData.currentPage === 1)
     return (
       <>

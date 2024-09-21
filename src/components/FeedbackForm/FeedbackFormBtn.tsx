@@ -1,7 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { CommentAdd01Icon } from "../icons";
 import { Button } from "@nextui-org/button";
-export default function FeedbackFormBtn({ props, text = "Fill the Survey" }) {
+
+export default function FeedbackFormBtn({
+  props,
+  text = "Fill the Survey",
+}: {
+  props: any;
+  text: string;
+}) {
   const navigate = useNavigate();
   return (
     <Button

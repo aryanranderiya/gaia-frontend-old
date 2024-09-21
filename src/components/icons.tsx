@@ -1,4 +1,7 @@
-export const GlobalIcon = (props) => (
+import React from "react";
+interface IconProps extends React.SVGProps<SVGSVGElement> {}
+
+export const GlobalIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -34,7 +37,7 @@ export const GlobalIcon = (props) => (
   </svg>
 );
 
-export const PinIcon = (props) => (
+export const PinIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -60,7 +63,7 @@ export const PinIcon = (props) => (
     />
   </svg>
 );
-export const DiscoverCircleIcon = (props) => (
+export const DiscoverCircleIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -92,7 +95,7 @@ export const DiscoverCircleIcon = (props) => (
   </svg>
 );
 
-export const CalendarIcon = (props) => (
+export const CalendarIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -140,7 +143,7 @@ export const CalendarIcon = (props) => (
   </svg>
 );
 
-export const Calendar01Icon = (props) => (
+export const Calendar01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -180,7 +183,7 @@ export const Calendar01Icon = (props) => (
   </svg>
 );
 
-export const SearchIcon = (props) => (
+export const SearchIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -206,7 +209,7 @@ export const SearchIcon = (props) => (
   </svg>
 );
 
-export const StarsIcon = (props) => (
+export const StarsIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -237,7 +240,7 @@ export const StarsIcon = (props) => (
   </svg>
 );
 
-export const PlusSignIcon = (props) => (
+export const PlusSignIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -256,7 +259,7 @@ export const PlusSignIcon = (props) => (
     />
   </svg>
 );
-export const PencilEdit02Icon = (props) => (
+export const PencilEdit02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -282,7 +285,7 @@ export const PencilEdit02Icon = (props) => (
   </svg>
 );
 
-export const UserCircleIcon = (props) => (
+export const UserCircleIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -302,7 +305,7 @@ export const UserCircleIcon = (props) => (
   </svg>
 );
 
-export const ThreeDotsMenu = (props) => (
+export const ThreeDotsMenu: React.FC<IconProps> = (props) => (
   <svg
     fill="#9b9b9b"
     width={18}
@@ -330,7 +333,7 @@ export const ThreeDotsMenu = (props) => (
   </svg>
 );
 
-export const Settings01Icon = (props) => (
+export const Settings01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -354,7 +357,7 @@ export const Settings01Icon = (props) => (
   </svg>
 );
 
-export const BlushBrush02Icon = (props) => (
+export const BlushBrush02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -380,7 +383,7 @@ export const BlushBrush02Icon = (props) => (
   </svg>
 );
 
-export const Logout02Icon = (props) => (
+export const Logout02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -406,7 +409,7 @@ export const Logout02Icon = (props) => (
   </svg>
 );
 
-export const SentIcon = (props) => (
+export const SentIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -431,7 +434,7 @@ export const SentIcon = (props) => (
   </svg>
 );
 
-export const AttachmentIcon = (props) => (
+export const AttachmentIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -451,7 +454,7 @@ export const AttachmentIcon = (props) => (
   </svg>
 );
 
-export const GlobalSearchIcon = (props) => (
+export const GlobalSearchIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -488,7 +491,7 @@ export const GlobalSearchIcon = (props) => (
   </svg>
 );
 
-export const WavingHand01Icon = (props) => (
+export const WavingHand01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -514,7 +517,7 @@ export const WavingHand01Icon = (props) => (
   </svg>
 );
 
-export const SidebarLeftIcon = (props) => (
+export const SidebarLeftIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -545,7 +548,7 @@ export const SidebarLeftIcon = (props) => (
   </svg>
 );
 
-export const ChatBotIcon = (props) => (
+export const ChatBotIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -601,7 +604,7 @@ export const ChatBotIcon = (props) => (
   </svg>
 );
 
-export const Task01Icon = (props) => (
+export const Task01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -631,7 +634,7 @@ export const Task01Icon = (props) => (
   </svg>
 );
 
-export const Menu02Icon = (props) => (
+export const Menu02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -665,7 +668,7 @@ export const Menu02Icon = (props) => (
   </svg>
 );
 
-export const TranslateIcon = (props) => (
+export const TranslateIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -717,7 +720,7 @@ export const TranslateIcon = (props) => (
   </svg>
 );
 
-export const Pdf02Icon = (props) => (
+export const Pdf02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -751,7 +754,7 @@ export const Pdf02Icon = (props) => (
   </svg>
 );
 
-export const Image02Icon = (props) => (
+export const Image02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -788,7 +791,7 @@ export const Image02Icon = (props) => (
   </svg>
 );
 
-export const Mic01Icon = (props) => (
+export const Mic01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -818,7 +821,7 @@ export const Mic01Icon = (props) => (
   </svg>
 );
 
-export const VoiceIcon = (props) => (
+export const VoiceIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -871,7 +874,7 @@ export const VoiceIcon = (props) => (
   </svg>
 );
 
-export const Mic02Icon = (props) => (
+export const Mic02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -895,7 +898,7 @@ export const Mic02Icon = (props) => (
   </svg>
 );
 
-export const Tick02Icon = (props) => (
+export const Tick02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -915,7 +918,7 @@ export const Tick02Icon = (props) => (
   </svg>
 );
 
-export const Cancel01Icon = (props) => (
+export const Cancel01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -934,7 +937,7 @@ export const Cancel01Icon = (props) => (
     />
   </svg>
 );
-export const CalendarAdd01Icon = (props) => (
+export const CalendarAdd01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -975,7 +978,7 @@ export const CalendarAdd01Icon = (props) => (
   </svg>
 );
 
-export const GoogleIcon = (props) => (
+export const GoogleIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -996,7 +999,7 @@ export const GoogleIcon = (props) => (
   </svg>
 );
 
-export const Timer02Icon = (props) => (
+export const Timer02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1056,7 +1059,7 @@ export const Timer02Icon = (props) => (
   </svg>
 );
 
-export const WorkflowSquare03Icon = (props) => (
+export const WorkflowSquare03Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1098,7 +1101,7 @@ export const WorkflowSquare03Icon = (props) => (
   </svg>
 );
 
-export const Target02Icon = (props) => (
+export const Target02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1130,7 +1133,7 @@ export const Target02Icon = (props) => (
   </svg>
 );
 
-export const GoogleDriveIcon = (props) => (
+export const GoogleDriveIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1171,7 +1174,7 @@ export const GoogleDriveIcon = (props) => (
   </svg>
 );
 
-export const LanguageSkillIcon = (props) => (
+export const LanguageSkillIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1200,7 +1203,7 @@ export const LanguageSkillIcon = (props) => (
     />
   </svg>
 );
-export const NoteDoneIcon = (props) => (
+export const NoteDoneIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1240,7 +1243,7 @@ export const NoteDoneIcon = (props) => (
   </svg>
 );
 
-export const Share05Icon = (props) => (
+export const Share05Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1266,7 +1269,7 @@ export const Share05Icon = (props) => (
   </svg>
 );
 
-export const DocumentAttachmentIcon = (props) => (
+export const DocumentAttachmentIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1303,7 +1306,7 @@ export const DocumentAttachmentIcon = (props) => (
   </svg>
 );
 
-export const LinkBackwardIcon = (props) => (
+export const LinkBackwardIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1322,7 +1325,7 @@ export const LinkBackwardIcon = (props) => (
     />
   </svg>
 );
-export const ArrowUpRight01Icon = (props) => (
+export const ArrowUpRight01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1348,7 +1351,7 @@ export const ArrowUpRight01Icon = (props) => (
   </svg>
 );
 
-export const FallingStarIcon = (props) => (
+export const FallingStarIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1374,7 +1377,7 @@ export const FallingStarIcon = (props) => (
   </svg>
 );
 
-export const GoogleCalendar = (props) => {
+export const GoogleCalendar: React.FC<IconProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1410,13 +1413,14 @@ export const GoogleCalendar = (props) => {
   );
 };
 
-export const GoogleDrive = (props) => {
+export const GoogleDrive: React.FC<IconProps> = (props) => {
   return (
     <svg
       width="100"
       height="100"
       viewBox="0 0 87.3 78"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z"
@@ -1445,7 +1449,7 @@ export const GoogleDrive = (props) => {
     </svg>
   );
 };
-export const Github = (props) => {
+export const Github: React.FC<IconProps> = (props) => {
   return (
     <svg width="100" height="100" viewBox="0 0 438.549 438.549" {...props}>
       <path
@@ -1455,7 +1459,7 @@ export const Github = (props) => {
     </svg>
   );
 };
-export const Notion = (props) => {
+export const Notion: React.FC<IconProps> = (props) => {
   return (
     <svg
       width="100"
@@ -1463,6 +1467,7 @@ export const Notion = (props) => {
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M6.017 4.313l55.333 -4.087c6.797 -0.583 8.543 -0.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277 -1.553 6.807 -6.99 7.193L24.467 99.967c-4.08 0.193 -6.023 -0.39 -8.16 -3.113L3.3 79.94c-2.333 -3.113 -3.3 -5.443 -3.3 -8.167V11.113c0 -3.497 1.553 -6.413 6.017 -6.8z"
@@ -1478,7 +1483,7 @@ export const Notion = (props) => {
   );
 };
 
-export const SmartPhone01Icon = (props) => (
+export const SmartPhone01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1510,7 +1515,7 @@ export const SmartPhone01Icon = (props) => (
   </svg>
 );
 
-export const ComputerIcon = (props) => (
+export const ComputerIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1547,7 +1552,7 @@ export const ComputerIcon = (props) => (
     />
   </svg>
 );
-// export const GoogleCalendar = (props) => {};
+// export const GoogleCalendar: React.FC<IconProps> = (props)=> {};
 
 export function Gmail() {
   return (
@@ -1582,7 +1587,7 @@ export function Gmail() {
   );
 }
 
-export const Watch02Icon = (props) => (
+export const Watch02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1617,7 +1622,7 @@ export const Watch02Icon = (props) => (
   </svg>
 );
 
-export const Mail01Icon = (props) => (
+export const Mail01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1642,7 +1647,7 @@ export const Mail01Icon = (props) => (
   </svg>
 );
 
-export const SquareLock02Icon = (props) => (
+export const SquareLock02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1673,7 +1678,7 @@ export const SquareLock02Icon = (props) => (
   </svg>
 );
 
-export const CommentAdd01Icon = (props) => (
+export const CommentAdd01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1706,7 +1711,7 @@ export const CommentAdd01Icon = (props) => (
   </svg>
 );
 
-export const Menu01Icon = (props) => (
+export const Menu01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1740,7 +1745,7 @@ export const Menu01Icon = (props) => (
   </svg>
 );
 
-export const Home01Icon = (props) => (
+export const Home01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1765,7 +1770,7 @@ export const Home01Icon = (props) => (
   </svg>
 );
 
-export const CheckmarkBadge01Icon = (props) => (
+export const CheckmarkBadge01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1789,7 +1794,7 @@ export const CheckmarkBadge01Icon = (props) => (
     />
   </svg>
 );
-export const ArrowRight01Icon = (props) => (
+export const ArrowRight01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1808,7 +1813,7 @@ export const ArrowRight01Icon = (props) => (
     />
   </svg>
 );
-export const ArrowLeft01Icon = (props) => (
+export const ArrowLeft01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1828,7 +1833,7 @@ export const ArrowLeft01Icon = (props) => (
   </svg>
 );
 
-export const SourceCodeCircleIcon = (props) => (
+export const SourceCodeCircleIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1863,7 +1868,7 @@ export const SourceCodeCircleIcon = (props) => (
   </svg>
 );
 
-export const ComputerPhoneSyncIcon = (props) => (
+export const ComputerPhoneSyncIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1902,7 +1907,7 @@ export const ComputerPhoneSyncIcon = (props) => (
   </svg>
 );
 
-export const AccountSetting02Icon = (props) => (
+export const AccountSetting02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1927,7 +1932,7 @@ export const AccountSetting02Icon = (props) => (
   </svg>
 );
 
-export const FileUploadIcon = (props) => (
+export const FileUploadIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1961,7 +1966,7 @@ export const FileUploadIcon = (props) => (
   </svg>
 );
 
-export const InternetIcon = (props) => (
+export const InternetIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -1990,7 +1995,7 @@ export const InternetIcon = (props) => (
   </svg>
 );
 
-export const ImageAdd02Icon = (props) => (
+export const ImageAdd02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2024,7 +2029,7 @@ export const ImageAdd02Icon = (props) => (
     />
   </svg>
 );
-export const BrushIcon = (props) => (
+export const BrushIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2044,7 +2049,7 @@ export const BrushIcon = (props) => (
   </svg>
 );
 
-export const DownloadSquare01Icon = (props) => (
+export const DownloadSquare01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2069,7 +2074,7 @@ export const DownloadSquare01Icon = (props) => (
   </svg>
 );
 
-export const VolumeHighIcon = (props) => (
+export const VolumeHighIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2103,7 +2108,7 @@ export const VolumeHighIcon = (props) => (
   </svg>
 );
 
-export const ImageUploadIcon = (props) => (
+export const ImageUploadIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2141,7 +2146,7 @@ export const ImageUploadIcon = (props) => (
   </svg>
 );
 
-export const AiImageIcon = (props) => (
+export const AiImageIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2180,7 +2185,7 @@ export const AiImageIcon = (props) => (
   </svg>
 );
 
-export const Alert01Icon = (props) => (
+export const Alert01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2211,7 +2216,7 @@ export const Alert01Icon = (props) => (
     />
   </svg>
 );
-export const ViewOffSlashIcon = (props) => (
+export const ViewOffSlashIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2244,7 +2249,7 @@ export const ViewOffSlashIcon = (props) => (
   </svg>
 );
 
-export const ViewIcon = (props) => (
+export const ViewIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2267,7 +2272,7 @@ export const ViewIcon = (props) => (
   </svg>
 );
 
-export const LockPasswordIcon = (props) => (
+export const LockPasswordIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2312,7 +2317,7 @@ export const LockPasswordIcon = (props) => (
     />
   </svg>
 );
-export const IdentityCardIcon = (props) => (
+export const IdentityCardIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2376,7 +2381,7 @@ export const GoogleColoured = ({ props }) => (
   </svg>
 );
 
-export const Alert02Icon = (props) => (
+export const Alert02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2407,7 +2412,7 @@ export const Alert02Icon = (props) => (
     />
   </svg>
 );
-export const PlayIcon = (props) => (
+export const PlayIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2426,7 +2431,7 @@ export const PlayIcon = (props) => (
   </svg>
 );
 
-export const BubbleChatIcon = (props) => (
+export const BubbleChatIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2452,7 +2457,7 @@ export const BubbleChatIcon = (props) => (
   </svg>
 );
 
-export const Chatting01Icon = (props) => (
+export const Chatting01Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2478,7 +2483,7 @@ export const Chatting01Icon = (props) => (
   </svg>
 );
 
-export const UserIcon = (props) => (
+export const UserIcon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2503,7 +2508,7 @@ export const UserIcon = (props) => (
   </svg>
 );
 
-export const MoneyBag02Icon = (props) => (
+export const MoneyBag02Icon: React.FC<IconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -2536,26 +2541,86 @@ export const MoneyBag02Icon = (props) => (
   </svg>
 );
 
-export const HelpCircleIcon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"#000000"} fill={"none"} {...props}>
+export const HelpCircleIcon: React.FC<IconProps> = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={24}
+    height={24}
+    color={"#000000"}
+    fill={"none"}
+    {...props}
+  >
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M11.992 17H12.001" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M11.992 17H12.001"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
-export const BubbleChatQuestionIcon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"#000000"} fill={"none"} {...props}>
-    <path d="M22 11.5667C22 16.8499 17.5222 21.1334 12 21.1334C11.3507 21.1343 10.7032 21.0742 10.0654 20.9545C9.60633 20.8682 9.37678 20.8251 9.21653 20.8496C9.05627 20.8741 8.82918 20.9948 8.37499 21.2364C7.09014 21.9197 5.59195 22.161 4.15111 21.893C4.69874 21.2194 5.07275 20.4112 5.23778 19.5448C5.33778 19.0148 5.09 18.5 4.71889 18.1231C3.03333 16.4115 2 14.1051 2 11.5667C2 6.28357 6.47778 2 12 2C17.5222 2 22 6.28357 22 11.5667Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M10 9.84615C10 8.82655 10.8954 8 12 8C13.1046 8 14 8.82655 14 9.84615C14 10.2137 13.8837 10.5561 13.6831 10.8438C13.0854 11.7012 12 12.5189 12 13.5385V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M12 16.5H12.009" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const BubbleChatQuestionIcon: React.FC<IconProps> = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={24}
+    height={24}
+    color={"#000000"}
+    fill={"none"}
+    {...props}
+  >
+    <path
+      d="M22 11.5667C22 16.8499 17.5222 21.1334 12 21.1334C11.3507 21.1343 10.7032 21.0742 10.0654 20.9545C9.60633 20.8682 9.37678 20.8251 9.21653 20.8496C9.05627 20.8741 8.82918 20.9948 8.37499 21.2364C7.09014 21.9197 5.59195 22.161 4.15111 21.893C4.69874 21.2194 5.07275 20.4112 5.23778 19.5448C5.33778 19.0148 5.09 18.5 4.71889 18.1231C3.03333 16.4115 2 14.1051 2 11.5667C2 6.28357 6.47778 2 12 2C17.5222 2 22 6.28357 22 11.5667Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M10 9.84615C10 8.82655 10.8954 8 12 8C13.1046 8 14 8.82655 14 9.84615C14 10.2137 13.8837 10.5561 13.6831 10.8438C13.0854 11.7012 12 12.5189 12 13.5385V14"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M12 16.5H12.009"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
-
-export const CheckmarkCircle02Icon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"#000000"} fill={"none"} {...props}>
-    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M8 12.5L10.5 15L16 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const CheckmarkCircle02Icon: React.FC<IconProps> = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={24}
+    height={24}
+    color={"#000000"}
+    fill={"none"}
+    {...props}
+  >
+    <path
+      d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M8 12.5L10.5 15L16 9"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );

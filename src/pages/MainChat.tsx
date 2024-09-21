@@ -1,24 +1,32 @@
-import MainSearchbar from "@/components/Chat/MainSearchbar";
-import StarterText from "@/components/Chat/StarterText";
-import StarterEmoji from "@/components/Chat/StarterEmoji";
-import { ScrollArea } from "@/components/Shadcn/ScrollArea";
-import * as React from "react";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
-import LoadTranslationModel from "@/components/Translation/LoadTranslationModel";
-import fetchDate from "@/components/Chat/fetchDate";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
 import api from "@/apiaxios";
+import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
+import fetchDate from "@/components/Chat/fetchDate";
+import MainSearchbar from "@/components/Chat/MainSearchbar";
+import StarterEmoji from "@/components/Chat/StarterEmoji";
+import StarterText from "@/components/Chat/StarterText";
+import { ScrollArea } from "@/components/Shadcn/ScrollArea";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+// Helper function to set the last bot item
 function setLastBotItem(
-  conversationHistory,
-  setConversationHistory,
-  data_array,
-  conversationID
+  convoHistory: ConversationHistoryType,
+  setConvoHistory: React.Dispatch<
+    React.SetStateAction<ConversationHistoryType>
+  >,
+  data_array: string | string[],
+  conversationID: string
 ) {
-  if (!!conversationHistory && data_array.length > 0) {
-    const previousHistory = { ...conversationHistory };
+  if (
+    !!convoHistory &&
+    (typeof data_array === "string"
+      ? data_array.length > 0
+      : data_array.length > 0)
+  ) {
+    const previousHistory = { ...convoHistory };
     const currentConvo = previousHistory[conversationID];
     const messages = currentConvo.messages;
     const lastItemIndex = messages.length - 1;
@@ -35,28 +43,30 @@ function setLastBotItem(
         lastItem.date = fetchDate();
       }
 
-      setConversationHistory(previousHistory);
+      setConvoHistory(previousHistory);
     }
   }
 }
 
 export default function MainChat() {
-  const { conversationHistory, setConversationHistory } = useConvoHistory();
-  const [loading, setLoading] = React.useState(false);
-  const [conversationMessages, setConversationMessages] = React.useState([]);
-  const [searchbarText, setSearchbarText] = React.useState("");
-  const [data, setData] = React.useState([]);
-  const inputRef = React.useRef(null);
-  const effectHasRunRef = React.useRef(false);
-  const convoRef = React.useRef(null);
-  const navigate = useNavigate();
-  const { convoIdParam } = useParams();
-  const [convoIdParamState, setConvoIdParamState] = React.useState(null);
+  const { convoHistory, setConvoHistory } = useConvoHistory();
+  // const { convoHistory, setConvoHistory } = useConvoHistory();
 
-  React.useEffect(() => {
-    setConvoIdParamState(convoIdParam);
-    // if (!conversationHistory.includes(convoIdParam) && !!convoIdParam)
-    //   navigate("/404");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [convoMessages, setConvoMessages] = useState<MessageType[]>([]);
+  const [searchbarText, setSearchbarText] = useState<string>("");
+  const [data, setData] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const effectHasRunRef = useRef<boolean>(false);
+  const convoRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
+  const [convoIdParamState, setConvoIdParamState] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    setConvoIdParamState(convoIdParam ?? null);
   }, [convoIdParam]);
 
   const focusInput = () => {
@@ -65,7 +75,9 @@ export default function MainChat() {
     }, 10);
   };
 
-  const fetchConversationDescription = async (searchbarText) => {
+  const fetchConversationDescription = async (
+    searchbarText: string
+  ): Promise<string> => {
     const response = await api.post(
       "/chatNoStream",
       {
@@ -82,30 +94,25 @@ export default function MainChat() {
     return response?.data?.response.toString().replace('"', "") || "New Chat";
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     convoRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [conversationHistory]);
+  }, [convoHistory]);
 
-  React.useEffect(() => {
-    if (!!convoIdParamState && !!conversationHistory)
-      setConversationMessages(conversationHistory[convoIdParamState]?.messages);
-  }, [conversationHistory, convoIdParamState]);
+  useEffect(() => {
+    if (!!convoIdParamState && !!convoHistory)
+      setConvoMessages(convoHistory[convoIdParamState]?.messages);
+  }, [convoHistory, convoIdParamState]);
 
-  React.useEffect(() => {
-    LoadTranslationModel();
-  }, []);
+  // useEffect(() => {
+  //   LoadTranslationModel();
+  // }, []);
 
-  React.useEffect(() => {
-    setLastBotItem(
-      conversationHistory,
-      setConversationHistory,
-      data,
-      convoIdParamState
-    );
-  }, [data, conversationHistory]);
+  useEffect(() => {
+    setLastBotItem(convoHistory, setConvoHistory, data, convoIdParamState!);
+  }, [data, convoHistory]);
 
-  const fetchData = async (searchbarText) => {
-    const currentMessages = [
+  const fetchData = async (searchbarText: string) => {
+    const currentMessages: MessageType[] = [
       {
         type: "user",
         response: searchbarText,
@@ -113,6 +120,8 @@ export default function MainChat() {
       },
       {
         type: "bot",
+        response: "",
+        date: "",
         loading: true,
       },
     ];
@@ -121,7 +130,7 @@ export default function MainChat() {
       const convoID = crypto.randomUUID();
       navigate(`/try/chat/${convoID}`);
 
-      setConversationHistory((oldHistory) => ({
+      setConvoHistory((oldHistory) => ({
         ...oldHistory,
         [convoID]: {
           description: "New Chat",
@@ -130,7 +139,7 @@ export default function MainChat() {
       }));
 
       fetchConversationDescription(searchbarText).then((description) => {
-        setConversationHistory((oldHistory) => ({
+        setConvoHistory((oldHistory) => ({
           ...oldHistory,
           [convoID]: {
             ...oldHistory[convoID],
@@ -139,12 +148,12 @@ export default function MainChat() {
         }));
       });
     } else {
-      setConversationHistory((oldHistory) => ({
+      setConvoHistory((oldHistory) => ({
         ...oldHistory,
-        [convoIdParamState]: {
-          ...oldHistory[convoIdParamState],
+        [convoIdParamState!]: {
+          ...oldHistory[convoIdParamState!],
           messages: [
-            ...(oldHistory[convoIdParamState]?.messages || []),
+            ...(oldHistory[convoIdParamState!]?.messages || []),
             ...currentMessages,
           ],
         },
@@ -173,8 +182,8 @@ export default function MainChat() {
         }
         let dataJson = JSON.parse(event.data);
         let response = dataJson.response;
-        if (typeof response === "object") checkIntent(response, controller);
-        else if (response === "") setData((data) => [...data, "\n"]);
+        // if (typeof response === "object") checkIntent(response, controller);
+        if (response === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, response]);
       },
 
@@ -193,7 +202,7 @@ export default function MainChat() {
     });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchbarText) return;
     setLoading(true);
@@ -205,10 +214,8 @@ export default function MainChat() {
     <>
       <ScrollArea>
         <div className="conversation_history" ref={convoRef}>
-          {!!conversationHistory &&
-          !!conversationMessages &&
-          conversationMessages.length > 0 ? (
-            conversationMessages.map((message, index) =>
+          {!!convoHistory && !!convoMessages && convoMessages.length > 0 ? (
+            convoMessages.map((message, index) =>
               message.type === "bot" ? (
                 <ChatBubbleBot
                   text={message.response}
@@ -217,7 +224,6 @@ export default function MainChat() {
                   index={index}
                   isImage={message.isImage}
                   image={message.imageUrl}
-                  conversationHistory={conversationHistory}
                   disclaimer={message.disclaimer}
                   userinputType={message.userinputType}
                   date={message.date}
@@ -228,7 +234,7 @@ export default function MainChat() {
                   key={index}
                   subtype={message.subtype || null}
                   file={message.file || null}
-                  filename={message.filename || null}
+                  filename={message.filename || undefined}
                   date={message.date}
                 />
               )

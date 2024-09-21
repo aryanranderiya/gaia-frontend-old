@@ -1,4 +1,6 @@
 import { Select, SelectItem } from "@nextui-org/select";
+import { FormData } from "@/pages/FeedbackForm";
+import { methodType } from "@/pages/FeedbackForm";
 
 const devices = [
   { key: "smartphone", label: "Smartphone" },
@@ -25,6 +27,11 @@ const DevicesOperatingSystemsSelects = ({
   operatingSystems,
   formData,
   handleDataChange,
+}: {
+  devices: { key: string; label: string };
+  operatingSystems: { key: string; label: string };
+  formData: FormData;
+  handleDataChange: (key: keyof FormData, value: any) => void;
 }) => (
   <>
     <Select
@@ -46,7 +53,7 @@ const DevicesOperatingSystemsSelects = ({
         },
       }}
     >
-      {devices.map((device) => (
+      {devices.map((device: { key: string; label: string }) => (
         <SelectItem key={device.key}>{device.label}</SelectItem>
       ))}
     </Select>
@@ -70,7 +77,7 @@ const DevicesOperatingSystemsSelects = ({
         },
       }}
     >
-      {operatingSystems.map((os) => (
+      {operatingSystems.map((os: { key: string; label: string }) => (
         <SelectItem key={os.key}>{os.label}</SelectItem>
       ))}
     </Select>
@@ -95,7 +102,7 @@ const ageRanges = [
   { key: "65-and-over", label: "65 and over" },
 ];
 
-const AgeOccupationSelects = ({ formData, handleDataChange }) => (
+const AgeOccupationSelects = ({ formData, handleDataChange }: methodType) => (
   <>
     <Select
       isRequired
@@ -147,13 +154,13 @@ const AgeOccupationSelects = ({ formData, handleDataChange }) => (
   </>
 );
 
-export default function Page2({ formData, handleDataChange }) {
+export default function Page2({ formData, handleDataChange }: methodType) {
   if (formData.currentPage === 2)
     return (
       <>
         <DevicesOperatingSystemsSelects
-          devices={devices}
-          operatingSystems={operatingSystems}
+          devices={formData.devices}
+          operatingSystems={formData.operatingSystems}
           formData={formData}
           handleDataChange={handleDataChange}
         />

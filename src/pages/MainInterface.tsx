@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Route,
   Routes,
@@ -12,27 +11,22 @@ import WebsiteName from "@/components/TopWebsiteName";
 import Sidebar from "../layouts/Sidebar";
 import MainChat from "./MainChat";
 import Explore from "./Explore";
-import { apiauth } from "../apiaxios";
-import { useNotLoggedDialogOpen } from "@/contexts/NotLoggedDialogOpen";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
-import { useUserInfoContext } from "@/contexts/UserInfo";
-import { useUser } from "@clerk/clerk-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function MainInterface() {
   const location = useLocation();
   const navigate = useNavigate();
-  const sidebarRef = React.useRef(null);
-  const contentContainerRef = React.useRef(null);
-  const [isSidebarVisible, setSidebarVisible] = React.useState(true);
+  const sidebarRef = useRef(null);
+  const contentContainerRef = useRef(null);
+  const [isSidebarVisible, setSidebarVisible] = useState(true);
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
-  const { setNotLoggedDialogOpen } = useNotLoggedDialogOpen();
-  const { userInfo, setUserInfo } = useUserInfoContext();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
   }, [location]);
 
-  const toggleSidebar = () => {
+  function toggleSidebar() {
     if (sidebarRef.current) {
       if (isSidebarVisible) {
         sidebarRef.current.classList.add("hide");
@@ -44,7 +38,7 @@ export default function MainInterface() {
         setSidebarVisible(true);
       }
     }
-  };
+  }
 
   const hideSidebar = () => {
     if (sidebarRef.current) {
@@ -56,19 +50,9 @@ export default function MainInterface() {
     }
   };
 
-
-  const { isLoaded, isSignedIn } = useUser();
-
-  React.useEffect(() => {
-    if (isLoaded)
-      // if (!isSignedIn) setNotLoggedDialogOpen(true);
-      if (!isSignedIn) navigate("/");
-  }, [isLoaded]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobileScreen && isSidebarVisible) toggleSidebar();
   }, []);
-
 
   return (
     <ConversationHistoryProvider>

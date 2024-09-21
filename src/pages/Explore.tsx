@@ -7,8 +7,19 @@ import {
   WorkflowSquare03Icon,
   Calendar01Icon,
 } from "@/components/icons";
+import React from "react";
 
-export function OptionsTab(key, icon, title, content) {
+export function OptionsTab({
+  key,
+  icon,
+  title,
+  content,
+}: {
+  key: string;
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  content: React.ReactNode;
+}) {
   return (
     <Tab
       key={key}

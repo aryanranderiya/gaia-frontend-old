@@ -9,7 +9,41 @@ import Page7 from "@/components/FeedbackForm/Page7";
 import Page8 from "@/components/FeedbackForm/Page8";
 import NextPrevButtons from "@/components/FeedbackForm/NextPrevButtons";
 
-export const initialFormData = {
+export interface FormData {
+  firstName: string;
+  lastName: string;
+  currentPage: number;
+  ageRange: string;
+  occupation: string;
+  email: string;
+  devices: string;
+  operatingSystems: string[];
+  openAIUsage: number;
+  googleBardUsage: number;
+  usesDigitalAssistant: string;
+  digitalAssistantDetails: string[];
+  currentUsefulFeatures: string;
+  desiredFeatures: string;
+  challenges: string;
+  helpfulSituations: string[];
+  interactionFrequency: string;
+  customisationLevel: number;
+  mobileAppLikelihood: number;
+  concerns: string;
+  factorsToUse: string;
+  integrations: string;
+  additionalComments: string;
+  accountCreation: string;
+  calendarServiceUsage: string;
+  learningBehaviourComfortable: string;
+}
+
+export interface methodType {
+  formData: FormData;
+  handleDataChange: (key: keyof FormData, value: any) => void;
+}
+
+export const initialFormData: FormData = {
   firstName: "",
   lastName: "",
   currentPage: 1,
@@ -39,18 +73,17 @@ export const initialFormData = {
 };
 
 export default function FeedbackForm() {
-  const [formData, setFormData] = React.useState(() => {
+  const [formData, setFormData] = React.useState<FormData>(() => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData ? JSON.parse(savedFormData) : initialFormData;
   });
 
-  const handleDataChange = (key, value) => {
+  const handleDataChange = (key: keyof FormData, value: any) => {
     setFormData({ ...formData, [key]: value });
   };
 
   React.useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
-    console.log(formData);
   }, [formData]);
 
   return (

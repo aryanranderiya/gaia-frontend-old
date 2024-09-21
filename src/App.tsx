@@ -1,19 +1,18 @@
-import * as React from "react";
 import MainInterface from "./pages/MainInterface";
 import Landing from "./layouts/Landing";
 import { Route, Routes } from "react-router-dom";
 import NotLoggedIn from "@/components/NotLoggedInDialog";
-import { UserInfoProvider } from "@/contexts/UserInfo";
+import { UserProvider } from "./contexts/UserContext";
 
 function App() {
   return (
-    <UserInfoProvider>
-      <NotLoggedIn />
+    <UserProvider>
+      <NotLoggedIn /> {/* Login Dialog for when user is not logged in*/}
       <Routes>
         <Route path="/try/*" element={<MainInterface />} />
         <Route path="/*" element={<Landing />} />
       </Routes>
-    </UserInfoProvider>
+    </UserProvider>
   );
 }
 

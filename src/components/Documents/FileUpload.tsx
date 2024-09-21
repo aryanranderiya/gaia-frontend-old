@@ -17,29 +17,53 @@ import {
 } from "../Shadcn/Dialog";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 
-export default function FileUpload({ isImage, fileInputRef }) {
-  const { conversationHistory, setConversationHistory } = useConvoHistory();
+interface FileUploadProps {
+  isImage: boolean;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+}
 
-  const [file, setFile] = React.useState(null);
-  const [fileLoading, setFileLoading] = React.useState(false);
-  const [textContent, setTextContent] = React.useState("");
-  const [isValid, setIsValid] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [botResponse, setBotResponse] = React.useState(null);
+interface ConversationItem {
+  type: "user" | "bot";
+  response: string;
+  subtype?: "image" | "pdf";
+  file?: string | File;
+  date: string;
+  filename?: string;
+  loading?: boolean;
+  disclaimer?: string;
+}
+
+export default function FileUpload({
+  isImage,
+  fileInputRef,
+}: FileUploadProps): JSX.Element {
+  const {
+    convoHistory: conversationHistory,
+    setConvoHistory: setConversationHistory,
+  } = useConvoHistory();
+
+  const [file, setFile] = React.useState<File | null>(null);
+  const [fileLoading, setFileLoading] = React.useState<boolean>(false);
+  const [textContent, setTextContent] = React.useState<string>("");
+  const [isValid, setIsValid] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [botResponse, setBotResponse] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (open === false) closeModal();
   }, [open]);
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     if (fileInputRef.current) fileInputRef.current.value = "";
     setTextContent("");
     setFile(null);
   };
 
-  const handleFileSelect = async (event) => {
+  const handleFileSelect = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
     setFileLoading(true);
-    const selectedFile = event.target.files[0];
+    const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
     setOpen(true);
 
@@ -62,7 +86,7 @@ export default function FileUpload({ isImage, fileInputRef }) {
     }
   };
 
-  function updateWithResponse() {
+  function updateWithResponse(): void {
     if (conversationHistory.length > 0 && !!botResponse) {
       const updatedHistory = [...conversationHistory];
       const lastItemIndex = updatedHistory.length - 1;
@@ -80,21 +104,21 @@ export default function FileUpload({ isImage, fileInputRef }) {
     updateWithResponse();
   }, [botResponse]);
 
-  const submitForm = async () => {
+  const submitForm = async (): Promise<void> => {
     setIsValid(textContent.trim() === "");
     if (textContent.trim() === "") return;
 
     closeModal();
     setOpen(false);
-    setConversationHistory((prevHistory) => [
+    setConversationHistory((prevHistory: ConversationItem[]) => [
       ...prevHistory,
       {
         type: "user",
         response: textContent,
         subtype: isImage ? "image" : "pdf",
-        file: isImage ? URL.createObjectURL(file) : file,
+        file: isImage && file ? URL.createObjectURL(file) : file,
         date: fetchDate(),
-        filename: file.name,
+        filename: file?.name,
       },
       {
         type: "bot",
@@ -105,12 +129,14 @@ export default function FileUpload({ isImage, fileInputRef }) {
       },
     ]);
 
+    if (!file) return;
+
     const formData = new FormData();
     formData.append("message", textContent);
     formData.append("file", file);
 
     try {
-      const response = await api.post(
+      const response = await api.post<{ response: string }>(
         isImage ? "/image" : "/document",
         formData,
         {
@@ -136,7 +162,9 @@ export default function FileUpload({ isImage, fileInputRef }) {
     }
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ): void => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
       setTextContent((text) => text + "\n");
@@ -171,6 +199,7 @@ export default function FileUpload({ isImage, fileInputRef }) {
               <img
                 src={URL.createObjectURL(file)}
                 className="rounded-3xl my-2 object-cover h-[250px] w-[350px]"
+                alt="Uploaded file preview"
               />
             ) : (
               <PdfContainer file={file} />
@@ -193,9 +222,9 @@ export default function FileUpload({ isImage, fileInputRef }) {
               spellCheck={false}
               size="large"
               onKeyDown={handleKeyDown}
-              onValueChange={(value) => {
+              onValueChange={(value: string) => {
                 setTextContent(value);
-                setIsValid(value.trim() == "");
+                setIsValid(value.trim() === "");
               }}
             />
           </div>

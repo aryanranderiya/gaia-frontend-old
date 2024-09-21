@@ -1,16 +1,36 @@
 import { Avatar } from "@nextui-org/avatar";
+import { Chip } from "@nextui-org/chip";
+import Markdown from "markdown-to-jsx";
+import { useEffect, useRef, useState } from "react";
+import { PdfContainer } from "../Documents/PdfComponent";
 import smiley from "../Smileys/2.webp";
 import { Alert01Icon } from "../icons";
-import Markdown from "markdown-to-jsx";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import { PdfContainer } from "../Documents/PdfComponent";
-import { Chip } from "@nextui-org/chip";
-import * as React from "react";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
-import fetchDate, { parseDate } from "./fetchDate";
+import { parseDate } from "./fetchDate";
+import { DateType } from "@/contexts/ConversationHistory";
+
+// Define interfaces for component props
+interface ChatBubbleUserProps {
+  text?: string;
+  subtype?: "image" | "pdf" | null;
+  file?: File | null | string;
+  filename?: string;
+  date: string | DateType;
+}
+
+interface ChatBubbleBotProps {
+  index: number;
+  text: string;
+  loading?: boolean;
+  isImage?: boolean;
+  image?: string | null;
+  disclaimer?: string;
+  date: string | DateType;
+  userinputType?: string;
+}
 
 export function ChatBubbleUser({
   text,
@@ -18,7 +38,7 @@ export function ChatBubbleUser({
   file = null,
   filename,
   date,
-}) {
+}: ChatBubbleUserProps) {
   return (
     (!!text || !!file) && (
       <div className="chat_bubble_container user">
@@ -29,10 +49,10 @@ export function ChatBubbleUser({
             </div>
           )}
 
-          {subtype === "image" && (
+          {subtype === "image" && typeof file === "string" && (
             <div className="flex flex-col items-center gap-2 max-w-[250px] whitespace-nowrap text-ellipsis overflow-hidden">
               <img
-                src={file}
+                src={file} // Ensured this is a string by checking the type
                 width={"250px"}
                 height={"250px"}
                 content-type="image/png"
@@ -50,7 +70,9 @@ export function ChatBubbleUser({
             </div>
           )}
 
-          {subtype === "pdf" && <PdfContainer file={file} chat_bubble={true} />}
+          {subtype === "pdf" && file instanceof File && (
+            <PdfContainer file={file} chat_bubble={true} />
+          )}
         </div>
         <div className="flex justify-end">
           <span className="text-xs text-white text-opacity-45 flex flex-col select-text pt-[2px]">
@@ -71,10 +93,10 @@ export function ChatBubbleBot({
   disclaimer,
   date,
   userinputType,
-}) {
-  const [component, setComponent] = React.useState(<></>);
+}: ChatBubbleBotProps) {
+  const [component, setComponent] = useState<JSX.Element>(<></>);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loading) return;
     if (isImage)
       setComponent(
@@ -84,7 +106,7 @@ export function ChatBubbleBot({
               <span>Here is your generated image:</span>
 
               <img
-                src={image}
+                src={image as string}
                 width={"250px"}
                 height={"250px"}
                 content-type="image/png"
@@ -92,8 +114,8 @@ export function ChatBubbleBot({
               />
 
               <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
-                {text.split(",").map((keyword) => (
-                  <Chip color="default" size="sm">
+                {text.split(",").map((keyword, index) => (
+                  <Chip key={index} color="default" size="sm">
                     {keyword.trim()}
                   </Chip>
                 ))}
@@ -131,20 +153,20 @@ export function ChatBubbleBot({
           </span>
         </>
       );
-  }, [isImage, text, image, date, userinputType, disclaimer]);
+  }, [isImage, text, image, date, userinputType, disclaimer, loading]);
 
-  const actionsRef = React.useRef(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   const handleMouseOver = () => {
     if (actionsRef.current) {
-      actionsRef.current.style.opacity = 1;
+      actionsRef.current.style.opacity = "1";
       actionsRef.current.style.visibility = "visible";
     }
   };
 
   const handleMouseOut = () => {
     if (actionsRef.current) {
-      actionsRef.current.style.opacity = 0;
+      actionsRef.current.style.opacity = "0";
       actionsRef.current.style.visibility = "hidden";
     }
   };
@@ -166,10 +188,10 @@ export function ChatBubbleBot({
           <div
             className="pl-12 transition-all"
             ref={actionsRef}
-            style={{ opacity: 0 }}
+            style={{ opacity: 0, visibility: "hidden" }}
           >
             {isImage ? (
-              <ChatBubble_Actions_Image src={image} />
+              <ChatBubble_Actions_Image src={image as string} />
             ) : (
               <ChatBubble_Actions loading={loading} text={text} index={index} />
             )}

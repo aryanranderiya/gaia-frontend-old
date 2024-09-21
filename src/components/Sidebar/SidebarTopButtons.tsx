@@ -1,11 +1,6 @@
-import {
-  DiscoverCircleIcon,
-  PinIcon,
-  CalendarIcon,
-  GlobalSearchIcon,
-} from "../icons";
+import { DiscoverCircleIcon, PinIcon, CalendarIcon } from "../icons";
 import { Button } from "@nextui-org/button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SidebarTopButtons() {
   const navigate = useNavigate();

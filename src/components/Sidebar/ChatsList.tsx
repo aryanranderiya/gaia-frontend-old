@@ -1,11 +1,16 @@
-import React from "react";
-import { PencilEdit02Icon } from "../icons";
-import { Button } from "@nextui-org/button";
-import { useNavigate } from "react-router-dom";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { Chatting01Icon } from "@/components/icons";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { Button } from "@nextui-org/button";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+import { PencilEdit02Icon } from "../icons";
 
-export function ChatTab({ name, id }) {
+interface ChatTabProps {
+  name: string;
+  id: string;
+}
+
+export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,17 +26,13 @@ export function ChatTab({ name, id }) {
       </Button>
     </div>
   );
-}
+};
 
 export default function ChatsList() {
-  const { conversationHistory, setConversationHistory } = useConvoHistory();
-
+  const { convoHistory: conversationHistory } = useConvoHistory();
   const navigate = useNavigate();
 
-  const createNewChat = () => {
-    // const convoID = crypto.randomUUID();
-    // setChatsList((oldlist) => [...oldlist, { id: convoID, name: "New Chat" }]);
-    // navigate(`/try/chat/${convoID}`);
+  const createNewChat = (): void => {
     navigate(`/try/chat/`);
   };
 
@@ -46,9 +47,8 @@ export default function ChatsList() {
         <PencilEdit02Icon width="21" />
       </Button>
 
-      {/* <ScrollArea className="max-h-[50vh]"> */}
       <div className="chats_list max-h-[40vh]">
-        {Object.keys(conversationHistory).map((key) => (
+        {Object.keys(conversationHistory).map((key: string) => (
           <ChatTab
             key={key}
             name={conversationHistory[key].description}
@@ -56,7 +56,6 @@ export default function ChatsList() {
           />
         ))}
       </div>
-      {/* </ScrollArea> */}
     </div>
   );
 }

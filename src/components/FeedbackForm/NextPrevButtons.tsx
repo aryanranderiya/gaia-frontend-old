@@ -7,7 +7,7 @@ import {
 } from "../icons";
 import { Pagination } from "@nextui-org/pagination";
 import { toast } from "sonner";
-import api from "../../apiaxios";
+import api from "@/apiaxios";
 import * as React from "react";
 import { initialFormData } from "../../pages/FeedbackForm";
 import { useNavigate } from "react-router-dom";

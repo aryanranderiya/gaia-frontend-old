@@ -1,88 +1,103 @@
-import { Tabs, Tab } from "@nextui-org/tabs";
-import { Chip } from "@nextui-org/chip";
-import { Button } from "@nextui-org/button";
-import { Tick02Icon, StarsIcon, ArrowLeft01Icon, BubbleChatQuestionIcon } from "@/components/icons";
+import { ArrowLeft01Icon, StarsIcon, Tick02Icon } from "@/components/icons";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
+import { Tab, Tabs } from "@nextui-org/tabs";
 
 function FAQAccordion() {
   const faqItems = [
     {
       question: "What is Gaia and how does it work?",
-      content: "Gaia is a general-purpose AI assistant designed to help with time management, event scheduling, email integration, and more."
+      content:
+        "Gaia is a general-purpose AI assistant designed to help with time management, event scheduling, email integration, and more.",
     },
     {
       question: "How do I create an account?",
-      content: "To create an account, click on the 'Sign Up' button and fill out the registration form."
+      content:
+        "To create an account, click on the 'Sign Up' button and fill out the registration form.",
     },
     {
       question: "What features does Gaia offer?",
-      content: "Gaia offers features such as task management, event scheduling, email integration, and goal tracking."
+      content:
+        "Gaia offers features such as task management, event scheduling, email integration, and goal tracking.",
     },
     {
       question: "How can I schedule events with Gaia?",
-      content: "Use the scheduling feature in Gaia's interface to set up and manage your events easily."
+      content:
+        "Use the scheduling feature in Gaia's interface to set up and manage your events easily.",
     },
     {
       question: "Is my data secure with Gaia?",
-      content: "Yes, we prioritize user data security with advanced encryption and privacy measures."
+      content:
+        "Yes, we prioritize user data security with advanced encryption and privacy measures.",
     },
     {
       question: "How do I integrate Gaia with my email?",
-      content: "Connect your email through the settings page to enable email management features."
+      content:
+        "Connect your email through the settings page to enable email management features.",
     },
     {
       question: "Can I customize Gaia's settings?",
-      content: "Yes, you can adjust Gaia's settings from the preferences section in your account."
+      content:
+        "Yes, you can adjust Gaia's settings from the preferences section in your account.",
     },
     {
       question: "How do I reset my password?",
-      content: "Go to the login page and click 'Forgot Password' to initiate the reset process."
+      content:
+        "Go to the login page and click 'Forgot Password' to initiate the reset process.",
     },
     {
       question: "What platforms is Gaia compatible with?",
-      content: "Gaia is compatible with web, iOS, and Android platforms."
+      content: "Gaia is compatible with web, iOS, and Android platforms.",
     },
     {
       question: "How do I contact support if I have an issue?",
-      content: "Reach out to our support team via the 'Contact Us' page or email us directly."
-    }
+      content:
+        "Reach out to our support team via the 'Contact Us' page or email us directly.",
+    },
   ];
-
 
   return (
     <div className="sm:py-[1em] px-[5%] w-full py-[1em] flex justify-center items-center">
-      <div className="mb-[10vh] faq_container mt-[20px] bg-foreground-50 p-10 rounded-3xl" >
-        <div div className="flex flex-col justify-center w-full items-center gap-3 mb-5" >
+      <div className="mb-[10vh] faq_container mt-[20px] bg-foreground-50 p-10 rounded-3xl">
+        <div className="flex flex-col justify-center w-full items-center gap-3 mb-5">
           {/* <div className="flex gap-2 -mr-[15px]"> */}
-          <span className="font-medium text-4xl" >Frequently asked questions</span>
+          <span className="font-medium text-4xl">
+            Frequently asked questions
+          </span>
           {/* <BubbleChatQuestionIcon color="foreground" height="40" width="40" className="-mt-2" /> */}
           {/* </div> */}
           {/* <span className="text-foreground-500"></span> */}
-        </div >
+        </div>
 
         <Accordion variant="light">
           {faqItems.map((item, index) => (
-
             <AccordionItem
               key={index}
               title={item.question}
               indicator={<ArrowLeft01Icon width="18" color="white" />}
               aria-label={item.question}
             >
-              <span className="select-text">
-
-                {item.content}
-              </span>
+              <span className="select-text">{item.content}</span>
             </AccordionItem>
           ))}
         </Accordion>
-      </div >
+      </div>
     </div>
-
-  )
+  );
 }
 
-function PricingCard({
+interface PricingCardProps {
+  title: string;
+  description: string;
+  type: "main" | "secondary";
+  price: number;
+  featurestitle: React.ReactNode;
+  features?: string[];
+  durationIsMonth: boolean;
+}
+
+export function PricingCard({
   title,
   description,
   type,
@@ -90,11 +105,11 @@ function PricingCard({
   featurestitle,
   features,
   durationIsMonth,
-}) {
+}: PricingCardProps) {
   return (
     <>
       <div
-        className={`bg-white  w-full relative ${type === "main" ? "bg-opacity-[15%]" : "bg-opacity-[7%]"} `}
+        className={`bg-white w-full relative ${type === "main" ? "bg-opacity-[15%]" : "bg-opacity-[7%]"} `}
       >
         {type === "main" && (
           <div className="absolute -top-7 w-full flex justify-center bg-primary !rounded-tr-3xl !rounded-tl-3xl !rounded-bl-none !rounded-br-none text-black text-sm py-1 items-center gap-1 mostpopular_banner">
@@ -143,9 +158,8 @@ function PricingCard({
               <div className="flex text-sm items-center gap-[2px] !border-none">
                 <span>Save</span>
                 <span>
-                  $
-                  {!durationIsMonth &&
-                    price * 12 - (price * 12 - (40 / 100) * (price * 12))}
+                  $ 
+                  {!durationIsMonth && price * 12 - (price * 12 - (40 / 100) * (price * 12))}
                 </span>
               </div>
             )} */}
@@ -163,8 +177,11 @@ function PricingCard({
             {featurestitle}
 
             {!!features &&
-              features.map((feature) => (
-                <div className="text-sm font-normal flex items-center gap-3 !border-none">
+              features.map((feature: string, index: number) => (
+                <div
+                  key={index}
+                  className="text-sm font-normal flex items-center gap-3 !border-none"
+                >
                   <Tick02Icon width="20" height="20" />
                   {feature}
                 </div>
@@ -175,6 +192,7 @@ function PricingCard({
     </>
   );
 }
+
 export function PricingCards({ durationIsMonth = false }) {
   return (
     <div className="pricingcards_layout">
@@ -183,6 +201,7 @@ export function PricingCards({ durationIsMonth = false }) {
         title="Basic"
         description="lorem ipsum"
         price={0}
+        type="secondary"
         features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
@@ -217,6 +236,7 @@ export function PricingCards({ durationIsMonth = false }) {
           "Feature 4",
           "Feature 5",
         ]}
+        type="secondary"
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
@@ -232,7 +252,6 @@ export default function Pricing() {
   return (
     <div className="flex justify-center h-full w-screen mt-[110px] flex-col">
       <div className="flex-col flex gap-2 items-center">
-
         <div className="flex items-center flex-col gap-3 mb-2 w-full">
           <Chip variant="light" color="primary" size="lg">
             Pricing

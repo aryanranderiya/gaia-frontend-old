@@ -1,4 +1,14 @@
-export const ColoredLine = ({ color = "white", width = "100%", className }) => (
+interface ColoredLineProps {
+  color: string;
+  width: string;
+  className?: string;
+}
+
+export const ColoredLine = ({
+  color = "white",
+  width = "100%",
+  className,
+}: ColoredLineProps) => (
   <hr
     style={{
       height: 2,
