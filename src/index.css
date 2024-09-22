@@ -188,7 +188,7 @@ main {
   flex-direction: column;
   padding: 2em;
   gap: 1em;
-  width: 40vw;
+  width: 50vw;
   height: fit-content;
   min-height: 70vh;
 }
@@ -216,10 +216,12 @@ main {
 
 .chat_bubble pre {
   margin: 20px 0;
-  padding: 20px;
-  background: #000000ab;
-  border-radius: 15px;
+  border-radius: 10px;
   text-wrap: wrap;
+}
+
+.chat_bubble pre div {
+  border-radius: 0px 0px 15px 15px;
 }
 
 /* .chat_bubble code {
@@ -764,4 +766,20 @@ main {
     rgba(0, 0, 0, 0) 31%,
     rgba(0, 187, 255, 0.25) 100%
   );
+}
+
+/* .whitespace-pre {
+  white-space: pre; 
+}
+
+.whitespace-pre-line {
+  white-space: pre-line; 
+}
+*/
+
+code {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  padding: 4px;
+  border-radius: 10px;
+  font-family: monospace !important;
 }

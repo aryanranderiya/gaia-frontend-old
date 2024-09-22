@@ -9,6 +9,7 @@ const UserContainer: React.FC = () => {
       <div className="user_container_inner">
         <User
           name={`${user?.firstName} ${user?.lastName}`}
+          className="text-nowrap"
           avatarProps={{
             src: user?.profilePicture,
             showFallback: true,
@@ -20,6 +21,7 @@ const UserContainer: React.FC = () => {
               />
             ),
             size: "sm",
+            className: "min-w-[30px]",
           }}
         />
       </div>

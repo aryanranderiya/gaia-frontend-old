@@ -1,7 +1,7 @@
 import { useUser } from "@/contexts/UserContext";
 import { Button } from "@nextui-org/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "../../hooks/MediaQuery";
 import {
@@ -19,13 +19,39 @@ import {
   SheetTrigger,
 } from "../Shadcn/Sheet";
 import WaitListButton from "./WaitlistModal";
+import { apiauth } from "@/apiaxios";
+import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
 
 export default function Navbar() {
-  const { user } = useUser();
+  const { user, setUserData } = useUser();
 
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
+
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // LoadTranslationModel();
+    const fetchUserInfo = async () => {
+      try {
+        const response = await apiauth.get("/auth/me", {
+          withCredentials: true,
+        });
+
+        setUserData(
+          response?.data?.first_name,
+          response?.data?.last_name,
+          response?.data?.id,
+          response?.data?.profile_picture
+        );
+      } catch (err) {
+        console.error(err);
+        navigate("/login");
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   return (
     <div className="navbar">
@@ -48,22 +74,22 @@ export default function Navbar() {
 
         {!isMobileScreen ? (
           <div className="flex items-center gap-1">
-            {/* <FeedbackFormBtn
+            <FeedbackFormBtn
               props={{
                 size: "md",
                 color: "default",
                 variant: "light",
               }}
               text="Survey"
-            /> */}
+            />
 
-            {!!user ? (
+            {user ? (
               <Button
                 variant="shadow"
                 color="primary"
                 radius="full"
                 size="md"
-                className="font-medium text-xl"
+                className="font-medium"
                 endContent={<Chatting01Icon color="foreground" width="17" />}
                 onPress={() => navigate("/try/chat")}
               >

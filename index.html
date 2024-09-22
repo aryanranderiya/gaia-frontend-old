@@ -43,8 +43,24 @@
     }
 
 
-    * {
+    body {
       font-family: 'Creato', sans-serif;
+    }
+
+    p,
+    span,
+    button,
+    text,
+    input,
+    textarea,
+    div,
+    :where([data-sonner-toaster]),
+    *:not(body) {
+      font-family: inherit !important;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace !important;
     }
   </style>
 

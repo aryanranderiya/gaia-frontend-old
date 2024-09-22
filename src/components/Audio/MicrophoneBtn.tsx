@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import {
   Modal,
   ModalContent,
@@ -9,55 +12,88 @@ import Lottie from "react-lottie";
 import recordingAnimation from "../lotties/recording.json";
 import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
 
 // Define props type for the MicrophoneBtn component
 interface MicrophoneBtnProps {
   loading: boolean;
+  onTranscriptionComplete: (transcript: string) => void;
 }
 
-export default function MicrophoneBtn({ loading }: MicrophoneBtnProps) {
+export default function MicrophoneBtn({
+  loading,
+  onTranscriptionComplete,
+}: MicrophoneBtnProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const [finalTranscript, setFinalTranscript] = useState<string>("");
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [transcript, setTranscript] = useState<string>("");
+  const recognitionRef = useRef<any | null>(null);
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
+    ) {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = "en-US";
 
-  recognition.lang = "en-US";
-  recognition.continuous = true;
-  recognition.interimResults = true;
+      recognitionRef.current.onresult = (event: any) => {
+        let interimTranscript = "";
+        let finalTranscript = "";
 
-  recognition.onerror = (event: SpeechRecognitionError) => {
-    console.error("Recognition error:", event.error);
-  };
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const result = event.results[i];
+          const transcript = result[0].transcript;
+          if (result.isFinal) {
+            finalTranscript += transcript + " ";
+          } else {
+            interimTranscript += transcript;
+          }
+        }
 
-  recognition.onspeechend = () => {
-    recognition.stop();
-    setFinalTranscript("speech ended");
-  };
+        setTranscript(finalTranscript + interimTranscript);
+      };
 
-  recognition.onresult = (event: SpeechRecognitionEvent) => {
-    let interimTranscript = "";
-    let final = "";
+      recognitionRef.current.onerror = (event: any) => {
+        console.error("Recognition error:", event.error);
+        stopRecording(); // Stop recording on error
+      };
 
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript;
-      if (event.results[i].isFinal) final += transcript + " ";
-      else interimTranscript += transcript;
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
+    } else {
+      console.log("Speech recognition not supported");
     }
 
-    setFinalTranscript(final.trim());
-  };
+    return () => {
+      stopRecording(); // Ensure to stop on cleanup
+    };
+  }, []);
 
-  const recordSpeech = () => {
-    setFinalTranscript("Starting");
-    recognition.start();
+  const startRecording = () => {
+    setTranscript("");
+    setIsRecording(true);
+    recognitionRef.current?.start();
   };
 
   const stopRecording = () => {
-    recognition.stop();
-    setFinalTranscript("stopped");
+    recognitionRef.current?.stop();
+    setIsRecording(false);
+  };
+
+  const handleClose = () => {
+    stopRecording();
+    setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    stopRecording();
+    onTranscriptionComplete(transcript);
+    setOpen(false);
   };
 
   return (
@@ -70,7 +106,7 @@ export default function MicrophoneBtn({ loading }: MicrophoneBtnProps) {
         isDisabled={loading}
         onPress={() => {
           setOpen(true);
-          recordSpeech();
+          startRecording();
         }}
       >
         <Mic02Icon />
@@ -79,17 +115,17 @@ export default function MicrophoneBtn({ loading }: MicrophoneBtnProps) {
         isOpen={open}
         onOpenChange={setOpen}
         backdrop="opaque"
-        classNames={{ base: "w-fit p-4 dark text-white" }}
-        onClose={stopRecording}
+        classNames={{ base: "w-full max-w-md p-4 dark text-white" }}
+        onClose={handleClose}
         hideCloseButton
       >
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col items-center">
-                Recording Voice
-              </ModalHeader>
-              <ModalBody className="flex justify-center items-center lottie_container">
+          <ModalHeader className="flex flex-col items-center">
+            {isRecording ? "Recording Voice" : "Voice Recording Complete"}
+          </ModalHeader>
+          <ModalBody className="flex flex-col items-center space-y-4">
+            {isRecording && (
+              <div className="lottie_container">
                 <Lottie
                   options={{
                     loop: true,
@@ -103,30 +139,30 @@ export default function MicrophoneBtn({ loading }: MicrophoneBtnProps) {
                   height={50}
                   width={100}
                 />
-                <span>{finalTranscript}</span>
-              </ModalBody>
-              <ModalFooter className="flex w-full justify-center">
-                <Button
-                  color="danger"
-                  onPress={onClose}
-                  isIconOnly
-                  variant="flat"
-                >
-                  <Cancel01Icon color="red" />
-                </Button>
-                <Button
-                  color="success"
-                  onPress={() => {
-                    stopRecording();
-                  }}
-                  isIconOnly
-                  variant="flat"
-                >
-                  <Tick02Icon color="green" />
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+              </div>
+            )}
+            <div className="w-full p-4 bg-gray-800 rounded-md min-h-[100px] max-h-[200px] overflow-y-auto">
+              <p className="whitespace-pre-wrap">{transcript}</p>
+            </div>
+          </ModalBody>
+          <ModalFooter className="flex w-full justify-center space-x-4">
+            <Button
+              color="danger"
+              onPress={handleClose}
+              isIconOnly
+              variant="flat"
+            >
+              <Cancel01Icon color="red" />
+            </Button>
+            <Button
+              color="success"
+              onPress={handleSubmit}
+              isIconOnly
+              variant="flat"
+            >
+              <Tick02Icon color="green" />
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

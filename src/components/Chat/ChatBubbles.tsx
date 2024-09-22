@@ -1,7 +1,11 @@
+import {
+  ChatBubbleBotProps,
+  ChatBubbleUserProps,
+} from "@/types/ChatBubbleTypes";
 import { Avatar } from "@nextui-org/avatar";
 import { Chip } from "@nextui-org/chip";
-import Markdown from "markdown-to-jsx";
 import { useEffect, useRef, useState } from "react";
+
 import { PdfContainer } from "../Documents/PdfComponent";
 import smiley from "../Smileys/2.webp";
 import { Alert01Icon } from "../icons";
@@ -10,10 +14,7 @@ import {
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
 import { parseDate } from "./fetchDate";
-import {
-  ChatBubbleBotProps,
-  ChatBubbleUserProps,
-} from "@/types/ChatBubbleTypes";
+import { MarkdownRenderer } from "./MarkdownRenderer";
 
 export function ChatBubbleUser({
   text,
@@ -81,21 +82,19 @@ export function ChatBubbleBot({
 
   useEffect(() => {
     if (loading) return;
-    if (isImage)
+
+    if (isImage) {
       setComponent(
         <>
           <div className="chat_bubble bg-zinc-800">
             <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
               <span>Here is your generated image:</span>
-
               <img
                 src={image as string}
                 width={"250px"}
                 height={"250px"}
-                content-type="image/png"
                 className="rounded-3xl my-2"
               />
-
               <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
                 {text.split(",").map((keyword, index) => (
                   <Chip key={index} color="default" size="sm">
@@ -110,15 +109,12 @@ export function ChatBubbleBot({
           </span>
         </>
       );
-    else if (userinputType === "generate_image")
-      setComponent(<div className="chat_bubble bg-zinc-800"></div>); //!TODO
-    else
+    } else {
       setComponent(
         <>
           <div className="chat_bubble bg-zinc-800">
             <div className="flex flex-col gap-3">
-              <Markdown className="select-text">{text.toString()}</Markdown>
-
+              <MarkdownRenderer content={text.toString()} />
               {!!disclaimer && (
                 <Chip
                   size="sm"
@@ -130,12 +126,12 @@ export function ChatBubbleBot({
               )}
             </div>
           </div>
-
           <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
             {parseDate(date)}
           </span>
         </>
       );
+    }
   }, [isImage, text, image, date, userinputType, disclaimer, loading]);
 
   const actionsRef = useRef<HTMLDivElement>(null);

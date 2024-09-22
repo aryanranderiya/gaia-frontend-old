@@ -44,6 +44,7 @@ interface LoginSignupProps {
 
 export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const navigate = useNavigate();
+  const { setUserData } = useUser();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [isPasswordVisible, setPasswordVisible] =
     React.useState<boolean>(false);
@@ -173,7 +174,6 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
       console.log(response);
 
       if (isLogin) {
-        const { setUserData } = useUser();
         setUserData(
           response.data?.first_name,
           response.data?.last_name,
