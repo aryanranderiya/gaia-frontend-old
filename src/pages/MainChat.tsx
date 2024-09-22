@@ -1,4 +1,4 @@
-import api, { apiauth } from "@/apiaxios";
+import { apiauth } from "@/apiaxios";
 import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
 import fetchDate from "@/components/Chat/fetchDate";
 import MainSearchbar from "@/components/Chat/MainSearchbar";
@@ -60,49 +60,85 @@ function setLastBotItem(
   }
 }
 
-export default function MainChat() {
-  const { convoHistory, setConvoHistory } = useConvoHistory();
-  const { setUserData } = useUser();
-  const [loading, setLoading] = useState<boolean>(false);
-  const { convoMessages, setConvoMessages } = useConvo();
+const fetchConversationDescription = async (
+  searchbarText: string
+): Promise<string> => {
+  const response = await apiauth.post(
+    "/chat",
+    {
+      message: `Summarise what the message/question '${searchbarText}' is about, in under 4-5 words. Just respond with the summary.`,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
-  const [searchbarText, setSearchbarText] = useState<string>("");
-  const [data, setData] = useState<string[]>([]);
+  console.log(response?.data?.response.toString());
+  return response?.data?.response.toString().replace('"', "") || "New Chat";
+};
+
+export default function MainChat() {
+  const navigate = useNavigate();
+  const { setUserData } = useUser();
+  const { convoHistory, setConvoHistory } = useConvoHistory();
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const convoRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const { convoIdParam } = useParams<{ convoIdParam: string }>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { convoMessages, setConvoMessages } = useConvo();
+  const [searchbarText, setSearchbarText] = useState<string>("");
+  const [data, setData] = useState<string[]>([]);
   const [convoIdParamState, setConvoIdParamState] = useState<string | null>(
     null
   );
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await apiauth.get("/auth/me", {
+        withCredentials: true,
+      });
+
+      setUserData(
+        response?.data?.first_name,
+        response?.data?.last_name,
+        response?.data?.id,
+        response?.data?.profile_picture
+      );
+
+      return response;
+    } catch (err) {
+      console.error(err);
+      navigate("/login");
+    }
+  };
+
+  async function fetchMessages(conversationId: string | null) {
+    if (!conversationId) return;
+
+    try {
+      const response = await apiauth.get(`/conversations/${conversationId}`);
+      setConvoMessages(response?.data?.messages);
+    } catch (e) {
+      console.error(e);
+      navigate("/try/chat");
+    }
+  }
 
   useEffect(() => {
     setConvoIdParamState(convoIdParam ?? null);
   }, [convoIdParam]);
 
+  useEffect(() => {
+    if (!convoIdParamState) navigate("/try/chat");
+    fetchMessages(convoIdParamState);
+  }, [convoIdParamState]);
+
   const focusInput = () => {
     setTimeout(() => {
       if (inputRef.current) inputRef.current.focus();
     }, 10);
-  };
-
-  const fetchConversationDescription = async (
-    searchbarText: string
-  ): Promise<string> => {
-    const response = await api.post(
-      "/chat",
-      {
-        message: `Summarise what the message/question '${searchbarText}' is about, in under 4-5 words. Just respond with the summary.`,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    console.log(response?.data?.response.toString());
-    return response?.data?.response.toString().replace('"', "") || "New Chat";
   };
 
   useEffect(() => {
@@ -117,34 +153,12 @@ export default function MainChat() {
   }, [convoHistory, convoIdParamState]);
 
   useEffect(() => {
-    // LoadTranslationModel();
-    const fetchUserInfo = async () => {
-      try {
-        const response = await apiauth.get("/auth/me", {
-          withCredentials: true,
-        });
-
-        setUserData(
-          response?.data?.first_name,
-          response?.data?.last_name,
-          response?.data?.id,
-          response?.data?.profile_picture
-        );
-      } catch (err) {
-        console.error(err);
-        navigate("/login");
-      }
-    };
-
     fetchUserInfo();
   }, []);
 
   useEffect(() => {
-    console.log(convoHistory);
-  }, [convoHistory]);
-
-  useEffect(() => {
     setLastBotItem(convoHistory, setConvoHistory, data, convoIdParamState!);
+    console.log(convoHistory);
   }, [data, convoHistory]);
 
   const fetchData = async (searchbarText: string) => {
@@ -164,20 +178,29 @@ export default function MainChat() {
 
     if (!convoIdParamState) {
       const convoID = crypto.randomUUID();
-      navigate(`/try/chat/${convoID}`);
-      setConvoMessages([]);
+      try {
+        // await apiauth.post("/conversations/", {
+        //   conversation_id: convoID,
+        //   messages: currentMessages,
+        // });
 
-      setConvoHistory((oldHistory) => ({
-        ...oldHistory,
-        [convoID]: {
-          ...oldHistory[convoID],
-          description: "New Chat",
-          messages: [
-            ...(oldHistory[convoID]?.messages || []),
-            ...currentMessages,
-          ],
-        },
-      }));
+        navigate(`/try/chat/${convoID}`);
+        setConvoMessages([]);
+
+        setConvoHistory((oldHistory) => ({
+          ...oldHistory,
+          [convoID]: {
+            ...oldHistory[convoID],
+            description: "New Chat",
+            messages: [
+              ...(oldHistory[convoID]?.messages || []),
+              ...currentMessages,
+            ],
+          },
+        }));
+      } catch (err) {
+        console.error("Failed to create conversation", err);
+      }
     } else {
       setConvoHistory((oldHistory) => ({
         ...oldHistory,
@@ -214,6 +237,15 @@ export default function MainChat() {
             }));
           });
 
+          // try {
+          //   apiauth.put(
+          //     `/conversations/${convoIdParamState}/messages/`,
+          //     currentMessages
+          //   );
+          // } catch (err) {
+          //   console.error("Failed to update messages", err);
+          // }
+
           setTimeout(() => {
             focusInput();
             setData([]);
@@ -224,7 +256,6 @@ export default function MainChat() {
         }
         let dataJson = JSON.parse(event.data);
         let response = dataJson.response;
-        // if (typeof response === "object") checkIntent(response, controller);
         if (response === "") setData((data) => [...data, "\n"]);
         else setData((data) => [...data, response]);
       },

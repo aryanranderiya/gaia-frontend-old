@@ -1,10 +1,11 @@
 import { Chatting01Icon } from "@/components/icons";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { Button } from "@nextui-org/button";
-import { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PencilEdit02Icon } from "../icons";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { apiauth } from "@/apiaxios";
 
 interface ChatTabProps {
   name: string;
@@ -31,6 +32,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
 
 export default function ChatsList() {
   const { convoHistory } = useConvoHistory();
+  const [conversationIDs, setConversationIDs] = useState([]);
   const navigate = useNavigate();
   const { resetMessages } = useConvo();
 
@@ -38,6 +40,20 @@ export default function ChatsList() {
     navigate(`/try/chat/`);
     resetMessages();
   };
+
+  async function fetchAllConversations() {
+    try {
+      const response = await apiauth.get("/conversations/");
+      setConversationIDs(response?.data?.conversations);
+      console.log(response?.data?.conversations);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllConversations();
+  }, []);
 
   return (
     <div className="sidebar_inner ">
@@ -51,9 +67,15 @@ export default function ChatsList() {
       </Button>
 
       <div className="chats_list max-h-[40vh]">
-        {Object.keys(convoHistory).map((key: string) => (
-          <ChatTab key={key} name={convoHistory[key].description} id={key} />
-        ))}
+        {conversationIDs.map(
+          (conversation: { conversation_id: string; description: string }) => (
+            <ChatTab
+              key={conversation.conversation_id}
+              id={conversation.conversation_id}
+              name={conversation.description || "New Chat"}
+            />
+          )
+        )}
       </div>
     </div>
   );
