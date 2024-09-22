@@ -14,8 +14,8 @@ import fetchDate from "./fetchDate";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { useEffect, useState } from "react";
 import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
+import { useNavigate, useParams } from "react-router-dom";
 
-// Define the props interface
 interface GenerateImageProps {
   openImageDialog: boolean;
   setOpenImageDialog: (open: boolean) => void;
@@ -26,11 +26,17 @@ export default function GenerateImage({
   setOpenImageDialog,
 }: GenerateImageProps) {
   const { convoHistory, setConvoHistory } = useConvoHistory();
-
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [imagePrompt, setImagePrompt] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [botResponse, setBotResponse] = useState<string | null>(null);
+  const [currentConvoId, setCurrentConvoId] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setCurrentConvoId(convoIdParam ?? null);
+  }, [convoIdParam]);
 
   useEffect(() => {
     setIsValid(imagePrompt.trim() !== "");
@@ -55,25 +61,23 @@ export default function GenerateImage({
   };
 
   useEffect(() => {
-    if (botResponse) {
-      updateWithResponse();
-    }
+    if (botResponse) updateWithResponse();
   }, [botResponse]);
 
   function updateWithResponse() {
-    if (Object.keys(convoHistory).length > 0 && botResponse) {
+    if (Object.keys(convoHistory).length > 0 && botResponse && currentConvoId) {
       const updatedHistory = { ...convoHistory };
-      const lastKey = Object.keys(updatedHistory).pop();
+      const currentConvo = updatedHistory[currentConvoId];
 
-      if (lastKey) {
-        const lastItem = updatedHistory[lastKey].messages;
-        const lastMessage = lastItem[lastItem.length - 1];
+      if (currentConvo) {
+        const lastItem =
+          currentConvo.messages[currentConvo.messages.length - 1];
 
-        if (lastMessage.type === "bot") {
-          lastMessage.imageUrl = botResponse;
-          lastMessage.loading = false;
-          lastMessage.isImage = true;
-          lastMessage.date = fetchDate();
+        if (lastItem.type === "bot") {
+          lastItem.imageUrl = botResponse;
+          lastItem.loading = false;
+          lastItem.isImage = true;
+          lastItem.date = fetchDate();
           setConvoHistory(updatedHistory);
         }
       }
@@ -82,6 +86,16 @@ export default function GenerateImage({
 
   const SubmitForm = async () => {
     setLoading(true);
+
+    let convoID = currentConvoId || convoIdParam;
+
+    // Generate a new conversation ID if none exists
+    if (!convoID) {
+      convoID = crypto.randomUUID();
+      navigate(`/try/chat/${convoID}`);
+      setCurrentConvoId(convoID);
+    }
+
     const newMessage: MessageType = {
       type: "user",
       response: "Generate Image: \n" + imagePrompt,
@@ -95,26 +109,28 @@ export default function GenerateImage({
       date: "",
     };
 
+    // Update conversation history
     setConvoHistory((prevHistory: ConversationHistoryType) => ({
       ...prevHistory,
-      [Date.now()]: {
-        description: "Image Generation",
-        messages: [newMessage, loadingMessage],
+      [convoID]: {
+        ...(prevHistory[convoID] || { messages: [] }), // Initialize messages array if not present
+        messages: [
+          ...(prevHistory[convoID]?.messages || []),
+          newMessage,
+          loadingMessage,
+        ],
       },
     }));
+
     setOpenImageDialog(false);
 
     try {
       const response = await api.post(
-        "/generate_image",
-        {
-          message: imagePrompt,
-        },
+        "/image/generate",
+        { message: imagePrompt },
         {
           responseType: "arraybuffer",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 

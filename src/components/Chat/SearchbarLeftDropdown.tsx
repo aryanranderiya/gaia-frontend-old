@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import FileUpload from "../Documents/FileUpload";
 import {
   Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
   DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/dropdown";
+import { useEffect, useRef, useState } from "react";
+import FileUpload from "../Documents/FileUpload";
 import {
-  ImageUploadIcon,
-  FileUploadIcon,
-  PlusSignIcon,
   AiImageIcon,
+  FileUploadIcon,
+  ImageUploadIcon,
+  PlusSignIcon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
 

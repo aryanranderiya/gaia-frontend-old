@@ -69,8 +69,9 @@ export default function Explore() {
       content: "Coming Soon",
     },
   ];
+
   return (
-    <div className="main_chat">
+    <div className="w-full flex justify-center h-screen items-center p-4 sm:p-8 relative overflow-hidden flex-col transition-all duration-200">
       <div className="starter_container2">
         <StarterEmoji />
       </div>

@@ -30,14 +30,24 @@ function setLastBotItem(
   ) {
     const previousHistory = { ...convoHistory };
     const currentConvo = previousHistory[conversationID];
+
+    // Check if currentConvo exists and has messages
+    if (!currentConvo || !currentConvo.messages) {
+      console.error("Conversation or messages not found");
+      return;
+    }
+
     const messages = currentConvo.messages;
     const lastItemIndex = messages.length - 1;
     const lastItem = messages[lastItemIndex];
-    if (typeof data_array === "object") data_array = data_array.join("");
 
-    if (lastItem.type === "bot") {
+    if (typeof data_array === "object") {
+      data_array = data_array.join("");
+    }
+
+    if (lastItem?.type === "bot") {
       if (
-        (lastItem?.response !== data_array || !lastItem?.response) &&
+        (lastItem.response !== data_array || !lastItem.response) &&
         !lastItem.isImage
       ) {
         lastItem.response = data_array;
@@ -54,7 +64,6 @@ export default function MainChat() {
   const { convoHistory, setConvoHistory } = useConvoHistory();
   const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
-  // const [convoMessages, setConvoMessages] = useState<MessageType[]>([]);
   const { convoMessages, setConvoMessages } = useConvo();
 
   const [searchbarText, setSearchbarText] = useState<string>("");
@@ -153,10 +162,7 @@ export default function MainChat() {
       },
     ];
 
-    console.log("this is a test");
     if (!convoIdParamState) {
-      console.log("this is a test 2");
-
       const convoID = crypto.randomUUID();
       navigate(`/try/chat/${convoID}`);
       setConvoMessages([]);
@@ -164,25 +170,20 @@ export default function MainChat() {
       setConvoHistory((oldHistory) => ({
         ...oldHistory,
         [convoID]: {
+          ...oldHistory[convoID],
           description: "New Chat",
-          messages: currentMessages,
+          messages: [
+            ...(oldHistory[convoID]?.messages || []),
+            ...currentMessages,
+          ],
         },
       }));
-
-      fetchConversationDescription(searchbarText).then((description) => {
-        setConvoHistory((oldHistory) => ({
-          ...oldHistory,
-          [convoID]: {
-            ...oldHistory[convoID],
-            description: description || "New Chat",
-          },
-        }));
-      });
     } else {
       setConvoHistory((oldHistory) => ({
         ...oldHistory,
         [convoIdParamState!]: {
           ...oldHistory[convoIdParamState!],
+          description: "New Chat",
           messages: [
             ...(oldHistory[convoIdParamState!]?.messages || []),
             ...currentMessages,
@@ -203,6 +204,16 @@ export default function MainChat() {
 
       onmessage(event) {
         if (event.data == "[DONE]") {
+          fetchConversationDescription(searchbarText).then((description) => {
+            setConvoHistory((oldHistory) => ({
+              ...oldHistory,
+              [convoIdParamState!]: {
+                ...oldHistory[convoIdParamState!],
+                description: description || "New Chat",
+              },
+            }));
+          });
+
           setTimeout(() => {
             focusInput();
             setData([]);
