@@ -1,12 +1,10 @@
-import { DateType } from "./ChatBubbleTypes";
-
 // Define the structure for each message in the conversation
 // This type represents an individual message, including details about whether it's from the user or bot,
 // the content of the message, its date, and optional fields for loading state, images, files, etc.
 export type MessageType = {
   type: "user" | "bot"; // Indicates whether the message is from the "user" or the "bot"
   response: string; // The content of the message, typically text
-  date: DateType | ""; // The date when the message was sent, formatted as DateType, or an empty string
+  date: string | ""; // The date when the message was sent, formatted as DateType, or an empty string
   loading?: boolean; // Optional: Indicates whether the message is still loading (e.g., for bot responses)
   isImage?: boolean; // Optional: Indicates if the message contains an image
   imageUrl?: string; // Optional: URL for the image if it's an image message

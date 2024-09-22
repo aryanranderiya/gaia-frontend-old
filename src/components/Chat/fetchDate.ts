@@ -1,4 +1,4 @@
-const nth = (date) => {
+const nth = (date: number): string => {
   if (date > 3 && date < 21) return "th";
   switch (date % 10) {
     case 1:
@@ -12,48 +12,26 @@ const nth = (date) => {
   }
 };
 
-export default function fetchDate() {
-  const now = new Date();
-
-  const month = now.toLocaleString(navigator.language, {
-    month: "short",
-  });
-
-  const year = now.toLocaleString(navigator.language, {
-    year: "2-digit",
-  });
-
-  const time = now
-    .toLocaleString(navigator.language, {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .toUpperCase();
-
-  const date = now.getDate();
-  return {
-    fullDate: `${time}, ${date}${nth(date)} ${month} ${year}`,
-    time: time,
-    date: date,
-    month: month,
-    year: year,
-  };
+export default function fetchDate(): string {
+  return new Date().toISOString();
 }
 
-export function parseDate(previousDate) {
-  const currentDate = fetchDate();
-  const parsedDate = { ...currentDate };
+export function parseDate(isoDateString: string): string {
+  const date = new Date(isoDateString);
+  const optionsTime: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  };
+  const optionsMonth: Intl.DateTimeFormatOptions = { month: "short" };
+  const optionsYear: Intl.DateTimeFormatOptions = { year: "numeric" };
 
-  if (previousDate && previousDate.month === currentDate.month)
-    parsedDate.month = "";
+  const time = date
+    .toLocaleString(navigator.language, optionsTime)
+    .toUpperCase();
+  const month = date.toLocaleString(navigator.language, optionsMonth);
+  const year = date.toLocaleString(navigator.language, optionsYear);
+  const day = date.getDate();
 
-  if (previousDate && previousDate.year === currentDate.year)
-    parsedDate.year = "";
-
-  if (previousDate && previousDate.date === currentDate.date)
-    parsedDate.date = "";
-
-  previousDate = currentDate;
-  return `${parsedDate.time} ${parsedDate.date}${!!parsedDate.date ? nth(parsedDate.date) : ""} ${parsedDate.month} ${parsedDate.year}`.trim();
+  return `${time} ${day}${nth(day)} ${month} ${year}`.trim();
 }

@@ -8,7 +8,11 @@ import { ScrollArea } from "@/components/Shadcn/ScrollArea";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useUser } from "@/contexts/UserContext";
-import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
+import {
+  ConversationHistoryType,
+  ConversationType,
+  MessageType,
+} from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -158,7 +162,6 @@ export default function MainChat() {
 
   useEffect(() => {
     setLastBotItem(convoHistory, setConvoHistory, data, convoIdParamState!);
-    console.log(convoHistory);
   }, [data, convoHistory]);
 
   const fetchData = async (searchbarText: string) => {
@@ -177,14 +180,17 @@ export default function MainChat() {
     ];
 
     if (!convoIdParamState) {
-      const convoID = crypto.randomUUID();
       try {
-        // await apiauth.post("/conversations/", {
-        //   conversation_id: convoID,
-        //   messages: currentMessages,
-        // });
+        const convoID = crypto.randomUUID();
+        await apiauth.post("/conversations/", {
+          conversation_id: convoID,
+          messages: {
+            type: "user",
+            response: searchbarText,
+            date: fetchDate(),
+          },
+        });
 
-        navigate(`/try/chat/${convoID}`);
         setConvoMessages([]);
 
         setConvoHistory((oldHistory) => ({
@@ -198,10 +204,54 @@ export default function MainChat() {
             ],
           },
         }));
+
+        navigate(`/try/chat/${convoID}`);
       } catch (err) {
         console.error("Failed to create conversation", err);
       }
-    } else {
+    }
+    // if (!convoIdParamState) {
+    //   console.log("entering");
+
+    //   const convoID = crypto.randomUUID();
+
+    //   await apiauth.post("/conversations/", {
+    //     conversation_id: convoID,
+    //     messages: [
+    //       {
+    //         type: "user",
+    //         response: searchbarText,
+    //         date: fetchDate(),
+    //       },
+    //     ],
+    //   });
+
+    //   setConvoHistory((oldHistory) => ({
+    //     ...oldHistory,
+    //     [convoID]: {
+    //       description: "New Chat",
+    //       messages: currentMessages as MessageType[],
+    //     } as ConversationType,
+    //   }));
+
+    //   //  setConvoHistory((oldHistory) => ({
+    //   //     ...oldHistory,
+    //   //     [convoID]: {
+    //   //       ...oldHistory[convoID],
+    //   //       description: "New Chat",
+    //   //       messages: [
+    //   //         ...(oldHistory[convoID]?.messages || []),
+    //   //         ...currentMessages,
+    //   //       ],
+    //   //     },
+    //   //   }));
+
+    //   navigate(`/try/chat/${convoID}`);
+    //   return;
+    // }
+    else {
+      console.log("not entering");
+
       setConvoHistory((oldHistory) => ({
         ...oldHistory,
         [convoIdParamState!]: {
@@ -237,14 +287,16 @@ export default function MainChat() {
             }));
           });
 
-          // try {
-          //   apiauth.put(
-          //     `/conversations/${convoIdParamState}/messages/`,
-          //     currentMessages
-          //   );
-          // } catch (err) {
-          //   console.error("Failed to update messages", err);
-          // }
+          console.log(currentMessages);
+
+          try {
+            apiauth.put(`/conversations/${convoIdParamState}/messages/`, {
+              conversation_id: convoIdParamState,
+              messages: currentMessages,
+            });
+          } catch (err) {
+            console.error("Failed to update messages", err);
+          }
 
           setTimeout(() => {
             focusInput();
