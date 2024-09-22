@@ -1,4 +1,4 @@
-import api from "@/apiaxios";
+import api, { apiauth } from "@/apiaxios";
 import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
 import fetchDate from "@/components/Chat/fetchDate";
 import MainSearchbar from "@/components/Chat/MainSearchbar";
@@ -6,6 +6,8 @@ import StarterEmoji from "@/components/Chat/StarterEmoji";
 import StarterText from "@/components/Chat/StarterText";
 import { ScrollArea } from "@/components/Shadcn/ScrollArea";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useUser } from "@/contexts/UserContext";
 import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import React, { useEffect, useRef, useState } from "react";
@@ -50,14 +52,14 @@ function setLastBotItem(
 
 export default function MainChat() {
   const { convoHistory, setConvoHistory } = useConvoHistory();
-  // const { convoHistory, setConvoHistory } = useConvoHistory();
-
+  const { setUserData } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
-  const [convoMessages, setConvoMessages] = useState<MessageType[]>([]);
+  // const [convoMessages, setConvoMessages] = useState<MessageType[]>([]);
+  const { convoMessages, setConvoMessages } = useConvo();
+
   const [searchbarText, setSearchbarText] = useState<string>("");
   const [data, setData] = useState<string[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const effectHasRunRef = useRef<boolean>(false);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const convoRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
@@ -79,7 +81,7 @@ export default function MainChat() {
     searchbarText: string
   ): Promise<string> => {
     const response = await api.post(
-      "/chatNoStream",
+      "/chat",
       {
         message: `Summarise what the message/question '${searchbarText}' is about, in under 4-5 words. Just respond with the summary.`,
       },
@@ -99,13 +101,38 @@ export default function MainChat() {
   }, [convoHistory]);
 
   useEffect(() => {
-    if (!!convoIdParamState && !!convoHistory)
-      setConvoMessages(convoHistory[convoIdParamState]?.messages);
+    if (convoIdParamState && convoHistory) {
+      const currentConvo = convoHistory[convoIdParamState];
+      if (currentConvo) setConvoMessages(currentConvo.messages);
+    }
   }, [convoHistory, convoIdParamState]);
 
-  // useEffect(() => {
-  //   LoadTranslationModel();
-  // }, []);
+  useEffect(() => {
+    // LoadTranslationModel();
+    const fetchUserInfo = async () => {
+      try {
+        const response = await apiauth.get("/auth/me", {
+          withCredentials: true,
+        });
+
+        setUserData(
+          response?.data?.first_name,
+          response?.data?.last_name,
+          response?.data?.id,
+          response?.data?.profile_picture
+        );
+      } catch (err) {
+        console.error(err);
+        navigate("/login");
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  useEffect(() => {
+    console.log(convoHistory);
+  }, [convoHistory]);
 
   useEffect(() => {
     setLastBotItem(convoHistory, setConvoHistory, data, convoIdParamState!);
@@ -126,9 +153,13 @@ export default function MainChat() {
       },
     ];
 
-    if (!effectHasRunRef.current && !loading) {
+    console.log("this is a test");
+    if (!convoIdParamState) {
+      console.log("this is a test 2");
+
       const convoID = crypto.randomUUID();
       navigate(`/try/chat/${convoID}`);
+      setConvoMessages([]);
 
       setConvoHistory((oldHistory) => ({
         ...oldHistory,
@@ -161,7 +192,7 @@ export default function MainChat() {
     }
 
     const controller = new AbortController();
-    await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat`, {
+    await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat-stream`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -202,8 +233,8 @@ export default function MainChat() {
     });
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
     if (!searchbarText) return;
     setLoading(true);
     fetchData(searchbarText);

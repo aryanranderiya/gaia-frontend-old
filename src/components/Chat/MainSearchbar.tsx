@@ -6,7 +6,7 @@ import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 interface MainSearchbarProps {
   loading: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement>;
-  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleFormSubmit: (event?: React.FormEvent<HTMLFormElement>) => void;
   searchbarText: string;
   setSearchbarText: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -26,6 +26,9 @@ export default function MainSearchbar({
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
       setSearchbarText((text) => text + "\n");
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      handleFormSubmit();
     }
   };
 

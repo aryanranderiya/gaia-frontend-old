@@ -11,7 +11,7 @@ interface User {
 // Define the shape of the context
 interface UserContextType {
   user: User | null;
-  login: (
+  setUserData: (
     firstName: string,
     lastName: string,
     id: string,
@@ -29,7 +29,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (
+  const setUserData = (
     firstName: string,
     lastName: string,
     id: string,
@@ -43,7 +43,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, setUserData, logout }}>
       {children}
     </UserContext.Provider>
   );

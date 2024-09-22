@@ -1,12 +1,12 @@
+import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
+import Hr from "@/components/HorizontalRuler";
+import { GlobalIcon, StarsIcon } from "@/components/icons";
+import ChatsList from "@/components/Sidebar/ChatsList";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
+import UserContainer from "@/components/Sidebar/UserContainer";
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
-import { StarsIcon, GlobalIcon } from "@/components/icons";
-import Hr from "@/components/HorizontalRuler";
-import ChatsList from "@/components/Sidebar/ChatsList";
-import UserContainer from "@/components/Sidebar/UserContainer";
-import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 import { LegacyRef, useState } from "react";
 
 export default function Sidebar({

@@ -4,6 +4,7 @@ import { Button } from "@nextui-org/button";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { PencilEdit02Icon } from "../icons";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface ChatTabProps {
   name: string;
@@ -31,9 +32,11 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
 export default function ChatsList() {
   const { convoHistory } = useConvoHistory();
   const navigate = useNavigate();
+  const { resetMessages } = useConvo();
 
   const createNewChat = (): void => {
     navigate(`/try/chat/`);
+    resetMessages();
   };
 
   return (

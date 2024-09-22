@@ -22,11 +22,6 @@ const UserContainer: React.FC = () => {
             size: "sm",
           }}
         />
-        <div className="flex items-center gap-2 font-medium text-sm">
-          <p>
-            {user?.firstName} {user?.lastName}
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import MainChat from "./MainChat";
 import Explore from "./Explore";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { useEffect, useRef, useState } from "react";
+import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -56,27 +57,29 @@ export default function MainInterface() {
 
   return (
     <ConversationHistoryProvider>
-      <div className="main_container">
-        <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+      <ConvoProvider>
+        <div className="main_container">
+          <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
-        <div
-          ref={contentContainerRef}
-          onClick={hideSidebar}
-          className="main_chat"
-        >
-          <div className="chat_sidebar_toggle_btn">
-            <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+          <div
+            ref={contentContainerRef}
+            onClick={hideSidebar}
+            className="main_chat"
+          >
+            <div className="chat_sidebar_toggle_btn">
+              <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+            </div>
+            <WebsiteName />
+
+            <Routes>
+              <Route path="chat/:convoIdParam" element={<MainChat />} />
+              <Route path="chat" element={<MainChat />} />
+              <Route path="explore" element={<Explore />} />
+              <Route path="*" element={<Navigate to="/404" />} />
+            </Routes>
           </div>
-          <WebsiteName />
-
-          <Routes>
-            <Route path="chat/:convoIdParam" element={<MainChat />} />
-            <Route path="chat" element={<MainChat />} />
-            <Route path="explore" element={<Explore />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Routes>
         </div>
-      </div>
+      </ConvoProvider>
     </ConversationHistoryProvider>
   );
 }

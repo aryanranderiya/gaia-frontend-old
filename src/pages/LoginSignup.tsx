@@ -1,6 +1,5 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Button as ShadcnButton } from "@/components/Shadcn/Button";
 import { Link } from "react-router-dom";
 import {
   ViewIcon,
@@ -12,6 +11,7 @@ import {
   Tick02Icon,
   Cancel01Icon,
   GoogleColoured,
+  PasswordValidationIcon,
 } from "@/components/icons";
 import * as React from "react";
 import { ColoredLine } from "@/components/HorizontalRuler";
@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import api from "../apiaxios";
 import { Spinner } from "@nextui-org/spinner";
 import { AxiosError } from "axios";
+import { useUser } from "@contexts/UserContext";
 
 async function CheckCommonPassword(password: string): Promise<boolean> {
   try {
@@ -53,16 +54,20 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const [isCommonPassword, setIsCommonPassword] =
     React.useState<boolean>(false);
   const [capsLockOn, setCapsLockOn] = React.useState<boolean>(false);
+  const [confirmPasswordValid, setConfirmPasswordValid] =
+    React.useState<boolean>(true);
   const [data, setData] = React.useState<{
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+    confirmPassword: string; // Add this line
   }>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "", // Add this line
   });
 
   const validateEmail = (email: string): boolean => {
@@ -83,6 +88,13 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     return passRegex.test(password);
   };
 
+  const validateConfirmPassword = (
+    password: string,
+    confirmPassword: string
+  ): boolean => {
+    return password === confirmPassword;
+  };
+
   const capsLockCheck = (event: KeyboardEvent) => {
     const capsLockEnabled =
       event.getModifierState && event.getModifierState("CapsLock");
@@ -98,20 +110,27 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   };
 
   const handleSubmit = async () => {
-    const formData = new FormData();
     setLoading(true);
 
     if (!isLogin) {
       setFirstNameValid(validateName(data.firstName));
       setLastNameValid(validateName(data.lastName));
-      formData.append("firstName", data.firstName);
-      formData.append("lastName", data.lastName);
+
+      const isConfirmPasswordValid = validateConfirmPassword(
+        data.password,
+        data.confirmPassword
+      );
+
+      setConfirmPasswordValid(isConfirmPasswordValid);
+
+      if (!isConfirmPasswordValid) {
+        setLoading(false);
+        return;
+      }
     }
 
     setEmailValid(validateEmail(data.email));
     setPasswordValid(validatePassword(data.password));
-    formData.append("email", data.email);
-    formData.append("password", data.password);
 
     if (validatePassword(data.password)) {
       const findCommonPassword = await CheckCommonPassword(data.password);
@@ -139,15 +158,32 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
 
     try {
       const response = await api.post(
-        isLogin ? "/login" : "/signup",
-        formData,
+        isLogin ? "/auth/login" : "/users",
+        {
+          first_name: data.firstName,
+          last_name: data.lastName,
+          email: data.email,
+          password: data.password,
+        },
         {
           withCredentials: true,
         }
       );
 
       console.log(response);
+
+      if (isLogin) {
+        const { setUserData } = useUser();
+        setUserData(
+          response.data?.first_name,
+          response.data?.last_name,
+          response.data?.id,
+          response.data?.profile_picture
+        );
+      }
+
       navigate(isLogin ? "/try/chat" : "/login");
+
       toast.success("Welcome to GAIA!", {
         unstyled: true,
         classNames: {
@@ -302,6 +338,44 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
           }
         />
 
+        {!isLogin && (
+          <Input
+            label="Confirm Password"
+            fullWidth
+            color="primary"
+            variant="faded"
+            type={isPasswordVisible ? "text" : "password"}
+            placeholder="•••••••"
+            isInvalid={!confirmPasswordValid}
+            errorMessage="Passwords do not match."
+            startContent={<PasswordValidationIcon height="20" />}
+            onKeyDown={handleKeyDown}
+            onValueChange={(value) => {
+              setConfirmPasswordValid(
+                validateConfirmPassword(data.password, value.trim())
+              );
+              setData((oldFormData) => ({
+                ...oldFormData,
+                confirmPassword: value.trim(),
+              }));
+            }}
+            endContent={
+              <div className="flex gap-1">
+                <button
+                  type="button"
+                  onClick={() => setPasswordVisible(!isPasswordVisible)}
+                >
+                  {isPasswordVisible ? (
+                    <ViewOffSlashIcon height="20" />
+                  ) : (
+                    <ViewIcon height="20" />
+                  )}
+                </button>
+              </div>
+            }
+          />
+        )}
+
         <div className="flex justify-center items-center gap-6 mt-4 flex-col">
           <Link to={isLogin ? "/signup" : "/login"} className="text-sm">
             {isLogin ? (
@@ -319,14 +393,14 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
 
           <Button
             disabled={loading}
-            className="w-full flex gap-1 flex-row font-semibold"
+            className="w-full flex gap-3 flex-row font-semibold"
             onClick={handleSubmit}
             color="primary"
             variant="shadow"
             size="lg"
           >
             {isLogin ? "Login" : "Sign Up"}
-            {loading && <Spinner />}
+            {loading && <Spinner color="default" size="sm" />}
           </Button>
         </div>
 
