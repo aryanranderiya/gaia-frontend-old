@@ -782,3 +782,9 @@ code {
   border-radius: 10px;
   font-family: monospace !important;
 }
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

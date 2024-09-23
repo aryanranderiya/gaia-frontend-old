@@ -4,6 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
+import { Button } from "@nextui-org/button";
 
 interface MarkdownRendererProps {
   content: string;
@@ -21,15 +22,23 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 
   return !inline && match ? (
     <div className="relative flex flex-col gap-0">
-      <div className="flex justify-between items-center bg-black bg-opacity-60 text-white px-4 py-2 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]">
-        <span className="text-sm font-mono">{match[1]}</span>
-        <button onClick={handleCopy} className="text-white hover:text-gray-300">
+      <div className="flex justify-between items-center bg-black bg-opacity-60 text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]">
+        <span className="text-sm font-mono monospace">
+          {match[1]}
+        </span>
+        <Button
+          onPress={handleCopy}
+          size="sm"
+          variant="light"
+          className="text-foreground hover:text-gray-300 flex flex-row gap-1 text-xs items-center"
+        >
           {copied ? (
-            <TaskDone01Icon width={19} color="foreground" />
+            <TaskDone01Icon width={21} color="foreground" />
           ) : (
-            <Task01Icon width={19} color="foreground" />
+            <Task01Icon width={21} color="foreground" />
           )}
-        </button>
+          Copy Code
+        </Button>
       </div>
       <SyntaxHighlighter
         style={vscDarkPlus}

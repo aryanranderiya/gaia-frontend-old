@@ -14,6 +14,8 @@ import Explore from "./Explore";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { useEffect, useRef, useState } from "react";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
+import Calendar from "@/components/Calendar/calendar3";
+import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -75,6 +77,8 @@ export default function MainInterface() {
               <Route path="chat/:convoIdParam" element={<MainChat />} />
               <Route path="chat" element={<MainChat />} />
               <Route path="explore" element={<Explore />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="search" element={<ComprehensiveMessageHistory />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </div>
