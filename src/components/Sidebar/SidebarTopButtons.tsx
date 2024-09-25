@@ -20,12 +20,18 @@ export default function SidebarTopButtons() {
         <DiscoverCircleIcon />
       </Button>
 
-      <Button className="w-full flex justify-between">
+      <Button
+        className="w-full flex justify-between"
+        onClick={() => navigate("/try/pins")}
+      >
         Your Pins
         <PinIcon />
       </Button>
 
-      <Button className="w-full flex justify-between">
+      <Button
+        className="w-full flex justify-between"
+        onClick={() => navigate("/try/calendar")}
+      >
         Your Calendar
         <CalendarIcon />
       </Button>

@@ -1,22 +1,22 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { ChevronLeft, ChevronRight, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
+import { Switch } from "@nextui-org/switch";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   KeyboardEvent as ReactKeyboardEvent,
   useEffect,
@@ -78,11 +78,6 @@ export default function Calendar() {
   );
   const [naturalLanguageInput, setNaturalLanguageInput] = useState("");
   const calendarRef = useRef<HTMLDivElement>(null);
-  const { setTheme } = useTheme();
-
-  useEffect(() => {
-    setTheme("dark");
-  }, [setTheme]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -291,7 +286,9 @@ export default function Calendar() {
               return (
                 <div
                   key={cellDate.toISOString()}
-                  className={`h-12 border-t relative ${isCurrentDay ? "bg-primary/20" : ""}`}
+                  className={`h-12 border-t relative ${
+                    isCurrentDay ? "bg-primary/20" : ""
+                  }`}
                   onMouseDown={() => handleDragStart(cellDate)}
                   onMouseMove={() => handleDragMove(cellDate)}
                   onMouseUp={handleDragEnd}
@@ -309,13 +306,24 @@ export default function Calendar() {
                             (c) => c.id === event.categoryId
                           )?.color,
                           top: `${(event.start.getMinutes() / 60) * 48}px`,
-                          height: `${Math.max(16, ((event.end.getTime() - event.start.getTime()) / (60 * 60 * 1000)) * 48)}px`,
+                          height: `${Math.max(
+                            16,
+                            ((event.end.getTime() - event.start.getTime()) /
+                              (60 * 60 * 1000)) *
+                              48
+                          )}px`,
                         }}
                         onClick={() => handleEventClick(event)}
                       >
                         {event.title}{" "}
                         {!event.isAllDay &&
-                          `(${event.start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} - ${event.end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`}
+                          `(${event.start.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })} - ${event.end.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })})`}
                       </div>
                     ))}
                 </div>
@@ -364,7 +372,13 @@ export default function Calendar() {
           return (
             <div
               key={index}
-              className={`h-32 ${isCurrentMonth ? "bg-muted" : "bg-muted/50"} ${isCurrentDay ? "ring-2 ring-primary" : ""} rounded-lg p-1 overflow-y-auto`}
+              className={`h-32 ${
+                isCurrentMonth
+                  ? "bg-zinc-500 bg-opacity-35"
+                  : "bg-zinc-700 bg-opacity-20"
+              } ${
+                isCurrentDay ? "ring-2 ring-primary bg-primary-500" : ""
+              } rounded-lg overflow-y-auto p-2 cursor-pointer`}
               onClick={() => {
                 setCurrentDate(day);
                 setViewType("day");
@@ -373,7 +387,7 @@ export default function Calendar() {
               onMouseMove={() => handleDragMove(day)}
               onMouseUp={handleDragEnd}
             >
-              <div className="font-bold mb-1">{day.getDate()}</div>
+              <div className={"font-bold mb-1"}>{day.getDate()}</div>
               {events
                 .filter((event) => event.start <= day && event.end > day)
                 .map((event) => (
@@ -392,7 +406,10 @@ export default function Calendar() {
                   >
                     {event.title}{" "}
                     {!event.isAllDay &&
-                      `(${event.start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`}
+                      `(${event.start.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })})`}
                   </div>
                 ))}
               {previewEvent &&
@@ -417,7 +434,7 @@ export default function Calendar() {
         {months.map((month) => (
           <div
             key={month.toISOString()}
-            className="border rounded p-2 cursor-pointer"
+            className="rounded-xl p-2 cursor-pointer bg-zinc-700 bg-opacity-80 "
             onClick={() => {
               setCurrentDate(month);
               setViewType("month");
@@ -445,7 +462,11 @@ export default function Calendar() {
                 return (
                   <div
                     key={day}
-                    className={`text-center ${isCurrentDay ? "bg-primary text-primary-foreground" : ""} ${hasEvents ? "bg-secondary text-secondary-foreground" : ""} rounded-full`}
+                    className={`text-center ${
+                      isCurrentDay ? "bg-primary text-primary-foreground" : ""
+                    } ${
+                      hasEvents ? "bg-secondary text-secondary-foreground" : ""
+                    } rounded-full`}
                   >
                     {day}
                   </div>
@@ -526,7 +547,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="container mx-auto p-4 select-none" ref={calendarRef}>
+    <div className="container mx-auto p-4 select-none h-full" ref={calendarRef}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">
           {currentDate.toLocaleString("default", {
@@ -535,45 +556,66 @@ export default function Calendar() {
           })}
         </h1>
         <div className="flex gap-2">
-          <Button onClick={() => setCurrentDate(new Date())} variant="outline">
+          <Button
+            onClick={() => setCurrentDate(new Date())}
+            variant="flat"
+            color="primary"
+          >
             Today
           </Button>
-          <Button onClick={navigatePrevious} size="icon" variant="outline">
+          <Button
+            onClick={navigatePrevious}
+            isIconOnly
+            variant="flat"
+            color="primary"
+          >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <Button onClick={navigateNext} size="icon" variant="outline">
+          <Button
+            onClick={navigateNext}
+            isIconOnly
+            variant="flat"
+            color="primary"
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Select
             value={viewType}
-            onValueChange={(value: ViewType) => setViewType(value)}
+            onChange={(e) => setViewType(e.target.value as ViewType)}
+            placeholder="Select View"
+            className="w-32"
+            variant="bordered"
+            color="primary"
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select view" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="day">Day</SelectItem>
-              <SelectItem value="2day">2 Days</SelectItem>
-              <SelectItem value="3day">3 Days</SelectItem>
-              <SelectItem value="4day">4 Days</SelectItem>
-              <SelectItem value="5day">5 Days</SelectItem>
-              <SelectItem value="6day">6 Days</SelectItem>
-              <SelectItem value="7day">Week</SelectItem>
-              <SelectItem value="month">Month</SelectItem>
-              <SelectItem value="year">Year</SelectItem>
-            </SelectContent>
+            <SelectItem key="day" value="day">
+              Day
+            </SelectItem>
+            <SelectItem key="2day" value="2day">
+              2 Days
+            </SelectItem>
+            <SelectItem key="3day" value="3day">
+              3 Days
+            </SelectItem>
+            <SelectItem key="4day" value="4day">
+              4 Days
+            </SelectItem>
+            <SelectItem key="5day" value="5day">
+              5 Days
+            </SelectItem>
+            <SelectItem key="6day" value="6day">
+              6 Days
+            </SelectItem>
+            <SelectItem key="7day" value="7day">
+              Week
+            </SelectItem>
+            <SelectItem key="month" value="month">
+              Month
+            </SelectItem>
+            <SelectItem key="year" value="year">
+              Year
+            </SelectItem>
+            {/* </SelectContent> */}
           </Select>
-          <Button
-            onClick={() =>
-              setTheme((theme) => (theme === "dark" ? "light" : "dark"))
-            }
-            size="icon"
-            variant="outline"
-          >
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
         </div>
       </div>
 
@@ -584,14 +626,26 @@ export default function Calendar() {
           onChange={(e) => setNaturalLanguageInput(e.target.value)}
           onKeyDown={handleNaturalLanguageKeyDown}
           className="flex-grow mr-2"
+          radius="full"
+          variant="faded"
+          color="primary"
+          size="lg"
         />
-        <Button onClick={parseNaturalLanguage}>Add</Button>
+        <Button
+          onClick={parseNaturalLanguage}
+          variant="shadow"
+          color="primary"
+          radius="full"
+          size="lg"
+        >
+          Add
+        </Button>
       </div>
 
       {renderCalendar()}
 
       <Dialog open={showEventDialog} onOpenChange={setShowEventDialog}>
-        <DialogContent>
+        <DialogContent className="dark bg-zinc-900 text-foreground rounded-2xl border-none">
           <DialogHeader>
             <DialogTitle>
               {editingEvent ? "Edit Event" : "Add New Event"}
@@ -617,8 +671,8 @@ export default function Calendar() {
               </Label>
               <Switch
                 id="allDay"
-                checked={newEvent.isAllDay}
-                onCheckedChange={(checked) =>
+                isSelected={newEvent.isAllDay}
+                onValueChange={(checked: boolean) =>
                   setNewEvent({ ...newEvent, isAllDay: checked })
                 }
               />
@@ -663,28 +717,30 @@ export default function Calendar() {
               <Label htmlFor="category" className="text-right">
                 Category
               </Label>
+
               <Select
-                value={newEvent.categoryId}
-                onValueChange={(value: string) =>
+                placeholder="Select category"
+                className="col-span-3"
+                selectedKeys={newEvent.categoryId}
+                onSelectionChange={(value: string) =>
                   setNewEvent({ ...newEvent, categoryId: value })
                 }
+                classNames={{
+                  listboxWrapper: "rounded-lg m-0",
+                  popoverContent: "bg-zinc-600 hover:bg-zinc-400",
+                }}
               >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      <div className="flex items-center">
-                        <div
-                          className="w-4 h-4 rounded-full mr-2"
-                          style={{ backgroundColor: category.color }}
-                        ></div>
-                        {category.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    <div className="flex items-center text-white">
+                      <div
+                        className="w-4 h-4 rounded-full mr-2"
+                        style={{ backgroundColor: category.color }}
+                      ></div>
+                      {category.name}
+                    </div>
+                  </SelectItem>
+                ))}
               </Select>
             </div>
           </div>

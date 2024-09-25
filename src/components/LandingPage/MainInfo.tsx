@@ -9,7 +9,7 @@ export default function MainInfo() {
         <div className="flex flex-col justify-center items-center h-full">
           <GradualSpacing
             text="Introducing G.A.I.A"
-            className="landingpage_maintext bg-gradient-to-b from-black to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-30% py-4"
+            className="landingpage_maintext bg-gradient-to-b from-white to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-30% py-4"
           />
 
           <TypingAnimation
