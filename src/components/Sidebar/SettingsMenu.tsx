@@ -1,19 +1,24 @@
 import { Button } from "@nextui-org/button";
 import {
-  ThreeDotsMenu,
-  Settings01Icon,
-  BlushBrush02Icon,
-  Logout02Icon,
-} from "../icons";
-import {
   Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
   DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/dropdown";
+import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
+import { useUser } from "@/contexts/UserContext";
+
+interface MenuItem {
+  key: string;
+  label: React.ReactNode;
+  color?: "danger";
+  action?: () => void;
+}
 
 export default function SettingsMenu() {
-  const items: { key: string; label: React.ReactNode; color?: "danger" }[] = [
+  const { logout } = useUser();
+
+  const items: MenuItem[] = [
     {
       key: "settings",
       label: (
@@ -24,16 +29,6 @@ export default function SettingsMenu() {
       ),
     },
     {
-      key: "customise",
-      label: (
-        <div className="flex items-center gap-4">
-          <BlushBrush02Icon width={20} color="text-foreground" />
-          Customisation
-        </div>
-      ),
-    },
-    {
-      color: "danger",
       key: "logout",
       label: (
         <div className="flex items-center gap-4">
@@ -41,6 +36,8 @@ export default function SettingsMenu() {
           Logout
         </div>
       ),
+      action: logout,
+      color: "danger",
     },
   ];
 
@@ -51,17 +48,18 @@ export default function SettingsMenu() {
           <ThreeDotsMenu />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Dynamic Actions" items={items}>
-        {(item) => (
+      <DropdownMenu aria-label="Dynamic Actions">
+        {items.map((item) => (
           <DropdownItem
             key={item.key}
-            color={!!item.color ? item.color : "default"}
-            className={!!item.color ? item.color : "text-danger"}
+            color={item.color === "danger" ? "danger" : "default"}
+            className={item.color === "danger" ? "text-danger" : ""}
             textValue={item.key}
+            onPress={item.action}
           >
-            <span className="font-bold">{item.label}</span>
+            {item.label}
           </DropdownItem>
-        )}
+        ))}
       </DropdownMenu>
     </Dropdown>
   );

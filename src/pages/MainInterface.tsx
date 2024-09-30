@@ -16,6 +16,8 @@ import { useEffect, useRef, useState } from "react";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
 import Calendar from "@/components/Calendar/calendar3";
 import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
+import Notes from "./Notes";
+import Pins from "./Pins";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -84,8 +86,9 @@ export default function MainInterface() {
               <Route path="chat" element={<MainChat />} />
               <Route path="explore" element={<Explore />} />
               <Route path="calendar" element={<Calendar />} />
-              <Route path="pins" element={<MainChat />} />
               <Route path="search" element={<ComprehensiveMessageHistory />} />
+              <Route path="pins" element={<Pins />} />
+              <Route path="notes" element={<Notes />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </div>

@@ -35,6 +35,7 @@ export default function ChatsList() {
         variant="flat"
         className="w-full flex justify-between"
         onPress={createNewChat}
+        size="lg"
       >
         Create new chat
         <PlusSignIcon width="21" color="foreground" />

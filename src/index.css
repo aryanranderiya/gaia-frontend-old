@@ -40,18 +40,21 @@ main {
   position: relative;
   justify-content: space-between;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, opacity 0.1s ease;
   z-index: 1;
   min-width: 270px;
   max-width: 270px;
   background-color: #020202;
   height: 100vh;
+  transform: translateX(0%);
 }
 
 .sidebar.hide {
   width: 0 !important;
   min-width: 0 !important;
   max-width: 0 !important;
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .hr_container {
@@ -159,7 +162,7 @@ main {
   position: fixed;
   top: 16px;
   left: 16px;
-  z-index: 0;
+  z-index: 5;
 }
 
 .conversation_history {
@@ -329,10 +332,6 @@ main {
 }
 .arrow_diagonal_btn:hover .arrow_diagonal {
   transform: translateY(-10%);
-}
-
-.chat_sidebar_toggle_btn {
-  z-index: 5;
 }
 
 .rounded_class {
@@ -745,6 +744,15 @@ main {
     0deg,
     rgba(0, 0, 0, 0) 31%,
     rgba(0, 187, 255, 0.25) 100%
+  );
+}
+
+.bg-custom-gradient2 {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 31%,
+    rgba(0, 0, 0, 0.8) 100%
   );
 }
 

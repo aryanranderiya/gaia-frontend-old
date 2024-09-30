@@ -3,6 +3,7 @@ import {
   PinIcon,
   CalendarIcon,
   StickyNote01Icon,
+  Route02Icon,
 } from "../icons";
 import { Button } from "@nextui-org/button";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,7 +19,6 @@ export default function SidebarTopButtons() {
         Search
         <GlobalSearchIcon />
       </Button> */}
-
       <Tooltip showArrow={true} content="Explore">
         <Button
           onClick={() => navigate("/try/explore")}
@@ -33,7 +33,6 @@ export default function SidebarTopButtons() {
           />
         </Button>
       </Tooltip>
-
       <Tooltip showArrow={true} content="Pins">
         <Button
           className="w-fit"
@@ -48,7 +47,6 @@ export default function SidebarTopButtons() {
           />
         </Button>
       </Tooltip>
-
       <Tooltip showArrow={true} content="Calendar">
         <Button
           size="lg"
@@ -69,12 +67,27 @@ export default function SidebarTopButtons() {
           size="lg"
           className="w-fit"
           isIconOnly
-          onClick={() => navigate("/try/calendar")}
+          onClick={() => navigate("/try/notes")}
         >
           <StickyNote01Icon
             width={27}
             height={27}
             color={location.pathname === "/try/notes" ? "#00bbff" : "white"}
+          />
+        </Button>
+      </Tooltip>
+
+      <Tooltip showArrow={true} content="Roadmaps">
+        <Button
+          size="lg"
+          className="w-fit"
+          isIconOnly
+          onClick={() => navigate("/try/notes")}
+        >
+          <Route02Icon
+            width={27}
+            height={27}
+            color={location.pathname === "/try/roadmaps" ? "#00bbff" : "white"}
           />
         </Button>
       </Tooltip>

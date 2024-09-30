@@ -1,12 +1,11 @@
 import { useUser } from "@/contexts/UserContext";
-import { Button } from "@nextui-org/button";
+import useFetchUser from "@/hooks/useFetchUser";
 import { User } from "@nextui-org/user";
-import { useNavigate } from "react-router-dom";
-import { Settings01Icon } from "../icons";
+import SettingsMenu from "./SettingsMenu";
 
 const UserContainer: React.FC = () => {
   const { user } = useUser();
-  const navigate = useNavigate();
+  useFetchUser();
 
   return (
     <div className="user_container p-4 absolute bottom-0 left-0">
@@ -29,15 +28,7 @@ const UserContainer: React.FC = () => {
           }}
         />
 
-        <Button
-          isIconOnly
-          variant="light"
-          radius="full"
-          size="sm"
-          onPress={() => navigate("/settings")}
-        >
-          <Settings01Icon width={21} color="foreground" />
-        </Button>
+        <SettingsMenu />
       </div>
     </div>
   );

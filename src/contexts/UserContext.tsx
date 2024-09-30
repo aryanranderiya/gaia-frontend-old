@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios
+import { apiauth } from "@/apiaxios";
 
 // Define the shape of the user object
 interface User {
@@ -17,7 +20,7 @@ interface UserContextType {
     id: string,
     profilePicture: string
   ) => void;
-  logout: () => void;
+  logout: () => Promise<void>; // Update to return a Promise
 }
 
 // Create the context with default values
@@ -28,6 +31,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const setUserData = (
     firstName: string,
@@ -38,8 +42,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     setUser({ firstName, lastName, id, profilePicture });
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    try {
+      const response = await apiauth.post(
+        "/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(response);
+
+      if (response.status !== 200) throw new Error("Logout failed");
+
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (

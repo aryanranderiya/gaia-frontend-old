@@ -26,7 +26,6 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, fetchConversations }) => {
       variant="light"
       color={currentConvoId === id ? "primary" : "default"}
       className="w-full flex justify-start pr-0"
-      size="sm"
       onClick={() => {
         setButtonHovered(false);
         navigate(`/try/chat/${id}`);
