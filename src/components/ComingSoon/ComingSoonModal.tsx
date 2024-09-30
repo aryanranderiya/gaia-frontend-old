@@ -1,54 +1,112 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "../Shadcn/Dialog";
-import * as React from "react";
-import { StarsIcon } from "../icons";
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@nextui-org/button";
 
-export default function ComingSoonModal({ open, setOpen }) {
+const steps = [
+  {
+    title: "Exciting New Features!",
+    description: "Discover what's coming soon to enhance your experience.",
+    image: "https://placehold.co/600x400",
+    content:
+      "We're thrilled to announce a suite of new features that will revolutionize your workflow. From advanced AI-powered suggestions to seamless integrations with your favorite tools, we're taking productivity to the next level.",
+  },
+  {
+    title: "Enhanced Collaboration",
+    description: "Work together like never before.",
+    image: "https://placehold.co/600x400",
+    content:
+      "Our new collaboration tools will make teamwork a breeze. Real-time editing, intuitive commenting systems, and smart notifications will keep your team in sync and moving forward efficiently.",
+  },
+  {
+    title: "Powerful Analytics",
+    description: "Gain insights to drive your success.",
+    image: "https://placehold.co/600x400",
+    content:
+      "Unlock the potential of your data with our upcoming analytics dashboard. Visualize trends, track performance, and make data-driven decisions with ease. Your path to success is about to become clearer than ever.",
+  },
+];
+
+export default function Component({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setOpen(false);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen} className="rounded-full">
-      <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 md:rounded-2xl rounded-2xl max-w-[500px]">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 sm:max-w-[500px] max-w-[90vw]">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl  select-text">
-            Coming Soon!
+          <DialogTitle className="text-center text-2xl select-text">
+            {steps[currentStep].title}
           </DialogTitle>
-          <DialogDescription className="text-center  select-text">
-            What's coming soon?
+          <DialogDescription className="text-center select-text">
+            {steps[currentStep].description}
           </DialogDescription>
         </DialogHeader>
 
         <img
-          src="https://media.licdn.com/dms/image/D4D22AQEXAhBLeOGz8Q/feedshare-shrink_2048_1536/0/1720402539349?e=1723680000&v=beta&t=WWA3AWiaM--K0fgi24FTObeCZWGBVnwrOkZ5X9gmrI0"
-          alt="Coming Soon Image"
-          className="rounded-xl max-w-[500px] object-cover max-h-[350px]"
+          src={steps[currentStep].image}
+          alt={`Coming Soon - ${steps[currentStep].title}`}
+          className="rounded-xl w-full object-cover h-[200px]"
           loading="eager"
         />
 
-        <span className="text-sm text-justify select-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dolor
-          dolor, varius vitae suscipit nec, ultrices eu sapien. Donec eu
-          venenatis metus, et tempus justo. Quisque vestibulum eget dui sed
-          sagittis. Maecenas ultricies tortor sapien, a fermentum purus lacinia
-          eu. In nisi nisi, ultrices quis lectus nec, feugiat rutrum erat.
-        </span>
+        <p className="text-foreground-400 select-text">
+          {steps[currentStep].content}
+        </p>
 
-        <div className="flex justify-between mt-2 w-full">
-          <DialogClose asChild>
-            <Button size="sm" variant="light" color="danger">
-              Close
+        <DialogFooter className="flex justify-between items-center mt-2 gap-2 w-full">
+          <div className="flex gap-2 items-center justify-between w-full">
+            <Button
+              variant="flat"
+              onClick={handlePrevious}
+              isDisabled={currentStep === 0}
+              color="primary"
+            >
+              Previous
             </Button>
-          </DialogClose>
-          <Button size="sm" variant="flat" color="primary">
-            Next
-          </Button>
-        </div>
+
+            <div className="flex items-center gap-2">
+              {steps.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full ${
+                    index === currentStep ? "bg-primary" : "bg-gray-600"
+                  }`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+
+            <Button onClick={handleNext} variant="flat" color="primary">
+              {currentStep === steps.length - 1 ? "Finish" : "Next"}
+            </Button>
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

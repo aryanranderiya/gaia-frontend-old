@@ -7,7 +7,7 @@ import { UserProvider } from "./contexts/UserContext";
 function App() {
   return (
     <UserProvider>
-      <NotLoggedIn /> {/* Login Dialog for when user is not logged in*/}
+      <NotLoggedIn />
       <Routes>
         <Route path="/try/*" element={<MainInterface />} />
         <Route path="/*" element={<Landing />} />

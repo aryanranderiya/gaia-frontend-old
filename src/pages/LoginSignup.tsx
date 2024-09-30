@@ -44,7 +44,7 @@ interface LoginSignupProps {
 
 export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const navigate = useNavigate();
-  const { setUserData } = useUser();
+  const { user, setUserData } = useUser();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [isPasswordVisible, setPasswordVisible] =
     React.useState<boolean>(false);
@@ -96,9 +96,12 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     return password === confirmPassword;
   };
 
+  React.useEffect(() => {
+    if (user) navigate("/");
+  });
+
   const capsLockCheck = (event: KeyboardEvent) => {
-    const capsLockEnabled =
-      event.getModifierState && event.getModifierState("CapsLock");
+    const capsLockEnabled = event.getModifierState?.("CapsLock");
     setCapsLockOn(capsLockEnabled);
   };
 
@@ -193,7 +196,9 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
         },
         duration: 3000,
         icon: <Tick02Icon height="23" color="black" />,
-        description: `Successfully ${isLogin ? "logged in" : "created an account"}.`,
+        description: `Successfully ${
+          isLogin ? "logged in" : "created an account"
+        }.`,
       });
 
       CreateConfetti(2000);

@@ -44,13 +44,19 @@ export default function MainInterface() {
   }
 
   const hideSidebar = () => {
-    if (sidebarRef.current && contentContainerRef.current) {
-      if (isSidebarVisible && isMobileScreen) {
-        sidebarRef.current.classList.add("hide");
-        contentContainerRef.current.classList.remove("hide");
-        setSidebarVisible(false);
-      }
-    }
+    if (
+      !(
+        sidebarRef.current &&
+        contentContainerRef.current &&
+        isSidebarVisible &&
+        isMobileScreen
+      )
+    )
+      return;
+
+    sidebarRef.current.classList.add("hide");
+    contentContainerRef.current.classList.remove("hide");
+    setSidebarVisible(false);
   };
 
   useEffect(() => {
@@ -78,6 +84,7 @@ export default function MainInterface() {
               <Route path="chat" element={<MainChat />} />
               <Route path="explore" element={<Explore />} />
               <Route path="calendar" element={<Calendar />} />
+              <Route path="pins" element={<MainChat />} />
               <Route path="search" element={<ComprehensiveMessageHistory />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>

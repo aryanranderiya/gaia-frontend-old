@@ -23,21 +23,24 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   return !inline && match ? (
     <div className="relative flex flex-col gap-0">
       <div className="flex justify-between items-center bg-black bg-opacity-60 text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]">
-        <span className="text-sm font-mono monospace">
-          {match[1]}
-        </span>
+        <span className="text-sm font-mono monospace">{match[1]}</span>
         <Button
           onPress={handleCopy}
           size="sm"
           variant="light"
-          className="text-foreground hover:text-gray-300 flex flex-row gap-1 text-xs items-center"
+          className="text-foreground hover:text-gray-300 text-xs"
         >
           {copied ? (
-            <TaskDone01Icon width={21} color="foreground" />
+            <div className="flex flex-row gap-1 items-center">
+              <TaskDone01Icon width={21} color="foreground" />
+              <p>Copied!</p>
+            </div>
           ) : (
-            <Task01Icon width={21} color="foreground" />
+            <div className="flex flex-row gap-1 items-center">
+              <Task01Icon width={21} color="foreground" />
+              <p>Copy Code</p>
+            </div>
           )}
-          Copy Code
         </Button>
       </div>
       <SyntaxHighlighter
