@@ -16,7 +16,7 @@ export default function Sidebar({
   sidebarref: LegacyRef<HTMLDivElement>;
   toggleSidebar: () => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -56,7 +56,7 @@ export default function Sidebar({
         <UserContainer />
       </div>
 
-      <ComingSoonModal open={open} setOpen={setOpen} />
+      <ComingSoonModal isOpen={open} setOpen={setOpen} />
     </>
   );
 }

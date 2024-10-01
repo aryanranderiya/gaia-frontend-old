@@ -17,7 +17,7 @@ import {
 } from "@nextui-org/modal";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Trash } from "lucide-react";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 
 export default function ChatOptionsDropdown({
   buttonHovered,
@@ -67,11 +67,7 @@ export default function ChatOptionsDropdown({
 
   return (
     <>
-      <Dropdown
-        className="dark text-foreground w-fit min-w-fit"
-        size="sm"
-        backdrop="opaque"
-      >
+      <Dropdown className="dark text-foreground w-fit min-w-fit" size="sm">
         <DropdownTrigger>
           <Button
             variant="light"
@@ -117,6 +113,7 @@ export default function ChatOptionsDropdown({
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         className="dark text-foreground"
+        backdrop="blur"
       >
         <ModalContent>
           {modalAction === "edit" ? (
@@ -126,7 +123,9 @@ export default function ChatOptionsDropdown({
                 <Input
                   type="text"
                   value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setNewName(e.target.value)}
                   placeholder="Enter new chat name"
                   variant="faded"
                   labelPlacement="outside"
@@ -137,7 +136,7 @@ export default function ChatOptionsDropdown({
                       <b>{chatName}</b>
                     </div>
                   }
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: { key: string }) => {
                     if (e.key == "Enter") handleEdit();
                   }}
                 />

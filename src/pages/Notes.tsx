@@ -1,9 +1,8 @@
-import { NoteDoneIcon, StickyNote01Icon } from "@/components/icons";
+import { StickyNote01Icon } from "@/components/icons";
 import AddNoteDialog from "@/components/Notes/AddNoteDialog";
 import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@nextui-org/button";
-import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export interface Note {
@@ -234,11 +233,11 @@ export default function Notes() {
     <>
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
-          <div className="flex flex-wrap gap-4 justify-start pb-8">
+          <div className="flex flex-wrap gap-4 justify-center pb-8">
             {nonEmptyCategories.map((category) => (
               <div
                 key={category}
-                className="flex flex-col bg-black p-[1em] rounded-2xl bg-opacity-20 gap-3 max-w-[30%] min-w-[30%] aspect-square"
+                className="flex flex-col bg-black p-[1em] rounded-2xl bg-opacity-20 gap-3 max-w-[32%] min-w-[32%] aspect-square"
               >
                 <h2 className="text-2xl font-bold">{category}</h2>
                 <div className="flex flex-wrap gap-4">
@@ -264,7 +263,7 @@ export default function Notes() {
           </div>
         </ScrollArea>
 
-        <div className="absolute bottom-6 flex justify-center items-center w-full z-10">
+        <div className="fixed left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Button
             variant="shadow"
             color="primary"

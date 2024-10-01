@@ -1,13 +1,12 @@
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
 import { Button } from "@nextui-org/button";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@nextui-org/modal";
+import { useState } from "react";
 
 const steps = [
   {
@@ -33,11 +32,11 @@ const steps = [
   },
 ];
 
-export default function Component({
-  open,
+export default function ComingSoonModal({
+  isOpen,
   setOpen,
 }: {
-  open: boolean;
+  isOpen: boolean;
   setOpen: (open: boolean) => void;
 }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -57,57 +56,54 @@ export default function Component({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="bg-zinc-900 text-white border-none flex flex-col gap-3 sm:max-w-[500px] max-w-[90vw]">
-        <DialogHeader>
-          <DialogTitle className="text-center text-2xl select-text">
-            {steps[currentStep].title}
-          </DialogTitle>
-          <DialogDescription className="text-center select-text">
-            {steps[currentStep].description}
-          </DialogDescription>
-        </DialogHeader>
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={setOpen}
+      className="dark text-foreground"
+    >
+      <ModalContent>
+        <ModalHeader className="flex flex-col gap-1">
+          <h2 className="text-2xl">{steps[currentStep].title}</h2>
+          <p>{steps[currentStep].description}</p>
+        </ModalHeader>
 
-        <img
-          src={steps[currentStep].image}
-          alt={`Coming Soon - ${steps[currentStep].title}`}
-          className="rounded-xl w-full object-cover h-[200px]"
-          loading="eager"
-        />
+        <ModalBody>
+          <img
+            src={steps[currentStep].image}
+            alt={`Coming Soon - ${steps[currentStep].title}`}
+            className="rounded-xl w-full object-cover h-[200px]"
+            loading="eager"
+          />
+          <p>{steps[currentStep].content}</p>
+        </ModalBody>
 
-        <p className="text-foreground-400 select-text">
-          {steps[currentStep].content}
-        </p>
+        <ModalFooter className="flex justify-between items-center">
+          <Button
+            color="danger"
+            variant="light"
+            onPress={handlePrevious}
+            isDisabled={currentStep === 0}
+          >
+            Previous
+          </Button>
 
-        <DialogFooter className="flex justify-between items-center mt-2 gap-2 w-full">
-          <div className="flex gap-2 items-center justify-between w-full">
-            <Button
-              variant="flat"
-              onClick={handlePrevious}
-              isDisabled={currentStep === 0}
-              color="primary"
-            >
-              Previous
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {steps.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full ${
-                    index === currentStep ? "bg-primary" : "bg-gray-600"
-                  }`}
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
-
-            <Button onClick={handleNext} variant="flat" color="primary">
-              {currentStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
+          <div className="flex items-center gap-2">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full ${
+                  index === currentStep ? "bg-primary" : "bg-gray-600"
+                }`}
+                aria-hidden="true"
+              />
+            ))}
           </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+
+          <Button onPress={handleNext} color="primary">
+            {currentStep === steps.length - 1 ? "Finish" : "Next"}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }

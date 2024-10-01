@@ -1,25 +1,18 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import Axios
 import { apiauth } from "@/apiaxios";
+import React, { createContext, ReactNode, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Define the shape of the user object
 interface User {
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-  id: string;
+  name: string;
+  email: string;
+  picture: string;
 }
 
 // Define the shape of the context
 interface UserContextType {
   user: User | null;
-  setUserData: (
-    firstName: string,
-    lastName: string,
-    id: string,
-    profilePicture: string
-  ) => void;
+  setUserData: (name: string, email: string, picture: string) => void;
   logout: () => Promise<void>; // Update to return a Promise
 }
 
@@ -33,13 +26,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  const setUserData = (
-    firstName: string,
-    lastName: string,
-    id: string,
-    profilePicture: string
-  ) => {
-    setUser({ firstName, lastName, id, profilePicture });
+  const setUserData = (name: string, email: string, picture: string) => {
+    setUser({ name, email, picture });
   };
 
   const logout = async () => {

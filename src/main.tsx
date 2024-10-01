@@ -1,11 +1,11 @@
 import { Toaster } from "@/components/Shadcn/Sonner";
+import { NextUIProvider } from "@nextui-org/system";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
-import { NextUIProvider } from "@nextui-org/system";
-import { useNavigate } from "react-router-dom";
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -15,12 +15,14 @@ export function Provider({ children }: { children: React.ReactNode }) {
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider>
-        <Toaster />
-        <main className="dark text-foreground flex">
-          <App />
-        </main>
-      </Provider>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <Provider>
+          <Toaster />
+          <main className="dark text-foreground flex">
+            <App />
+          </main>
+        </Provider>
+      </GoogleOAuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
