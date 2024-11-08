@@ -2,19 +2,16 @@ import {
   ChatBubbleBotProps,
   ChatBubbleUserProps,
 } from "@/types/ChatBubbleTypes";
-import { Avatar } from "@nextui-org/avatar";
 import { Chip } from "@nextui-org/chip";
 import { useEffect, useRef, useState } from "react";
-
 import { PdfContainer } from "../Documents/PdfComponent";
-import smiley from "../Smileys/2.webp";
 import { Alert01Icon } from "../icons";
+import { parseDate } from "./fetchDate";
+import { MarkdownRenderer } from "./MarkdownRenderer";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import { parseDate } from "./fetchDate";
-import { MarkdownRenderer } from "./MarkdownRenderer";
 
 export function ChatBubbleUser({
   text,
@@ -163,7 +160,7 @@ export function ChatBubbleBot({
 
         {!loading && (
           <div
-            className="pl-12 transition-all"
+            className="transition-all"
             ref={actionsRef}
             style={{ opacity: 0, visibility: "hidden" }}
           >

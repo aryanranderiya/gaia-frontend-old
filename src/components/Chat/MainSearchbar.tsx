@@ -1,28 +1,40 @@
+import { useConversation } from "@/hooks/useConversation";
+import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
+import { ArrowDown } from "lucide-react";
 import * as React from "react";
+import { useParams } from "react-router-dom";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
-import { Button } from "@nextui-org/button";
-import { ArrowDown } from "lucide-react";
 
 interface MainSearchbarProps {
-  loading: boolean;
-  inputRef: React.RefObject<HTMLTextAreaElement>;
-  handleFormSubmit: (event?: React.FormEvent<HTMLFormElement>) => void;
-  searchbarText: string;
-  setSearchbarText: React.Dispatch<React.SetStateAction<string>>;
   scrollToBottom: () => void;
+  isAtBottom: boolean;
 }
 
 export default function MainSearchbar({
-  loading,
-  inputRef,
-  handleFormSubmit,
-  searchbarText,
-  setSearchbarText,
   scrollToBottom,
+  isAtBottom,
 }: MainSearchbarProps) {
-  const [currentHeight, setHeight] = React.useState(24);
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
+  const [currentHeight, setHeight] = React.useState<number>(24);
+  const [searchbarText, setSearchbarText] = React.useState<string>("");
+  const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  const { loading, updateConversation } = useConversation(convoIdParam ?? null);
+
+  const focusInput = () => {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 10);
+  };
+
+  const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
+    if (!searchbarText) return;
+    updateConversation(searchbarText);
+    setSearchbarText("");
+    focusInput();
+  };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     event
@@ -38,14 +50,19 @@ export default function MainSearchbar({
 
   return (
     <div className="searchbar_container relative">
-      <div className="absolute top-[-55px] flex justify-center w-full">
+      <div
+        className={`absolute top-[-55px] flex justify-center w-full pointer-events-none transition-opacity ${
+          isAtBottom ? "opacity-0" : "opacity-100"
+        }`}
+      >
         <Button
           isIconOnly
           onPress={scrollToBottom}
-          variant="faded"
           radius="full"
+          size="sm"
+          className="pointer-events-auto"
         >
-          <ArrowDown width={22} />
+          <ArrowDown width={18} />
         </Button>
       </div>
 
@@ -62,7 +79,7 @@ export default function MainSearchbar({
             ref={inputRef}
             autoFocus
             isInvalid={searchbarText.length > 4500}
-            onHeightChange={(height) => setHeight(height)}
+            onHeightChange={(height: number) => setHeight(height)}
             minRows={1}
             maxRows={13}
             endContent={<SearchbarRightSendBtn loading={loading} />}

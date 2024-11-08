@@ -1,21 +1,21 @@
+import Calendar from "@/components/Calendar/Calendar";
+import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import WebsiteName from "@/components/TopWebsiteName";
+import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
+import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
+import { useEffect, useRef, useState } from "react";
 import {
+  Navigate,
   Route,
   Routes,
   useLocation,
   useNavigate,
-  Navigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import WebsiteName from "@/components/TopWebsiteName";
 import Sidebar from "../layouts/Sidebar";
-import MainChat from "./MainChat";
 import Explore from "./Explore";
-import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
-import { useEffect, useRef, useState } from "react";
-import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
-import Calendar from "@/components/Calendar/Calendar";
-import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
+import MainChat from "./MainChat";
 import Notes from "./Notes";
 import Pins from "./Pins";
 

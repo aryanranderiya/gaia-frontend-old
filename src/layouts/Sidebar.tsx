@@ -37,7 +37,7 @@ export default function Sidebar({
             </Tooltip>
           </div>
 
-          <div className="px-1">
+          {/* <div className="px-1">
             <Button
               variant="shadow"
               color="primary"
@@ -47,9 +47,9 @@ export default function Sidebar({
               Coming Soon!
               <StarsIcon color="zinc-900" fill="zinc-900" />
             </Button>
-          </div>
+          </div> */}
 
-          <SidebarTopButtons />
+          {/* <SidebarTopButtons /> */}
           <Hr />
           <ChatsList />
         </div>
