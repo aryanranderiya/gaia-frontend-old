@@ -10,7 +10,17 @@ import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { toast } from "sonner";
 import { Tooltip } from "@nextui-org/tooltip";
 
-export function ChatBubble_Actions({ loading, text, index }) {
+interface ChatBubbleActionsProps {
+  loading: boolean;
+  text: string;
+  index: number;
+}
+
+export function ChatBubble_Actions({
+  loading,
+  text,
+  index,
+}: ChatBubbleActionsProps): JSX.Element {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard", {
@@ -71,7 +81,13 @@ export function ChatBubble_Actions({ loading, text, index }) {
   );
 }
 
-export function ChatBubble_Actions_Image({ src }) {
+interface ChatBubbleActionsImageProps {
+  src: string;
+}
+
+export function ChatBubble_Actions_Image({
+  src,
+}: ChatBubbleActionsImageProps): JSX.Element {
   const downloadFromSrc = () => {
     const downloadLink = document.createElement("a");
     downloadLink.href = src;
@@ -80,6 +96,7 @@ export function ChatBubble_Actions_Image({ src }) {
     downloadLink.click();
     document.body.removeChild(downloadLink);
   };
+
   return (
     <div className="flex py-2 w-fit gap-2 items-center">
       <Tooltip

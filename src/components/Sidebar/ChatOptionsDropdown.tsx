@@ -18,6 +18,7 @@ import {
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Trash } from "lucide-react";
 import { SetStateAction, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatOptionsDropdown({
   buttonHovered,
@@ -36,6 +37,7 @@ export default function ChatOptionsDropdown({
     null
   );
   const [newName, setNewName] = useState("");
+  const navigate = useNavigate();
 
   const handleEdit = async () => {
     if (!newName) return;
@@ -53,6 +55,7 @@ export default function ChatOptionsDropdown({
   const handleDelete = async () => {
     try {
       await apiauth.delete(`/conversations/${chatId}/`);
+      navigate("/try/chat");
       setIsOpen(false);
       fetchConversations();
     } catch (error) {

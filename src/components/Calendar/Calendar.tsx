@@ -5,13 +5,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -60,7 +53,8 @@ const defaultCategories: Category[] = [
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [events, setEvents] = useState<Event[]>([]);
-  const [categories, setCategories] = useState<Category[]>(defaultCategories);
+  // const [categories, setCategories] = useState<Category[]>(defaultCategories);
+  const categories = defaultCategories;
   const [newEvent, setNewEvent] = useState<Omit<Event, "id">>({
     title: "",
     start: new Date(),
@@ -122,14 +116,14 @@ export default function Calendar() {
     setShowEventDialog(true);
   };
 
-  const handleDayClick = (date: Date) => {
-    const newEventStart = new Date(date);
-    newEventStart.setHours(new Date().getHours());
-    const newEventEnd = new Date(newEventStart);
-    newEventEnd.setHours(newEventStart.getHours() + 1);
-    setNewEvent({ ...newEvent, start: newEventStart, end: newEventEnd });
-    setShowEventDialog(true);
-  };
+  // const handleDayClick = (date: Date) => {
+  //   const newEventStart = new Date(date);
+  //   newEventStart.setHours(new Date().getHours());
+  //   const newEventEnd = new Date(newEventStart);
+  //   newEventEnd.setHours(newEventStart.getHours() + 1);
+  //   setNewEvent({ ...newEvent, start: newEventStart, end: newEventEnd });
+  //   setShowEventDialog(true);
+  // };
 
   const handleDragStart = (date: Date) => {
     setDragStart(date);

@@ -481,7 +481,7 @@ main {
 }
 
 .pingspinner {
-  --uib-size: 40px;
+  --uib-size: 50px;
   --uib-color: #00bbff;
   --uib-speed: 1.5s;
   position: relative;

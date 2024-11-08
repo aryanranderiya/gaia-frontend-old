@@ -13,7 +13,7 @@ export default defineConfig({
       "@hooks": "/src/hooks",
       "@shadcn": "/src/components/Shadcn",
       "@apiaxios": "/src/apiaxios",
-      // Add more aliases as needed
+      "@*": "/src/*",
     },
   },
 });

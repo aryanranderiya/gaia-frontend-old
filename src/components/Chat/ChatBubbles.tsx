@@ -154,11 +154,9 @@ export function ChatBubbleBot({
     (!!text || loading || isImage) && (
       <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className="chatbubblebot_parent">
-          <Avatar src={smiley} className="smiley_avatar" />
+          {/* <Avatar src={smiley} className="smiley_avatar" />{" "} */}
 
-          {loading ? (
-            <div className="pingspinner" />
-          ) : (
+          {!loading && (
             <div className="chat_bubble_container ">{component}</div>
           )}
         </div>

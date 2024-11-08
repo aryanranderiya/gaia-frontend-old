@@ -1,51 +1,8 @@
 // utils/chatUtils.ts
 
 import { apiauth } from "@/apiaxios";
-import fetchDate from "@/components/Chat/fetchDate";
-import { ConversationHistoryType } from "@/types/ConvoTypes";
 import { MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-
-export const setLastBotItem = (
-  convoHistory: ConversationHistoryType,
-  setConvoHistory: React.Dispatch<
-    React.SetStateAction<ConversationHistoryType>
-  >,
-  data_array: string | string[],
-  conversationID: string
-) => {
-  if (
-    convoHistory &&
-    (typeof data_array === "string"
-      ? data_array.length > 0
-      : data_array.length > 0)
-  ) {
-    const previousHistory = { ...convoHistory };
-    const currentConvo = previousHistory[conversationID];
-
-    if (!currentConvo || !currentConvo.messages) {
-      console.error("Conversation or messages not found");
-      return;
-    }
-
-    const lastItem = currentConvo.messages[currentConvo.messages.length - 1];
-
-    if (typeof data_array === "object") {
-      data_array = data_array.join("");
-    }
-
-    if (
-      lastItem?.type === "bot" &&
-      (lastItem.response !== data_array || !lastItem.response) &&
-      !lastItem.isImage
-    ) {
-      lastItem.response = data_array;
-      lastItem.loading = false;
-      lastItem.date = fetchDate();
-      setConvoHistory(previousHistory);
-    }
-  }
-};
 
 export const fetchConversationDescription = async (
   searchbarText: string

@@ -14,7 +14,7 @@ import Explore from "./Explore";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { useEffect, useRef, useState } from "react";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
-import Calendar from "@/components/Calendar/calendar3";
+import Calendar from "@/components/Calendar/Calendar";
 import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
 import Notes from "./Notes";
 import Pins from "./Pins";

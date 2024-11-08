@@ -23,17 +23,21 @@ const ChatRenderer: React.FC<ChatRendererProps> = ({ convoMessages }) => {
     <>
       {convoMessages.map((message, index) =>
         message.type === "bot" ? (
-          <ChatBubbleBot
-            key={index}
-            text={message.response}
-            loading={message.loading}
-            index={index}
-            isImage={message.isImage}
-            image={message.imageUrl}
-            disclaimer={message.disclaimer}
-            userinputType={message.userinputType}
-            date={message.date}
-          />
+          <div className="relative flex items-end gap-3">
+            <div className="pingspinner relative bottom-9" />
+
+            <ChatBubbleBot
+              key={index}
+              text={message.response}
+              loading={message.loading}
+              index={index}
+              isImage={message.isImage}
+              image={message.imageUrl}
+              disclaimer={message.disclaimer}
+              userinputType={message.userinputType}
+              date={message.date}
+            />
+          </div>
         ) : (
           <ChatBubbleUser
             key={index}

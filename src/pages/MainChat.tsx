@@ -1,11 +1,11 @@
 // MainChat.tsx
-import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ScrollArea } from "@/components/Shadcn/ScrollArea";
-import MainSearchbar from "@/components/Chat/MainSearchbar";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 import ChatRenderer from "@/components/Chat/ChatRenderer";
+import MainSearchbar from "@/components/Chat/MainSearchbar";
+import { ScrollArea } from "@/components/Shadcn/ScrollArea";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useConversation } from "@/hooks/useConversation";
+import React, { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function MainChat() {
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
@@ -13,9 +13,7 @@ export default function MainChat() {
   const convoRef = useRef<HTMLDivElement>(null);
   const [searchbarText, setSearchbarText] = useState<string>("");
 
-  const { loading, data, updateConversation } = useConversation(
-    convoIdParam ?? null
-  );
+  const { loading, updateConversation } = useConversation(convoIdParam ?? null);
   const { convoMessages } = useConvo();
 
   const focusInput = () => {
@@ -32,27 +30,18 @@ export default function MainChat() {
     focusInput();
   };
 
-  useEffect(() => {
+  const scrollToBottom = () => {
     convoRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [convoMessages, data]);
+  };
+
+  // useEffect(() => {
+  // }, [convoMessages]);
 
   return (
     <>
       <ScrollArea>
         <div className="conversation_history" ref={convoRef}>
           <ChatRenderer convoMessages={convoMessages} />
-          {loading && (
-            <ChatRenderer
-              convoMessages={[
-                {
-                  type: "bot",
-                  response: data.join(""),
-                  loading: true,
-                  date: "",
-                },
-              ]}
-            />
-          )}
         </div>
       </ScrollArea>
 
@@ -62,6 +51,7 @@ export default function MainChat() {
         handleFormSubmit={handleFormSubmit}
         searchbarText={searchbarText}
         setSearchbarText={setSearchbarText}
+        scrollToBottom={scrollToBottom}
       />
     </>
   );

@@ -2,6 +2,8 @@ import { Textarea } from "@nextui-org/input";
 import * as React from "react";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
+import { Button } from "@nextui-org/button";
+import { ArrowDown } from "lucide-react";
 
 interface MainSearchbarProps {
   loading: boolean;
@@ -9,6 +11,7 @@ interface MainSearchbarProps {
   handleFormSubmit: (event?: React.FormEvent<HTMLFormElement>) => void;
   searchbarText: string;
   setSearchbarText: React.Dispatch<React.SetStateAction<string>>;
+  scrollToBottom: () => void;
 }
 
 export default function MainSearchbar({
@@ -17,6 +20,7 @@ export default function MainSearchbar({
   handleFormSubmit,
   searchbarText,
   setSearchbarText,
+  scrollToBottom,
 }: MainSearchbarProps) {
   const [currentHeight, setHeight] = React.useState(24);
 
@@ -33,7 +37,18 @@ export default function MainSearchbar({
   };
 
   return (
-    <div className="searchbar_container">
+    <div className="searchbar_container relative">
+      <div className="absolute top-[-55px] flex justify-center w-full">
+        <Button
+          isIconOnly
+          onPress={scrollToBottom}
+          variant="faded"
+          radius="full"
+        >
+          <ArrowDown width={22} />
+        </Button>
+      </div>
+
       <div className="searchbar">
         <form onSubmit={handleFormSubmit}>
           <Textarea
@@ -53,7 +68,9 @@ export default function MainSearchbar({
             endContent={<SearchbarRightSendBtn loading={loading} />}
             classNames={{
               inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
-              innerWrapper: `${currentHeight > 24 ? "items-end" : "items-center"}`,
+              innerWrapper: `${
+                currentHeight > 24 ? "items-end" : "items-center"
+              }`,
             }}
             startContent={<SearchbarLeftDropdown loading={loading} />}
           />

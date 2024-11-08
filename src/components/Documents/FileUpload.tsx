@@ -207,20 +207,24 @@ export default function FileUpload({
 
             <Textarea
               className="dark mt-4"
-              label={`What do you want to do with this ${isImage ? "image" : "file"}?`}
-              placeholder={`e.g - ${isImage ? "What is in this image?" : "Summarise this document"}`}
+              label={`What do you want to do with this ${
+                isImage ? "image" : "file"
+              }?`}
+              placeholder={`e.g - ${
+                isImage ? "What is in this image?" : "Summarise this document"
+              }`}
               startContent={<NoteDoneIcon />}
               maxRows={3}
               minRows={2}
               labelPlacement="outside"
               isRequired
-              variant="shadow"
+              variant="faded"
               color="primary"
               value={textContent}
               errorMessage="This is a required input field."
               isInvalid={isValid}
               spellCheck={false}
-              size="large"
+              size="lg"
               onKeyDown={handleKeyDown}
               onValueChange={(value: string) => {
                 setTextContent(value);

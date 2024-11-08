@@ -71,56 +71,7 @@ export default function Navbar() {
           <Button variant="light" radius="none" size="md" onPress={() => navigate("feedback")}>Survey</Button>
         </div> */}
 
-        {!isMobileScreen ? (
-          <div className="flex items-center gap-1">
-            <FeedbackFormBtn
-              props={{
-                size: "md",
-                color: "default",
-                variant: "light",
-              }}
-              text="Survey"
-            />
-
-            {user ? (
-              <Button
-                variant="shadow"
-                color="primary"
-                radius="full"
-                size="md"
-                className="font-medium"
-                endContent={<Chatting01Icon color="foreground" width="17" />}
-                onPress={() => navigate("/try/chat")}
-              >
-                Chat
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="light"
-                  color="primary"
-                  radius="full"
-                  size="md"
-                  className="p-0 font-semibold"
-                  onPress={() => navigate("/login")}
-                >
-                  Login
-                </Button>
-
-                <Button
-                  variant="shadow"
-                  color="primary"
-                  radius="full"
-                  size="md"
-                  className="p-0 font-semibold"
-                  onPress={() => navigate("/signup")}
-                >
-                  Signup
-                </Button>
-              </>
-            )}
-          </div>
-        ) : (
+        {isMobileScreen ? (
           <Sheet onOpenChange={setOpen} open={open}>
             <SheetTrigger>
               <div className="rounded-full p-3">
@@ -180,6 +131,55 @@ export default function Navbar() {
               </SheetHeader>
             </SheetContent>
           </Sheet>
+        ) : (
+          <div className="flex items-center gap-1">
+            <FeedbackFormBtn
+              props={{
+                size: "md",
+                color: "default",
+                variant: "light",
+              }}
+              text="Survey"
+            />
+
+            {user ? (
+              <Button
+                variant="shadow"
+                color="primary"
+                radius="full"
+                size="md"
+                className="font-medium"
+                endContent={<Chatting01Icon color="foreground" width="17" />}
+                onPress={() => navigate("/try/chat")}
+              >
+                Chat
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="light"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  className="p-0 font-semibold"
+                  onPress={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+
+                <Button
+                  variant="shadow"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  className="p-0 font-semibold"
+                  onPress={() => navigate("/signup")}
+                >
+                  Signup
+                </Button>
+              </>
+            )}
+          </div>
         )}
       </div>
     </div>
