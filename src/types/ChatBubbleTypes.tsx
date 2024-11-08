@@ -12,6 +12,7 @@ export interface ChatBubbleBotProps {
   loading?: boolean;
   isImage?: boolean;
   image?: string | null;
+  imagePrompt?: string;
   disclaimer?: string;
   date: string;
   userinputType?: string;

@@ -75,13 +75,17 @@ export default function ChatOptionsDropdown({
           <Button
             variant="light"
             isIconOnly
-            className="ml-auto"
+            className="ml-auto min-w-[20px]"
             size="sm"
             radius="full"
           >
             <DotsVerticalIcon
               width={20}
-              className={buttonHovered ? "opacity-100" : "opacity-0"}
+              className={
+                buttonHovered
+                  ? "opacity-100"
+                  : "opacity-0" + "min-w-[20px] w-[20px]"
+              }
             />
           </Button>
         </DropdownTrigger>

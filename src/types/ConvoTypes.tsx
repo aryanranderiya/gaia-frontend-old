@@ -8,6 +8,7 @@ export type MessageType = {
   loading?: boolean; // Optional: Indicates whether the message is still loading (e.g., for bot responses)
   isImage?: boolean; // Optional: Indicates if the message contains an image
   imageUrl?: string; // Optional: URL for the image if it's an image message
+  imagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
   userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")
   subtype?: "image" | "pdf" | null; // Optional: Specifies the type of file if the message contains a file (e.g., image or PDF)

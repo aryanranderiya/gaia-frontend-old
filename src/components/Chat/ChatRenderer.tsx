@@ -3,6 +3,7 @@ import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
 import StarterEmoji from "@/components/Chat/StarterEmoji";
 import StarterText from "@/components/Chat/StarterText";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useEffect } from "react";
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
@@ -16,6 +17,10 @@ export default function ChatRenderer() {
     );
   }
 
+  useEffect(() => {
+    console.log(convoMessages);
+  }, [convoMessages]);
+
   return (
     <>
       {convoMessages.map((message, index) =>
@@ -28,6 +33,7 @@ export default function ChatRenderer() {
               loading={message.loading}
               index={index}
               isImage={message.isImage}
+              imagePrompt={message.imagePrompt}
               image={message.imageUrl}
               disclaimer={message.disclaimer}
               userinputType={message.userinputType}

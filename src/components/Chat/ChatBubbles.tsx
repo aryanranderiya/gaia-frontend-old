@@ -12,6 +12,7 @@ import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
+import { Skeleton } from "@nextui-org/skeleton";
 
 export function ChatBubbleUser({
   text,
@@ -73,32 +74,50 @@ export function ChatBubbleBot({
   image = null,
   disclaimer,
   date,
+  imagePrompt,
   userinputType,
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    if (loading) return;
-
     if (isImage) {
       setComponent(
         <>
           <div className="chat_bubble bg-zinc-800">
             <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
-              <span>Here is your generated image:</span>
-              <img
-                src={image as string}
-                width={"250px"}
-                height={"250px"}
-                className="rounded-3xl my-2"
-              />
-              <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
-                {text.split(",").map((keyword, index) => (
-                  <Chip key={index} color="default" size="sm">
-                    {keyword.trim()}
-                  </Chip>
-                ))}
-              </div>
+              <span>{text}</span>
+              <Skeleton
+                isLoaded={!loading && !imageLoaded && !!image}
+                className="rounded-3xl my-2 max-w-[250px] min-w-[250px] 
+                max-h-[250px] min-h-[250px] 
+                aspect-square"
+              >
+                <img
+                  src={image as string}
+                  width={"250px"}
+                  height={"250px"}
+                  className="rounded-3xl my-2"
+                  onLoad={() => setImageLoaded(true)}
+                  onError={() => setImageLoaded(true)}
+                />
+              </Skeleton>
+
+              {imagePrompt && (
+                <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
+                  {imagePrompt?.split(",").map((keyword, index) => (
+                    <Chip
+                      key={index}
+                      color="default"
+                      size="sm"
+                      radius="md"
+                      className="text-wrap min-h-fit py-1"
+                    >
+                      {keyword.trim()}
+                    </Chip>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
@@ -153,9 +172,7 @@ export function ChatBubbleBot({
         <div className="chatbubblebot_parent">
           {/* <Avatar src={smiley} className="smiley_avatar" />{" "} */}
 
-          {!loading && (
-            <div className="chat_bubble_container ">{component}</div>
-          )}
+          <div className="chat_bubble_container ">{component}</div>
         </div>
 
         {!loading && (
@@ -165,7 +182,10 @@ export function ChatBubbleBot({
             style={{ opacity: 0, visibility: "hidden" }}
           >
             {isImage ? (
-              <ChatBubble_Actions_Image src={image as string} />
+              <ChatBubble_Actions_Image
+                src={image as string}
+                imagePrompt={imagePrompt}
+              />
             ) : (
               <ChatBubble_Actions loading={loading} text={text} index={index} />
             )}

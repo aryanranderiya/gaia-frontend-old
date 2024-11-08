@@ -1,20 +1,21 @@
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { MessageType } from "@/types/ConvoTypes";
 import { Button } from "@nextui-org/button";
-import { BrushIcon } from "../icons";
+import { Textarea } from "@nextui-org/input";
 import {
   Modal,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
 } from "@nextui-org/modal";
-import { Textarea } from "@nextui-org/input";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import api from "../../apiaxios";
+import { BrushIcon } from "../icons";
 import fetchDate from "./fetchDate";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
-import { useEffect, useState } from "react";
-import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
-import { useNavigate, useParams } from "react-router-dom";
+import { useConversation } from "@/hooks/useConversation";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -25,18 +26,13 @@ export default function GenerateImage({
   openImageDialog,
   setOpenImageDialog,
 }: GenerateImageProps) {
-  const { convoHistory, setConvoHistory } = useConvoHistory();
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [imagePrompt, setImagePrompt] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [botResponse, setBotResponse] = useState<string | null>(null);
-  const [currentConvoId, setCurrentConvoId] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCurrentConvoId(convoIdParam ?? null);
-  }, [convoIdParam]);
+  // Use the conversation hook
+  const { updateConversation } = useConversation(convoIdParam);
 
   useEffect(() => {
     setIsValid(imagePrompt.trim() !== "");
@@ -46,8 +42,8 @@ export default function GenerateImage({
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
       setImagePrompt((text) => text + "\n");
-    } else if (event.key === "Enter") {
-      handleButtonClick();
+    } else if (event.key === "Enter" && !loading && isValid) {
+      handleSubmit();
     }
   };
 
@@ -56,104 +52,60 @@ export default function GenerateImage({
     setIsValid(value.trim() !== "");
   };
 
-  const handleButtonClick = () => {
-    if (isValid) SubmitForm();
-  };
-
-  useEffect(() => {
-    if (botResponse) updateWithResponse();
-  }, [botResponse]);
-
-  function updateWithResponse() {
-    if (Object.keys(convoHistory).length > 0 && botResponse && currentConvoId) {
-      const updatedHistory = { ...convoHistory };
-      const currentConvo = updatedHistory[currentConvoId];
-
-      if (currentConvo) {
-        const lastItem =
-          currentConvo.messages[currentConvo.messages.length - 1];
-
-        if (lastItem.type === "bot") {
-          lastItem.imageUrl = botResponse;
-          lastItem.loading = false;
-          lastItem.isImage = true;
-          lastItem.date = fetchDate();
-          setConvoHistory(updatedHistory);
-        }
-      }
-    }
-  }
-
-  const SubmitForm = async () => {
-    setLoading(true);
-
-    let convoID = currentConvoId || convoIdParam;
-
-    // Generate a new conversation ID if none exists
-    if (!convoID) {
-      convoID = crypto.randomUUID();
-      navigate(`/try/chat/${convoID}`);
-      setCurrentConvoId(convoID);
-    }
-
-    const newMessage: MessageType = {
-      type: "user",
-      response: "Generate Image: \n" + imagePrompt,
-      date: fetchDate(),
-    };
-
-    const loadingMessage: MessageType = {
-      type: "bot",
-      loading: true,
-      response: imagePrompt,
-      date: "",
-    };
-
-    // Update conversation history
-    setConvoHistory((prevHistory: ConversationHistoryType) => ({
-      ...prevHistory,
-      [convoID]: {
-        ...(prevHistory[convoID] || { messages: [] }), // Initialize messages array if not present
-        messages: [
-          ...(prevHistory[convoID]?.messages || []),
-          newMessage,
-          loadingMessage,
-        ],
-      },
-    }));
-
-    setOpenImageDialog(false);
-
+  const generateImage = async (prompt: string): Promise<string> => {
     try {
       const response = await api.post(
         "/image/generate",
-        { message: imagePrompt },
+        { message: prompt },
         {
-          responseType: "arraybuffer",
           headers: { "Content-Type": "application/json" },
         }
       );
+      return response.data.url;
+    } catch (error) {
+      console.error("Image generation failed:", error);
+      throw new Error("Failed to generate image");
+    }
+  };
 
-      const arrayBuffer = response.data;
-      const blob = new Blob([arrayBuffer], { type: "image/png" });
-      const imageUrl = URL.createObjectURL(blob);
-      setBotResponse(imageUrl);
+  const handleSubmit = async () => {
+    if (!isValid || loading) return;
+    setLoading(true);
+
+    try {
+      // First, add the user's prompt and loading message
+      await updateConversation(`Generate Image: \n${imagePrompt}`);
+      setOpenImageDialog(false);
+
+      // Generate the image
+      const imageUrl = await generateImage(imagePrompt);
+
+      // Update the conversation with the final image
+      const finalMessage: MessageType = {
+        type: "bot",
+        response: "Here is your generated image",
+        date: fetchDate(),
+        imageUrl,
+        imagePrompt,
+        isImage: true,
+      };
+
+      await updateConversation(finalMessage);
       setImagePrompt("");
     } catch (error) {
-      console.error(error);
       toast.error("Uh oh! Something went wrong.", {
         classNames: {
           toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
-          title: " text-sm",
+          title: "text-sm",
           description: "text-sm",
         },
         duration: 3000,
         description:
           "There was a problem with generating images. Please try again later.\n",
       });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -202,7 +154,7 @@ export default function GenerateImage({
           <Button
             color="primary"
             size="md"
-            onPress={handleButtonClick}
+            onPress={handleSubmit}
             radius="full"
             isLoading={loading}
           >

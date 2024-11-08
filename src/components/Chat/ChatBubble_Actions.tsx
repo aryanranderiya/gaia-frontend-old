@@ -83,20 +83,54 @@ export function ChatBubble_Actions({
 
 interface ChatBubbleActionsImageProps {
   src: string;
+  imagePrompt: string | undefined;
 }
 
 export function ChatBubble_Actions_Image({
   src,
+  imagePrompt,
 }: ChatBubbleActionsImageProps): JSX.Element {
-  const downloadFromSrc = () => {
-    const downloadLink = document.createElement("a");
-    downloadLink.href = src;
-    downloadLink.download = "gaia_generated_image.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  };
+  
+  const downloadFromSrc = async () => {
+    try {
+      // Get current date and time for filename
+      const now = new Date();
+      const date = now.toISOString().split("T")[0];
+      const time = now.toTimeString().split(" ")[0].replace(/:/g, "-");
 
+      // Sanitize and truncate the prompt
+      const sanitizedPrompt = imagePrompt
+        ?.replace(/[^\w\s-]/g, "")
+        .slice(0, 50);
+      const fileName = `G.A.I.A ${date} ${time} ${sanitizedPrompt}.png`;
+
+      // Fetch the image as a blob
+      const response = await fetch(src);
+      const blob = await response.blob();
+
+      // Create URL from blob
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      // Create download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = blobUrl;
+      downloadLink.download = fileName;
+
+      // Trigger download
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+
+      // Cleanup
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      // You might want to show a toast notification here
+      toast.error("Failed to download image", {
+        description: "Please try again later",
+      });
+    }
+  };
   return (
     <div className="flex py-2 w-fit gap-2 items-center">
       <Tooltip

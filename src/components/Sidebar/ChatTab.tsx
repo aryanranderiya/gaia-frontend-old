@@ -33,6 +33,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, fetchConversations }) => {
       startContent={
         <Chatting01Icon
           width="19"
+          className="min-w-[19px] w-[19px]"
           color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
         />
       }
@@ -47,7 +48,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, fetchConversations }) => {
         />
       }
     >
-      <span>{name}</span>
+      <span className="truncate w-[200px] text-left">{name}</span>
     </Button>
   );
 };
