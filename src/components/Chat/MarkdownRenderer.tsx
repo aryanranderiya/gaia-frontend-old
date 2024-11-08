@@ -78,7 +78,6 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           h3: ({ node, ...props }) => (
             <h3 className="text-xl font-bold mt-4 mb-2" {...props} />
           ),
-          p: ({ node, ...props }) => <p className="mb-4" {...props} />,
           ul: ({ node, ...props }) => (
             <ul className="list-disc pl-6 mb-4" {...props} />
           ),
