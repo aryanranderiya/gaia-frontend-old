@@ -1,25 +1,10 @@
-import { ColoredLine } from "@/components/HorizontalRuler";
-import {
-  Alert02Icon,
-  Cancel01Icon,
-  GoogleColoured,
-  IdentityCardIcon,
-  LockPasswordIcon,
-  Mail01Icon,
-  PasswordValidationIcon,
-  Tick02Icon,
-  ViewIcon,
-  ViewOffSlashIcon,
-} from "@/components/icons";
+import { Cancel01Icon, Tick02Icon } from "@/components/icons";
 import CreateConfetti from "@/components/LandingPage/CreateConfetti";
 import { useUser } from "@contexts/UserContext";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Spinner } from "@nextui-org/spinner";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import axios, { AxiosError } from "axios";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import api from "../apiaxios";
 
@@ -57,6 +42,8 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const [capsLockOn, setCapsLockOn] = React.useState<boolean>(false);
   const [confirmPasswordValid, setConfirmPasswordValid] =
     React.useState<boolean>(true);
+  const [error, setError] = React.useState(null);
+
   const [data, setData] = React.useState<{
     firstName: string;
     lastName: string;
@@ -220,42 +207,24 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     setLoading(false);
   };
 
-  const handleGoogleLoginMain = useGoogleLogin({
+  const handleGoogleLogin = useGoogleLogin({
     flow: "auth-code",
-    ux_mode: "popup",
-    select_account: true,
-    redirect_uri: import.meta.env.VITE_GOOGLE_REDIRECT_URI,
-    onSuccess: async (tokenResponse: any) => {
-      console.log(tokenResponse);
-
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}oauth/callback`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResponse.code}`,
-            },
-            withCredentials: true,
-          }
-        );
-
-        console.log("User data:", response.data); // Handle successful login
-
-        setUserData(
-          response.data?.email,
-          response.data?.name,
-          response.data?.picture
-        );
-      } catch (error) {
-        console.error("Error during login:", error); // Handle error
-      }
+    onSuccess: async (codeResponse) => {
+      console.log(codeResponse);
+      const tokens = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}oauth/callback`,
+        { code: codeResponse.code },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      // navigate("/try/chat");
+      console.log(tokens);
     },
-    onError: () => {
-      console.log("Login failed");
-    },
+    onError: (errorResponse) => console.log(errorResponse),
   });
 
+  const handleGoogleFailure = (error: any) => {
+    setError(error.error);
+  };
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient">
       <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 p-[1.5em]">
@@ -263,7 +232,7 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
           {isLogin ? "Login" : "Create an Account"}
         </span>
 
-        {!isLogin && (
+        {/* {!isLogin && (
           <div className="flex w-full gap-2 flex-row mb-1">
             <Input
               label="First Name"
@@ -442,8 +411,8 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
           </Button>
         </div>
 
-        <ColoredLine color="#303030" className="my-4" />
-
+        <ColoredLine color="#303030" className="my-4" /> */}
+        {/* 
         <Button
           variant="flat"
           className="w-full"
@@ -456,16 +425,39 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
             {isLogin ? "Sign in using Google" : "Sign up using Google"}
           </span>
         </Button>
+        
+                <div
+          id="g_id_onload"
+          data-client_id="101305534572-4arjl87ssp4kln64uhf1k1mhhej80b3c.apps.googleusercontent.com"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-login_uri={`${import.meta.env.VITE_BACKEND_URL}oauth/callback`}
+          // data-login_uri="https://gaia-fastapi.onrender.com/api/v1/oauth/callback"
+          data-itp_support="true"
+        />
 
-        {/* <GoogleLogin
-          onSuccess={handleLoginSuccess}
-          onError={handleLoginError}
+        <div
+          className="g_id_signin"
+          data-type="standard"
+          data-shape="pill"
+          data-theme="filled_black"
+          data-text="signin_with"
+          data-size="large"
+          data-logo_alignment="left"
+        />
+
+        */}
+
+        <GoogleLogin
+          onSuccess={handleGoogleLogin}
+          onError={handleGoogleFailure}
           theme="filled_black"
           size="large"
           shape="circle"
           scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar.readonly"
-          useOneTap
-        /> */}
+          // useOneTap
+        />
+        {error && <div className="text-danger-500">Error: {error}</div>}
       </div>
     </form>
   );

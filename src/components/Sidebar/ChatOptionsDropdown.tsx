@@ -1,5 +1,6 @@
 import { apiauth } from "@/apiaxios";
 import { PencilEdit02Icon } from "@/components/icons";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Button } from "@nextui-org/button";
 import {
   Dropdown,
@@ -38,6 +39,7 @@ export default function ChatOptionsDropdown({
   );
   const [newName, setNewName] = useState("");
   const navigate = useNavigate();
+  const { resetMessages } = useConvo();
 
   const handleEdit = async () => {
     if (!newName) return;
@@ -54,8 +56,9 @@ export default function ChatOptionsDropdown({
 
   const handleDelete = async () => {
     try {
-      await apiauth.delete(`/conversations/${chatId}/`);
       navigate("/try/chat");
+      resetMessages();
+      await apiauth.delete(`/conversations/${chatId}/`);
       setIsOpen(false);
       fetchConversations();
     } catch (error) {

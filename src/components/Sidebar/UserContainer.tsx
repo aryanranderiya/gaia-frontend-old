@@ -6,15 +6,16 @@ import SettingsMenu from "./SettingsMenu";
 const UserContainer: React.FC = () => {
   const { user } = useUser();
   useFetchUser();
+  console.log(user);
 
   return (
     <div className="user_container p-4 absolute bottom-0 left-0">
       <div className="user_container_inner">
         <User
-          name={`${user?.firstName} ${user?.lastName}`}
+          name={`${user?.name}`}
           className="text-nowrap"
           avatarProps={{
-            src: user?.profilePicture,
+            src: user?.profile_picture,
             showFallback: true,
             isBordered: true,
             fallback: (

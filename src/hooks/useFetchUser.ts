@@ -11,14 +11,16 @@ const useFetchUser = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await apiauth.get("/auth/me", {
+      const response = await apiauth.get("/oauth/me", {
         withCredentials: true,
       });
+
+      console.log(response.data);
+
       setUserData(
-        response?.data?.first_name,
-        response?.data?.last_name,
+        response?.data?.name,
         response?.data?.id,
-        response?.data?.profile_picture
+        response?.data?.picture
       );
     } catch (err) {
       console.error(err);

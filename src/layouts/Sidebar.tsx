@@ -1,11 +1,9 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 import Hr from "@/components/HorizontalRuler";
-import { GlobalIcon, StarsIcon } from "@/components/icons";
+import { GlobalIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
-import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
 import { LegacyRef, useState } from "react";
 

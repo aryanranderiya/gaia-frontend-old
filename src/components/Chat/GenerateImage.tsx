@@ -10,12 +10,13 @@ import {
   ModalHeader,
 } from "@nextui-org/modal";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import api from "../../apiaxios";
 import { BrushIcon } from "../icons";
 import fetchDate from "./fetchDate";
-import { useConversation } from "@/hooks/useConversation";
+import { ApiService } from "@/utils/chatUtils";
+import { useConvoHistory } from "@/contexts/ConversationHistory";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -26,13 +27,13 @@ export default function GenerateImage({
   openImageDialog,
   setOpenImageDialog,
 }: GenerateImageProps) {
+  const { setConvoMessages } = useConvo();
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [imagePrompt, setImagePrompt] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  // Use the conversation hook
-  const { updateConversation } = useConversation(convoIdParam);
+  const { setConvoHistory } = useConvoHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsValid(imagePrompt.trim() !== "");
@@ -50,6 +51,60 @@ export default function GenerateImage({
   const handleInputChange = (value: string) => {
     setImagePrompt(value);
     setIsValid(value.trim() !== "");
+  };
+
+  const updateConversationState = async (
+    conversationId: string,
+    newMessages: MessageType[],
+    description?: string,
+    replaceLastMessage: boolean = false
+  ) => {
+    try {
+      // Update local state
+      setConvoMessages((prev) => {
+        const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+        return [...baseMessages, ...newMessages];
+      });
+
+      // Update conversation history
+      setConvoHistory((oldHistory) => {
+        const currentConvo = oldHistory[conversationId] || { messages: [] };
+        const baseMessages = replaceLastMessage
+          ? currentConvo.messages.slice(0, -1)
+          : currentConvo.messages;
+
+        return {
+          ...oldHistory,
+          [conversationId]: {
+            ...currentConvo,
+            description: description || currentConvo.description || "New Chat",
+            messages: [...baseMessages, ...newMessages],
+          },
+        };
+      });
+
+      // Update database
+      const currentMessages = replaceLastMessage ? newMessages : newMessages;
+      await ApiService.updateConversation(conversationId, currentMessages);
+    } catch (error) {
+      console.error("Failed to update conversation:", error);
+      throw new Error("Failed to update conversation state");
+    }
+  };
+
+  const createNewConversation = async (
+    initialMessages: MessageType[]
+  ): Promise<string> => {
+    try {
+      const convoID = crypto.randomUUID();
+      await ApiService.createConversation(convoID, initialMessages[0]);
+      await updateConversationState(convoID, initialMessages, "Generate Image");
+      navigate(`/try/chat/${convoID}`);
+      return convoID;
+    } catch (error) {
+      console.error("Failed to create conversation:", error);
+      throw new Error("Failed to create new conversation");
+    }
   };
 
   const generateImage = async (prompt: string): Promise<string> => {
@@ -73,15 +128,35 @@ export default function GenerateImage({
     setLoading(true);
 
     try {
-      // First, add the user's prompt and loading message
-      await updateConversation(`Generate Image: \n${imagePrompt}`);
+      const initialMessages: MessageType[] = [
+        {
+          type: "user",
+          response: `Generate Image: \n${imagePrompt}`,
+          date: fetchDate(),
+        },
+        {
+          type: "bot",
+          response: "Generating Image...",
+          date: fetchDate(),
+          loading: true,
+          imagePrompt,
+          isImage: true,
+        },
+      ];
+
+      // Handle conversation creation or updating
+      const conversationId =
+        convoIdParam || (await createNewConversation(initialMessages));
+
+      if (convoIdParam) {
+        await updateConversationState(conversationId, initialMessages);
+      }
+
       setOpenImageDialog(false);
 
-      // Generate the image
       const imageUrl = await generateImage(imagePrompt);
 
-      // Update the conversation with the final image
-      const finalMessage: MessageType = {
+      const finalBotMessage: MessageType = {
         type: "bot",
         response: "Here is your generated image",
         date: fetchDate(),
@@ -90,7 +165,13 @@ export default function GenerateImage({
         isImage: true,
       };
 
-      await updateConversation(finalMessage);
+      await updateConversationState(
+        conversationId,
+        [initialMessages.slice(0, -1), finalBotMessage],
+        undefined,
+        true
+      );
+
       setImagePrompt("");
     } catch (error) {
       toast.error("Uh oh! Something went wrong.", {

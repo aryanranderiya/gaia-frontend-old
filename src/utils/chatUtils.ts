@@ -39,10 +39,11 @@ export const ApiService = {
     conversationId: string,
     messages: MessageType[]
   ) => {
-    await apiauth.put(`/conversations/${conversationId}/messages/`, {
-      conversation_id: conversationId,
-      messages,
-    });
+    if (messages.length > 1)
+      await apiauth.put(`/conversations/${conversationId}/messages/`, {
+        conversation_id: conversationId,
+        messages,
+      });
   },
 
   fetchChatStream: async (

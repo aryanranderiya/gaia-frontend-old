@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 interface User {
   name: string;
   email: string;
-  picture: string;
+  profile_picture: string;
 }
 
 // Define the shape of the context
 interface UserContextType {
   user: User | null;
-  setUserData: (name: string, email: string, picture: string) => void;
+  setUserData: (name: string, email: string, profile_picture: string) => void;
   logout: () => Promise<void>; // Update to return a Promise
 }
 
@@ -26,8 +26,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  const setUserData = (name: string, email: string, picture: string) => {
-    setUser({ name, email, picture });
+  const setUserData = (
+    name: string,
+    email: string,
+    profile_picture: string
+  ) => {
+    setUser({ name, email, profile_picture });
   };
 
   const logout = async () => {

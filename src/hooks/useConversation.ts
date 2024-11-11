@@ -77,7 +77,10 @@ export const useConversation = (convoIdParam: string | null) => {
         date: fetchDate(),
       };
       setConvoMessages((oldMessages) => [
-        ...oldMessages.slice(0, -1),
+        ...oldMessages.slice(
+          0,
+          oldMessages.length > 1 ? -1 : oldMessages.length
+        ),
         botResponse,
       ]);
     };
@@ -92,20 +95,36 @@ export const useConversation = (convoIdParam: string | null) => {
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;
 
       try {
+        // console.log("currentMessages", currentMessages);
+
+        // if (currentMessages.length <= 2) currentMessages.shift();
+
+        // console.log("currentMessages2", currentMessages);
+
+        const updateConversationPromise = ApiService.updateConversation(
+          conversationId,
+          currentMessages
+        );
+
+        const updateDescriptionPromise = fetchConversationDescription(
+          inputText
+        ).then((description) => {
+          handleConvoHistoryUpdate(
+            conversationId,
+            currentMessages,
+            description
+          );
+          return ApiService.updateConversationDescription(
+            conversationId,
+            description || "New Chat"
+          );
+        });
+
         await Promise.all([
-          ApiService.updateConversation(conversationId, currentMessages),
-          fetchConversationDescription(inputText).then((description) => {
-            handleConvoHistoryUpdate(
-              conversationId,
-              currentMessages,
-              description
-            );
-            return ApiService.updateConversationDescription(
-              conversationId,
-              description || "New Chat"
-            );
-          }),
+          updateConversationPromise,
+          updateDescriptionPromise,
         ]);
+
         // setConvoMessages((oldMessages) => [
         //   ...oldMessages.slice(0, -1),
         //   finalizedBotResponse,

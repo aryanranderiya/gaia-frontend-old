@@ -28,3 +28,4 @@ dist-ssr
 
 .env
 install-state.gz
+.VSCodeCounter
