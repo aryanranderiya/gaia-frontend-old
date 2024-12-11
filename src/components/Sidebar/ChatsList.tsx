@@ -42,16 +42,21 @@ export default function ChatsList() {
       </Button>
 
       <div className="overflow-y-auto flex flex-col gap-1 py-1 max-h-[40vh]">
-        {conversationIDs.map(
-          (conversation: { conversation_id: string; description: string }) => (
-            <ChatTab
-              key={conversation.conversation_id}
-              id={conversation.conversation_id}
-              name={conversation.description || "New Chat"}
-              fetchConversations={fetchAllConversations}
-            />
-          )
-        )}
+        {!!conversationIDs &&
+          conversationIDs.length > 0 &&
+          conversationIDs.map(
+            (conversation: {
+              conversation_id: string;
+              description: string;
+            }) => (
+              <ChatTab
+                key={conversation.conversation_id}
+                id={conversation.conversation_id}
+                name={conversation.description || "New Chat"}
+                fetchConversations={fetchAllConversations}
+              />
+            )
+          )}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
+import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -14,15 +15,17 @@ export function Provider({ children }: { children: React.ReactNode }) {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-        <Provider>
-          <Toaster />
-          <main className="dark text-foreground flex">
-            <App />
-          </main>
-        </Provider>
-      </GoogleOAuthProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+          <Provider>
+            <Toaster />
+            <main className="dark text-foreground flex">
+              <App />
+            </main>
+          </Provider>
+        </GoogleOAuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>
 );

@@ -7,16 +7,16 @@ export default function PageNotFound() {
 
   return (
     <div className="h-screen flex justify-center items-center w-screen flex-col gap-4">
-      <span className="text-6xl">404</span>
+      <span className="text-6xl font-bold">404</span>
       <span className="text-4xl">Page Not Found</span>
       <Button
         onClick={() => navigate(-1)}
         startContent={
           <LinkBackwardIcon fill="foreground" color="transparent" />
         }
-        variant="shadow"
         size="md"
         color="primary"
+        className="font-medium text-lg mt-3"
       >
         Go Back
       </Button>

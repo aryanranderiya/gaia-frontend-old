@@ -44,12 +44,11 @@ export default function Navbar() {
           response?.data?.picture
         );
       } catch (err) {
-        console.error(err);
         navigate("/login");
       }
     };
 
-    fetchUserInfo();
+    // fetchUserInfo();
   }, []);
 
   return (

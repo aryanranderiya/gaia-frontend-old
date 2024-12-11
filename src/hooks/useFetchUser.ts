@@ -15,7 +15,7 @@ const useFetchUser = () => {
         withCredentials: true,
       });
 
-      console.log(response.data);
+      console.log("test", response.data);
 
       setUserData(
         response?.data?.name,
@@ -24,7 +24,7 @@ const useFetchUser = () => {
       );
     } catch (err) {
       console.error(err);
-      navigate("/login");
+      // navigate("/login");
     }
   };
 

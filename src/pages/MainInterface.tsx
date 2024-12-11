@@ -18,6 +18,7 @@ import Explore from "./Explore";
 import MainChat from "./MainChat";
 import Notes from "./Notes";
 import Pins from "./Pins";
+import Goals from "./Goals";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -89,6 +90,7 @@ export default function MainInterface() {
               <Route path="search" element={<ComprehensiveMessageHistory />} />
               <Route path="pins" element={<Pins />} />
               <Route path="notes" element={<Notes />} />
+              <Route path="goals" element={<Goals />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </div>
