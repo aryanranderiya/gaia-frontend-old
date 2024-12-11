@@ -15,10 +15,11 @@ import {
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
 import Explore from "./Explore";
+import GoalPage from "./GoalPage";
+import Goals from "./Goals";
 import MainChat from "./MainChat";
 import Notes from "./Notes";
 import Pins from "./Pins";
-import Goals from "./Goals";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -91,6 +92,7 @@ export default function MainInterface() {
               <Route path="pins" element={<Pins />} />
               <Route path="notes" element={<Notes />} />
               <Route path="goals" element={<Goals />} />
+              <Route path="goals/:goalId" element={<GoalPage />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </div>

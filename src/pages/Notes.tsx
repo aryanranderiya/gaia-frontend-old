@@ -263,7 +263,7 @@ export default function Notes() {
           </div>
         </ScrollArea>
 
-        <div className="fixed left-0 bottom-6 flex justify-center items-center w-full z-10">
+        <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Button
             variant="shadow"
             color="primary"
@@ -276,7 +276,7 @@ export default function Notes() {
             Add Note
           </Button>
         </div>
-        <div className="bg-custom-gradient2 absolute bottom-0 w-full h-[100px] z-[1]" />
+        <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
       <AddNoteDialog
         openDialog={openDialog}
