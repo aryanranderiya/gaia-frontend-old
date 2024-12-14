@@ -4,8 +4,9 @@ import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoomSlider } from "@/components/zoom-slider";
 import { Chip } from "@nextui-org/chip";
-import { Handle, Position, ReactFlow } from "@xyflow/react";
+import { ConnectionLineType, Handle, Position, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import dagre from "dagre"; // Import dagre for layout
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -15,28 +16,34 @@ export interface GoalData {
   title: string;
   progress: number;
   roadmap: {
-    nodes?: Array<NodeData>;
-    edges?: Array<{
-      id: string;
-      source: string;
-      target: string;
-    }>;
+    nodes?: Array<NodeType>;
+    edges?: Array<EdgeType>;
   };
 }
+
+export interface EdgeType {
+  id: string;
+  source: string;
+  target: string;
+}
+
+export interface NodeType {
+  id: string;
+  position: { x: number; y: number };
+  data: NodeData;
+}
+
 export interface NodeData {
   label: string;
   details: string[];
   estimatedTime: string[];
   resources: string[];
-  id: string;
-  position: { x: number; y: number };
-  data: { label: string };
 }
 
 const CustomNode = ({ data }: { data: NodeData }) => {
   return (
     <>
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" position={Position.Top} />
 
       <div className="bg-foreground-50 outline outline-2 outline-foreground-100 p-4 rounded-sm shadow-md text-white  flex flex-col gap-1">
         <div className="text-lg leading-5 font-bold">{data.label}</div>
@@ -67,11 +74,7 @@ const CustomNode = ({ data }: { data: NodeData }) => {
         </div>
       </div>
 
-      <Handle
-        type="source"
-        position={Position.Right}
-        // style={{ background: "#555" }}
-      />
+      <Handle type="source" position={Position.Bottom} />
     </>
   );
 };
@@ -84,6 +87,8 @@ export default function GoalPage() {
   const [goalData, setGoalData] = useState<GoalData | null>(null);
   const [loading, setLoading] = useState(true);
   const { goalId } = useParams();
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [edges, setEdges] = useState<EdgeType[]>([]);
 
   useEffect(() => {
     const fetchGoalData = async () => {
@@ -103,6 +108,31 @@ export default function GoalPage() {
         } else {
           setGoalData(goal);
           setLoading(false);
+
+          const graph = new dagre.graphlib.Graph();
+          graph.setGraph({ rankdir: "TD" }); // Optional settings for the graph (e.g., margins)
+          graph.setDefaultEdgeLabel(() => ({}));
+
+          // Add nodes and edges to the graph
+          goal.roadmap.nodes?.forEach((node: NodeType) => {
+            graph.setNode(node.id, { width: 300, height: 220 });
+          });
+
+          goal.roadmap.edges?.forEach((edge: EdgeType) => {
+            graph.setEdge(edge.source, edge.target);
+          });
+
+          // Run the Dagre layout algorithm
+          dagre.layout(graph);
+
+          // Apply the new node positions based on the layout
+          const updatedNodes = goal.roadmap.nodes?.map((node: NodeType) => {
+            const { x, y } = graph.node(node.id);
+            return { ...node, position: { x, y }, type: "customNode" };
+          });
+
+          setNodes(updatedNodes || []);
+          setEdges(goal.roadmap.edges || []);
         }
       } catch (error) {
         console.error("Goal fetch error:", error);
@@ -180,19 +210,16 @@ export default function GoalPage() {
             <div className="w-full h-full">
               <ReactFlow
                 className="relative"
-                nodes={goalData?.roadmap?.nodes?.map((node, index) => ({
-                  ...node,
-                  position: {
-                    x: node.position.x + index * 250,
-                    y: node.position.y,
-                  },
-                  type: "customNode",
-                }))}
-                edges={goalData?.roadmap?.edges}
+                nodes={nodes}
+                edges={edges}
                 nodesConnectable={false}
                 elementsSelectable={false}
                 nodesDraggable={false}
+                connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
+                // minZoom={1.2}
+                // fitViewOptions={{ minZoom: 1.2 }}
+                // maxZoom={2.0}
                 colorMode="dark"
                 proOptions={{ hideAttribution: true }}
                 nodeTypes={nodeTypes}
@@ -200,7 +227,6 @@ export default function GoalPage() {
                   background: "transparent",
                 }}
               >
-                {/* <MiniMap /> */}
                 <ZoomSlider className="fixed bottom-[10px] !right-0 !left-auto h-fit !top-auto z-30 " />
               </ReactFlow>
             </div>
