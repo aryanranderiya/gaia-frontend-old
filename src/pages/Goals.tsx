@@ -4,72 +4,169 @@ import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@nextui-org/react";
+import { Spinner } from "@nextui-org/spinner";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoalData } from "./GoalPage";
-import { Spinner } from "@nextui-org/spinner";
 
-export function GoalCard({ goal }: { goal: GoalData }) {
+export function GoalCard({
+  goal,
+  fetchGoals,
+}: {
+  goal: GoalData;
+  fetchGoals: () => void;
+}) {
   const navigate = useNavigate();
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  async function deleteGoal(goalId: string) {
+    try {
+      const response = await apiauth.delete(`/goals/${goalId}`);
+      console.log("Goal deleted successfully:", response.data);
+      fetchGoals();
+    } catch (error) {
+      console.error("Error deleting goal:", error);
+    }
+  }
+
+  const handleDelete = () => {
+    deleteGoal(goal?.id);
+    setOpenDeleteDialog(false);
+  };
 
   return (
-    <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full">
-      <div className="font-medium text-xl flex items-center gap-1">
-        <Target04Icon width={20} height={20} />
-        <span className="truncate w-[90%]">{goal.title}</span>
-      </div>
-
-      <Chip
-        size="sm"
-        variant="flat"
-        color={
-          !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
-            ? "warning"
-            : goal.progress === 100
-            ? "success"
-            : goal.progress > 0
-            ? "primary"
-            : "warning"
-        }
-        className="mt-2"
+    <>
+      <Modal
+        isOpen={openDeleteDialog}
+        onOpenChange={setOpenDeleteDialog}
+        className="dark text-foreground"
       >
-        {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
-          ? "Not Started"
-          : goal.progress === 100
-          ? "Completed"
-          : goal.progress > 0
-          ? "In Progress"
-          : "Not Started"}
-      </Chip>
+        <ModalContent>
+          <ModalHeader className="inline-block">
+            Are you sure you want to delete the roadmap titled
+            <span className="ml-1 font-normal text-primary-500">
+              {goal?.roadmap?.title || goal.title}
+            </span>
+            <span className="ml-1">?</span>
+          </ModalHeader>
 
-      <div className="my-3 flex items-center gap-2 justify-between">
-        <div className="bg-black h-3 rounded-full relative w-[100%]">
-          <div
-            style={{ width: `${goal?.progress || 0}%` }}
-            className={`absolute left-0 bg-[#00bbff] top-0 h-3 rounded-full`}
-          />
+          <ModalBody>
+            <p className="text-danger-400 font-medium">
+              This action cannot be undone.
+            </p>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="danger"
+              variant="light"
+              onPress={() => setOpenDeleteDialog(false)}
+            >
+              Close
+            </Button>
+            <Button color="primary" onPress={handleDelete}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full">
+        <div className="font-medium text-xl flex items-center gap-1 w-full relative group">
+          <Target04Icon width={20} height={20} />
+          <span className="truncate w-[90%]">
+            {goal?.roadmap?.title || goal.title}
+          </span>
+
+          <div className="absolute -right-2 group-hover:opacity-100 opacity-0 transition-opacity dark">
+            <Dropdown
+              classNames={{
+                content: "bg-zinc-900",
+              }}
+            >
+              <DropdownTrigger>
+                <Button variant="light" isIconOnly>
+                  <DotsVerticalIcon />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions" className="dark">
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                  onPress={() => setOpenDeleteDialog(true)}
+                >
+                  Delete Roadmap
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </div>
-        <span className="text-xs">{goal?.progress || 0}%</span>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="text-foreground-500 flex text-sm items-center gap-1 mt-2">
-          <CalendarSimpleIcon width={20} />
-          {new Intl.DateTimeFormat("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "2-digit",
-          }).format(new Date(goal?.created_at))}
-        </div>
-        <Button
+
+        <Chip
           size="sm"
-          color="primary"
           variant="flat"
-          onPress={() => navigate(`./${goal.id}`)}
+          color={
+            !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
+              ? "warning"
+              : goal.progress === 100
+              ? "success"
+              : goal.progress > 0
+              ? "primary"
+              : "warning"
+          }
+          className="mt-2"
         >
-          View Goal
-        </Button>
+          {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
+            ? "Not Started"
+            : goal.progress === 100
+            ? "Completed"
+            : goal.progress > 0
+            ? "In Progress"
+            : "Not Started"}
+        </Chip>
+
+        <div className="my-3 flex items-center gap-2 justify-between">
+          <div className="bg-black h-3 rounded-full relative w-[100%]">
+            <div
+              style={{ width: `${goal?.progress || 0}%` }}
+              className={`absolute left-0 bg-[#00bbff] top-0 h-3 rounded-full`}
+            />
+          </div>
+          <span className="text-xs">{goal?.progress || 0}%</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="text-foreground-500 flex text-sm items-center gap-1 mt-2">
+            <CalendarSimpleIcon width={20} />
+            {new Intl.DateTimeFormat("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "2-digit",
+            }).format(new Date(goal?.created_at))}
+          </div>
+          <Button
+            size="sm"
+            color="primary"
+            variant="flat"
+            onPress={() => navigate(`./${goal.id}`)}
+          >
+            View Goal
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -167,33 +264,33 @@ export default function Goals() {
     }
   };
 
+  const createGoal = async (goalTitle: string) => {
+    try {
+      const response = await apiauth.post("/goals", { title: goalTitle });
+      navigate(`/try/goals/${response.data.id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     fetchGoals();
   }, []);
 
   const handleAddGoal = (goalTitle: string) => {
-    const createGoal = async () => {
-      try {
-        const response = await apiauth.post("/goals", { title: goalTitle });
-        navigate(`/try/goals/${response.data.id}`);
-
-        // fetchGoals();
-      } catch (err) {
-        console.error(err);
-        // navigate("/login");
-      }
-    };
-
-    createGoal();
+    createGoal(goalTitle);
   };
 
   return (
     <>
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
+          <h1 className="font-bold text-center text-5xl pb-6">Roadmaps</h1>
           <div className="flex flex-wrap gap-4 justify-center pb-8 dark">
             {goals.length > 0 ? (
-              goals.map((goal, index) => <GoalCard key={index} goal={goal} />)
+              goals.map((goal, index) => (
+                <GoalCard key={index} goal={goal} fetchGoals={fetchGoals} />
+              ))
             ) : (
               <div className="h-[80vh] flex items-center">
                 {loading ? <Spinner /> : <div>No Goals created yet.</div>}
@@ -201,7 +298,6 @@ export default function Goals() {
             )}
           </div>
         </ScrollArea>
-
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Button
             variant="shadow"

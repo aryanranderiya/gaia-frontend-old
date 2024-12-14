@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
           <Provider>
             <Toaster />
-            <main className="dark text-foreground flex">
+            <main className="dark text-foreground flex bg-background">
               <App />
             </main>
           </Provider>

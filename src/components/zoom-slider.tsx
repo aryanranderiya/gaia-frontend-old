@@ -33,7 +33,7 @@ const ZoomSlider = React.forwardRef<
   return (
     <Panel
       className={cn(
-        "flex gap-1 rounded-md bg-zinc-50 p-1 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50",
+        "flex gap-1 rounded-full bg-black backdrop-blur-md outline-[3px] bg-opacity-30 outline-[#00bbff] outline p-1 px-2 text-zinc-50",
         className
       )}
       {...props}
@@ -41,33 +41,37 @@ const ZoomSlider = React.forwardRef<
       <Button
         variant="ghost"
         size="icon"
+        className="hover:bg-[#00bbff]"
         onClick={() => zoomOut({ duration: 300 })}
       >
         <Minus className="h-4 w-4" />
       </Button>
       <Slider
-        className="w-[140px]"
+        className="w-[140px] "
         value={[zoom]}
         min={minZoom}
         max={maxZoom}
         step={0.01}
-        onValueChange={(values) => zoomTo(values[0])}
+        rangeClasses={"bg-[#00bbff]"}
+        onValueChange={(values: any) => zoomTo(values[0])}
       />
       <Button
         variant="ghost"
+        className="hover:bg-[#00bbff]"
         size="icon"
         onClick={() => zoomIn({ duration: 300 })}
       >
         <Plus className="h-4 w-4" />
       </Button>
       <Button
-        className="min-w-20 tabular-nums"
+        className="min-w-20 tabular-nums hover:bg-[#00bbff]"
         variant="ghost"
         onClick={() => zoomTo(1, { duration: 300 })}
       >
         {(100 * zoom).toFixed(0)}%
       </Button>
       <Button
+        className="hover:bg-[#00bbff]"
         variant="ghost"
         size="icon"
         onClick={() => fitView({ duration: 300 })}

@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Checkbox } from "@nextui-org/checkbox";
+import { Info } from "lucide-react";
 
 export interface GoalData {
   id: string;
@@ -45,14 +46,39 @@ export interface NodeType {
 }
 
 export interface NodeData {
+  id: string;
+  goalId?: string;
   label: string;
   details: string[];
   estimatedTime: string[];
   resources: string[];
+  isComplete: boolean;
 }
 
 const CustomNode = ({ data }: { data: NodeData }) => {
-  const [isComplete, setIsComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(data.isComplete);
+
+  console.log(data);
+
+  const handleCheckboxClick = async (e) => {
+    const newIsComplete = !isComplete;
+    setIsComplete(newIsComplete);
+
+    try {
+      const response = await apiauth.patch(
+        `/goals/${data.goalId}/roadmap/nodes/${data.id}`,
+        { is_complete: newIsComplete }
+      );
+
+      console.log(response);
+
+      // if (response.status !== 200)
+      //   throw new Error("Failed to update the node status");
+    } catch (error) {
+      console.error("Error while updating the node status:", error);
+      setIsComplete(!newIsComplete);
+    }
+  };
 
   return (
     <>
@@ -63,37 +89,49 @@ const CustomNode = ({ data }: { data: NodeData }) => {
           isComplete
             ? "bg-[#092d3b] outline-primary-500"
             : "bg-foreground-50 outline-foreground-100"
-        }  transition-colors outline outline-2  p-4 rounded-sm shadow-md text-white  flex flex-col gap-1`}
+        }  transition-colors outline outline-2  p-4 rounded-sm shadow-md text-white  flex flex-col gap-1 max-w-[350px] min-w-[350px]`}
       >
         <div className="text-lg leading-5 font-bold">
           <Checkbox
             color="primary"
             radius="full"
             isSelected={isComplete}
-            onValueChange={setIsComplete}
+            onValueChange={handleCheckboxClick}
           >
             {data.label}
           </Checkbox>
-        </div>
-        <div>
-          {data?.details?.map((detail: string) => (
-            <li className="text-xs relative">
-              <span className="relative -left-2">{detail}</span>
-            </li>
-          ))}
         </div>
 
         <Chip size="sm" color="primary" variant="flat">
           {data.estimatedTime}
         </Chip>
 
-        <hr className="border-foreground-100 my-1" />
-
         <Accordion className="px-0">
           <AccordionItem
             key="1"
-            aria-label="Accordion 1"
+            aria-label="details"
             isCompact
+            title={
+              <div className="flex items-center gap-1 font-medium">
+                <Info width={15} />
+                <span>Details</span>
+              </div>
+            }
+          >
+            <div>
+              {data?.details?.map((detail: string) => (
+                <li className="text-xs relative">
+                  <span className="relative -left-2">{detail}</span>
+                </li>
+              ))}
+            </div>
+          </AccordionItem>
+
+          <AccordionItem
+            key="2"
+            aria-label="resources"
+            isCompact
+            className="py-0"
             title={
               <div className="flex items-center gap-1 font-medium">
                 <BookIcon1 width={15} />
@@ -101,7 +139,7 @@ const CustomNode = ({ data }: { data: NodeData }) => {
               </div>
             }
           >
-            <div className="mt-2 relative -top-2">
+            <div>
               {data?.resources?.map((resource: string) => (
                 <li className="text-xs relative">
                   <span className="relative -left-2">{resource}</span>
@@ -127,51 +165,57 @@ export default function GoalPage() {
   const { goalId } = useParams();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [edges, setEdges] = useState<EdgeType[]>([]);
-  useEffect(() => {
-    const fetchGoalData = async () => {
-      try {
-        if (!goalId) return;
 
-        setLoading(true);
-        const response = await apiauth.get(`/goals/${goalId}`);
-        const goal = response.data;
-        console.log("data", goal.roadmap);
+  const fetchGoalData = async () => {
+    try {
+      if (!goalId) return;
 
-        if (goal?.roadmap) {
-          setGoalData(goal);
-          setLoading(false);
+      setLoading(true);
+      const response = await apiauth.get(`/goals/${goalId}`);
+      const goal = response.data;
+      console.log("data", goal.roadmap);
 
-          const graph = new dagre.graphlib.Graph();
-          graph.setGraph({ rankdir: "TD" });
-          graph.setDefaultEdgeLabel(() => ({}));
+      if (goal?.roadmap) {
+        setGoalData(goal);
+        setLoading(false);
 
-          goal.roadmap.nodes?.forEach((node: NodeType) => {
-            graph.setNode(node.id, { width: 350, height: 220 });
-          });
+        const graph = new dagre.graphlib.Graph();
+        graph.setGraph({ rankdir: "TD" });
+        graph.setDefaultEdgeLabel(() => ({}));
 
-          goal.roadmap.edges?.forEach((edge: EdgeType) => {
-            graph.setEdge(edge.source, edge.target);
-          });
+        goal.roadmap.nodes?.forEach((node: NodeType) => {
+          graph.setNode(node.id, { width: 350, height: 220 });
+        });
 
-          dagre.layout(graph);
+        goal.roadmap.edges?.forEach((edge: EdgeType) => {
+          graph.setEdge(edge.source, edge.target);
+        });
 
-          const updatedNodes = goal.roadmap.nodes?.map((node: NodeType) => {
-            const { x, y } = graph.node(node.id);
-            return { ...node, position: { x, y }, type: "customNode" };
-          });
+        dagre.layout(graph);
 
-          setNodes(updatedNodes || []);
-          setEdges(goal.roadmap.edges || []);
-        } else {
-          console.log("initialising roadmap web socket");
-          initiateWebSocket(goalId, goal.title);
-        }
-      } catch (error) {
-        console.error("Goal fetch error:", error);
-        setGoalData(null);
+        const updatedNodes = goal.roadmap.nodes?.map((node: NodeType) => {
+          const { x, y } = graph.node(node.id);
+          return {
+            ...node,
+            position: { x, y },
+            type: "customNode",
+            data: { ...node.data, id: node.id, goalId: goal.id },
+          };
+        });
+
+        setNodes(updatedNodes || []);
+        setEdges(goal.roadmap.edges || []);
+      } else {
+        console.log("initialising roadmap web socket");
+        initiateWebSocket(goalId, goal.title);
       }
-    };
+    } catch (error) {
+      console.error("Goal fetch error:", error);
+      setGoalData(null);
+    }
+  };
 
+  useEffect(() => {
     if (goalId) fetchGoalData();
   }, [goalId]);
 
@@ -185,14 +229,14 @@ export default function GoalPage() {
 
     ws.onmessage = (event) => {
       const jsonData = event.data.replace(/^data: /, "");
-      const parsedData = JSON.parse(jsonData);
-      setLoadingPieces((old) => old + parsedData.response);
-      console.log("Parsed WebSocket response:", parsedData.response);
+      const parsedData = JSON.parse(jsonData) || jsonData;
+      console.log("Parsed WebSocket response:", parsedData);
     };
 
     ws.onerror = (error) => console.error("WebSocket error:", error);
     ws.onclose = () => {
       console.log("WebSocket closed.");
+      fetchGoalData();
       setLoading(false);
     };
   };
@@ -200,7 +244,22 @@ export default function GoalPage() {
   if (goalData === null && !loading) return <div>Page Not Found</div>;
 
   return (
-    <div className="flex flex-row justify-between h-full">
+    <div className="flex flex-row justify-between h-full relative">
+      {!!goalData?.progress && (
+        <div className="w-full flex justify-center  absolute bottom-[20px] z-30 pointer-events-none">
+          <div className="flex items-center text-white text-sm my-2 gap-3 bg-black bg-opacity-30 backdrop-blur-md outline-[3px] outline outline-[#002d3d] shadow-lg  rounded-full py-3 px-5">
+            Progress
+            <div className="w-[300px] h-[15px] bg-white bg-opacity-20 rounded-full">
+              <div
+                style={{ width: `${goalData?.progress}%` }}
+                className="bg-[#00bbff] h-[15px] rounded-full"
+              />
+            </div>
+            {goalData?.progress}%
+          </div>
+        </div>
+      )}
+
       <ScrollArea>
         <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
           <div className="flex flex-col justify-center items-center">
@@ -246,7 +305,7 @@ export default function GoalPage() {
               </div>
             </div>
           ) : (
-            <div className="w-full h-full">
+            <div className="w-full h-full relative">
               <ReactFlow
                 className="relative"
                 nodes={nodes}
@@ -267,8 +326,7 @@ export default function GoalPage() {
                   background: "transparent",
                 }}
               >
-                <MiniMap className="fixed !bottom-[100px]" />
-                <ZoomSlider className="fixed bottom-[10px] !right-0 !left-auto h-fit !top-auto z-30 " />
+                <ZoomSlider className="fixed bottom-[25px] !right-0 !left-auto h-fit !top-auto z-30 dark" />
               </ReactFlow>
             </div>
           )}

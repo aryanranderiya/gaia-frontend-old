@@ -70,7 +70,7 @@ export default function MainInterface() {
   return (
     <ConversationHistoryProvider>
       <ConvoProvider>
-        <div className="main_container">
+        <div className="main_container dark">
           <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
           <div

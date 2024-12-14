@@ -781,3 +781,9 @@ code {
 .qJTHM {
   background-color: rgba(0, 0, 0, 0) !important;
 }
+
+.progressshadow {
+  -webkit-box-shadow: 1px -55px 65px -28px rgba(255, 0, 0, 0.75);
+  -moz-box-shadow: 1px -55px 65px -28px rgba(252, 0, 0, 0.75);
+  box-shadow: 1px -55px 65px -28px rgba(253, 0, 0, 0.75);
+}
