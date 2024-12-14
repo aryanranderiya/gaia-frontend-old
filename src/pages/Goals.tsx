@@ -3,11 +3,14 @@ import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoalData } from "./GoalPage";
 
-export function GoalCard({ goal }) {
+export function GoalCard({ goal }: { goal: GoalData }) {
   console.log(goal);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full">
@@ -15,6 +18,29 @@ export function GoalCard({ goal }) {
         <Target04Icon width={20} height={20} />
         <span className="truncate w-[90%]">{goal.title}</span>
       </div>
+
+      <Chip
+        size="sm"
+        variant="flat"
+        color={
+          !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
+            ? "warning"
+            : goal.progress === 100
+            ? "success"
+            : goal.progress > 0
+            ? "primary"
+            : "warning"
+        }
+        className="mt-2"
+      >
+        {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
+          ? "Not Started"
+          : goal.progress === 100
+          ? "Completed"
+          : goal.progress > 0
+          ? "In Progress"
+          : "Not Started"}
+      </Chip>
 
       <div className="my-3 flex items-center gap-2 justify-between">
         <div className="bg-black h-3 rounded-full relative w-[100%]">
@@ -34,11 +60,14 @@ export function GoalCard({ goal }) {
             year: "2-digit",
           }).format(new Date(goal?.created_at))}
         </div>
-        <Link to={`./${goal.id}`}>
-          <Button size="sm" color="primary" variant="flat">
-            View Goal
-          </Button>
-        </Link>
+        <Button
+          size="sm"
+          color="primary"
+          variant="flat"
+          onPress={() => navigate(`./${goal.id}`)}
+        >
+          View Goal
+        </Button>
       </div>
     </div>
   );
