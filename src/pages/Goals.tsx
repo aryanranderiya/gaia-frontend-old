@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GoalData } from "./GoalPage";
 
 export function GoalCard({ goal }: { goal: GoalData }) {
@@ -185,7 +185,7 @@ export default function Goals() {
     <>
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
-          <div className="flex flex-wrap gap-4 justify-center pb-8">
+          <div className="flex flex-wrap gap-4 justify-center pb-8 dark">
             {goals.length > 0 ? (
               goals.map((goal, index) => <GoalCard key={index} goal={goal} />)
             ) : (

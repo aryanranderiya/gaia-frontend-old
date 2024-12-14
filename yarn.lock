@@ -7882,6 +7882,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^3.24.0":
+  version: 3.24.0
+  resolution: "@tabler/icons-react@npm:3.24.0"
+  dependencies:
+    "@tabler/icons": "npm:3.24.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/b47b32eaefacc99714158cbe0684ee7fae26a6dcd424493367abf0cbd74bf6dc43b2bc7ea9990ac194c20f79914650c060c1fef5e47e0a69ff4a36f7ecd75bdd
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.24.0":
+  version: 3.24.0
+  resolution: "@tabler/icons@npm:3.24.0"
+  checksum: 10c0/7f8abb6175a7c233cbe38aaac3b1198b312b9d873c6276d06fa48a9616397bfeac93ba850023940678471da61868c57efed45653c6ab450608f63ff78a49d6b5
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:3.10.9":
   version: 3.10.9
   resolution: "@tanstack/react-virtual@npm:3.10.9"
@@ -10613,15 +10631,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:~11.1.1":
-  version: 11.1.9
-  resolution: "framer-motion@npm:11.1.9"
+"framer-motion@npm:^11.14.4":
+  version: 11.14.4
+  resolution: "framer-motion@npm:11.14.4"
   dependencies:
+    motion-dom: "npm:^11.14.3"
+    motion-utils: "npm:^11.14.3"
     tslib: "npm:^2.4.0"
   peerDependencies:
     "@emotion/is-prop-valid": "*"
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
@@ -10629,7 +10649,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/c1bbadb5f5c324de0473f3fb2c3d0180fc5239335f49b536dc827dff27c87d749af402d1c1fbe7081fbc15b816e32fadf66e24970476f98b2934464f8df9bdb0
+  checksum: 10c0/ffa4b3642dc8debdc2c73ca118e2ad48ea9a1b0bc0b59fad595b522ecfdb67eda2967cdb62da2a1ff293d30eba3398f2a6901a745e42c49146505b19ff97eb7a
   languageName: node
   linkType: hard
 
@@ -12764,6 +12784,20 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 10c0/46ea0f3ffa8bc6a5bc0c7081ffc3907777f0ed6516888d40a518c5111f8366d97d2678911ad1a6882bf592fa9de6c784fea32e1687bb94e1f4944170af48a5cf
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^11.14.3":
+  version: 11.14.3
+  resolution: "motion-dom@npm:11.14.3"
+  checksum: 10c0/14989aba2981dcf618dc77d202ac35325366e645fd9e57c6942d88d0696263bbe7d0680da2e5f84e93339a67255bdbfebb8a4994a46584a661dd9a1e136fa7a1
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^11.14.3":
+  version: 11.14.3
+  resolution: "motion-utils@npm:11.14.3"
+  checksum: 10c0/7459bcb27311b72b416b2618cbfd56bad7d0fbec27736529e3f45a561fa78c43bf82e05338d9d9b765649b57d1c693821e83b30c6ba449d6f7f66c5245f072fb
   languageName: node
   linkType: hard
 
@@ -15365,6 +15399,7 @@ __metadata:
     "@react-aria/visually-hidden": "npm:3.8.12"
     "@react-oauth/google": "npm:^0.12.1"
     "@studio-freight/react-lenis": "npm:^0.0.47"
+    "@tabler/icons-react": "npm:^3.24.0"
     "@types/canvas-confetti": "npm:^1.6.4"
     "@types/dagre": "npm:^0"
     "@types/lodash.debounce": "npm:^4"
@@ -15397,7 +15432,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.36.1"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-unused-imports: "npm:^3.2.0"
-    framer-motion: "npm:~11.1.1"
+    framer-motion: "npm:^11.14.4"
     google-translate-api: "npm:^2.3.0"
     input-otp: "npm:^1.2.4"
     lodash.debounce: "npm:^4.0.8"

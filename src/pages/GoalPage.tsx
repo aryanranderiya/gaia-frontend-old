@@ -1,4 +1,5 @@
 import { apiauth } from "@/apiaxios";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoomSlider } from "@/components/zoom-slider";
 import { Spinner } from "@nextui-org/spinner";
@@ -54,15 +55,42 @@ export default function GoalPage() {
   return (
     <div className="flex flex-col justify-between h-full">
       <ScrollArea>
-        <div className="flex flex-wrap gap-4 justify-center pb-8 h-screen w-screen text-background relative">
+        <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[95vh] w-screen text-background relative">
           <h1 className="font-bold text-white text-2xl mt-1">
             {goalData?.title}
           </h1>
           <div />
 
           {loading ? (
-            <div className="h-full w-screen flex items-center justify-center">
-              <Spinner size="lg" />
+            // <div className="h-full w-screen flex items-center justify-center">
+            //   <Spinner size="lg" />
+            // </div>
+
+            <div className="bg-black w-fit pt-9 pb-0 px-32 relative h-fit flex items-center justify-center rounded-xl bg-opacity-50 flex-col gap-10 overflow-hidden">
+              <div className="text-center space-y-2">
+                <div className="font-medium text-xl text-foreground">
+                  Creating your detailed Roadmap. Please wait.
+                </div>
+                <div className=" text-foreground-500 text-medium">
+                  Please Wait. This may take a while.
+                </div>
+              </div>
+              <MultiStepLoader
+                loadingStates={[
+                  { text: "Defining the Goal" },
+                  { text: "Analyzing Objectives" },
+                  { text: "Adding Description" },
+                  { text: "Generating Milestones" },
+                  { text: "Creating Detailed Roadmap" },
+                  { text: "Adding Nodes" },
+                  { text: "Creating Connecting Edges" },
+                  { text: "Fetching Resources" },
+                  { text: "Estimating Time" },
+                  { text: "Adding finishing touches.." },
+                ]}
+                loading={true}
+                loop={false}
+              />
             </div>
           ) : (
             <div className="w-full h-full">

@@ -7,6 +7,7 @@ const api = axios.create({
 export const apiauth = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
+  timeout: 300000,
 });
 
 export default api;
