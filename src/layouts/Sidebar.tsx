@@ -1,11 +1,13 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 import Hr from "@/components/HorizontalRuler";
-import { GlobalIcon } from "@/components/icons";
+import { GlobalIcon, Target04Icon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import UserContainer from "@/components/Sidebar/UserContainer";
+import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
 import { LegacyRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({
   sidebarref,
@@ -15,6 +17,7 @@ export default function Sidebar({
   toggleSidebar: () => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -34,6 +37,16 @@ export default function Sidebar({
               </div>
             </Tooltip>
           </div>
+
+          <Button
+            variant="shadow"
+            color="primary"
+            className="w-full flex justify-between my-4 font-medium text-zinc-900"
+            onPress={() => navigate("/try/goals")}
+          >
+            <Target04Icon width={20} />
+            Goals & Roadmaps
+          </Button>
 
           {/* <div className="px-1">
             <Button

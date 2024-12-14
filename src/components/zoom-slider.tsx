@@ -27,14 +27,14 @@ const ZoomSlider = React.forwardRef<
       minZoom: state.minZoom,
       maxZoom: state.maxZoom,
     }),
-    (a, b) => a.minZoom !== b.minZoom || a.maxZoom !== b.maxZoom,
+    (a, b) => a.minZoom !== b.minZoom || a.maxZoom !== b.maxZoom
   );
 
   return (
     <Panel
       className={cn(
         "flex gap-1 rounded-md bg-zinc-50 p-1 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50",
-        className,
+        className
       )}
       {...props}
     >

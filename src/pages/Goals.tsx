@@ -7,9 +7,9 @@ import { Chip } from "@nextui-org/chip";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoalData } from "./GoalPage";
+import { Spinner } from "@nextui-org/spinner";
 
 export function GoalCard({ goal }: { goal: GoalData }) {
-  console.log(goal);
   const navigate = useNavigate();
 
   return (
@@ -149,16 +149,21 @@ export function GoalCard({ goal }: { goal: GoalData }) {
 // ];
 export default function Goals() {
   const [goals, setGoals] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
   const fetchGoals = async () => {
     try {
+      setLoading(true);
       const response = await apiauth.get("/goals");
+      console.log("goals", response.data);
       setGoals(response.data);
     } catch (err) {
       console.error(err);
       // navigate("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -171,6 +176,7 @@ export default function Goals() {
       try {
         const response = await apiauth.post("/goals", { title: goalTitle });
         navigate(`/try/goals/${response.data.id}`);
+
         // fetchGoals();
       } catch (err) {
         console.error(err);
@@ -190,7 +196,7 @@ export default function Goals() {
               goals.map((goal, index) => <GoalCard key={index} goal={goal} />)
             ) : (
               <div className="h-[80vh] flex items-center">
-                No Goals created yet.
+                {loading ? <Spinner /> : <div>No Goals created yet.</div>}
               </div>
             )}
           </div>
