@@ -20,6 +20,7 @@ import Goals from "./Goals";
 import MainChat from "./MainChat";
 import Notes from "./Notes";
 import Pins from "./Pins";
+import { ReactFlowProvider } from "@xyflow/react";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -92,7 +93,14 @@ export default function MainInterface() {
               <Route path="pins" element={<Pins />} />
               <Route path="notes" element={<Notes />} />
               <Route path="goals" element={<Goals />} />
-              <Route path="goals/:goalId" element={<GoalPage />} />
+              <Route
+                path="goals/:goalId"
+                element={
+                  <ReactFlowProvider>
+                    <GoalPage />
+                  </ReactFlowProvider>
+                }
+              />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </div>

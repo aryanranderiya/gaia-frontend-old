@@ -3,21 +3,23 @@ import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoomSlider } from "@/components/zoom-slider";
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Checkbox } from "@nextui-org/checkbox";
 import { Chip } from "@nextui-org/chip";
 import {
   ConnectionLineType,
   Handle,
-  MiniMap,
   Position,
   ReactFlow,
+  ReactFlowInstance,
+  useReactFlow,
+  useViewport,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
+import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Checkbox } from "@nextui-org/checkbox";
-import { Info } from "lucide-react";
 
 export interface GoalData {
   id: string;
@@ -58,9 +60,7 @@ export interface NodeData {
 const CustomNode = ({ data }: { data: NodeData }) => {
   const [isComplete, setIsComplete] = useState(data.isComplete);
 
-  console.log(data);
-
-  const handleCheckboxClick = async (e) => {
+  const handleCheckboxClick = async () => {
     const newIsComplete = !isComplete;
     setIsComplete(newIsComplete);
 
@@ -102,9 +102,11 @@ const CustomNode = ({ data }: { data: NodeData }) => {
           </Checkbox>
         </div>
 
-        <Chip size="sm" color="primary" variant="flat">
-          {data.estimatedTime}
-        </Chip>
+        {data.estimatedTime && (
+          <Chip size="sm" color="primary" variant="flat">
+            {data?.estimatedTime}
+          </Chip>
+        )}
 
         <Accordion className="px-0">
           <AccordionItem
@@ -165,6 +167,8 @@ export default function GoalPage() {
   const { goalId } = useParams();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [edges, setEdges] = useState<EdgeType[]>([]);
+  const { setViewport } = useReactFlow();
+  const { x, y, zoom } = useViewport();
 
   const fetchGoalData = async () => {
     try {
@@ -219,6 +223,14 @@ export default function GoalPage() {
     if (goalId) fetchGoalData();
   }, [goalId]);
 
+  // useEffect(() => {
+  //   setViewport({ x: 300, y: 200, zoom: 3 });
+  // }, [setViewport]);
+
+  // useEffect(() => {
+  //   console.log("test2", x, y, zoom);
+  // }, [x, y, zoom]);
+
   const initiateWebSocket = (goalId: string, goalTitle: string) => {
     const ws = new WebSocket(`${import.meta.env.VITE_BACKEND_URL}ws/roadmap`);
 
@@ -230,7 +242,7 @@ export default function GoalPage() {
     ws.onmessage = (event) => {
       const jsonData = event.data.replace(/^data: /, "");
       const parsedData = JSON.parse(jsonData) || jsonData;
-      console.log("Parsed WebSocket response:", parsedData);
+      // console.log("Parsed WebSocket response:", parsedData);
     };
 
     ws.onerror = (error) => console.error("WebSocket error:", error);
@@ -239,6 +251,17 @@ export default function GoalPage() {
       fetchGoalData();
       setLoading(false);
     };
+  };
+
+  const handleInit = (reactFlowInstance: ReactFlowInstance) => {
+    const currentViewport = reactFlowInstance.getViewport();
+    const currentX = currentViewport.x || 0;
+    const newX = currentX + 75;
+    reactFlowInstance.setViewport({
+      x: newX,
+      y: -50,
+      zoom: 1,
+    });
   };
 
   if (goalData === null && !loading) return <div>Page Not Found</div>;
@@ -310,14 +333,15 @@ export default function GoalPage() {
                 className="relative"
                 nodes={nodes}
                 edges={edges}
+                onInit={handleInit}
                 nodesConnectable={false}
                 // elementsSelectable={false}
                 // onNodeClick={() => console.log("asdas")}
                 nodesDraggable={false}
                 connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
-                minZoom={0.2}
                 fitViewOptions={{ minZoom: 1.2 }}
+                minZoom={0.2}
                 // maxZoom={2.0}
                 colorMode="dark"
                 proOptions={{ hideAttribution: true }}
