@@ -1,8 +1,10 @@
 import { apiauth } from "@/apiaxios";
+import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoomSlider } from "@/components/zoom-slider";
-import { Handle, NodeProps, Position, ReactFlow } from "@xyflow/react";
+import { Chip } from "@nextui-org/chip";
+import { Handle, Position, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -13,11 +15,7 @@ export interface GoalData {
   title: string;
   progress: number;
   roadmap: {
-    nodes?: Array<{
-      id: string;
-      position: { x: number; y: number };
-      data: { label: string };
-    }>;
+    nodes?: Array<NodeData>;
     edges?: Array<{
       id: string;
       source: string;
@@ -25,29 +23,53 @@ export interface GoalData {
     }>;
   };
 }
+export interface NodeData {
+  label: string;
+  details: string[];
+  estimatedTime: string[];
+  resources: string[];
+  id: string;
+  position: { x: number; y: number };
+  data: { label: string };
+}
 
-const CustomNode = ({ data }: NodeProps) => {
+const CustomNode = ({ data }: { data: NodeData }) => {
   return (
     <>
-      {/* Left Handle */}
-      <Handle
-        type="target"
-        position={Position.Top}
-        // style={{ background: "#555" }}
-      />
+      <Handle type="target" position={Position.Left} />
 
-      {/* Node Content */}
-      <div className="bg-foreground-50 outline outline-2 outline-foreground-400 p-4 rounded-sm shadow-lg text-white">
-        <div className="text-lg">{data.label}</div>
-        {data.description && <p className="text-sm mt-2">{data.description}</p>}
+      <div className="bg-foreground-50 outline outline-2 outline-foreground-100 p-4 rounded-sm shadow-md text-white  flex flex-col gap-1">
+        <div className="text-lg leading-5 font-bold">{data.label}</div>
+        <div>
+          {data?.details?.map((detail: string) => (
+            <li className="text-xs relative">
+              <span className="relative -left-2">{detail}</span>
+            </li>
+          ))}
+        </div>
 
-        {/* {data?.details?.map((detail))} */}
+        <Chip size="sm" color="primary" variant="flat">
+          {data.estimatedTime}
+        </Chip>
+
+        <hr className="border-foreground-100 my-1" />
+
+        <div className="flex items-center gap-1 font-medium">
+          <BookIcon1 width={15} />
+          <span>Resources</span>
+        </div>
+        <div className="mt-2 relative -top-2">
+          {data?.resources?.map((resource: string) => (
+            <li className="text-xs relative">
+              <span className="relative -left-2">{resource}</span>
+            </li>
+          ))}
+        </div>
       </div>
 
-      {/* Right Handle */}
       <Handle
         type="source"
-        position={Position.Bottom}
+        position={Position.Right}
         // style={{ background: "#555" }}
       />
     </>
@@ -119,7 +141,7 @@ export default function GoalPage() {
   return (
     <div className="flex flex-row justify-between h-full">
       <ScrollArea>
-        <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[95vh] w-screen text-background relative flex-row">
+        <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
           <h1 className="font-bold text-white text-2xl mt-1">
             {goalData?.title}
           </h1>
@@ -161,8 +183,8 @@ export default function GoalPage() {
                 nodes={goalData?.roadmap?.nodes?.map((node, index) => ({
                   ...node,
                   position: {
-                    x: node.position.x + index * 50,
-                    y: node.position.y + index * 50,
+                    x: node.position.x + index * 250,
+                    y: node.position.y,
                   },
                   type: "customNode",
                 }))}
