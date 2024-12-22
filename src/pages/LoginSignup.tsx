@@ -6,7 +6,7 @@ import axios, { AxiosError } from "axios";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import api from "../apiaxios";
+import api, { apiauth } from "../apiaxios";
 
 async function CheckCommonPassword(password: string): Promise<boolean> {
   try {
@@ -211,12 +211,19 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
       console.log(codeResponse);
-      const tokens = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}oauth/callback`,
-        { code: codeResponse.code },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      // navigate("/try/chat");
+      // const tokens = await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_URL}oauth/callback`,
+      //   {
+      //     withCredentials: true,
+      //   },
+      //   { code: codeResponse.code },
+      //   { headers: { "Content-Type": "application/json" } }
+      // );
+
+      const tokens = await apiauth.post("/oauth/callback", {
+        code: codeResponse.code,
+      });
+      navigate("/try/chat");
       console.log(tokens);
     },
     onError: (errorResponse) => console.log(errorResponse),

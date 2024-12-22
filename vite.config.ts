@@ -4,7 +4,12 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), basicSsl()],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+
+    // basicSsl()
+  ],
   resolve: {
     alias: {
       "@components": "/src/components",

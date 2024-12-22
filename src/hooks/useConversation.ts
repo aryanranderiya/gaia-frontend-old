@@ -71,6 +71,8 @@ export const useConversation = (convoIdParam: string | null) => {
 
     const onMessage = (response: string) => {
       botResponseText += response;
+      console.log(response);
+
       const botResponse: MessageType = {
         type: "bot",
         response: botResponseText,

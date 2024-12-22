@@ -62,6 +62,8 @@ export const ApiService = {
       signal: controller.signal,
       body: JSON.stringify({ message: inputText }),
       onmessage(event) {
+        console.log("testing", event);
+
         if (event.data === "[DONE]") {
           onClose();
           controller.abort();
