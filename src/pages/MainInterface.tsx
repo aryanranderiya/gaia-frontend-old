@@ -21,6 +21,7 @@ import MainChat from "./MainChat";
 import Notes from "./Notes";
 import Pins from "./Pins";
 import { ReactFlowProvider } from "@xyflow/react";
+import { ConversationListProvider } from "@/contexts/ConversationList";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -70,42 +71,47 @@ export default function MainInterface() {
 
   return (
     <ConversationHistoryProvider>
-      <ConvoProvider>
-        <div className="main_container dark">
-          <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+      <ConversationListProvider>
+        <ConvoProvider>
+          <div className="main_container dark">
+            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
-          <div
-            ref={contentContainerRef}
-            onClick={hideSidebar}
-            className="main_chat"
-          >
-            <div className="chat_sidebar_toggle_btn">
-              <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+            <div
+              ref={contentContainerRef}
+              onClick={hideSidebar}
+              className="main_chat"
+            >
+              <div className="chat_sidebar_toggle_btn">
+                <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+              </div>
+              <WebsiteName />
+
+              <Routes>
+                <Route path="chat/:convoIdParam" element={<MainChat />} />
+                <Route path="chat" element={<MainChat />} />
+                <Route path="explore" element={<Explore />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route
+                  path="search"
+                  element={<ComprehensiveMessageHistory />}
+                />
+                <Route path="pins" element={<Pins />} />
+                <Route path="notes" element={<Notes />} />
+                <Route path="goals" element={<Goals />} />
+                <Route
+                  path="goals/:goalId"
+                  element={
+                    <ReactFlowProvider>
+                      <GoalPage />
+                    </ReactFlowProvider>
+                  }
+                />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Routes>
             </div>
-            <WebsiteName />
-
-            <Routes>
-              <Route path="chat/:convoIdParam" element={<MainChat />} />
-              <Route path="chat" element={<MainChat />} />
-              <Route path="explore" element={<Explore />} />
-              <Route path="calendar" element={<Calendar />} />
-              <Route path="search" element={<ComprehensiveMessageHistory />} />
-              <Route path="pins" element={<Pins />} />
-              <Route path="notes" element={<Notes />} />
-              <Route path="goals" element={<Goals />} />
-              <Route
-                path="goals/:goalId"
-                element={
-                  <ReactFlowProvider>
-                    <GoalPage />
-                  </ReactFlowProvider>
-                }
-              />
-              <Route path="*" element={<Navigate to="/404" />} />
-            </Routes>
           </div>
-        </div>
-      </ConvoProvider>
+        </ConvoProvider>
+      </ConversationListProvider>
     </ConversationHistoryProvider>
   );
 }

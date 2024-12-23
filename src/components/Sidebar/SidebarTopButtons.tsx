@@ -1,102 +1,64 @@
+import { Button } from "@nextui-org/button";
+import { Tooltip } from "@nextui-org/tooltip";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
+  CalendarIcon,
   DiscoverCircleIcon,
   PinIcon,
-  CalendarIcon,
-  StickyNote01Icon,
   Route02Icon,
+  StickyNote01Icon,
 } from "../icons";
-import { Button } from "@nextui-org/button";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Tooltip } from "@nextui-org/tooltip";
 
 export default function SidebarTopButtons() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const buttonData = [
+    {
+      route: "/try/explore",
+      icon: <DiscoverCircleIcon width={27} height={27} />,
+      label: "Explore",
+    },
+    {
+      route: "/try/pins",
+      icon: <PinIcon width={27} height={27} />,
+      label: "Pins",
+    },
+    {
+      route: "/try/calendar",
+      icon: <CalendarIcon width={27} height={27} />,
+      label: "Calendar",
+    },
+    {
+      route: "/try/notes",
+      icon: <StickyNote01Icon width={27} height={27} />,
+      label: "Notes",
+    },
+    {
+      route: "/try/goals",
+      icon: <Route02Icon width={27} height={27} />,
+      label: "Goals",
+    },
+  ];
+
   return (
-    <div className="bg-[#141414] rounded-md p-2 gap-2 flex flex-wrap items-center">
-      {/* <Button className="w-full flex justify-between">
-        Search
-        <GlobalSearchIcon />
-      </Button> */}
-      <Tooltip showArrow={true} content="Explore">
-        <Button
-          onClick={() => navigate("/try/explore")}
-          className="w-fit"
-          isIconOnly
-          size="lg"
-        >
-          <DiscoverCircleIcon
-            width={27}
-            height={27}
-            color={location.pathname === "/try/explore" ? "#00bbff" : "white"}
-          />
-        </Button>
-      </Tooltip>
-      <Tooltip showArrow={true} content="Pins">
-        <Button
-          className="w-fit"
-          isIconOnly
-          size="lg"
-          onClick={() => navigate("/try/pins")}
-        >
-          <PinIcon
-            width={27}
-            height={27}
-            color={location.pathname === "/try/pins" ? "#00bbff" : "white"}
-          />
-        </Button>
-      </Tooltip>
-      <Tooltip showArrow={true} content="Calendar">
-        <Button
-          size="lg"
-          className="w-fit"
-          isIconOnly
-          onClick={() => navigate("/try/calendar")}
-        >
-          <CalendarIcon
-            width={27}
-            height={27}
-            color={location.pathname === "/try/calendar" ? "#00bbff" : "white"}
-          />
-        </Button>
-      </Tooltip>
-
-      <Tooltip showArrow={true} content="Notes">
-        <Button
-          size="lg"
-          className="w-fit"
-          isIconOnly
-          onClick={() => navigate("/try/notes")}
-        >
-          <StickyNote01Icon
-            width={27}
-            height={27}
-            color={location.pathname === "/try/notes" ? "#00bbff" : "white"}
-          />
-        </Button>
-      </Tooltip>
-
-      <Tooltip showArrow={true} content="Roadmaps">
-        <Button
-          size="lg"
-          className="w-fit"
-          isIconOnly
-          onClick={() => navigate("/try/notes")}
-        >
-          <Route02Icon
-            width={27}
-            height={27}
-            color={location.pathname === "/try/roadmaps" ? "#00bbff" : "white"}
-          />
-        </Button>
-      </Tooltip>
-
-      <div>
-        {/* <Button isIconOnly aria-label="Like">
-          <ThreeDotsMenu />
-        </Button> */}
-      </div>
+    <div className="bg-[#141414] rounded-2xl p-2 gap-2 flex flex-wrap items-center">
+      {buttonData.map(({ route, icon, label }) => (
+        <Tooltip key={route} showArrow={true} content={label}>
+          <Button
+            className="w-fit"
+            isIconOnly
+            size="lg"
+            color={location.pathname === route ? "primary" : "default"}
+            onClick={() => navigate(route)}
+          >
+            {React.cloneElement(icon, {
+              color: "white",
+            })}
+          </Button>
+        </Tooltip>
+      ))}
     </div>
   );
 }

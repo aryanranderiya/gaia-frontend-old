@@ -5,11 +5,13 @@ import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { MessageType } from "@/types/ConvoTypes";
 import fetchDate from "@/components/Chat/fetchDate";
 import { ApiService, fetchConversationDescription } from "@/utils/chatUtils";
+import { useConversationList } from "@/contexts/ConversationList";
 
 export const useConversation = (convoIdParam: string | null) => {
   const navigate = useNavigate();
   const { setConvoHistory } = useConvoHistory();
   const { setConvoMessages } = useConvo();
+  const { fetchConversations } = useConversationList();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -48,13 +50,28 @@ export const useConversation = (convoIdParam: string | null) => {
 
   const createNewConversation = async (currentMessages: MessageType[]) => {
     try {
-      const convoID = crypto.randomUUID();
-      await ApiService.createConversation(convoID, currentMessages[0]);
+      const conversationId = crypto.randomUUID();
+      await ApiService.createConversation(conversationId, currentMessages[0]);
+
+      console.log("ARYAN RANDERIYA", currentMessages);
 
       setConvoMessages(currentMessages);
-      handleConvoHistoryUpdate(convoID, currentMessages, "New Chat");
-      navigate(`/try/chat/${convoID}`);
-      return convoID;
+      handleConvoHistoryUpdate(conversationId, currentMessages, "New Chat");
+      navigate(`/try/chat/${conversationId}`);
+
+      await fetchConversationDescription(
+        JSON.stringify(currentMessages[0])
+      ).then((description) => {
+        handleConvoHistoryUpdate(conversationId, currentMessages, description);
+        return ApiService.updateConversationDescription(
+          conversationId,
+          description || "New Chat"
+        );
+      });
+
+      fetchConversations();
+
+      return conversationId;
     } catch (err) {
       console.error("Failed to create conversation:", err);
       return null;
@@ -98,39 +115,14 @@ export const useConversation = (convoIdParam: string | null) => {
 
       try {
         // console.log("currentMessages", currentMessages);
-
         // if (currentMessages.length <= 2) currentMessages.shift();
-
         // console.log("currentMessages2", currentMessages);
-
-        const updateConversationPromise = ApiService.updateConversation(
-          conversationId,
-          currentMessages
-        );
-
-        const updateDescriptionPromise = fetchConversationDescription(
-          inputText
-        ).then((description) => {
-          handleConvoHistoryUpdate(
-            conversationId,
-            currentMessages,
-            description
-          );
-          return ApiService.updateConversationDescription(
-            conversationId,
-            description || "New Chat"
-          );
-        });
-
-        await Promise.all([
-          updateConversationPromise,
-          updateDescriptionPromise,
-        ]);
-
+        // fetchConversations();
         // setConvoMessages((oldMessages) => [
         //   ...oldMessages.slice(0, -1),
         //   finalizedBotResponse,
         // ]);
+        await ApiService.updateConversation(conversationId, currentMessages);
       } catch (err) {
         console.error("Failed to update conversation:", err);
       } finally {

@@ -1,5 +1,6 @@
 import { apiauth } from "@/apiaxios";
 import { PencilEdit02Icon } from "@/components/icons";
+import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Button } from "@nextui-org/button";
 import {
@@ -25,13 +26,12 @@ export default function ChatOptionsDropdown({
   buttonHovered,
   chatId,
   chatName,
-  fetchConversations,
 }: {
   buttonHovered: boolean;
   chatId: string;
   chatName: string;
-  fetchConversations: () => void;
 }) {
+  const { fetchConversations } = useConversationList();
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
@@ -44,7 +44,7 @@ export default function ChatOptionsDropdown({
   const handleEdit = async () => {
     if (!newName) return;
     try {
-      await apiauth.put(`/conversations/${chatId}/description/`, {
+      await apiauth.put(`/conversations/${chatId}/description`, {
         description: newName,
       });
       setIsOpen(false);
@@ -58,7 +58,7 @@ export default function ChatOptionsDropdown({
     try {
       navigate("/try/chat");
       resetMessages();
-      await apiauth.delete(`/conversations/${chatId}/`);
+      await apiauth.delete(`/conversations/${chatId}`);
       setIsOpen(false);
       fetchConversations();
     } catch (error) {
@@ -95,6 +95,7 @@ export default function ChatOptionsDropdown({
         <DropdownMenu aria-label="Static Actions">
           <DropdownItem
             key="edit"
+            textValue="Rename"
             className="w-fit"
             onPress={() => openModal("edit")}
           >
@@ -105,6 +106,7 @@ export default function ChatOptionsDropdown({
           </DropdownItem>
           <DropdownItem
             key="delete"
+            textValue="Delete"
             className="text-danger"
             color="danger"
             onMouseOver={() => setDangerStateHovered(true)}
@@ -123,7 +125,6 @@ export default function ChatOptionsDropdown({
         isOpen={isOpen}
         onOpenChange={setIsOpen}
         className="dark text-foreground"
-        backdrop="blur"
       >
         <ModalContent>
           {modalAction === "edit" ? (

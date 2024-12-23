@@ -29,7 +29,7 @@ export const ApiService = {
   },
 
   createConversation: async (convoID: string, message: MessageType) => {
-    await apiauth.post("/conversations/", {
+    await apiauth.post("/conversations", {
       conversation_id: convoID,
       messages: [message],
     });
@@ -40,7 +40,7 @@ export const ApiService = {
     messages: MessageType[]
   ) => {
     if (messages.length > 1)
-      await apiauth.put(`/conversations/${conversationId}/messages/`, {
+      await apiauth.put(`/conversations/${conversationId}/messages`, {
         conversation_id: conversationId,
         messages,
       });
@@ -82,7 +82,7 @@ export const ApiService = {
     conversationId: string,
     description: string
   ) => {
-    await apiauth.put(`/conversations/${conversationId}/description/`, {
+    await apiauth.put(`/conversations/${conversationId}/description`, {
       description,
     });
   },

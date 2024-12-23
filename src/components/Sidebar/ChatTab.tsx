@@ -7,10 +7,9 @@ import ChatOptionsDropdown from "./ChatOptionsDropdown";
 interface ChatTabProps {
   name: string;
   id: string;
-  fetchConversations: () => void;
 }
 
-export const ChatTab: FC<ChatTabProps> = ({ name, id, fetchConversations }) => {
+export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
   const navigate = useNavigate();
   const [currentConvoId, setCurrentConvoId] = useState<string | null>(null);
   const location = useLocation();
@@ -44,7 +43,6 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, fetchConversations }) => {
           buttonHovered={buttonHovered}
           chatId={id}
           chatName={name}
-          fetchConversations={fetchConversations}
         />
       }
     >

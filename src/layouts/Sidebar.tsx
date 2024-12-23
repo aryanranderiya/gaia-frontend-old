@@ -3,9 +3,11 @@ import Hr from "@/components/HorizontalRuler";
 import { GlobalIcon, Target04Icon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
+import { StarsIcon } from "lucide-react";
 import { LegacyRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +19,6 @@ export default function Sidebar({
   toggleSidebar: () => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   return (
     <>
@@ -38,17 +39,7 @@ export default function Sidebar({
             </Tooltip>
           </div>
 
-          <Button
-            variant="shadow"
-            color="primary"
-            className="w-full flex justify-between my-4 font-medium text-zinc-900"
-            onPress={() => navigate("/try/goals")}
-          >
-            <Target04Icon width={20} />
-            Goals & Roadmaps
-          </Button>
-
-          {/* <div className="px-1">
+          <div className="px-1">
             <Button
               variant="shadow"
               color="primary"
@@ -58,9 +49,9 @@ export default function Sidebar({
               Coming Soon!
               <StarsIcon color="zinc-900" fill="zinc-900" />
             </Button>
-          </div> */}
+          </div>
 
-          {/* <SidebarTopButtons /> */}
+          <SidebarTopButtons />
           <Hr />
           <ChatsList />
         </div>
