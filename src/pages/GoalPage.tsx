@@ -17,9 +17,31 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
-import { Info } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronDown, Info, Plus } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export interface GoalData {
   id: string;
@@ -57,116 +79,126 @@ export interface NodeData {
   isComplete: boolean;
 }
 
-const CustomNode = ({ data }: { data: NodeData }) => {
-  const [isComplete, setIsComplete] = useState(data.isComplete);
+export default function GoalPage() {
+  const CustomNode = React.memo(({ data }: { data: NodeData }) => {
+    const [isComplete, setIsComplete] = useState(data.isComplete);
 
-  const handleCheckboxClick = async () => {
-    const newIsComplete = !isComplete;
-    setIsComplete(newIsComplete);
+    // Memoizing the handleCheckboxClick function using useCallback
+    const handleCheckboxClick = useCallback(async () => {
+      const newIsComplete = !isComplete;
+      setIsComplete(newIsComplete);
 
-    try {
-      const response = await apiauth.patch(
-        `/goals/${data.goalId}/roadmap/nodes/${data.id}`,
-        { is_complete: newIsComplete }
-      );
+      try {
+        const response = await apiauth.patch(
+          `/goals/${data.goalId}/roadmap/nodes/${data.id}`,
+          { is_complete: newIsComplete }
+        );
 
-      console.log(response);
+        console.log(response);
 
-      // if (response.status !== 200)
-      //   throw new Error("Failed to update the node status");
-    } catch (error) {
-      console.error("Error while updating the node status:", error);
-      setIsComplete(!newIsComplete);
-    }
-  };
+        // if (response.status !== 200)
+        //   throw new Error("Failed to update the node status");
+      } catch (error) {
+        console.error("Error while updating the node status:", error);
+        setIsComplete(!newIsComplete);
+      }
+    }, [data.goalId, data.id, isComplete]); // Add dependencies
 
-  return (
-    <>
-      <Handle type="target" position={Position.Top} />
+    return (
+      <>
+        <Handle type="target" position={Position.Top} />
 
-      <div
-        className={`${
-          isComplete
-            ? "bg-[#092d3b] outline-primary-500"
-            : "bg-foreground-50 outline-foreground-100"
-        }  transition-colors outline outline-2  p-4 rounded-sm shadow-md text-white  flex flex-col gap-1 max-w-[350px] min-w-[350px]`}
-      >
-        <div className="text-lg leading-5 font-bold">
-          <Checkbox
-            color="primary"
-            radius="full"
-            isSelected={isComplete}
-            onValueChange={handleCheckboxClick}
-          >
-            {data.label}
-          </Checkbox>
+        <div
+          className={`${
+            isComplete
+              ? "bg-[#092d3b] outline-primary-500"
+              : "bg-foreground-50 outline-foreground-100"
+          }  transition-colors outline outline-2  p-4 rounded-sm shadow-md text-white  flex flex-col gap-1 max-w-[350px] min-w-[350px]`}
+          onClick={() => {
+            setOpenSidebar(true);
+            setCurrentlySelectedNode(data);
+          }}
+        >
+          {/* <div className="text-lg leading-5 font-bold">
+            <Checkbox
+              color="primary"
+              radius="full"
+              isSelected={isComplete}
+              onValueChange={handleCheckboxClick}
+            >
+            </Checkbox>
+            </div> */}
+          {data.label}
+
+          {data.estimatedTime && (
+            <Chip size="sm" color="primary" variant="flat">
+              {data?.estimatedTime}
+            </Chip>
+          )}
+
+          {/* <Accordion className="px-0">
+            <AccordionItem
+              key="1"
+              aria-label="details"
+              isCompact
+              title={
+                <div className="flex items-center gap-1 font-medium">
+                  <Info width={15} />
+                  <span>Details</span>
+                </div>
+              }
+            >
+              <div>
+                {data?.details?.map((detail: string) => (
+                  <li className="text-xs relative" key={detail}>
+                    <span className="relative -left-2">{detail}</span>
+                  </li>
+                ))}
+              </div>
+            </AccordionItem>
+
+            <AccordionItem
+              key="2"
+              aria-label="resources"
+              isCompact
+              className="py-0"
+              title={
+                <div className="flex items-center gap-1 font-medium">
+                  <BookIcon1 width={15} />
+                  <span>Resources</span>
+                </div>
+              }
+            >
+              <div>
+                {data?.resources?.map((resource: string) => (
+                  <li className="text-xs relative" key={resource}>
+                    <span className="relative -left-2">{resource}</span>
+                  </li>
+                ))}
+              </div>
+            </AccordionItem>
+          </Accordion> */}
         </div>
 
-        {data.estimatedTime && (
-          <Chip size="sm" color="primary" variant="flat">
-            {data?.estimatedTime}
-          </Chip>
-        )}
+        <Handle type="source" position={Position.Bottom} />
+      </>
+    );
+  });
 
-        <Accordion className="px-0">
-          <AccordionItem
-            key="1"
-            aria-label="details"
-            isCompact
-            title={
-              <div className="flex items-center gap-1 font-medium">
-                <Info width={15} />
-                <span>Details</span>
-              </div>
-            }
-          >
-            <div>
-              {data?.details?.map((detail: string) => (
-                <li className="text-xs relative">
-                  <span className="relative -left-2">{detail}</span>
-                </li>
-              ))}
-            </div>
-          </AccordionItem>
-
-          <AccordionItem
-            key="2"
-            aria-label="resources"
-            isCompact
-            className="py-0"
-            title={
-              <div className="flex items-center gap-1 font-medium">
-                <BookIcon1 width={15} />
-                <span>Resources</span>
-              </div>
-            }
-          >
-            <div>
-              {data?.resources?.map((resource: string) => (
-                <li className="text-xs relative">
-                  <span className="relative -left-2">{resource}</span>
-                </li>
-              ))}
-            </div>
-          </AccordionItem>
-        </Accordion>
-      </div>
-
-      <Handle type="source" position={Position.Bottom} />
-    </>
+  const nodeTypes = useMemo(
+    () => ({
+      customNode: CustomNode,
+    }),
+    []
   );
-};
-
-const nodeTypes = {
-  customNode: CustomNode,
-};
-
-export default function GoalPage() {
   const [goalData, setGoalData] = useState<GoalData | null>(null);
   const [loading, setLoading] = useState(true);
   const { goalId } = useParams();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [edges, setEdges] = useState<EdgeType[]>([]);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [currentlySelectedNode, setCurrentlySelectedNode] =
+    useState<NodeData>();
   const { setViewport } = useReactFlow();
   const { x, y, zoom } = useViewport();
 
@@ -268,6 +300,29 @@ export default function GoalPage() {
 
   return (
     <div className="flex flex-row justify-between h-full relative">
+      {/* <SidebarProvider open={openSidebar} onOpenChange={setOpenSidebar}> */}
+      <div
+        className={`${
+          openSidebar ? "visible" : "hidden"
+        } fixed right-2 top-2 bg-zinc-900 max-w-[350px] p-5 rounded-xl flex flex-col gap-3 z-10 shadow-lg`}
+      >
+        <div className="text-xl font-medium">
+          {currentlySelectedNode?.label}
+        </div>
+
+        <div className="text-sm -mt-2 text-foreground-500">
+          {currentlySelectedNode?.details}
+        </div>
+
+        <div className="text-sm">
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
+        </div>
+      </div>
+
       {!!goalData?.progress && (
         <div className="w-full flex justify-center  absolute bottom-[20px] z-30 pointer-events-none">
           <div className="flex items-center text-white text-sm my-2 gap-3 bg-black bg-opacity-30 backdrop-blur-md outline-[3px] outline outline-[#002d3d] shadow-lg  rounded-full py-3 px-5">
@@ -340,12 +395,16 @@ export default function GoalPage() {
                 nodesDraggable={false}
                 connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
+                elementsSelectable={true}
                 fitViewOptions={{ minZoom: 1.2 }}
                 minZoom={0.2}
                 // maxZoom={2.0}
+                // onNodeClick={(e) => console.log("Test", e)}
                 colorMode="dark"
                 proOptions={{ hideAttribution: true }}
                 nodeTypes={nodeTypes}
+                // onSelect={() => console.log("hi")}
+
                 style={{
                   background: "transparent",
                 }}
