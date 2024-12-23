@@ -1,7 +1,7 @@
 // utils/chatUtils.ts
 
 import { apiauth } from "@/apiaxios";
-import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
+import { MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export const fetchConversationDescription = async (
@@ -80,12 +80,11 @@ export const ApiService = {
       body: JSON.stringify({
         message: inputText,
         messages: convoMessages
-          .slice(1) // Skip the first message if necessary
-          .slice(-5) // Take the last 5 messages
-          .filter(({ response }) => response.length > 0) // Only keep messages with a non-empty response
+          .slice(-6)
+          .filter(({ response }) => response.length > 0)
           .map(({ type, response }) => ({
             role: type,
-            content: response,
+            content: response.slice(0, 1000),
           })),
       }),
       onmessage(event) {

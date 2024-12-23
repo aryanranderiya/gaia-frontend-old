@@ -85,6 +85,8 @@ export default function GenerateImage({
 
       // Update database
       const currentMessages = replaceLastMessage ? newMessages : newMessages;
+      console.log("currentMessages", currentMessages);
+      console.log("newMessages", newMessages);
       await ApiService.updateConversation(conversationId, currentMessages);
     } catch (error) {
       console.error("Failed to update conversation:", error);
@@ -167,7 +169,7 @@ export default function GenerateImage({
 
       await updateConversationState(
         conversationId,
-        [initialMessages.slice(0, -1), finalBotMessage],
+        [...initialMessages.slice(0, -1), finalBotMessage],
         undefined,
         true
       );

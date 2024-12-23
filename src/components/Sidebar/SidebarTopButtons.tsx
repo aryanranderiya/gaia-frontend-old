@@ -5,9 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
   DiscoverCircleIcon,
-  PinIcon,
   Route02Icon,
   StickyNote01Icon,
+  // PinIcon,
 } from "../icons";
 
 export default function SidebarTopButtons() {
@@ -20,11 +20,11 @@ export default function SidebarTopButtons() {
       icon: <DiscoverCircleIcon width={27} height={27} />,
       label: "Explore",
     },
-    {
-      route: "/try/pins",
-      icon: <PinIcon width={27} height={27} />,
-      label: "Pins",
-    },
+    // {
+    //   route: "/try/pins",
+    //   icon: <PinIcon width={27} height={27} />,
+    //   label: "Pins",
+    // },
     {
       route: "/try/calendar",
       icon: <CalendarIcon width={27} height={27} />,
