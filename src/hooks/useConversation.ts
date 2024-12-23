@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import fetchDate from "@/components/Chat/fetchDate";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { MessageType } from "@/types/ConvoTypes";
-import fetchDate from "@/components/Chat/fetchDate";
 import { ApiService, fetchConversationDescription } from "@/utils/chatUtils";
-import { useConversationList } from "@/contexts/ConversationList";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useConversation = (convoIdParam: string | null) => {
   const navigate = useNavigate();
   const { setConvoHistory } = useConvoHistory();
-  const { setConvoMessages } = useConvo();
+  const { convoMessages, setConvoMessages } = useConvo();
   const { fetchConversations } = useConversationList();
   const [loading, setLoading] = useState(false);
 
@@ -53,8 +53,6 @@ export const useConversation = (convoIdParam: string | null) => {
       const conversationId = crypto.randomUUID();
       await ApiService.createConversation(conversationId, currentMessages[0]);
 
-      console.log("ARYAN RANDERIYA", currentMessages);
-
       setConvoMessages(currentMessages);
       handleConvoHistoryUpdate(conversationId, currentMessages, "New Chat");
       navigate(`/try/chat/${conversationId}`);
@@ -88,8 +86,6 @@ export const useConversation = (convoIdParam: string | null) => {
 
     const onMessage = (response: string) => {
       botResponseText += response;
-      console.log(response);
-
       const botResponse: MessageType = {
         type: "bot",
         response: botResponseText,
@@ -135,7 +131,13 @@ export const useConversation = (convoIdParam: string | null) => {
       setLoading(false);
     };
 
-    await ApiService.fetchChatStream(inputText, onMessage, onClose, onError);
+    await ApiService.fetchChatStream(
+      inputText,
+      convoMessages,
+      onMessage,
+      onClose,
+      onError
+    );
   };
 
   const updateConversation = async (inputText: string) => {

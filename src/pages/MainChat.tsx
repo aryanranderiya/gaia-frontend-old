@@ -12,7 +12,6 @@ const MainChat = React.memo(function MainChat() {
     const { scrollTop, scrollHeight, clientHeight } =
       event.target as HTMLElement;
     const threshold = 1;
-    console.log(scrollHeight - scrollTop);
 
     setIsAtBottom(scrollHeight - scrollTop <= clientHeight + threshold);
   }, 100);

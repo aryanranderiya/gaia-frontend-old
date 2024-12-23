@@ -15,8 +15,6 @@ const useFetchUser = () => {
         withCredentials: true,
       });
 
-      console.log("test", response.data);
-
       setUserData(
         response?.data?.name,
         response?.data?.id,

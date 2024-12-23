@@ -1,7 +1,7 @@
 // utils/chatUtils.ts
 
 import { apiauth } from "@/apiaxios";
-import { MessageType } from "@/types/ConvoTypes";
+import { ConversationHistoryType, MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export const fetchConversationDescription = async (
@@ -19,7 +19,7 @@ export const fetchConversationDescription = async (
     }
   );
 
-  return response?.data?.response.toString().replace('"', "") || "New Chat";
+  return response?.data?.response?.toString().replace('"', "") || "New Chat";
 };
 
 export const ApiService = {
@@ -48,10 +48,27 @@ export const ApiService = {
 
   fetchChatStream: async (
     inputText: string,
+    convoMessages: MessageType[],
     onMessage: (data: string) => void,
     onClose: () => void,
     onError: (err: any) => void
   ) => {
+    console.log(
+      "convoMessages mapped and filtered",
+      convoMessages
+        .filter(({ response }) => response.length > 0)
+        .map(({ type, response }) => ({
+          items: {
+            role: type,
+            content: response,
+          },
+        }))
+    );
+
+    console.log("inputText", inputText);
+
+    convoMessages.push({ type: "user", response: inputText });
+
     const controller = new AbortController();
     await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat-stream`, {
       method: "POST",
@@ -60,10 +77,18 @@ export const ApiService = {
         Accept: "text/event-stream",
       },
       signal: controller.signal,
-      body: JSON.stringify({ message: inputText }),
+      body: JSON.stringify({
+        message: inputText,
+        messages: convoMessages
+          .slice(1) // Skip the first message if necessary
+          .slice(-5) // Take the last 5 messages
+          .filter(({ response }) => response.length > 0) // Only keep messages with a non-empty response
+          .map(({ type, response }) => ({
+            role: type,
+            content: response,
+          })),
+      }),
       onmessage(event) {
-        console.log("testing", event);
-
         if (event.data === "[DONE]") {
           onClose();
           controller.abort();
