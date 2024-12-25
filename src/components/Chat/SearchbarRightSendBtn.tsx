@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { SentIcon } from "../icons";
 import { Tooltip } from "@nextui-org/tooltip";
-import MicrophoneBtn from "../Audio/MicrophoneBtn";
+// import MicrophoneBtn from "../Audio/MicrophoneBtn";
 
 export default function SearchbarRightSendBtn({
   loading,
@@ -10,7 +10,7 @@ export default function SearchbarRightSendBtn({
 }) {
   return (
     <div className="ml-2 flex items-center gap-1">
-      <MicrophoneBtn loading={loading} />
+      {/* <MicrophoneBtn loading={loading} /> */}
 
       <Tooltip content="Send message" placement="right">
         <Button
