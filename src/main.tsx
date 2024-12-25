@@ -14,18 +14,18 @@ export function Provider({ children }: { children: React.ReactNode }) {
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <BrowserRouter>
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-          <Provider>
-            <Toaster />
-            <main className="dark text-foreground flex bg-background">
-              <App />
-            </main>
-          </Provider>
-        </GoogleOAuthProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ErrorBoundary>
+    <BrowserRouter>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <Provider>
+          <Toaster />
+          <main className="dark text-foreground flex bg-background">
+            <App />
+          </main>
+        </Provider>
+      </GoogleOAuthProvider>
+    </BrowserRouter>
+  </ErrorBoundary>
+  // {/* </React.StrictMode> */}
 );

@@ -29,10 +29,9 @@ export const ApiService = {
     return response?.data?.messages;
   },
 
-  createConversation: async (convoID: string, message: MessageType) => {
+  createConversation: async (convoID: string) => {
     await apiauth.post("/conversations", {
       conversation_id: convoID,
-      messages: [message],
     });
   },
 

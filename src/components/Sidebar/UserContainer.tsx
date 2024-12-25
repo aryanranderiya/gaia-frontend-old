@@ -9,11 +9,11 @@ const UserContainer: React.FC = () => {
   useFetchUser();
 
   return (
-    <div className="user_container p-4 absolute bottom-0 left-0 flex-col">
-      <div className="flex relative py-4 my-4 px-3 justify-between items-center hover:bg-zinc-900 rounded-xl transition-all">
+    <div className="justify-center flex w-full p-4 bg-black py absolute bottom-0 left-0 flex-col gap-3">
+      <div className="flex relative py-3 px-3 justify-between items-center hover:bg-zinc-900 rounded-xl transition-all bg-black">
         Syncing...
         <Spinner size="sm" />
-        <div className="absolute h-[2px] bottom-1 left-3 w-1/3 bg-[#00bbff]" />
+        <div className="absolute h-[2px] bottom-2 left-3 w-1/3 bg-[#00bbff]" />
       </div>
 
       <div className="user_container_inner">

@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChatTab } from "./ChatTab";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function ChatsList() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function ChatsList() {
   };
 
   return (
-    <div className="sidebar_inner ">
+    <div>
       <Button
         variant="flat"
         className="w-full flex justify-between"
@@ -32,7 +33,8 @@ export default function ChatsList() {
         <PlusSignIcon width="21" color="foreground" />
       </Button>
 
-      <div className="overflow-y-auto flex flex-col gap-1 py-1 max-h-[40vh]">
+      <div className="overflow-y-auto flex flex-col gap-1 py-1 max-h-[40vh] ">
+        {/* <ScrollArea className="min-h-[20vh] nax-h-[80vh]"> */}
         {conversations.length > 0 &&
           conversations.map(
             (conversation: {
@@ -46,6 +48,7 @@ export default function ChatsList() {
               />
             )
           )}
+        {/* </ScrollArea> */}
       </div>
     </div>
   );

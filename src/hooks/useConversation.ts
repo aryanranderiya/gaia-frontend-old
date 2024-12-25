@@ -55,13 +55,19 @@ export const useConversation = (convoIdParam: string | null) => {
 
       handleConvoHistoryUpdate(conversationId, currentMessages, "New Chat");
 
-      await ApiService.createConversation(conversationId, currentMessages[0]);
+      // Log time taken for createConversation API call
+      console.time("createConversationTime");
+      await ApiService.createConversation(conversationId);
+      console.timeEnd("createConversationTime");
 
+      // Log time taken for updateConversationDescription API call
+      console.time("updateConversationDescriptionTime");
       ApiService.updateConversationDescription(
         conversationId,
         JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
         fetchConversations
       );
+      console.timeEnd("updateConversationDescriptionTime");
 
       navigate(`/try/chat/${conversationId}`);
 
