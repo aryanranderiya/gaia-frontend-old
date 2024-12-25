@@ -6,6 +6,8 @@ import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import { Button } from "@nextui-org/button";
 
+// atom-one-dark
+
 interface MarkdownRendererProps {
   content: string;
 }
@@ -50,13 +52,17 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             language={match[1]}
             PreTag="div"
             className="m-0"
+            showLineNumbers
             {...props}
           >
             {String(children).replace(/\n$/, "")}
           </SyntaxHighlighter>
         </div>
       ) : (
-        <code className={className} {...props}>
+        <code
+          className={className + " bg-black bg-opacity-40 rounded-sm"}
+          {...props}
+        >
           {children}
         </code>
       )}

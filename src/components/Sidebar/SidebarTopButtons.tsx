@@ -7,8 +7,9 @@ import {
   DiscoverCircleIcon,
   Route02Icon,
   StickyNote01Icon,
-  // PinIcon,
+  PinIcon,
 } from "../icons";
+import { SearchIcon } from "lucide-react";
 
 export default function SidebarTopButtons() {
   const navigate = useNavigate();
@@ -20,11 +21,16 @@ export default function SidebarTopButtons() {
       icon: <DiscoverCircleIcon width={27} height={27} />,
       label: "Explore",
     },
-    // {
-    //   route: "/try/pins",
-    //   icon: <PinIcon width={27} height={27} />,
-    //   label: "Pins",
-    // },
+    {
+      route: "/try/search",
+      icon: <SearchIcon width={27} height={27} />,
+      label: "Search",
+    },
+    {
+      route: "/try/pins",
+      icon: <PinIcon width={27} height={27} />,
+      label: "Pins",
+    },
     {
       route: "/try/calendar",
       icon: <CalendarIcon width={27} height={27} />,

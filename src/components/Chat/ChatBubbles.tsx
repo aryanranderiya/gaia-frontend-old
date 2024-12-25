@@ -86,7 +86,7 @@ export function ChatBubbleBot({
     if (isImage) {
       setComponent(
         <>
-          <div className="chat_bubble bg-zinc-800">
+          <div className="chat_bubble bg-zinc-800 ">
             <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
               <span>{text}</span>
               <Skeleton

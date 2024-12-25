@@ -69,11 +69,12 @@ export const ApiService = {
       body: JSON.stringify({
         message: inputText,
         messages: convoMessages
-          .slice(-6)
+          .slice(-10)
           .filter(({ response }) => response.length > 0)
-          .map(({ type, response }) => ({
+          // .filter(({ type }) => type == "user")
+          .map(({ type, response }, index, array) => ({
             role: type,
-            content: response.slice(0, 1000),
+            content: `mostRecent: ${index === array.length - 1} ${response}`,
           })),
       }),
       onmessage(event) {

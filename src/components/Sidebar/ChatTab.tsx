@@ -46,7 +46,9 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
         />
       }
     >
-      <span className="truncate w-[200px] text-left">{name}</span>
+      <span className="truncate w-[200px] text-left">
+        {name.replace('"', "")}
+      </span>
     </Button>
   );
 };

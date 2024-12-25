@@ -1,3 +1,10 @@
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import SuspenseLoader from "@/components/SuspenseLoader";
+import WebsiteName from "@/components/TopWebsiteName";
+import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
+import { ConversationListProvider } from "@/contexts/ConversationList";
+import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
+import { ReactFlowProvider } from "@xyflow/react";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   Navigate,
@@ -8,13 +15,7 @@ import {
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import WebsiteName from "@/components/TopWebsiteName";
-import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
-import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
-import { ReactFlowProvider } from "@xyflow/react";
-import { ConversationListProvider } from "@/contexts/ConversationList";
-import SuspenseLoader from "@/components/SuspenseLoader";
+import SearchPage from "./Search";
 
 // Lazy load the components
 const MainChat = lazy(() => import("./MainChat"));
@@ -24,9 +25,6 @@ const Pins = lazy(() => import("./Pins"));
 const Notes = lazy(() => import("./Notes"));
 const Goals = lazy(() => import("./Goals"));
 const GoalPage = lazy(() => import("./GoalPage"));
-const ComprehensiveMessageHistory = lazy(
-  () => import("@/components/comprehensive-message-history")
-);
 
 export default function MainInterface() {
   const location = useLocation();
@@ -97,10 +95,7 @@ export default function MainInterface() {
                   <Route path="chat" element={<MainChat />} />
                   <Route path="explore" element={<Explore />} />
                   <Route path="calendar" element={<Calendar />} />
-                  <Route
-                    path="search"
-                    element={<ComprehensiveMessageHistory />}
-                  />
+                  <Route path="search" element={<SearchPage />} />
                   <Route path="pins" element={<Pins />} />
                   <Route path="memories" element={<Notes />} />
                   <Route path="goals" element={<Goals />} />
