@@ -6,16 +6,15 @@ import { ZoomSlider } from "@/components/zoom-slider";
 import { Chip } from "@nextui-org/chip";
 import {
   ConnectionLineType,
+  Edge,
   Handle,
+  Node,
   Position,
   ReactFlow,
   ReactFlowInstance,
-  Node,
-  Edge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
-import { Book } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -69,8 +68,6 @@ const CustomNode = React.memo(
     >;
     setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
-    console.log(data);
-
     return (
       <>
         <Handle type="target" position={Position.Top} />
@@ -128,8 +125,11 @@ export default function GoalPage() {
       setLoading(true);
       const response = await apiauth.get(`/goals/${goalId}`);
       const goal = response.data;
+      console.log(goal?.roadmap);
 
       if (goal?.roadmap) {
+        console.log("this is a test");
+
         setGoalData(goal);
         setLoading(false);
 
@@ -159,11 +159,36 @@ export default function GoalPage() {
 
         setNodes(updatedNodes || []);
         setEdges(goal.roadmap.edges || []);
+      } else {
+        console.log("initialising roadmap web socket");
+        initiateWebSocket(goalId, goal.title);
       }
     } catch (error) {
       console.error("Goal fetch error:", error);
       setGoalData(null);
     }
+  };
+
+  const initiateWebSocket = (goalId: string, goalTitle: string) => {
+    const ws = new WebSocket(`${import.meta.env.VITE_BACKEND_URL}ws/roadmap`);
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ goal_id: goalId, goal_title: goalTitle }));
+      console.log("WebSocket: Generating roadmap...");
+    };
+
+    ws.onmessage = (event) => {
+      const jsonData = event.data.replace(/^data: /, "");
+      const parsedData = JSON.parse(jsonData) || jsonData;
+      console.log("Parsed WebSocket response:", parsedData);
+    };
+
+    ws.onerror = (error) => console.error("WebSocket error:", error);
+    ws.onclose = () => {
+      console.log("WebSocket closed.");
+      fetchGoalData();
+      setLoading(false);
+    };
   };
 
   useEffect(() => {
