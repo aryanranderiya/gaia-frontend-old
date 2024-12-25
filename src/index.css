@@ -28,9 +28,9 @@
   }
 }
 
-* {
+/* * {
   user-select: none;
-}
+} */
 
 *::selection {
   color: #00bbff;

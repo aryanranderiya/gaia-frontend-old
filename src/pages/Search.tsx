@@ -5,7 +5,27 @@ import * as React from "react";
 export default function SearchPage({}) {
   const [currentHeight, setHeight] = React.useState<number>(24);
   const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [searchResults, setSearchResults] = React.useState<any[]>([]);
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  const socketRef = React.useRef<WebSocket | null>(null);
+
+  React.useEffect(() => {
+    // Initialize WebSocket connection
+    socketRef.current = new WebSocket("ws://localhost:8000/ws/search");
+
+    socketRef.current.onmessage = (event) => {
+      const results = JSON.parse(event.data);
+      setSearchResults(results);
+    };
+
+    socketRef.current.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    return () => {
+      socketRef.current?.close();
+    };
+  }, []);
 
   const focusInput = () => {
     setTimeout(() => {
@@ -17,7 +37,7 @@ export default function SearchPage({}) {
     if (e) e.preventDefault();
     if (!searchQuery) return;
     console.log("Search query submitted:", searchQuery);
-    setSearchQuery("");
+    socketRef.current?.send(searchQuery);
     focusInput();
   };
 
@@ -33,6 +53,13 @@ export default function SearchPage({}) {
     }
   };
 
+  const handleInputChange = (query: string) => {
+    setSearchQuery(query);
+    if (socketRef.current && query) {
+      socketRef.current.send(query);
+    }
+  };
+
   return (
     <div className="searchpage_container relative">
       <div className="searchpage">
@@ -41,7 +68,7 @@ export default function SearchPage({}) {
             radius="full"
             size="lg"
             placeholder="Search for a message..."
-            onValueChange={setSearchQuery}
+            onValueChange={handleInputChange}
             onKeyDown={handleKeyDown}
             value={searchQuery}
             ref={inputRef}
@@ -58,11 +85,17 @@ export default function SearchPage({}) {
               }`,
             }}
             className="max-w-[500px] min-w-[500px] w-[50vw]"
-            // startContent={<SearchbarLeftDropdown />}
           />
         </form>
         <div className="flex w-full justify-end text-sm mt-1 text-gray-500">
           {searchQuery.length}/1000 words
+        </div>
+        <div className="search-results mt-4">
+          {searchResults.map((result, index) => (
+            <div key={index} className="result-item p-2 border-b">
+              {result.text}
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -4,17 +4,17 @@ import { GoalData } from "@/pages/GoalPage";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import {
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/dropdown";
 import {
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
 } from "@nextui-org/react";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -80,10 +80,10 @@ export function GoalCard({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full">
-        <div className="font-medium text-xl flex items-center gap-1 w-full relative group">
+      <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full group">
+        <div className="font-medium text-xl flex items-center gap-1 w-full relative ">
           <Target04Icon width={20} height={20} />
-          <span className="truncate w-[90%]">
+          <span className="truncate w-[85%]">
             {goal?.roadmap?.title || goal.title}
           </span>
 
@@ -94,7 +94,7 @@ export function GoalCard({
               }}
             >
               <DropdownTrigger>
-                <Button variant="light" isIconOnly>
+                <Button variant="flat" isIconOnly>
                   <DotsVerticalIcon />
                 </Button>
               </DropdownTrigger>
