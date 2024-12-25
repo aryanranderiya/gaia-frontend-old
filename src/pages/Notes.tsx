@@ -82,7 +82,7 @@ export default function Notes() {
             <div className="flex flex-wrap gap-4">
               {notes.length > 0 &&
                 notes?.map((note, index) => (
-                  <NoteCard key={index} note={note} />
+                  <NoteCard key={index} note={note} onDelete={deleteNote} />
                 ))}
             </div>
           </div>
