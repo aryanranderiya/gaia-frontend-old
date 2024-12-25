@@ -175,7 +175,7 @@ export default function Notes() {
     },
   ]);
 
-  const [categories, setCategories] = useState<string[]>([
+  const categories = [
     "Groceries",
     "Leisure",
     "Reading",
@@ -209,7 +209,7 @@ export default function Notes() {
     "Planning",
     "Safety",
     "Internet",
-  ]);
+  ];
 
   const addNote = (note: Note) => {
     setNotes((prevNotes) => [...prevNotes, note]);

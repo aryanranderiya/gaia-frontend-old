@@ -1,6 +1,6 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 import Hr from "@/components/HorizontalRuler";
-import { GlobalIcon, Target04Icon } from "@/components/icons";
+import { GlobalIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
@@ -9,7 +9,6 @@ import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
 import { StarsIcon } from "lucide-react";
 import { LegacyRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({
   sidebarref,

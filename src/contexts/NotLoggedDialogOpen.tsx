@@ -1,9 +1,23 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
-export const NotLoggedDialogOpenContext = createContext();
+interface NotLoggedDialogOpenContextType {
+  notLoggedDialogOpen: boolean;
+  setNotLoggedDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export const NotLoggedDialogOpenProvider = ({ children }) => {
-  const [notLoggedDialogOpen, setNotLoggedDialogOpen] = useState(false);
+const NotLoggedDialogOpenContext = createContext<
+  NotLoggedDialogOpenContextType | undefined
+>(undefined);
+
+interface NotLoggedDialogOpenProviderProps {
+  children: ReactNode;
+}
+
+export const NotLoggedDialogOpenProvider: React.FC<
+  NotLoggedDialogOpenProviderProps
+> = ({ children }) => {
+  const [notLoggedDialogOpen, setNotLoggedDialogOpen] =
+    useState<boolean>(false);
 
   return (
     <NotLoggedDialogOpenContext.Provider
@@ -14,6 +28,12 @@ export const NotLoggedDialogOpenProvider = ({ children }) => {
   );
 };
 
-export const useNotLoggedDialogOpen = () => {
-  return useContext(NotLoggedDialogOpenContext);
+export const useNotLoggedDialogOpen = (): NotLoggedDialogOpenContextType => {
+  const context = useContext(NotLoggedDialogOpenContext);
+  if (!context) {
+    throw new Error(
+      "useNotLoggedDialogOpen must be used within a NotLoggedDialogOpenProvider"
+    );
+  }
+  return context;
 };

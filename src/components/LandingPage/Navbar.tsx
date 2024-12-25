@@ -20,7 +20,6 @@ import {
 } from "../Shadcn/Sheet";
 import WaitListButton from "./WaitlistModal";
 import { apiauth } from "@/apiaxios";
-import FeedbackFormBtn from "../FeedbackForm/FeedbackFormBtn";
 
 export default function Navbar() {
   const { user, setUserData } = useUser();
@@ -132,15 +131,6 @@ export default function Navbar() {
           </Sheet>
         ) : (
           <div className="flex items-center gap-1">
-            <FeedbackFormBtn
-              props={{
-                size: "md",
-                color: "default",
-                variant: "light",
-              }}
-              text="Survey"
-            />
-
             {user ? (
               <Button
                 variant="shadow"

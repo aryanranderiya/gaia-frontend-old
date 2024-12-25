@@ -1,7 +1,5 @@
-import React from "react";
 import { ArrowLeft, HomeIcon } from "lucide-react";
-import { Button } from "@nextui-org/button";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;

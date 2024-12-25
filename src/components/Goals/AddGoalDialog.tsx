@@ -9,7 +9,6 @@ import {
 } from "@nextui-org/modal";
 import { Send } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate for navigation in React Router v6
 
 export default function AddGoalDialog({
   openDialog,

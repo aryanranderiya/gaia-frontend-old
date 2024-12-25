@@ -16,13 +16,13 @@ import { Button } from "@nextui-org/button";
 // Define props type for the MicrophoneBtn component
 interface MicrophoneBtnProps {
   loading: boolean;
-  onTranscriptionComplete: (transcript: string) => void;
+  // onTranscriptionComplete: (transcript: string) => void;
 }
 
 export default function MicrophoneBtn({
   loading,
-  onTranscriptionComplete,
-}: MicrophoneBtnProps) {
+}: // onTranscriptionComplete,
+MicrophoneBtnProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [transcript, setTranscript] = useState<string>("");
@@ -92,7 +92,7 @@ export default function MicrophoneBtn({
 
   const handleSubmit = () => {
     stopRecording();
-    onTranscriptionComplete(transcript);
+    // onTranscriptionComplete(transcript);
     setOpen(false);
   };
 

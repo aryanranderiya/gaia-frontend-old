@@ -57,9 +57,11 @@ export function ChatBubbleUser({
           )}
         </div>
         <div className="flex justify-end">
-          <span className="text-xs text-white text-opacity-45 flex flex-col select-text pt-[2px]">
-            {parseDate(date)}
-          </span>
+          {date && (
+            <span className="text-xs text-white text-opacity-45 flex flex-col select-text pt-[2px]">
+              {parseDate(date)}
+            </span>
+          )}
         </div>
       </div>
     )
@@ -120,9 +122,11 @@ export function ChatBubbleBot({
               )}
             </div>
           </div>
-          <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
-            {parseDate(date)}
-          </span>
+          {date && (
+            <span className="text-xs text-white text-opacity-40 flex flex-col select-text pt-1">
+              {parseDate(date)}
+            </span>
+          )}
         </>
       );
     } else {
@@ -142,9 +146,11 @@ export function ChatBubbleBot({
               )}
             </div>
           </div>
-          <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
-            {parseDate(date)}
-          </span>
+          {date && (
+            <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
+              {parseDate(date)}
+            </span>
+          )}
         </>
       );
     }

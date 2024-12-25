@@ -5,7 +5,6 @@ import ImagePreview from "@/components/LandingPage/ImagePreview";
 import TextInformation from "@/components/LandingPage/TextInformation";
 import WaitListButton from "@/components/LandingPage/WaitlistModal";
 import MadeBy from "@/components/LandingPage/MadeBy";
-import FeedbackFormBtn from "@/components/FeedbackForm/FeedbackFormBtn";
 import FeatureList from "@/components/LandingPage/FeatureList";
 
 export default function LandingPage() {
@@ -15,24 +14,6 @@ export default function LandingPage() {
         <div className="landing_page">
           <MainInfo />
           <ImagePreview />
-
-          <TextInformation
-            title={"We're Looking for Feedback!"}
-            description={[
-              "Help us create the perfect AI assistant for you!",
-              "Your feedback will be invaluable towards creating an assistant tailored to your needs.!",
-            ]}
-            button={
-              <FeedbackFormBtn
-                props={{
-                  size: "lg",
-                  color: "primary",
-                  variant: "shadow",
-                  radius: "md",
-                }}
-              />
-            }
-          />
 
           <FeatureList />
 
