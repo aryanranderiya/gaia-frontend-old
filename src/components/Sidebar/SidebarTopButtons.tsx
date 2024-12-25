@@ -31,9 +31,9 @@ export default function SidebarTopButtons() {
       label: "Calendar",
     },
     {
-      route: "/try/notes",
+      route: "/try/memories",
       icon: <StickyNote01Icon width={27} height={27} />,
-      label: "Notes",
+      label: "Memories",
     },
     {
       route: "/try/goals",

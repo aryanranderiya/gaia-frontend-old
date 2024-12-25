@@ -1,249 +1,13 @@
 import { apiauth } from "@/apiaxios";
 import AddGoalDialog from "@/components/Goals/AddGoalDialog";
-import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
+import { GoalCard } from "@/components/Goals/GoalCard";
+import { Target04Icon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/dropdown";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@nextui-org/react";
 import { Spinner } from "@nextui-org/spinner";
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoalData } from "./GoalPage";
 
-export function GoalCard({
-  goal,
-  fetchGoals,
-}: {
-  goal: GoalData;
-  fetchGoals: () => void;
-}) {
-  const navigate = useNavigate();
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-  async function deleteGoal(goalId: string) {
-    try {
-      const response = await apiauth.delete(`/goals/${goalId}`);
-      console.log("Goal deleted successfully:", response.data);
-      fetchGoals();
-    } catch (error) {
-      console.error("Error deleting goal:", error);
-    }
-  }
-
-  const handleDelete = () => {
-    deleteGoal(goal?.id);
-    setOpenDeleteDialog(false);
-  };
-
-  return (
-    <>
-      <Modal
-        isOpen={openDeleteDialog}
-        onOpenChange={setOpenDeleteDialog}
-        className="dark text-foreground"
-      >
-        <ModalContent>
-          <ModalHeader className="inline-block">
-            Are you sure you want to delete the roadmap titled
-            <span className="ml-1 font-normal text-primary-500">
-              {goal?.roadmap?.title || goal.title}
-            </span>
-            <span className="ml-1">?</span>
-          </ModalHeader>
-
-          <ModalBody>
-            <p className="text-danger-400 font-medium">
-              This action cannot be undone.
-            </p>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              color="danger"
-              variant="light"
-              onPress={() => setOpenDeleteDialog(false)}
-            >
-              Close
-            </Button>
-            <Button color="primary" onPress={handleDelete}>
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full">
-        <div className="font-medium text-xl flex items-center gap-1 w-full relative group">
-          <Target04Icon width={20} height={20} />
-          <span className="truncate w-[90%]">
-            {goal?.roadmap?.title || goal.title}
-          </span>
-
-          <div className="absolute -right-2 group-hover:opacity-100 opacity-0 transition-opacity dark">
-            <Dropdown
-              classNames={{
-                content: "bg-zinc-900",
-              }}
-            >
-              <DropdownTrigger>
-                <Button variant="light" isIconOnly>
-                  <DotsVerticalIcon />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions" className="dark">
-                <DropdownItem
-                  key="delete"
-                  className="text-danger"
-                  color="danger"
-                  onPress={() => setOpenDeleteDialog(true)}
-                >
-                  Delete Roadmap
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        </div>
-
-        <Chip
-          size="sm"
-          variant="flat"
-          color={
-            !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
-              ? "warning"
-              : goal.progress === 100
-              ? "success"
-              : goal.progress > 0
-              ? "primary"
-              : "warning"
-          }
-          className="mt-2"
-        >
-          {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
-            ? "Not Started"
-            : goal.progress === 100
-            ? "Completed"
-            : goal.progress > 0
-            ? "In Progress"
-            : "Not Started"}
-        </Chip>
-
-        <div className="my-3 flex items-center gap-2 justify-between">
-          <div className="bg-black h-3 rounded-full relative w-[100%]">
-            <div
-              style={{ width: `${goal?.progress || 0}%` }}
-              className={`absolute left-0 bg-[#00bbff] top-0 h-3 rounded-full`}
-            />
-          </div>
-          <span className="text-xs">{goal?.progress || 0}%</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="text-foreground-500 flex text-sm items-center gap-1 mt-2">
-            <CalendarSimpleIcon width={20} />
-            {new Intl.DateTimeFormat("en-GB", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "2-digit",
-            }).format(new Date(goal?.created_at))}
-          </div>
-          <Button
-            size="sm"
-            color="primary"
-            variant="flat"
-            onPress={() => navigate(`./${goal.id}`)}
-          >
-            View Goal
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-}
-
-// [
-//   {
-//     id: "goal001",
-//     title: "Read 10 pages of a book every day",
-//     description: "Develop a habit of reading to improve knowledge and focus.",
-//     createdAt: new Date().toISOString(),
-//     progress: 20,
-//   },
-//   {
-//     id: "goal002",
-//     title: "Run a 5k marathon",
-//     description:
-//       "Train regularly to build endurance and achieve fitness goals.",
-//     createdAt: new Date().toISOString(),
-//     progress: 45,
-//   },
-//   {
-//     id: "goal003",
-//     title: "Launch a personal blog",
-//     description: "Create a platform to share ideas, tutorials, and stories.",
-//     createdAt: new Date().toISOString(),
-//     progress: 70,
-//   },
-//   {
-//     id: "goal004",
-//     title: "Save $1000 in an emergency fund",
-//     description: "Build financial security by saving consistently each month.",
-//     createdAt: new Date().toISOString(),
-//     progress: 55,
-//   },
-//   {
-//     id: "goal005",
-//     title: "Learn to cook 5 new recipes",
-//     description: "Expand culinary skills by trying diverse cuisines.",
-//     createdAt: new Date().toISOString(),
-//     progress: 30,
-//   },
-//   {
-//     id: "goal006",
-//     title: "Complete a 30-day yoga challenge",
-//     description:
-//       "Improve flexibility and mindfulness with daily yoga practice.",
-//     createdAt: new Date().toISOString(),
-//     progress: 10,
-//   },
-//   {
-//     id: "goal007",
-//     title: "Master basic photography skills",
-//     description: "Learn to capture and edit stunning photos using a DSLR.",
-//     createdAt: new Date().toISOString(),
-//     progress: 60,
-//   },
-//   {
-//     id: "goal008",
-//     title: "Declutter the entire house",
-//     description: "Organize living spaces to improve productivity and clarity.",
-//     createdAt: new Date().toISOString(),
-//     progress: 80,
-//   },
-//   {
-//     id: "goal009",
-//     title: "Learn a new programming language",
-//     description: "Expand technical skills by mastering Python or TypeScript.",
-//     createdAt: new Date().toISOString(),
-//     progress: 35,
-//   },
-//   {
-//     id: "goal010",
-//     title: "Plant and grow a vegetable garden",
-//     description: "Grow fresh, organic vegetables in the backyard.",
-//     createdAt: new Date().toISOString(),
-//     progress: 15,
-//   },
-// ];
 export default function Goals() {
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -285,7 +49,15 @@ export default function Goals() {
     <>
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
-          <h1 className="font-bold text-center text-5xl pb-6">Roadmaps</h1>
+          <div className="flex items-center flex-col gap-2">
+            <h1 className="font-bold text-center text-5xl">Roadmaps</h1>
+            <h5 className=" text-center text-md pb-6 max-w-screen-md">
+              A tool that instantly generates personalized goal roadmaps from a
+              single prompt, helping you plan and track your objectives
+              efficiently.
+            </h5>
+          </div>
+
           <div className="flex flex-wrap gap-4 justify-center pb-8 dark">
             {goals.length > 0 ? (
               goals.map((goal, index) => (

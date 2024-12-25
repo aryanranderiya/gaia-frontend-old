@@ -11,6 +11,7 @@ import { Eraser } from "lucide-react";
 import { ApiService } from "@/utils/chatUtils";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useNavigate } from "react-router-dom";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface MenuItem {
   key: string;
@@ -23,6 +24,7 @@ export default function SettingsMenu() {
   const { logout } = useUser();
   const navigate = useNavigate();
   const { fetchConversations } = useConversationList();
+  const { setConvoMessages } = useConvo();
 
   const items: MenuItem[] = [
     {
@@ -36,7 +38,8 @@ export default function SettingsMenu() {
       action: async () => {
         navigate("/try/chat");
         await ApiService.deleteAllConversations();
-        fetchConversations();
+        await fetchConversations();
+        setConvoMessages([]);
       },
     },
 

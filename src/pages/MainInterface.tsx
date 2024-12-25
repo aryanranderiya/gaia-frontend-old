@@ -1,10 +1,4 @@
-import Calendar from "@/components/Calendar/Calendar";
-import { ComprehensiveMessageHistory } from "@/components/comprehensive-message-history";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import WebsiteName from "@/components/TopWebsiteName";
-import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
-import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   Navigate,
   Route,
@@ -14,14 +8,25 @@ import {
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
-import Explore from "./Explore";
-import GoalPage from "./GoalPage";
-import Goals from "./Goals";
-import MainChat from "./MainChat";
-import Notes from "./Notes";
-import Pins from "./Pins";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import WebsiteName from "@/components/TopWebsiteName";
+import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
+import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
 import { ReactFlowProvider } from "@xyflow/react";
 import { ConversationListProvider } from "@/contexts/ConversationList";
+import SuspenseLoader from "@/components/SuspenseLoader";
+
+// Lazy load the components
+const MainChat = lazy(() => import("./MainChat"));
+const Explore = lazy(() => import("./Explore"));
+const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
+const ComprehensiveMessageHistory = lazy(
+  () => import("@/components/comprehensive-message-history")
+);
+const Pins = lazy(() => import("./Pins"));
+const Notes = lazy(() => import("./Notes"));
+const Goals = lazy(() => import("./Goals"));
+const GoalPage = lazy(() => import("./GoalPage"));
 
 export default function MainInterface() {
   const location = useLocation();
@@ -86,28 +91,30 @@ export default function MainInterface() {
               </div>
               <WebsiteName />
 
-              <Routes>
-                <Route path="chat/:convoIdParam" element={<MainChat />} />
-                <Route path="chat" element={<MainChat />} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="calendar" element={<Calendar />} />
-                <Route
-                  path="search"
-                  element={<ComprehensiveMessageHistory />}
-                />
-                <Route path="pins" element={<Pins />} />
-                <Route path="notes" element={<Notes />} />
-                <Route path="goals" element={<Goals />} />
-                <Route
-                  path="goals/:goalId"
-                  element={
-                    <ReactFlowProvider>
-                      <GoalPage />
-                    </ReactFlowProvider>
-                  }
-                />
-                <Route path="*" element={<Navigate to="/404" />} />
-              </Routes>
+              <Suspense fallback={<SuspenseLoader />}>
+                <Routes>
+                  <Route path="chat/:convoIdParam" element={<MainChat />} />
+                  <Route path="chat" element={<MainChat />} />
+                  <Route path="explore" element={<Explore />} />
+                  <Route path="calendar" element={<Calendar />} />
+                  <Route
+                    path="search"
+                    element={<ComprehensiveMessageHistory />}
+                  />
+                  <Route path="pins" element={<Pins />} />
+                  <Route path="memories" element={<Notes />} />
+                  <Route path="goals" element={<Goals />} />
+                  <Route
+                    path="goals/:goalId"
+                    element={
+                      <ReactFlowProvider>
+                        <GoalPage />
+                      </ReactFlowProvider>
+                    }
+                  />
+                  <Route path="*" element={<Navigate to="/404" />} />
+                </Routes>
+              </Suspense>
             </div>
           </div>
         </ConvoProvider>

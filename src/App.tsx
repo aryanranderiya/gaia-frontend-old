@@ -1,17 +1,23 @@
-import MainInterface from "./pages/MainInterface";
-import Landing from "./layouts/Landing";
+import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import NotLoggedIn from "@/components/NotLoggedInDialog";
 import { UserProvider } from "./contexts/UserContext";
+import SuspenseLoader from "./components/SuspenseLoader";
+
+// Lazy load components
+const MainInterface = lazy(() => import("./pages/MainInterface"));
+const Landing = lazy(() => import("./layouts/Landing"));
+const NotLoggedIn = lazy(() => import("@/components/NotLoggedInDialog"));
 
 function App() {
   return (
     <UserProvider>
-      <NotLoggedIn />
-      <Routes>
-        <Route path="/try/*" element={<MainInterface />} />
-        <Route path="/*" element={<Landing />} />
-      </Routes>
+      <Suspense fallback={<SuspenseLoader />}>
+        <NotLoggedIn />
+        <Routes>
+          <Route path="/try/*" element={<MainInterface />} />
+          <Route path="/*" element={<Landing />} />
+        </Routes>
+      </Suspense>
     </UserProvider>
   );
 }
