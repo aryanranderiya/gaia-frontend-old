@@ -8,8 +8,8 @@ import {
   ModalBody,
   ModalFooter,
 } from "@nextui-org/modal";
-import Lottie from "react-lottie";
-import recordingAnimation from "../lotties/recording.json";
+// import Lottie from "react-lottie";
+// import recordingAnimation from "../lotties/recording.json";
 import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@nextui-org/button";
 
@@ -126,7 +126,7 @@ MicrophoneBtnProps) {
           <ModalBody className="flex flex-col items-center space-y-4">
             {isRecording && (
               <div className="lottie_container">
-                <Lottie
+                {/* <Lottie
                   options={{
                     loop: true,
                     autoplay: true,
@@ -137,8 +137,8 @@ MicrophoneBtnProps) {
                   }}
                   isClickToPauseDisabled={true}
                   height={50}
-                  width={100}
-                />
+                  width={100} */}
+                {/* /> */}
               </div>
             )}
             <div className="w-full p-4 bg-gray-800 rounded-md min-h-[100px] max-h-[200px] overflow-y-auto">
