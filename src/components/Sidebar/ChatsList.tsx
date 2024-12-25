@@ -5,7 +5,6 @@ import { Button } from "@nextui-org/button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChatTab } from "./ChatTab";
-import { ScrollArea } from "../ui/scroll-area";
 
 export default function ChatsList() {
   const navigate = useNavigate();

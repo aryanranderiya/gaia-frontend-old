@@ -4,6 +4,8 @@ import { Button } from "@nextui-org/button";
 // import { Spinner } from "@nextui-org/spinner";
 
 export default function TextToSpeech({ text }: { text: string }) {
+  console.log(text);
+
   // const [loading, setLoading] = React.useState(false);
   // const [isPaused, setIsPaused] = React.useState(false);
   // const [isPlaying, setIsPlaying] = React.useState(false);

@@ -1,13 +1,12 @@
-import * as React from "react";
-import { NoteDoneIcon, Cancel01Icon, SentIcon } from "../icons";
-import { Spinner } from "@nextui-org/spinner";
+// import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
-import { PdfContainer } from "./PdfComponent";
+import { Spinner } from "@nextui-org/spinner";
+import imageCompression from "browser-image-compression";
+import * as React from "react";
 import { toast } from "sonner";
 import api from "../../apiaxios";
-import imageCompression from "browser-image-compression";
-import fetchDate from "../Chat/fetchDate";
+import { Cancel01Icon, NoteDoneIcon, SentIcon } from "../icons";
 import {
   Dialog,
   DialogContent,
@@ -15,32 +14,32 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../Shadcn/Dialog";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { PdfContainer } from "./PdfComponent";
 
 interface FileUploadProps {
   isImage: boolean;
   fileInputRef: React.RefObject<HTMLInputElement>;
 }
 
-interface ConversationItem {
-  type: "user" | "bot";
-  response: string;
-  subtype?: "image" | "pdf";
-  file?: string | File;
-  date: string;
-  filename?: string;
-  loading?: boolean;
-  disclaimer?: string;
-}
+// interface ConversationItem {
+//   type: "user" | "bot";
+//   response: string;
+//   subtype?: "image" | "pdf";
+//   file?: string | File;
+//   date: string;
+//   filename?: string;
+//   loading?: boolean;
+//   disclaimer?: string;
+// }
 
 export default function FileUpload({
   isImage,
   fileInputRef,
 }: FileUploadProps): JSX.Element {
-  const {
-    convoHistory: conversationHistory,
-    setConvoHistory: setConversationHistory,
-  } = useConvoHistory();
+  // const {
+  //   convoHistory: conversationHistory,
+  //   setConvoHistory: setConversationHistory,
+  // } = useConvoHistory();
 
   const [file, setFile] = React.useState<File | null>(null);
   const [fileLoading, setFileLoading] = React.useState<boolean>(false);
@@ -86,22 +85,22 @@ export default function FileUpload({
     }
   };
 
-  function updateWithResponse(): void {
-    if (conversationHistory.length > 0 && !!botResponse) {
-      const updatedHistory = [...conversationHistory];
-      const lastItemIndex = updatedHistory.length - 1;
-      const lastItem = updatedHistory[lastItemIndex];
+  // function updateWithResponse(): void {
+  //   if (conversationHistory.length > 0 && !!botResponse) {
+  //     const updatedHistory = [...conversationHistory];
+  //     const lastItemIndex = updatedHistory.length - 1;
+  //     const lastItem = updatedHistory[lastItemIndex];
 
-      if (lastItem.type === "bot") {
-        lastItem.response = botResponse;
-        lastItem.loading = false;
-        setConversationHistory(updatedHistory);
-      }
-    }
-  }
+  //     if (lastItem.type === "bot") {
+  //       lastItem.response = botResponse;
+  //       lastItem.loading = false;
+  //       setConversationHistory(updatedHistory);
+  //     }
+  //   }
+  // }
 
   React.useEffect(() => {
-    updateWithResponse();
+    // updateWithResponse();
   }, [botResponse]);
 
   const submitForm = async (): Promise<void> => {
@@ -110,24 +109,24 @@ export default function FileUpload({
 
     closeModal();
     setOpen(false);
-    setConversationHistory((prevHistory: ConversationItem[]) => [
-      ...prevHistory,
-      {
-        type: "user",
-        response: textContent,
-        subtype: isImage ? "image" : "pdf",
-        file: isImage && file ? URL.createObjectURL(file) : file,
-        date: fetchDate(),
-        filename: file?.name,
-      },
-      {
-        type: "bot",
-        loading: true,
-        disclaimer: "GAIA can make mistakes. Check important info.",
-        date: fetchDate(),
-        response: "",
-      },
-    ]);
+    // setConversationHistory((prevHistory: ConversationItem[]) => [
+    //   ...prevHistory,
+    //   {
+    //     type: "user",
+    //     response: textContent,
+    //     subtype: isImage ? "image" : "pdf",
+    //     file: isImage && file ? URL.createObjectURL(file) : file,
+    //     date: fetchDate(),
+    //     filename: file?.name,
+    //   },
+    //   {
+    //     type: "bot",
+    //     loading: true,
+    //     disclaimer: "GAIA can make mistakes. Check important info.",
+    //     date: fetchDate(),
+    //     response: "",
+    //   },
+    // ]);
 
     if (!file) return;
 

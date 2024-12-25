@@ -38,18 +38,18 @@ export default function Notes() {
   };
 
   // Update a note
-  const updateNote = async (id: string, updatedNote: Partial<Note>) => {
-    try {
-      const response = await apiauth.put(`/notes/${id}`, updatedNote);
-      setNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.id === id ? { ...note, ...response?.data } : note
-        )
-      );
-    } catch (error) {
-      console.error("Error updating note:", error);
-    }
-  };
+  // const updateNote = async (id: string, updatedNote: Partial<Note>) => {
+  //   try {
+  //     const response = await apiauth.put(`/notes/${id}`, updatedNote);
+  //     setNotes((prevNotes) =>
+  //       prevNotes.map((note) =>
+  //         note.id === id ? { ...note, ...response?.data } : note
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating note:", error);
+  //   }
+  // };
 
   // Delete a note
   const deleteNote = async (id: string) => {

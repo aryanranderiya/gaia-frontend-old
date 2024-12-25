@@ -97,7 +97,7 @@ export default function GenerateImage({
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
-      await ApiService.createConversation(convoID, initialMessages[0]);
+      await ApiService.createConversation(convoID);
       await updateConversationState(convoID, initialMessages, "Generate Image");
       navigate(`/try/chat/${convoID}`);
       return convoID;

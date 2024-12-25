@@ -25,7 +25,7 @@ import {
   ChevronLeft,
   Paperclip,
   Search,
-  User
+  User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -126,7 +126,7 @@ const allMessages: Message[] = [
   },
 ];
 
-export function ComprehensiveMessageHistory() {
+export default function ComprehensiveMessageHistory() {
   const [searchQuery, setSearchQuery] = useState("''");
   const [filteredMessages, setFilteredMessages] = useState(allMessages);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -264,12 +264,20 @@ export function ComprehensiveMessageHistory() {
                     </div>
                   ) : null}
                   <div
-                    className={`p-4 ${message.sender === "'user'" ? "'bg-blue-50'" : "'bg-white'"} cursor-pointer hover:bg-gray-100`}
+                    className={`p-4 ${
+                      message.sender === "'user'"
+                        ? "'bg-blue-50'"
+                        : "'bg-white'"
+                    } cursor-pointer hover:bg-gray-100`}
                     onClick={() => handleMessageClick(message)}
                   >
                     <div className="flex items-start gap-3">
                       <div
-                        className={`rounded-full p-2 ${message.sender === "'user'" ? "'bg-blue-500'" : "'bg-gray-500'"}`}
+                        className={`rounded-full p-2 ${
+                          message.sender === "'user'"
+                            ? "'bg-blue-500'"
+                            : "'bg-gray-500'"
+                        }`}
                       >
                         {message.sender === "'user'" ? (
                           <User className="h-4 w-4 text-white" />
@@ -328,11 +336,23 @@ export function ComprehensiveMessageHistory() {
                       </div>
                     ) : null}
                     <div
-                      className={`p-4 ${message.sender === "'user'" ? "'bg-blue-50'" : "'bg-white'"} ${message.id === selectedMessage ? "'border-2 border-blue-500'" : "''"}`}
+                      className={`p-4 ${
+                        message.sender === "'user'"
+                          ? "'bg-blue-50'"
+                          : "'bg-white'"
+                      } ${
+                        message.id === selectedMessage
+                          ? "'border-2 border-blue-500'"
+                          : "''"
+                      }`}
                     >
                       <div className="flex items-start gap-3">
                         <div
-                          className={`rounded-full p-2 ${message.sender === "'user'" ? "'bg-blue-500'" : "'bg-gray-500'"}`}
+                          className={`rounded-full p-2 ${
+                            message.sender === "'user'"
+                              ? "'bg-blue-500'"
+                              : "'bg-gray-500'"
+                          }`}
                         >
                           {message.sender === "'user'" ? (
                             <User className="h-4 w-4 text-white" />

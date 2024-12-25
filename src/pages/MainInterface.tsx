@@ -20,13 +20,13 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 const MainChat = lazy(() => import("./MainChat"));
 const Explore = lazy(() => import("./Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
-const ComprehensiveMessageHistory = lazy(
-  () => import("@/components/comprehensive-message-history")
-);
 const Pins = lazy(() => import("./Pins"));
 const Notes = lazy(() => import("./Notes"));
 const Goals = lazy(() => import("./Goals"));
 const GoalPage = lazy(() => import("./GoalPage"));
+const ComprehensiveMessageHistory = lazy(
+  () => import("@/components/comprehensive-message-history")
+);
 
 export default function MainInterface() {
   const location = useLocation();

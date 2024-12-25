@@ -1,47 +1,18 @@
 import { apiauth } from "@/apiaxios";
-import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ZoomSlider } from "@/components/zoom-slider";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Checkbox } from "@nextui-org/checkbox";
 import { Chip } from "@nextui-org/chip";
 import {
   ConnectionLineType,
   Handle,
   Position,
-  ReactFlow,
-  ReactFlowInstance,
-  useReactFlow,
-  useViewport,
+  ReactFlow
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
-import { ChevronDown, Info, Plus } from "lucide-react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupAction,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 export interface GoalData {
   id: string;
@@ -82,27 +53,27 @@ export interface NodeData {
 export default function GoalPage() {
   const CustomNode = React.memo(({ data }: { data: NodeData }) => {
     const [isComplete, setIsComplete] = useState(data.isComplete);
-
+    setIsComplete(data.isComplete);
     // Memoizing the handleCheckboxClick function using useCallback
-    const handleCheckboxClick = useCallback(async () => {
-      const newIsComplete = !isComplete;
-      setIsComplete(newIsComplete);
+    // const handleCheckboxClick = useCallback(async () => {
+    //   const newIsComplete = !isComplete;
+    //   setIsComplete(newIsComplete);
 
-      try {
-        const response = await apiauth.patch(
-          `/goals/${data.goalId}/roadmap/nodes/${data.id}`,
-          { is_complete: newIsComplete }
-        );
+    //   try {
+    //     const response = await apiauth.patch(
+    //       `/goals/${data.goalId}/roadmap/nodes/${data.id}`,
+    //       { is_complete: newIsComplete }
+    //     );
 
-        console.log(response);
+    //     console.log(response);
 
-        // if (response.status !== 200)
-        //   throw new Error("Failed to update the node status");
-      } catch (error) {
-        console.error("Error while updating the node status:", error);
-        setIsComplete(!newIsComplete);
-      }
-    }, [data.goalId, data.id, isComplete]); // Add dependencies
+    //     // if (response.status !== 200)
+    //     //   throw new Error("Failed to update the node status");
+    //   } catch (error) {
+    //     console.error("Error while updating the node status:", error);
+    //     setIsComplete(!newIsComplete);
+    //   }
+    // }, [data.goalId, data.id, isComplete]);
 
     return (
       <>
@@ -199,9 +170,7 @@ export default function GoalPage() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [currentlySelectedNode, setCurrentlySelectedNode] =
     useState<NodeData>();
-  const { setViewport } = useReactFlow();
-  const { x, y, zoom } = useViewport();
-
+  nodes;
   const fetchGoalData = async () => {
     try {
       if (!goalId) return;
@@ -274,7 +243,7 @@ export default function GoalPage() {
     ws.onmessage = (event) => {
       const jsonData = event.data.replace(/^data: /, "");
       const parsedData = JSON.parse(jsonData) || jsonData;
-      // console.log("Parsed WebSocket response:", parsedData);
+      console.log("Parsed WebSocket response:", parsedData);
     };
 
     ws.onerror = (error) => console.error("WebSocket error:", error);
@@ -285,16 +254,16 @@ export default function GoalPage() {
     };
   };
 
-  const handleInit = (reactFlowInstance: ReactFlowInstance) => {
-    const currentViewport = reactFlowInstance.getViewport();
-    const currentX = currentViewport.x || 0;
-    const newX = currentX + 75;
-    reactFlowInstance.setViewport({
-      x: newX,
-      y: -50,
-      zoom: 1,
-    });
-  };
+  // const handleInit = (reactFlowInstance: ReactFlowInstance) => {
+  //   const currentViewport = reactFlowInstance.getViewport();
+  //   const currentX = currentViewport.x || 0;
+  //   const newX = currentX + 75;
+  //   reactFlowInstance.setViewport({
+  //     x: newX,
+  //     y: -50,
+  //     zoom: 1,
+  //   });
+  // };
 
   if (goalData === null && !loading) return <div>Page Not Found</div>;
 
@@ -386,9 +355,9 @@ export default function GoalPage() {
             <div className="w-full h-full relative">
               <ReactFlow
                 className="relative"
-                nodes={nodes}
+                // nodes={nodes}
                 edges={edges}
-                onInit={handleInit}
+                // onInit={handleInit}
                 nodesConnectable={false}
                 // elementsSelectable={false}
                 // onNodeClick={() => console.log("asdas")}

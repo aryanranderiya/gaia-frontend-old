@@ -1,27 +1,8 @@
-import { Cancel01Icon, Tick02Icon } from "@/components/icons";
-import CreateConfetti from "@/components/LandingPage/CreateConfetti";
 import { useUser } from "@contexts/UserContext";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import axios, { AxiosError } from "axios";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import api, { apiauth } from "../apiaxios";
-
-async function CheckCommonPassword(password: string): Promise<boolean> {
-  try {
-    const response = await fetch(
-      "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt"
-    );
-    if (!response.ok) throw new Error("Failed to fetch common password list");
-    const text = await response.text();
-    const commonPasswords = text.split("\n").map((pw) => pw.trim());
-    return commonPasswords.includes(password);
-  } catch (error) {
-    console.error("Error checking common password:", error);
-    return false;
-  }
-}
+import { apiauth } from "../apiaxios";
 
 interface LoginSignupProps {
   isLogin?: boolean;
@@ -29,183 +10,183 @@ interface LoginSignupProps {
 
 export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
   const navigate = useNavigate();
-  const { user, setUserData } = useUser();
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [isPasswordVisible, setPasswordVisible] =
-    React.useState<boolean>(false);
-  const [emailValid, setEmailValid] = React.useState<boolean>(true);
-  const [passwordValid, setPasswordValid] = React.useState<boolean>(true);
-  const [firstNameValid, setFirstNameValid] = React.useState<boolean>(true);
-  const [lastNameValid, setLastNameValid] = React.useState<boolean>(true);
-  const [isCommonPassword, setIsCommonPassword] =
-    React.useState<boolean>(false);
-  const [capsLockOn, setCapsLockOn] = React.useState<boolean>(false);
-  const [confirmPasswordValid, setConfirmPasswordValid] =
-    React.useState<boolean>(true);
-  const [error, setError] = React.useState(null);
+  const { user } = useUser();
+  // const [error, setError] = React.useState(null);
+  // const [loading, setLoading] = React.useState<boolean>(false);
+  // const [isPasswordVisible, setPasswordVisible] =
+  //   React.useState<boolean>(false);
+  // const [emailValid, setEmailValid] = React.useState<boolean>(true);
+  // const [passwordValid, setPasswordValid] = React.useState<boolean>(true);
+  // const [firstNameValid, setFirstNameValid] = React.useState<boolean>(true);
+  // const [lastNameValid, setLastNameValid] = React.useState<boolean>(true);
+  // const [isCommonPassword, setIsCommonPassword] =
+  //   React.useState<boolean>(false);
+  // const [capsLockOn, setCapsLockOn] = React.useState<boolean>(false);
+  // const [confirmPasswordValid, setConfirmPasswordValid] =
+  // React.useState<boolean>(true);
 
-  const [data, setData] = React.useState<{
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string; // Add this line
-  }>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "", // Add this line
-  });
+  // const [data, setData] = React.useState<{
+  //   firstName: string;
+  //   lastName: string;
+  //   email: string;
+  //   password: string;
+  //   confirmPassword: string; // Add this line
+  // }>({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "", // Add this line
+  // });
 
-  const validateEmail = (email: string): boolean => {
-    if (email === "") return false;
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return emailRegex.test(email);
-  };
+  // const validateEmail = (email: string): boolean => {
+  //   if (email === "") return false;
+  //   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  //   return emailRegex.test(email);
+  // };
 
-  const validateName = (name: string): boolean => {
-    if (name === "") return false;
-    const nameRegex = /^[a-zA-Z]+$/;
-    return nameRegex.test(name);
-  };
+  // const validateName = (name: string): boolean => {
+  //   if (name === "") return false;
+  //   const nameRegex = /^[a-zA-Z]+$/;
+  //   return nameRegex.test(name);
+  // };
 
-  const validatePassword = (password: string): boolean => {
-    if (password === "") return false;
-    const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    return passRegex.test(password);
-  };
+  // const validatePassword = (password: string): boolean => {
+  //   if (password === "") return false;
+  //   const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  //   return passRegex.test(password);
+  // };
 
-  const validateConfirmPassword = (
-    password: string,
-    confirmPassword: string
-  ): boolean => {
-    return password === confirmPassword;
-  };
+  // const validateConfirmPassword = (
+  //   password: string,
+  //   confirmPassword: string
+  // ): boolean => {
+  //   return password === confirmPassword;
+  // };
 
   React.useEffect(() => {
     if (user) navigate("/");
   });
 
-  const capsLockCheck = (event: KeyboardEvent) => {
-    const capsLockEnabled = event.getModifierState?.("CapsLock");
-    setCapsLockOn(capsLockEnabled);
-  };
+  // const capsLockCheck = (event: KeyboardEvent) => {
+  //   const capsLockEnabled = event.getModifierState?.("CapsLock");
+  //   setCapsLockOn(capsLockEnabled);
+  // };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    capsLockCheck(event.nativeEvent);
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSubmit();
-    }
-  };
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   capsLockCheck(event.nativeEvent);
+  //   if (event.key === "Enter") {
+  //     event.preventDefault();
+  //     handleSubmit();
+  //   }
+  // };
 
-  const handleSubmit = async () => {
-    setLoading(true);
+  // const handleSubmit = async () => {
+  //   setLoading(true);
 
-    if (!isLogin) {
-      setFirstNameValid(validateName(data.firstName));
-      setLastNameValid(validateName(data.lastName));
+  //   if (!isLogin) {
+  //     setFirstNameValid(validateName(data.firstName));
+  //     setLastNameValid(validateName(data.lastName));
 
-      const isConfirmPasswordValid = validateConfirmPassword(
-        data.password,
-        data.confirmPassword
-      );
+  //     const isConfirmPasswordValid = validateConfirmPassword(
+  //       data.password,
+  //       data.confirmPassword
+  //     );
 
-      setConfirmPasswordValid(isConfirmPasswordValid);
+  //     setConfirmPasswordValid(isConfirmPasswordValid);
 
-      if (!isConfirmPasswordValid) {
-        setLoading(false);
-        return;
-      }
-    }
+  //     if (!isConfirmPasswordValid) {
+  //       setLoading(false);
+  //       return;
+  //     }
+  //   }
 
-    setEmailValid(validateEmail(data.email));
-    setPasswordValid(validatePassword(data.password));
+  //   setEmailValid(validateEmail(data.email));
+  //   setPasswordValid(validatePassword(data.password));
 
-    if (validatePassword(data.password)) {
-      const findCommonPassword = await CheckCommonPassword(data.password);
-      setPasswordValid(!findCommonPassword);
-      setIsCommonPassword(findCommonPassword);
-      if (findCommonPassword) {
-        setLoading(false);
-        return;
-      }
-    }
+  //   if (validatePassword(data.password)) {
+  //     const findCommonPassword = await CheckCommonPassword(data.password);
+  //     setPasswordValid(!findCommonPassword);
+  //     setIsCommonPassword(findCommonPassword);
+  //     if (findCommonPassword) {
+  //       setLoading(false);
+  //       return;
+  //     }
+  //   }
 
-    const emailpasswordvalid =
-      !validateEmail(data.email) || !validatePassword(data.password);
+  //   const emailpasswordvalid =
+  //     !validateEmail(data.email) || !validatePassword(data.password);
 
-    const namesvalid =
-      !validateName(data.firstName) || !validateName(data.lastName);
+  //   const namesvalid =
+  //     !validateName(data.firstName) || !validateName(data.lastName);
 
-    if (
-      (!isLogin && (namesvalid || emailpasswordvalid)) ||
-      (isLogin && emailpasswordvalid)
-    ) {
-      setLoading(false);
-      return;
-    }
+  //   if (
+  //     (!isLogin && (namesvalid || emailpasswordvalid)) ||
+  //     (isLogin && emailpasswordvalid)
+  //   ) {
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    try {
-      const response = await api.post(
-        isLogin ? "/auth/login" : "/users",
-        {
-          first_name: data.firstName,
-          last_name: data.lastName,
-          email: data.email,
-          password: data.password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+  //   try {
+  //     const response = await api.post(
+  //       isLogin ? "/auth/login" : "/users",
+  //       {
+  //         first_name: data.firstName,
+  //         last_name: data.lastName,
+  //         email: data.email,
+  //         password: data.password,
+  //       },
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
 
-      if (isLogin) {
-        setUserData(
-          `${response.data?.first_name} ${response.data?.last_name}`,
-          response.data?.email,
-          response.data?.picture
-        );
-      }
+  //     if (isLogin) {
+  //       setUserData(
+  //         `${response.data?.first_name} ${response.data?.last_name}`,
+  //         response.data?.email,
+  //         response.data?.picture
+  //       );
+  //     }
 
-      navigate(isLogin ? "/try/chat" : "/login");
+  //     navigate(isLogin ? "/try/chat" : "/login");
 
-      toast.success("Welcome to GAIA!", {
-        unstyled: true,
-        classNames: {
-          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast",
-          title: "text-black text-sm",
-          description: "text-sm text-black",
-        },
-        duration: 3000,
-        icon: <Tick02Icon height="23" color="black" />,
-        description: `Successfully ${
-          isLogin ? "logged in" : "created an account"
-        }.`,
-      });
+  //     toast.success("Welcome to GAIA!", {
+  //       unstyled: true,
+  //       classNames: {
+  //         toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast",
+  //         title: "text-black text-sm",
+  //         description: "text-sm text-black",
+  //       },
+  //       duration: 3000,
+  //       icon: <Tick02Icon height="23" color="black" />,
+  //       description: `Successfully ${
+  //         isLogin ? "logged in" : "created an account"
+  //       }.`,
+  //     });
 
-      CreateConfetti(2000);
-    } catch (e) {
-      console.error(e);
+  //     CreateConfetti(2000);
+  //   } catch (e) {
+  //     console.error(e);
 
-      const error = e as AxiosError<{ detail: string }>;
-      const errorMessage = error.response?.data?.detail || error.message;
+  //     const error = e as AxiosError<{ detail: string }>;
+  //     const errorMessage = error.response?.data?.detail || error.message;
 
-      toast.error("Login failed", {
-        unstyled: true,
-        classNames: {
-          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
-          title: "text-sm",
-          description: "text-sm ",
-        },
-        duration: 3000,
-        icon: <Cancel01Icon height="23" color="foreground" />,
-        description: errorMessage.toString(),
-      });
-    }
-    setLoading(false);
-  };
+  //     toast.error("Login failed", {
+  //       unstyled: true,
+  //       classNames: {
+  //         toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
+  //         title: "text-sm",
+  //         description: "text-sm ",
+  //       },
+  //       duration: 3000,
+  //       icon: <Cancel01Icon height="23" color="foreground" />,
+  //       description: errorMessage.toString(),
+  //     });
+  //   }
+  //   setLoading(false);
+  // };
 
   const handleGoogleLogin = useGoogleLogin({
     flow: "auth-code",
@@ -229,9 +210,7 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     onError: (errorResponse) => console.log(errorResponse),
   });
 
-  const handleGoogleFailure = (error: any) => {
-    setError(error.error);
-  };
+  const handleGoogleFailure = () => {};
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient">
       <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 p-[1.5em]">
@@ -461,10 +440,10 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
           theme="filled_black"
           size="large"
           shape="circle"
-          scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar.readonly"
+          // scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar.readonly"
           // useOneTap
         />
-        {error && <div className="text-danger-500">Error: {error}</div>}
+        {/* {error && <div className="text-danger-500">Error: {error}</div>} */}
       </div>
     </form>
   );

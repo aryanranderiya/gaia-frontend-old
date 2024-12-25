@@ -16,7 +16,7 @@ interface PdfComponentProps {
   width?: number;
 }
 
-export function PdfContainer({ file, chat_bubble = false }: PdfContainerProps) {
+export function PdfContainer({ file }: PdfContainerProps) {
   return (
     <div
       className={`flex w-full rounded-2xl flex-col justify-center p-2 my-1 items-center text-white bg-black bg-opacity-70`}
