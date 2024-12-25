@@ -8,32 +8,27 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/modal";
-import { Select, SelectItem } from "@nextui-org/select";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export default function AddNoteDialog({
   openDialog,
   setOpenDialog,
-  categories,
   addNote,
 }: {
   openDialog: boolean;
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
-  categories: string[];
-  addNote: (note: Note) => void;
+  addNote: (note: Omit<Note, "id">) => void;
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleAddNote = () => {
-    if (!(title && description && selectedCategory)) {
+    if (!(title && description)) {
       return;
     }
-    addNote({ title, description, category: selectedCategory });
+    addNote({ title, description });
     setTitle("");
     setDescription("");
-    setSelectedCategory("");
     setOpenDialog(false);
   };
 
@@ -52,30 +47,27 @@ export default function AddNoteDialog({
             variant="faded"
             placeholder="Personal Preferences"
             value={title}
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
+            maxLength={100} // Enforce 100-character limit
+            onChange={(e: { target: { value: string } }) =>
               setTitle(e.target.value)
             }
           />
+          <div className="text-xs text-gray-500 relative left-2 -top-1">
+            {title.length}/100 characters
+          </div>
           <Textarea
             label="Enter Description"
             variant="faded"
             placeholder="Store key information about your preferences, interests, and important details that will help the AI assistant tailor responses and suggestions to better suit your needs."
             value={description}
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
+            maxLength={1000} // Enforce 1000-character limit
+            onChange={(e: { target: { value: string } }) =>
               setDescription(e.target.value)
             }
           />
-          <Select
-            label="Select a Category"
-            variant="faded"
-            className="dark"
-            value={selectedCategory}
-            onSelectionChange={setSelectedCategory}
-          >
-            {categories.map((category) => (
-              <SelectItem key={category}>{category}</SelectItem>
-            ))}
-          </Select>
+          <div className="text-xs text-gray-500 relative left-2 -top-1">
+            {description.length}/1000 characters
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button
