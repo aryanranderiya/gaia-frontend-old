@@ -7,6 +7,10 @@ import {
 } from "@nextui-org/dropdown";
 import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
 import { useUser } from "@/contexts/UserContext";
+import { Eraser } from "lucide-react";
+import { ApiService } from "@/utils/chatUtils";
+import { useConversationList } from "@/contexts/ConversationList";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItem {
   key: string;
@@ -17,8 +21,25 @@ interface MenuItem {
 
 export default function SettingsMenu() {
   const { logout } = useUser();
+  const navigate = useNavigate();
+  const { fetchConversations } = useConversationList();
 
   const items: MenuItem[] = [
+    {
+      key: "clear",
+      label: (
+        <div className="flex items-center gap-4">
+          <Eraser width={20} />
+          Clear all Chats
+        </div>
+      ),
+      action: async () => {
+        navigate("/try/chat");
+        await ApiService.deleteAllConversations();
+        fetchConversations();
+      },
+    },
+
     {
       key: "settings",
       label: (
@@ -28,6 +49,7 @@ export default function SettingsMenu() {
         </div>
       ),
     },
+
     {
       key: "logout",
       label: (

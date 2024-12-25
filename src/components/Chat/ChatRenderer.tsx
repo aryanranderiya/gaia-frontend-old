@@ -1,16 +1,16 @@
 // ChatRenderer.tsx
 import { ChatBubbleBot, ChatBubbleUser } from "@/components/Chat/ChatBubbles";
-import StarterEmoji from "@/components/Chat/StarterEmoji";
+// import StarterEmoji from "@/components/Chat/StarterEmoji";
 import StarterText from "@/components/Chat/StarterText";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
 
-  if (convoMessages.length === 0) {
+  if (!!convoMessages && convoMessages?.length === 0) {
     return (
       <div className="starter_container">
-        <StarterEmoji />
+        {/* <StarterEmoji /> */}
         <StarterText />
       </div>
     );
@@ -22,7 +22,7 @@ export default function ChatRenderer() {
 
   return (
     <>
-      {convoMessages.map((message, index) =>
+      {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
           <div className="relative flex items-end gap-3" key={index}>
             <div className="pingspinner relative bottom-9" />

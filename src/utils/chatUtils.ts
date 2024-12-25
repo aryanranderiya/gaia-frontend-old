@@ -1,6 +1,7 @@
 // utils/chatUtils.ts
 
 import { apiauth } from "@/apiaxios";
+import { useConversationList } from "@/contexts/ConversationList";
 import { MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 
@@ -10,7 +11,7 @@ export const fetchConversationDescription = async (
   const response = await apiauth.post(
     "/chat",
     {
-      message: `Summarise what the message/question '${searchbarText}' is about, in under 4-5 words. Just respond with the summary.`,
+      message: `Summarise what the message/question '${searchbarText}' is about, in under 3-4 words from a 3rd person perspective. Just respond with the summary. Exclude any double quotes or titles.`,
     },
     {
       headers: {
@@ -35,6 +36,10 @@ export const ApiService = {
     });
   },
 
+  deleteAllConversations: async () => {
+    await apiauth.delete(`/conversations`);
+  },
+
   updateConversation: async (
     conversationId: string,
     messages: MessageType[]
@@ -53,20 +58,6 @@ export const ApiService = {
     onClose: () => void,
     onError: (err: any) => void
   ) => {
-    console.log(
-      "convoMessages mapped and filtered",
-      convoMessages
-        .filter(({ response }) => response.length > 0)
-        .map(({ type, response }) => ({
-          items: {
-            role: type,
-            content: response,
-          },
-        }))
-    );
-
-    console.log("inputText", inputText);
-
     convoMessages.push({ type: "user", response: inputText });
 
     const controller = new AbortController();
@@ -104,10 +95,17 @@ export const ApiService = {
 
   updateConversationDescription: async (
     conversationId: string,
-    description: string
+    userFirstMessage: string,
+    fetchConversations: () => void
   ) => {
-    await apiauth.put(`/conversations/${conversationId}/description`, {
-      description,
-    });
+    const response = await apiauth.put(
+      `/conversations/${conversationId}/description`,
+      {
+        userFirstMessage,
+      }
+    );
+    fetchConversations();
+
+    return response.data;
   },
 };

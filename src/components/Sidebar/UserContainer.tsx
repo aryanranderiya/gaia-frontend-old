@@ -7,14 +7,13 @@ import { Spinner } from "@nextui-org/spinner";
 const UserContainer: React.FC = () => {
   const { user } = useUser();
   useFetchUser();
-  console.log(user);
 
   return (
     <div className="user_container p-4 absolute bottom-0 left-0 flex-col">
       <div className="flex relative py-4 my-4 px-3 justify-between items-center hover:bg-zinc-900 rounded-xl transition-all">
         Syncing...
         <Spinner size="sm" />
-        <div className="absolute h-[2px] bottom-1 left-3 w-1/3 bg-[#00bbff]"></div>
+        <div className="absolute h-[2px] bottom-1 left-3 w-1/3 bg-[#00bbff]" />
       </div>
 
       <div className="user_container_inner">

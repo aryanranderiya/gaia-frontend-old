@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import debounce from "lodash.debounce"; // Import debounce function
 import ChatRenderer from "@/components/Chat/ChatRenderer";
 import MainSearchbar from "@/components/Chat/MainSearchbar";
-import { ScrollArea } from "@/components/Shadcn/ScrollArea";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import debounce from "lodash.debounce"; // Import debounce function
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const MainChat = React.memo(function MainChat() {
   const convoRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const location = useLocation();
 
   const handleScroll = debounce((event: React.UIEvent) => {
     const { scrollTop, scrollHeight, clientHeight } =
@@ -28,6 +30,10 @@ const MainChat = React.memo(function MainChat() {
     };
   }, [handleScroll]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [location.pathname]);
+
   return (
     <>
       <ScrollArea onScrollCapture={handleScroll}>
@@ -35,7 +41,11 @@ const MainChat = React.memo(function MainChat() {
           <ChatRenderer />
         </div>
       </ScrollArea>
-      <MainSearchbar scrollToBottom={scrollToBottom} isAtBottom={isAtBottom} />
+      <MainSearchbar
+        scrollToBottom={scrollToBottom}
+        isAtBottom={isAtBottom}
+        isOverflowing={false}
+      />
     </>
   );
 });

@@ -42,7 +42,7 @@ export default function GenerateImage({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
-      setImagePrompt((text) => text + "\n");
+      setImagePrompt((text) => `${text}\n`);
     } else if (event.key === "Enter" && !loading && isValid) {
       handleSubmit();
     }
@@ -84,9 +84,7 @@ export default function GenerateImage({
       });
 
       // Update database
-      const currentMessages = replaceLastMessage ? newMessages : newMessages;
-      console.log("currentMessages", currentMessages);
-      console.log("newMessages", newMessages);
+      const currentMessages = newMessages;
       await ApiService.updateConversation(conversationId, currentMessages);
     } catch (error) {
       console.error("Failed to update conversation:", error);

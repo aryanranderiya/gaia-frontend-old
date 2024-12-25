@@ -10,11 +10,13 @@ import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 interface MainSearchbarProps {
   scrollToBottom: () => void;
   isAtBottom: boolean;
+  isOverflowing: boolean;
 }
 
 export default function MainSearchbar({
   scrollToBottom,
   isAtBottom,
+  isOverflowing,
 }: MainSearchbarProps) {
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [currentHeight, setHeight] = React.useState<number>(24);
@@ -34,6 +36,7 @@ export default function MainSearchbar({
     updateConversation(searchbarText);
     setSearchbarText("");
     focusInput();
+    scrollToBottom();
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
@@ -47,12 +50,11 @@ export default function MainSearchbar({
       handleFormSubmit();
     }
   };
-
   return (
     <div className="searchbar_container relative">
       <div
         className={`absolute top-[-55px] flex justify-center w-full pointer-events-none transition-opacity ${
-          isAtBottom ? "opacity-0" : "opacity-100"
+          isOverflowing && !isAtBottom ? "opacity-100" : "opacity-0"
         }`}
       >
         <Button
