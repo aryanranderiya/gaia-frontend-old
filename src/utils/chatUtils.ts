@@ -95,10 +95,11 @@ export const ApiService = {
   updateConversationDescription: async (
     conversationId: string,
     userFirstMessage: string,
-    fetchConversations: () => void
+    fetchConversations: () => void,
+    llm: boolean = true
   ) => {
     const response = await apiauth.put(
-      `/conversations/${conversationId}/description`,
+      `/conversations/${conversationId}/description${llm ? "/llm" : ""}`,
       {
         userFirstMessage,
       }

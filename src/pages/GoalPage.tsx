@@ -2,8 +2,9 @@ import { apiauth } from "@/apiaxios";
 import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ZoomSlider } from "@/components/zoom-slider";
+// import { ZoomSlider } from "@/components/zoom-slider";
 import { Chip } from "@nextui-org/chip";
+import { Checkbox } from "@nextui-org/checkbox";
 import {
   ConnectionLineType,
   Edge,
@@ -15,6 +16,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
+import { Clock } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -158,6 +160,9 @@ export default function GoalPage() {
         });
 
         setNodes(updatedNodes || []);
+
+        setCurrentlySelectedNodeId(updatedNodes[0].id);
+        setOpenSidebar(true);
         setEdges(goal.roadmap.edges || []);
       } else {
         console.log("initialising roadmap web socket");
@@ -208,13 +213,64 @@ export default function GoalPage() {
   };
 
   if (goalData === null && !loading) return <div>Page Not Found</div>;
+  const handleCheckboxClick = async () => {
+    if (!currentlySelectedNodeId) return;
 
+    // Find the currently selected node
+    const selectedNode = nodes.find(
+      (node) => node.id === currentlySelectedNodeId
+    );
+
+    if (!selectedNode) return;
+
+    const updatedIsComplete = !selectedNode.data.isComplete;
+
+    // Optimistically update the node state locally
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === currentlySelectedNodeId
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                isComplete: updatedIsComplete,
+              },
+            }
+          : node
+      )
+    );
+
+    // Update the server state
+    try {
+      await apiauth.patch(
+        `/goals/${selectedNode.data.goalId}/roadmap/nodes/${selectedNode.id}`,
+        { is_complete: updatedIsComplete }
+      );
+    } catch (error) {
+      console.error("Error updating node status:", error);
+
+      // Revert the change if the update fails
+      setNodes((prevNodes) =>
+        prevNodes.map((node) =>
+          node.id === currentlySelectedNodeId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  isComplete: !updatedIsComplete,
+                },
+              }
+            : node
+        )
+      );
+    }
+  };
   return (
     <div className="flex flex-row justify-between h-full relative">
       <div
         className={`${
           openSidebar ? "visible" : "hidden"
-        } fixed right-2 top-2 bg-zinc-900 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg`}
+        } fixed right-3 bottom-3 bg-zinc-900 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950`}
       >
         <div className="p-4 space-y-2">
           <div className="text-xl font-medium ">
@@ -223,41 +279,92 @@ export default function GoalPage() {
                 .label}
           </div>
 
-          <div className="text-sm -mt-2 text-foreground-500">
+          <div className="text-md -mt-2 text-foreground-600 pb-4">
             {currentlySelectedNodeId &&
               nodes
                 .find((node) => node.id === currentlySelectedNodeId)
                 ?.data?.details?.join(", ")}
           </div>
-          {currentlySelectedNodeId &&
-            (() => {
-              const selectedNode = nodes.find(
-                (node) => node.id === currentlySelectedNodeId
-              );
-              const estimatedTime = selectedNode?.data?.estimatedTime;
-
-              return estimatedTime ? (
-                <Chip size="sm" color="primary" variant="flat">
-                  {estimatedTime}
-                </Chip>
-              ) : null;
-            })()}
-        </div>
-
-        <div className=" bg-black bg-opacity-35 p-5 rounded-lg">
-          <div className="flex text-md font-medium gap-2 items-center pb-2">
-            <BookIcon1 width={18} />
-            Resources
-          </div>
-          <div className="text-sm">
+          <div className="space-y-4">
             {currentlySelectedNodeId &&
-              nodes
-                .find((node) => node.id === currentlySelectedNodeId)
-                ?.data?.resources?.map((resource, index) => (
-                  <li key={index}>{resource}</li>
-                ))}
+              (() => {
+                const selectedNode = nodes.find(
+                  (node) => node.id === currentlySelectedNodeId
+                );
+                const estimatedTime = selectedNode?.data?.estimatedTime;
+
+                return estimatedTime ? (
+                  <Chip
+                    size="lg"
+                    color="primary"
+                    variant="flat"
+                    startContent={
+                      <div className="flex items-center gap-1 text-md">
+                        <Clock width={18} />
+                        Estimated Time:
+                      </div>
+                    }
+                  >
+                    {/* <div className="flex items-center gap-2 bg-[black] text-sm bg-opacity-40 rounded-full pl-4 pr-1 py-1 w-fit outline outline-2 outline-[#00bbff40] text-primary"> */}
+                    <span className="text-white text-md pl-1">
+                      {estimatedTime}
+                    </span>
+
+                    {/* <Chip color="primary" variant="flat"></Chip> */}
+                    {/* </div> */}
+                  </Chip>
+                ) : null;
+              })()}
+
+            {currentlySelectedNodeId && (
+              <Chip
+                variant="flat"
+                color="success"
+                size="lg"
+                startContent={
+                  <Checkbox
+                    color="success"
+                    lineThrough
+                    radius="full"
+                    isSelected={
+                      nodes.find((node) => node.id === currentlySelectedNodeId)
+                        ?.data?.isComplete ?? false
+                    }
+                    onValueChange={handleCheckboxClick}
+                  >
+                    Mark as Complete
+                  </Checkbox>
+                }
+              />
+            )}
           </div>
         </div>
+        {currentlySelectedNodeId &&
+          nodes.find((node) => node.id === currentlySelectedNodeId)?.data
+            ?.resources && (
+            <div className=" bg-black bg-opacity-40 p-5 rounded-xl">
+              <div className="flex text-md font-medium gap-2 items-center pb-2">
+                <BookIcon1 width={18} />
+                Resources
+              </div>
+              <div className="text-sm">
+                {currentlySelectedNodeId &&
+                  nodes
+                    .find((node) => node.id === currentlySelectedNodeId)
+                    ?.data?.resources?.map((resource, index) => (
+                      <a
+                        href={`https://www.google.com/search?q=${resource.split(
+                          "+"
+                        )}`}
+                        target="__blank"
+                        className="hover:text-[#00bbff] underline underline-offset-4"
+                      >
+                        <li key={index}>{resource}</li>
+                      </a>
+                    ))}
+              </div>
+            </div>
+          )}
       </div>
 
       <ScrollArea>
@@ -320,7 +427,7 @@ export default function GoalPage() {
                 nodeTypes={nodeTypes}
                 style={{ background: "transparent" }}
               >
-                <ZoomSlider className="fixed bottom-[25px] !right-0 !left-auto h-fit !top-auto z-30 dark" />
+                {/* <ZoomSlider className="fixed bottom-[25px] !right-[150px]  !left-auto h-fit !top-auto z-30 dark" /> */}
               </ReactFlow>
             </div>
           )}

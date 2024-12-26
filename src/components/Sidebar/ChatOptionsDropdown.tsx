@@ -37,7 +37,7 @@ export default function ChatOptionsDropdown({
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
     null
   );
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();
   const { resetMessages } = useConvo();
 

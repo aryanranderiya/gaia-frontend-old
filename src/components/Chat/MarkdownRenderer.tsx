@@ -25,7 +25,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   return (
     <>
       {!inline && match ? (
-        <div className="relative flex flex-col gap-0">
+        <div className="relative flex flex-col gap-0 ">
           <div className="flex justify-between items-center bg-black bg-opacity-60 text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]">
             <span className="text-sm font-mono monospace">{match[1]}</span>
             <Button
@@ -53,6 +53,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             PreTag="div"
             className="m-0"
             showLineNumbers
+            // wrapLongLines
             {...props}
           >
             {String(children).replace(/\n$/, "")}
