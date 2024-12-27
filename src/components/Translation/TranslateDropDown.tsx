@@ -81,7 +81,12 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
     <Dropdown classNames={{ content: "dark" }}>
       <DropdownTrigger>{trigger}</DropdownTrigger>
       <DropdownMenu aria-label="Translate" className="p-0">
-        <DropdownItem isReadOnly closeOnSelect={false} className="dark m-0 p-">
+        <DropdownItem
+          isReadOnly
+          closeOnSelect={false}
+          className="dark m-0 p-"
+          key={0}
+        >
           <Autocomplete
             description="Select a language to translate from"
             label="Search a Language"

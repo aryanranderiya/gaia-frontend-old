@@ -107,7 +107,7 @@
     "react-resizable-panels": "^2.1.3",
     "react-router-dom": "6.23.0",
     "react-speech-recognition": "^3.10.0",
-    "react-syntax-highlighter": "^15.5.0",
+    "react-syntax-highlighter": "^15.6.1",
     "react-voice-recorder-player": "^1.2.0",
     "recharts": "^2.12.7",
     "remark-gfm": "^4.0.0",

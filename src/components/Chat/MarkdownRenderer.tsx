@@ -1,6 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
+const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
@@ -48,13 +51,13 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             </Button>
           </div>
           <SyntaxHighlighter
+            {...(props as any)}
             style={vscDarkPlus}
             language={match[1]}
             PreTag="div"
             className="m-0"
             showLineNumbers
             // wrapLongLines
-            {...props}
           >
             {String(children).replace(/\n$/, "")}
           </SyntaxHighlighter>
