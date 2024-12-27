@@ -1,14 +1,14 @@
-import TranslateDropdown from "../Translation/TranslateDropDown";
 import { Button } from "@nextui-org/button";
 import {
-  Task01Icon,
-  PinIcon,
-  TranslateIcon,
   DownloadSquare01Icon,
+  PinIcon,
+  Task01Icon,
+  TranslateIcon,
 } from "../icons";
-import TextToSpeech from "../Audio/TextToSpeechComponent";
-import { toast } from "sonner";
+import TranslateDropdown from "../Translation/TranslateDropDown";
+// import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { Tooltip } from "@nextui-org/tooltip";
+import { toast } from "sonner";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
@@ -74,7 +74,7 @@ export function ChatBubble_Actions({
             }
           />
 
-          <TextToSpeech text={text} />
+          {/* <TextToSpeech text={text} /> */}
         </div>
       )}
     </>
@@ -90,7 +90,6 @@ export function ChatBubble_Actions_Image({
   src,
   imagePrompt,
 }: ChatBubbleActionsImageProps): JSX.Element {
-  
   const downloadFromSrc = async () => {
     try {
       // Get current date and time for filename

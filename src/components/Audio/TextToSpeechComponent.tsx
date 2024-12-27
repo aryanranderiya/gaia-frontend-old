@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 // import * as React from "react";
 // import { Spinner } from "@nextui-org/spinner";
 
-export default function TextToSpeech({ text }: { text: string }) {
+export default function TextToSpeech() {
   // console.log(text);
 
   // const [loading, setLoading] = React.useState(false);
