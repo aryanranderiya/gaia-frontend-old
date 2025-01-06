@@ -142,3 +142,5 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     </div>
   );
 };
+
+export default MarkdownRenderer;

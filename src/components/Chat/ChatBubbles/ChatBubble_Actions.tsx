@@ -4,8 +4,8 @@ import {
   PinIcon,
   Task01Icon,
   TranslateIcon,
-} from "../icons";
-import TranslateDropdown from "../Translation/TranslateDropDown";
+} from "../../icons";
+import TranslateDropdown from "../../Translation/TranslateDropDown";
 // import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { Tooltip } from "@nextui-org/tooltip";
 import { toast } from "sonner";

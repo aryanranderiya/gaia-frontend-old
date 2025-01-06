@@ -17,9 +17,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../Shadcn/Sheet";
+} from "../ui/sheet";
 import WaitListButton from "./WaitlistModal";
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 
 export default function Navbar() {
   const { user, setUserData } = useUser();

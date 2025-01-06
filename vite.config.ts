@@ -16,7 +16,6 @@ export default defineConfig({
       "@contexts": "/src/contexts",
       "@layouts": "/src/layouts",
       "@hooks": "/src/hooks",
-      "@shadcn": "/src/components/Shadcn",
       "@apiaxios": "/src/apiaxios",
       "@*": "/src/*",
     },

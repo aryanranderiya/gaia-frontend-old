@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import * as React from "react";
 import { toast } from "sonner";
-import api from "../../apiaxios";
+import api from "@/utils/apiaxios";
 import createConfetti from "./CreateConfetti.js";
 import { CheckmarkCircle02Icon } from "../icons";
 

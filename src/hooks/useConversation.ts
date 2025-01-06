@@ -1,4 +1,4 @@
-import fetchDate from "@/components/Chat/fetchDate";
+import fetchDate from "@/utils/fetchDate";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";

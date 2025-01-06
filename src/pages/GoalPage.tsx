@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";

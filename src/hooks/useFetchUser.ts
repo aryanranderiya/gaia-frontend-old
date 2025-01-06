@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useUser } from "@/contexts/UserContext";
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { useNavigate } from "react-router-dom";
 
 const useFetchUser = () => {

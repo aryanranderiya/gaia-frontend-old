@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { PencilEdit02Icon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";

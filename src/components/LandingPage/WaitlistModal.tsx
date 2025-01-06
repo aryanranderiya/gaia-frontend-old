@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { toast } from "sonner";
-import api from "../../apiaxios";
+import api from "@/utils/apiaxios";
 import PartySmiley from "../Smileys/20.webp";
 import createConfetti from "./CreateConfetti";
 import {
@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "../Shadcn/Dialog";
+} from "../ui/dialog";
 import {
   ArrowUpRight01Icon,
   Mail01Icon,

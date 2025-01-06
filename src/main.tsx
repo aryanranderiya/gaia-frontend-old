@@ -1,4 +1,4 @@
-import { Toaster } from "@/components/Shadcn/Sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { NextUIProvider } from "@nextui-org/system";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";

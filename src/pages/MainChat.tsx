@@ -1,7 +1,7 @@
 import ChatRenderer from "@/components/Chat/ChatRenderer";
 import MainSearchbar from "@/components/Chat/MainSearchbar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import debounce from "lodash.debounce"; // Import debounce function
+import debounce from "lodash.debounce";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -19,9 +19,8 @@ const MainChat = React.memo(function MainChat() {
   }, 100);
 
   const scrollToBottom = () => {
-    if (convoRef.current) {
+    if (convoRef.current)
       convoRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
   };
 
   useEffect(() => {

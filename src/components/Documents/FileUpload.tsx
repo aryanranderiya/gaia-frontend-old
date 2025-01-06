@@ -5,7 +5,7 @@ import { Spinner } from "@nextui-org/spinner";
 import imageCompression from "browser-image-compression";
 import * as React from "react";
 import { toast } from "sonner";
-import api from "../../apiaxios";
+import api from "@/utils/apiaxios";
 import { Cancel01Icon, NoteDoneIcon, SentIcon } from "../icons";
 import {
   Dialog,
@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../Shadcn/Dialog";
+} from "../ui/dialog";
 import { PdfContainer } from "./PdfComponent";
 
 interface FileUploadProps {

@@ -2,7 +2,7 @@ import { useUser } from "@contexts/UserContext";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { apiauth } from "../apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 
 interface LoginSignupProps {
   isLogin?: boolean;

@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 
 // Define the context type
 interface Conversation {

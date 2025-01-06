@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

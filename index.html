@@ -1,98 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link
+      rel="preload"
+      href="/fonts/CreatoDisplay-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/CreatoDisplay-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/CreatoDisplay-ExtraBold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.webp" as="image" type="image/webp"> -->
+    <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.png" as="image" type="image/png"> -->
+    <!-- <link rel="preload" href="./src/components/Smileys/20.webp" as="image" type="image/webp"> -->
+    <style>
+      @font-face {
+        font-family: "Creato";
+        src: url("/fonts/CreatoDisplay-Bold.woff2") format("woff2"),
+          url("/fonts/CreatoDisplay-Bold.woff") format("woff"),
+          url("/fonts/CreatoDisplay-Bold.ttf") format("truetype"),
+          url("/fonts/CreatoDisplay-Bold.otf") format("opentype");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
 
-<head>
-  <link rel="preload" href="CreatoDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="CreatoDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="CreatoDisplay-ExtraBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.webp" as="image" type="image/webp"> -->
-  <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.png" as="image" type="image/png"> -->
-  <!-- <link rel="preload" href="./src/components/Smileys/20.webp" as="image" type="image/webp"> -->
-  <style>
-    @font-face {
-      font-family: 'Creato';
-      src: url('CreatoDisplay-Bold.woff2') format('woff2'),
-        url('CreatoDisplay-Bold.woff') format('woff'),
-        url('CreatoDisplay-Bold.ttf') format('truetype'),
-        url('CreatoDisplay-Bold.otf') format('opentype');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
+      @font-face {
+        font-family: "Creato";
+        src: url("/fonts/CreatoDisplay-Regular.woff2") format("woff2"),
+          url("/fonts/CreatoDisplay-Regular.woff") format("woff"),
+          url("/fonts/CreatoDisplay-Regular.otf") format("opentype"),
+          url("/fonts/CreatoDisplay-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Creato";
+        src: url("/fonts/CreatoDisplay-ExtraBold.woff2") format("woff2"),
+          url("/fonts/CreatoDisplay-ExtraBold.woff") format("woff"),
+          url("/fonts/CreatoDisplay-ExtraBold.ttf") format("truetype"),
+          url("/fonts/CreatoDisplay-ExtraBold.otf") format("opentype");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        font-family: "Creato", sans-serif;
+      }
+
+      p,
+      span,
+      button,
+      text,
+      input,
+      textarea,
+      div,
+      :where([data-sonner-toaster]),
+      *:not(body) {
+        font-family: inherit !important;
+      }
+
+      code,
+      .monospace {
+        font-family: Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono",
+          "Courier New", monospace !important;
+      }
+    </style>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaia</title>
+    <meta
+      key="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
+    <link rel="stylesheet" href="./src/index.css" />
+    <script async src="https://accounts.google.com/gsi/client" async></script>
+    <!-- <link href="/favicon.ico" rel="icon" /> -->
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
     }
+    gtag("js", new Date());
 
-    @font-face {
-      font-family: 'Creato';
-      src: url('CreatoDisplay-Regular.woff2') format('woff2'),
-        url('CreatoDisplay-Regular.woff') format('woff'),
-        url('CreatoDisplay-Regular.otf') format('opentype'),
-        url('CreatoDisplay-Regular.ttf') format('truetype');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
+    gtag("config", "G-R6EGV9FG2Q");
+  </script>
 
-    @font-face {
-      font-family: 'Creato';
-      src: url('CreatoDisplay-ExtraBold.woff2') format('woff2'),
-        url('CreatoDisplay-ExtraBold.woff') format('woff'),
-        url('CreatoDisplay-ExtraBold.ttf') format('truetype'),
-        url('CreatoDisplay-ExtraBold.otf') format('opentype');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-
-    body {
-      font-family: 'Creato', sans-serif;
-    }
-
-    p,
-    span,
-    button,
-    text,
-    input,
-    textarea,
-    div,
-    :where([data-sonner-toaster]),
-    *:not(body) {
-      font-family: inherit !important;
-    }
-
-    code,
-    .monospace {
-      font-family: Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace !important;
-    }
-  </style>
-
-  <meta charset="UTF-8" />
-  <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gaia</title>
-  <!-- <meta key="title" content="Vite + NextUI" property="og:title" /> -->
-  <!-- <meta content="Make beautiful websites regardless of your design experience." property="og:description" /> -->
-  <!-- <meta content="Make beautiful websites regardless of your design experience." name="description" /> -->
-  <meta key="viewport"
-    content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    name="viewport" />
-  <link rel="stylesheet" href="./src/index.css">
-  <script async src="https://accounts.google.com/gsi/client" async></script>
-  <!-- <link href="/favicon.ico" rel="icon" /> -->
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-
-  gtag('config', 'G-R6EGV9FG2Q');
-</script>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-  <!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=sQbETYAT"></script> -->
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

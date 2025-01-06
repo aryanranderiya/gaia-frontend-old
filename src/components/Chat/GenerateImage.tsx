@@ -12,9 +12,9 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import api from "../../apiaxios";
+import api from "@/utils/apiaxios";
 import { BrushIcon } from "../icons";
-import fetchDate from "./fetchDate";
+import fetchDate from "../../utils/fetchDate";
 import { ApiService } from "@/utils/chatUtils";
 import { useConvoHistory } from "@/contexts/ConversationHistory";
 

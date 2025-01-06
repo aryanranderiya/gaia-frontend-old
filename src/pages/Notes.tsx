@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { StickyNote01Icon } from "@/components/icons";
 import AddNoteDialog from "@/components/Notes/AddNoteDialog";
 import NoteCard from "@/components/Notes/NoteCard";

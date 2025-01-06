@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
 import { GoalData } from "@/pages/GoalPage";
 import { Button } from "@nextui-org/button";

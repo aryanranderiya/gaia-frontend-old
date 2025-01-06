@@ -1,4 +1,4 @@
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { GoalCard } from "@/components/Goals/GoalCard";
 import { Target04Icon } from "@/components/icons";

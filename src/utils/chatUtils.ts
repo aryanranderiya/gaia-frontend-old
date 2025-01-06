@@ -1,6 +1,6 @@
 // utils/chatUtils.ts
 
-import { apiauth } from "@/apiaxios";
+import { apiauth } from "@/utils/apiaxios";
 import { MessageType } from "@/types/ConvoTypes";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 

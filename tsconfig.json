@@ -11,7 +11,6 @@
       "@contexts/*": ["./src/contexts/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@shadcn/*": ["./src/components/Shadcn*"]
     },
 
     /* Bundler mode */

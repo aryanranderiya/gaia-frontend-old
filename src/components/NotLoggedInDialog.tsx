@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/Shadcn/Dialog";
+} from "@/components/ui/dialog";
 import { Button } from "@nextui-org/button";
 
 export default function NotLoggedIn() {
