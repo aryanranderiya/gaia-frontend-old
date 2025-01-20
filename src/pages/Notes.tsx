@@ -70,11 +70,11 @@ export default function Notes() {
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
           <div className="flex items-center flex-col gap-2">
-            <h1 className="font-bold text-center text-5xl">Memories</h1>
+            <h1 className="font-bold text-center text-5xl">Notes</h1>
             <h5 className=" text-center text-md pb-6 max-w-screen-md">
-              Add and store custom memories for your AI assistant, enabling it
-              to recall important details and provide more personalized
-              interactions over time.
+              Add and store custom notes as memories for your AI assistant,
+              enabling it to recall important details and provide more
+              personalized interactions over time.
             </h5>
           </div>
 
