@@ -341,7 +341,7 @@ export default function GoalPage() {
         </div>
         {currentlySelectedNodeId &&
           nodes.find((node) => node.id === currentlySelectedNodeId)?.data
-            ?.resources && (
+            ?.resources.length > 0 && (
             <div className=" bg-black bg-opacity-40 p-5 rounded-xl">
               <div className="flex text-md font-medium gap-2 items-center pb-2">
                 <BookIcon1 width={18} />
@@ -370,12 +370,12 @@ export default function GoalPage() {
       <ScrollArea>
         <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-white text-2xl mt-1">
+            <div className="font-bold text-white text-2xl mt-1">
               {goalData?.roadmap?.title || goalData?.title}
-            </h1>
-            <h2 className="text-foreground-500 text-md mt-1 ">
+            </div>
+            <div className="text-foreground-500 text-md mt-1 ">
               {goalData?.roadmap?.description || goalData?.description}
-            </h2>
+            </div>
           </div>
           {loading ? (
             <div className="bg-black w-fit pt-9 pb-0 relative h-fit flex items-center justify-center rounded-xl bg-opacity-50 flex-col gap-10 overflow-hidden">

@@ -543,12 +543,12 @@ export default function Calendar() {
   return (
     <div className="container mx-auto p-4 select-none h-full" ref={calendarRef}>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">
+        <div className="text-2xl font-bold">
           {currentDate.toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
-        </h1>
+        </div>
         <div className="flex gap-2">
           <Button
             onClick={() => setCurrentDate(new Date())}

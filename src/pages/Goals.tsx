@@ -50,12 +50,12 @@ export default function Goals() {
       <div className="flex flex-col justify-between h-full">
         <ScrollArea>
           <div className="flex items-center flex-col gap-2">
-            <h1 className="font-bold text-center text-5xl">Roadmaps</h1>
-            <h5 className=" text-center text-md pb-6 max-w-screen-md">
+            <div className="font-bold text-center text-5xl">Roadmaps</div>
+            <div className=" text-center text-md pb-6 max-w-screen-md">
               A tool that instantly generates personalized goal roadmaps from a
               single prompt, helping you plan and track your objectives
               efficiently.
-            </h5>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-4 justify-center pb-8 dark">

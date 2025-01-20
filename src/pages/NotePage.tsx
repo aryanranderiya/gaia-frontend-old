@@ -465,7 +465,7 @@ export default function NotesAdd() {
       const method = id ? "PUT" : "POST";
       const url = id ? `/notes/${id}` : `/notes`;
       const response = await apiauth[method.toLowerCase()](url, {
-        note: note.content,
+        note: note.note,
       });
 
       // Handle response if needed
