@@ -1,15 +1,16 @@
-import { apiauth } from "@/utils/apiaxios";
 import { StickyNote01Icon } from "@/components/icons";
-import AddNoteDialog from "@/components/Notes/AddNoteDialog";
 import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export interface Note {
   id: string;
-  title: string;
-  description: string;
+  // title?: string;
+  // description?: string;
+  note: string;
 }
 
 export default function Notes() {
@@ -89,25 +90,27 @@ export default function Notes() {
         </ScrollArea>
 
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
-          <Button
-            variant="shadow"
-            color="primary"
-            size="lg"
-            radius="full"
-            className="font-semibold gap-1"
-            onPress={() => setOpenDialog(true)}
-          >
-            <StickyNote01Icon width={27} height={27} />
-            Add Note
-          </Button>
+          <Link to={"./add"}>
+            <Button
+              variant="shadow"
+              color="primary"
+              size="lg"
+              radius="full"
+              className="font-semibold gap-1"
+              // onPress={() => setOpenDialog(true)}
+            >
+              <StickyNote01Icon width={27} height={27} />
+              Add Note
+            </Button>
+          </Link>
         </div>
         <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
-      <AddNoteDialog
+      {/* <AddNoteDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         addNote={addNote}
-      />
+      /> */}
     </>
   );
 }

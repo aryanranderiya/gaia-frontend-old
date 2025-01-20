@@ -1,7 +1,8 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { NoteDialog } from "@/components/Notes/NoteCardDialog";
 import { Note } from "@/pages/Notes";
 import { useState } from "react";
-import { NoteDialog } from "@/components/Notes/NoteCardDialog";
+import { convert } from "html-to-text";
+import { Link } from "react-router-dom";
 
 export default function NoteCard({
   note,
@@ -13,28 +14,27 @@ export default function NoteCard({
   const [openDialog, setOpenDialog] = useState(false);
 
   return (
-    <>
-      {/* Note Card */}
+    <Link to={`./${note.id}`}>
       <div
-        className="bg-white bg-opacity-20 min-w-[250px] max-w-[250px] max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-end overflow-hidden gap-1 cursor-pointer"
+        className="bg-white bg-opacity-20 min-w-[250px] max-w-[250px] max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer"
         onClick={() => setOpenDialog(true)} // Open dialog on click
       >
-        <span className="font-semibold text-xl whitespace-nowrap overflow-hidden overflow-ellipsis min-h-7 ">
-          {note.title}
-        </span>
+        <div className="font-normal text-md whitespace-wrap overflow-hidden overflow-ellipsis min-h-7 max-h-[100px]">
+          {convert(note.note)}
+        </div>
 
-        <ScrollArea>
-          <span className="text-md">{note.description}</span>
-        </ScrollArea>
+        {/* <ScrollArea>
+        <span className="text-md">{note.note}</span>
+      </ScrollArea> */}
       </div>
 
       {/* Note Dialog */}
-      <NoteDialog
+      {/* <NoteDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         note={note}
         onDelete={() => onDelete(note.id)} // Pass delete handler
-      />
-    </>
+      /> */}
+    </Link>
   );
 }

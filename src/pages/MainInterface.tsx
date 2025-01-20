@@ -16,7 +16,7 @@ import {
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
 import SearchPage from "./Search";
-import NotesAdd from "./NotesAdd";
+import NotesAdd from "./NotePage";
 
 // Lazy load the components
 const MainChat = lazy(() => import("./MainChat"));
@@ -88,7 +88,7 @@ export default function MainInterface() {
               <div className="chat_sidebar_toggle_btn">
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
-              <WebsiteName />
+              {/* <WebsiteName /> */}
 
               <Suspense fallback={<SuspenseLoader />}>
                 <Routes>
@@ -100,6 +100,7 @@ export default function MainInterface() {
                   <Route path="pins" element={<Pins />} />
                   <Route path="notes" element={<Notes />} />
                   <Route path="notes/add" element={<NotesAdd />} />
+                  <Route path="notes/:id" element={<NotesAdd />} />
                   <Route path="goals" element={<Goals />} />
                   <Route
                     path="goals/:goalId"
