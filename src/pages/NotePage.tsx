@@ -1,31 +1,43 @@
-import CharacterCount from "@tiptap/extension-character-count";
-import { Button } from "@/components/ui/button";
-import Typography from "@tiptap/extension-typography";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
 import { MenuBar } from "@/components/Notes/NotesMenuBar";
+import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { Spinner } from "@nextui-org/spinner";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import CharacterCount from "@tiptap/extension-character-count";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
+import Typography from "@tiptap/extension-typography";
 import Underline from "@tiptap/extension-underline";
-import { all, createLowlight } from "lowlight";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { ArrowLeft, CircleX, TriangleAlert } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { CircleX, TriangleAlert } from "lucide-react";
-// import { Input } from "@nextui-org/input";
+
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+
+interface Note {
+  id: string;
+  title: string;
+  note: string;
+}
 
 export default function NotesAdd() {
   const { id } = useParams();
   const location = useLocation();
-  const [note, setNote] = useState({ id: "", title: "", note: "" });
-  const [oldNote, setOldNote] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  // const [oldTitle, setOldTitle] = useState("");
-  // const lowlight = createLowlight(all);
+  const [note, setNote] = useState<Note>({ id: "", title: "", note: "" });
+  const [oldNote, setOldNote] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(true);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const editor = useEditor({
     extensions: [
@@ -33,9 +45,6 @@ export default function NotesAdd() {
       Highlight,
       Typography,
       Underline,
-      // CodeBlockLowlight.configure({
-      //   lowlight,
-      // }),
       CharacterCount.configure({ limit: 10_000 }),
       Placeholder.configure({
         placeholder: ({ node }) => {
@@ -48,9 +57,9 @@ export default function NotesAdd() {
     ],
     content: note.note,
     onUpdate: ({ editor }) => {
-      const note = editor.getHTML();
+      const noteContent = editor.getHTML();
 
-      if (note.length == 9500) {
+      if (noteContent.length === 9500) {
         toast.custom(() => (
           <div className="bg-[#ffecd8] list-none py-2 px-4 rounded-md flex flex-row items-center gap-3 text-[#dc7609] font-medium w-full justify-evenly text-nowrap">
             <TriangleAlert
@@ -66,7 +75,7 @@ export default function NotesAdd() {
             </span>
           </div>
         ));
-      } else if (note.length == 10_000) {
+      } else if (noteContent.length === 10_000) {
         toast.custom(() => (
           <div className="bg-[#ffe1e1] list-none py-2 px-4 rounded-md flex flex-row items-center gap-3 text-[#e60000] font-medium w-full justify-evenly text-nowrap">
             <CircleX
@@ -84,9 +93,7 @@ export default function NotesAdd() {
         ));
       }
 
-      setNote((prev) => {
-        return { ...prev, note };
-      });
+      setNote((prev) => ({ ...prev, note: noteContent }));
     },
   });
 
@@ -97,22 +104,18 @@ export default function NotesAdd() {
   }, [note, oldNote, editor]);
 
   useEffect(() => {
-    setHasUnsavedChanges(hasUnsavedChanges);
+    setHasUnsavedChanges(unsavedChanges);
   }, [unsavedChanges]);
 
   const fetchNote = useCallback(async () => {
     if (id) {
       try {
-        // const response = await fetch(`${API_URL}/notes/${id}`);
-        // if (!response.ok) throw new Error("Failed to fetch note");
-        // const data = await response.json();
         const response = await apiauth.get(`/notes/${id}`);
-        console.log(response.data);
-        setNote(response.data);
-        setOldNote(response.data.note);
-        // setOldTitle(response.data.title);
+        const fetchedNote = response.data as Note; // Type cast the response
+        setNote(fetchedNote);
+        setOldNote(fetchedNote.note);
         setHasUnsavedChanges(false);
-        editor?.commands.setContent(response.data.note);
+        editor?.commands.setContent(fetchedNote.note);
       } catch (error) {
         console.error("Error fetching note:", error);
       }
@@ -128,20 +131,17 @@ export default function NotesAdd() {
     }
   }, [location, fetchNote]);
 
-  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setNote((prev) => ({ ...prev, title: e.target.value }));
-  //   setHasUnsavedChanges(true);
-  // };
-
   const saveNote = async () => {
     try {
+      setIsSaving(true);
       const method = id ? "PUT" : "POST";
       const url = id ? `/notes/${id}` : `/notes`;
-      const response = await apiauth[method.toLowerCase()](url, {
+      await apiauth[method.toLowerCase() as "put" | "post"](url, {
         note: note.note,
       });
 
-      toast.success("Note has been created");
+      toast.success("Note has been saved");
+      setOldNote(note.note);
 
       setHasUnsavedChanges(false);
     } catch (error) {
@@ -156,38 +156,82 @@ export default function NotesAdd() {
         description:
           "There was a problem with saving this Note. Please try again later.\n",
       });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const deleteNote = async () => {
+    try {
+      await apiauth.delete(`/notes/${id}`);
+      toast.success("Note has been deleted");
+      navigate("/try/notes");
+      setHasUnsavedChanges(false);
+    } catch (error) {
+      console.error("Error saving note:", error);
+      toast.error("Uh oh! Something went wrong.", {
+        classNames: {
+          toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
+          title: " text-sm",
+          description: "text-sm",
+        },
+        duration: 3000,
+        description:
+          "There was a problem with deleting this Note. Please try again later.\n",
+      });
     }
   };
 
   return (
     <div className="flex flex-col justify-between min-h-screen h-screen w-full">
-      <div className="min-h-screen h-screen pt-3 flex flex-col editor">
-        {/* <Toaster position="top-right" /> */}
+      <div className="flex w-full justify-between items-center dark">
+        <Link to={"/try/notes"}>
+          <Button
+            variant={"link"}
+            className="text-white w-fit gap-2 px-0 font-normal"
+          >
+            <ArrowLeft />
+            All Notes
+          </Button>
+        </Link>
 
-        {editor && (
-          <>
-            <BubbleMenuComponent editor={editor} />
-            <MenuBar editor={editor} />
-            {/* 
-            <Input
-              value={note.title}
-              onChange={handleTitleChange}
-              variant="underlined"
-              placeholder="Title"
-              size="lg"
-              className="mb-2 no-underline after:bg-transparent"
-              classNames={{
-                input: "!text-5xl font-medium",
-                inputWrapper: "border-none !px-0 after:bg-transparent",
-              }}
-            /> */}
-
-            <EditorContent editor={editor} className="min-h-screen" />
-          </>
-        )}
+        <Dropdown className="dark">
+          <DropdownTrigger>
+            <Button size="icon" variant={"ghost"}>
+              <DotsVerticalIcon width={20} height={20} />
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu>
+            <DropdownItem
+              key="delete"
+              className="text-danger"
+              color="danger"
+              onPress={deleteNote}
+            >
+              Delete Note
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
+
+      {isLoading ? (
+        <div className="h-full flex items-center justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        <div className="min-h-screen h-screen pt-3 flex flex-col editor">
+          {editor && (
+            <>
+              <BubbleMenuComponent editor={editor} />
+              <MenuBar editor={editor} />
+              <EditorContent editor={editor} className="min-h-screen" />
+            </>
+          )}
+        </div>
+      )}
+
       <div
-        className={`fixed bottom-4 right-4 bg-[#00bbff] p-5 rounded-lg shadow-lg  transition-all duration-200 ${
+        className={`fixed bottom-4 right-4 bg-[#00bbff] p-5 rounded-lg shadow-lg transition-all duration-200 ${
           hasUnsavedChanges
             ? "opacity-100 pointer-events-auto scale-100"
             : "opacity-0 pointer-events-none scale-80"
@@ -196,8 +240,12 @@ export default function NotesAdd() {
         <p className="text-white mb-2 font-medium text-xl">
           You have unsaved changes!
         </p>
-        <Button onClick={saveNote} size={"lg"} disabled={!hasUnsavedChanges}>
-          Save Changes
+        <Button
+          onClick={saveNote}
+          size={"lg"}
+          disabled={!hasUnsavedChanges || isSaving}
+        >
+          {isSaving ? "Saving..." : "Save Changes"}
         </Button>
       </div>
     </div>

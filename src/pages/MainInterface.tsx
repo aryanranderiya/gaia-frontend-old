@@ -4,7 +4,6 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { ConversationListProvider } from "@/contexts/ConversationList";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
-import { ReactFlowProvider } from "@xyflow/react";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   Navigate,
@@ -15,8 +14,8 @@ import {
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
-import SearchPage from "./Search";
 import NotesAdd from "./NotePage";
+import SearchPage from "./Search";
 
 // Lazy load the components
 const MainChat = lazy(() => import("./MainChat"));
@@ -102,14 +101,7 @@ export default function MainInterface() {
                   <Route path="notes/add" element={<NotesAdd />} />
                   <Route path="notes/:id" element={<NotesAdd />} />
                   <Route path="goals" element={<Goals />} />
-                  <Route
-                    path="goals/:goalId"
-                    element={
-                      <ReactFlowProvider>
-                        <GoalPage />
-                      </ReactFlowProvider>
-                    }
-                  />
+                  <Route path="goals/:goalId" element={<GoalPage />} />
                   <Route path="*" element={<Navigate to="/404" />} />
                 </Routes>
               </Suspense>

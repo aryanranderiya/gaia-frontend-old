@@ -3,6 +3,7 @@ import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@nextui-org/button";
+import { Spinner } from "@nextui-org/spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,41 +17,19 @@ export interface Note {
 export default function Notes() {
   const [openDialog, setOpenDialog] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch all notes
   const fetchNotes = async () => {
+    setLoading(true);
     try {
       const response = await apiauth.get("/notes");
       setNotes(response?.data || []);
     } catch (error) {
       console.error("Error fetching notes:", error);
+    } finally {
+      setLoading(false);
     }
   };
-
-  // Add a new note
-  const addNote = async (note: Omit<Note, "id">) => {
-    try {
-      const response = await apiauth.post("/notes", note);
-      setNotes((prevNotes) => [...prevNotes, response?.data]);
-      fetchNotes();
-    } catch (error) {
-      console.error("Error adding note:", error);
-    }
-  };
-
-  // Update a note
-  // const updateNote = async (id: string, updatedNote: Partial<Note>) => {
-  //   try {
-  //     const response = await apiauth.put(`/notes/${id}`, updatedNote);
-  //     setNotes((prevNotes) =>
-  //       prevNotes.map((note) =>
-  //         note.id === id ? { ...note, ...response?.data } : note
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error updating note:", error);
-  //   }
-  // };
 
   // Delete a note
   const deleteNote = async (id: string) => {
@@ -79,14 +58,20 @@ export default function Notes() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 justify-center pb-8 sm:px-[10vw]">
-            <div className="flex flex-wrap gap-4">
-              {notes.length > 0 &&
-                notes?.map((note, index) => (
-                  <NoteCard key={index} note={note} onDelete={deleteNote} />
-                ))}
+          {loading ? (
+            <div className="h-[80vh] flex items-center justify-center">
+              <Spinner />
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-wrap gap-4 justify-center pb-8 sm:px-[10vw]">
+              <div className="flex flex-wrap gap-4">
+                {notes.length > 0 &&
+                  notes?.map((note, index) => (
+                    <NoteCard key={index} note={note} onDelete={deleteNote} />
+                  ))}
+              </div>
+            </div>
+          )}
         </ScrollArea>
 
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
@@ -97,7 +82,6 @@ export default function Notes() {
               size="lg"
               radius="full"
               className="font-semibold gap-1"
-              // onPress={() => setOpenDialog(true)}
             >
               <StickyNote01Icon width={27} height={27} />
               Add Note

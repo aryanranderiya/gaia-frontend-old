@@ -1,13 +1,9 @@
 import { apiauth } from "@/utils/apiaxios";
-import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/spinner";
-import { useEffect, useState } from "react";
-import { CalendarAdd01Icon } from "../icons";
-import { ScrollArea } from "../ui/scroll-area";
-import { useRef } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Checkbox } from "@nextui-org/checkbox";
-import { daysToWeeks } from "date-fns";
+import { Spinner } from "@nextui-org/spinner";
+import { useEffect, useRef, useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface GoogleCalendarDateTime {
   date?: string;
@@ -53,6 +49,7 @@ interface GoogleCalendarEvent {
 interface CalendarCardProps {
   event: GoogleCalendarEvent;
   onClick: () => void;
+  calendars: GoogleCalendar[];
 }
 
 interface GoogleCalendar {
@@ -89,6 +86,7 @@ function formatDateDay(event: GoogleCalendarEvent): [string, string] {
 
   return [day, dayOfWeek];
 }
+
 function formatEventDate(event: GoogleCalendarEvent): string | null {
   if (event.start.dateTime && event.end?.dateTime) {
     const startDateTime = new Date(event.start.dateTime);
@@ -135,6 +133,7 @@ function getEventColor(event: GoogleCalendarEvent): string {
       return "bg-blue-500 hover:bg-blue-600";
   }
 }
+
 const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
   const calendar = calendars?.find((cal) => cal.id === event.organizer.email);
   const backgroundColor = calendar?.backgroundColor || getEventColor(event);
@@ -145,11 +144,11 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
       className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden"
       onClick={onClick}
     >
-      <div className="flex items-center gap-2  relative z-[1]">
+      <div className="flex items-center gap-2 relative z-[1]">
         <span className="text-xl">{icon}</span>
         <div className="font-bold text-lg">{event.summary}</div>
       </div>
-      <div className="text-sm mt-2  relative z-[1] opacity-70">
+      <div className="text-sm mt-2 relative z-[1] opacity-70">
         {formatEventDate(event)}
       </div>
       <div
@@ -207,7 +206,7 @@ export default function Calendar() {
 
       // Find the primary calendar
       const primaryCalendar = response.data.items.find(
-        (cal) => cal.primary === true
+        (cal: { primary: boolean }) => cal.primary === true
       );
       if (primaryCalendar) {
         setSelectedCalendars([primaryCalendar.id]);
@@ -329,7 +328,6 @@ export default function Calendar() {
                     key={calendar.id}
                     isSelected={selectedCalendars.includes(calendar.id)}
                     onValueChange={() => handleCalendarSelect(calendar.id)}
-                    //   color={calendar.backgroundColor.replace("#", "") as any}
                     color="default"
                   >
                     <div className="font-medium text-white">
@@ -349,7 +347,7 @@ export default function Calendar() {
 
                 return (
                   <div key={date} className="w-full flex gap-7">
-                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px]  min-h-[60px] max-h-[60px]  rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
+                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
                       <div className="font-normal text-sm text-[#b7ecff]">
                         {dayOfWeek}
                       </div>
@@ -379,7 +377,7 @@ export default function Calendar() {
 
           <div ref={observerRef} className="h-1"></div>
         </ScrollArea>
-
+        {/* 
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Button
             variant="shadow"
@@ -391,7 +389,7 @@ export default function Calendar() {
             <CalendarAdd01Icon width={23} height={23} />
             Create a new event
           </Button>
-        </div>
+        </div> */}
         <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
       {selectedEvent && (

@@ -1,16 +1,10 @@
 // ChatRenderer.tsx
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import StarterText from "@/components/Chat/StarterText";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import SuspenseLoader from "../SuspenseLoader";
-
-// Lazy load components
-const ChatBubbleBot = lazy(
-  () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
-);
-const ChatBubbleUser = lazy(
-  () => import("@/components/Chat/ChatBubbles/ChatBubbleUser")
-);
+import ChatBubbleBot from "@/components/Chat/ChatBubbles/ChatBubbleBot";
+import ChatBubbleUser from "@/components/Chat/ChatBubbles/ChatBubbleUser";
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();

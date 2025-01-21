@@ -13,6 +13,7 @@ import {
   Position,
   ReactFlow,
   ReactFlowInstance,
+  ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre"; // Import dagre for layout
@@ -268,170 +269,186 @@ export default function GoalPage() {
     }
   };
   return (
-    <div className="flex flex-row justify-between h-full relative">
-      <div
-        className={`${
-          openSidebar ? "visible" : "hidden"
-        } fixed right-3 bottom-3 bg-zinc-800 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950`}
-      >
-        <div className="p-4 space-y-2">
-          <div className="text-xl font-medium ">
-            {currentlySelectedNodeId &&
-              nodes.find((node) => node.id === currentlySelectedNodeId)?.data
-                .label}
+    <ReactFlowProvider>
+      <div className="flex flex-row justify-between h-full relative">
+        <div
+          className={`${
+            openSidebar ? "visible" : "hidden"
+          } fixed right-3 bottom-3 bg-zinc-800 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950`}
+        >
+          <div className="p-4 space-y-2">
+            <div className="text-xl font-medium ">
+              {currentlySelectedNodeId &&
+                nodes.find((node) => node.id === currentlySelectedNodeId)?.data
+                  .label}
+            </div>
+
+            <div className="text-md -mt-2 text-foreground-600 pb-4">
+              {currentlySelectedNodeId &&
+                nodes
+                  .find((node) => node.id === currentlySelectedNodeId)
+                  ?.data?.details?.join(", ")}
+            </div>
+            <div className="space-y-4">
+              {currentlySelectedNodeId &&
+                (() => {
+                  const selectedNode = nodes.find(
+                    (node) => node.id === currentlySelectedNodeId
+                  );
+                  const estimatedTime = selectedNode?.data?.estimatedTime;
+
+                  return estimatedTime ? (
+                    <Chip
+                      size="lg"
+                      color="primary"
+                      variant="flat"
+                      startContent={
+                        <div className="flex items-center gap-1 text-md">
+                          <Clock width={18} />
+                          Estimated Time:
+                        </div>
+                      }
+                    >
+                      <span className="text-white text-md pl-1">
+                        {estimatedTime}
+                      </span>
+                    </Chip>
+                  ) : null;
+                })()}
+
+              {currentlySelectedNodeId && (
+                <Chip
+                  variant="flat"
+                  color="success"
+                  size="lg"
+                  startContent={
+                    <Checkbox
+                      color="success"
+                      // lineThrough
+                      radius="full"
+                      isSelected={
+                        nodes.find(
+                          (node) => node.id === currentlySelectedNodeId
+                        )?.data?.isComplete ?? false
+                      }
+                      onValueChange={handleCheckboxClick}
+                    >
+                      Mark as Complete
+                    </Checkbox>
+                  }
+                />
+              )}
+            </div>
           </div>
-
-          <div className="text-md -mt-2 text-foreground-600 pb-4">
-            {currentlySelectedNodeId &&
-              nodes
-                .find((node) => node.id === currentlySelectedNodeId)
-                ?.data?.details?.join(", ")}
-          </div>
-          <div className="space-y-4">
-            {currentlySelectedNodeId &&
-              (() => {
-                const selectedNode = nodes.find(
-                  (node) => node.id === currentlySelectedNodeId
-                );
-                const estimatedTime = selectedNode?.data?.estimatedTime;
-
-                return estimatedTime ? (
-                  <Chip
-                    size="lg"
-                    color="primary"
-                    variant="flat"
-                    startContent={
-                      <div className="flex items-center gap-1 text-md">
-                        <Clock width={18} />
-                        Estimated Time:
-                      </div>
-                    }
-                  >
-                    <span className="text-white text-md pl-1">
-                      {estimatedTime}
-                    </span>
-                  </Chip>
-                ) : null;
-              })()}
-
+          <div>
             {currentlySelectedNodeId && (
-              <Chip
-                variant="flat"
-                color="success"
-                size="lg"
-                startContent={
-                  <Checkbox
-                    color="success"
-                    // lineThrough
-                    radius="full"
-                    isSelected={
-                      nodes.find((node) => node.id === currentlySelectedNodeId)
-                        ?.data?.isComplete ?? false
-                    }
-                    onValueChange={handleCheckboxClick}
-                  >
-                    Mark as Complete
-                  </Checkbox>
+              <>
+                {
+                  (() => {
+                    const selectedNode = nodes.find(
+                      (node) => node.id === currentlySelectedNodeId
+                    );
+
+                    return selectedNode?.data?.resources &&
+                    selectedNode?.data?.resources?.length > 0 ? (
+                      <div className="bg-black bg-opacity-40 p-5 rounded-xl">
+                        <div className="flex text-md font-medium gap-2 items-center pb-2">
+                          <BookIcon1 width={18} />
+                          Resources
+                        </div>
+                        <div className="text-sm">
+                          {selectedNode.data.resources.map(
+                            (resource, index) => (
+                              <a
+                                key={index}
+                                href={`https://www.google.com/search?q=${resource.split(
+                                    "+"
+                                  )}`}
+                                target="__blank"
+                                className="hover:text-[#00bbff] underline underline-offset-4"
+                              >
+                                <li>{resource}</li>
+                              </a>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    ) : <div>No resources available.</div>;
+                  })()
                 }
-              />
+              </>
             )}
           </div>
         </div>
-        {currentlySelectedNodeId &&
-          nodes.find((node) => node.id === currentlySelectedNodeId)?.data
-            ?.resources?.length > 0 && (
-            <div className=" bg-black bg-opacity-40 p-5 rounded-xl">
-              <div className="flex text-md font-medium gap-2 items-center pb-2">
-                <BookIcon1 width={18} />
-                Resources
-              </div>
-              <div className="text-sm">
-                {currentlySelectedNodeId &&
-                  nodes
-                    .find((node) => node.id === currentlySelectedNodeId)
-                    ?.data?.resources?.map((resource, index) => (
-                      <a
-                        href={`https://www.google.com/search?q=${resource.split(
-                          "+"
-                        )}`}
-                        target="__blank"
-                        className="hover:text-[#00bbff] underline underline-offset-4"
-                      >
-                        <li key={index}>{resource}</li>
-                      </a>
-                    ))}
-              </div>
-            </div>
-          )}
-      </div>
 
-      <ScrollArea>
-        <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
-          <div className="flex flex-col justify-center items-center">
-            <div className="font-bold text-white text-2xl mt-1">
-              {goalData?.roadmap?.title || goalData?.title}
+        <ScrollArea>
+          <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
+            <div className="flex flex-col justify-center items-center">
+              <div className="font-bold text-white text-2xl mt-1">
+                {goalData?.roadmap?.title || goalData?.title}
+              </div>
+              <div className="text-foreground-500 text-md mt-1 ">
+                {goalData?.roadmap?.description || goalData?.description}
+              </div>
             </div>
-            <div className="text-foreground-500 text-md mt-1 ">
-              {goalData?.roadmap?.description || goalData?.description}
-            </div>
+            {loading ? (
+              <div className="bg-black w-fit pt-9 pb-0 relative h-fit flex items-center justify-center rounded-xl bg-opacity-50 flex-col gap-10 overflow-hidden">
+                <div className="text-center space-y-2">
+                  <div className="font-medium text-xl text-foreground">
+                    Creating your detailed Roadmap.
+                  </div>
+                  {goalData?.title}
+                  <div className="text-foreground-500 text-medium">
+                    Please Wait. This may take a while.
+                  </div>
+                </div>
+                <div className="px-32">
+                  <MultiStepLoader
+                    duration={4500}
+                    loadingStates={[
+                      { text: "Setting your goal... Let's get started!" },
+                      { text: "Exploring your objectives... Almost there!" },
+                      { text: "Adding some details to your vision..." },
+                      { text: "Creating milestones to guide you..." },
+                      { text: "Building your personalized roadmap..." },
+                      { text: "Placing the first pieces of the puzzle..." },
+                      {
+                        text: "Connecting the dots... Things are coming together!",
+                      },
+                      { text: "Gathering the resources you’ll need..." },
+                      { text: "Estimating time... Getting a clearer picture!" },
+                      { text: "Putting the final touches on your plan..." },
+                    ]}
+                    loading={true}
+                    loop={false}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="w-full h-full relative">
+                <ReactFlow
+                  className="relative"
+                  nodes={nodes}
+                  edges={edges}
+                  onInit={handleInit}
+                  nodesConnectable={false}
+                  nodesDraggable={false}
+                  connectionLineType={ConnectionLineType.SmoothStep}
+                  fitView
+                  elementsSelectable={true}
+                  fitViewOptions={{ minZoom: 1.2 }}
+                  minZoom={0.2}
+                  nodeTypes={nodeTypes}
+                  style={{ background: "transparent" }}
+                >
+                  {/* <ZoomSlider className="fixed bottom-[25px] !right-[150px]  !left-auto h-fit !top-auto z-30 dark" /> */}
+                </ReactFlow>
+              </div>
+            )}
           </div>
-          {loading ? (
-            <div className="bg-black w-fit pt-9 pb-0 relative h-fit flex items-center justify-center rounded-xl bg-opacity-50 flex-col gap-10 overflow-hidden">
-              <div className="text-center space-y-2">
-                <div className="font-medium text-xl text-foreground">
-                  Creating your detailed Roadmap.
-                </div>
-                {goalData?.title}
-                <div className="text-foreground-500 text-medium">
-                  Please Wait. This may take a while.
-                </div>
-              </div>
-              <div className="px-32">
-                <MultiStepLoader
-                  duration={4500}
-                  loadingStates={[
-                    { text: "Setting your goal... Let's get started!" },
-                    { text: "Exploring your objectives... Almost there!" },
-                    { text: "Adding some details to your vision..." },
-                    { text: "Creating milestones to guide you..." },
-                    { text: "Building your personalized roadmap..." },
-                    { text: "Placing the first pieces of the puzzle..." },
-                    {
-                      text: "Connecting the dots... Things are coming together!",
-                    },
-                    { text: "Gathering the resources you’ll need..." },
-                    { text: "Estimating time... Getting a clearer picture!" },
-                    { text: "Putting the final touches on your plan..." },
-                  ]}
-                  loading={true}
-                  loop={false}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="w-full h-full relative">
-              <ReactFlow
-                className="relative"
-                nodes={nodes}
-                edges={edges}
-                onInit={handleInit}
-                nodesConnectable={false}
-                nodesDraggable={false}
-                connectionLineType={ConnectionLineType.SmoothStep}
-                fitView
-                elementsSelectable={true}
-                fitViewOptions={{ minZoom: 1.2 }}
-                minZoom={0.2}
-                nodeTypes={nodeTypes}
-                style={{ background: "transparent" }}
-              >
-                {/* <ZoomSlider className="fixed bottom-[25px] !right-[150px]  !left-auto h-fit !top-auto z-30 dark" /> */}
-              </ReactFlow>
-            </div>
-          )}
-        </div>
-      </ScrollArea>
-      <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1] pointer-events-none" />
-    </div>
+        </ScrollArea>
+        <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1] pointer-events-none" />
+      </div>
+    </ReactFlowProvider>
   );
 }

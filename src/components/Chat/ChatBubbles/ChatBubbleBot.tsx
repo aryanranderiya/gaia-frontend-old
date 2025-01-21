@@ -1,15 +1,14 @@
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
 import { Alert01Icon } from "../../icons";
+import MarkdownRenderer from "../MarkdownRenderer";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import SuspenseLoader from "@/components/SuspenseLoader";
-const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
 export default function ChatBubbleBot({
   index,
@@ -78,9 +77,9 @@ export default function ChatBubbleBot({
           <div className="chat_bubble bg-zinc-800">
             <div className="flex flex-col gap-3">
               {/* TODO: Update this suspense to be a skeleton */}
-              <Suspense fallback={<SuspenseLoader />}>
-                <MarkdownRenderer content={text.toString()} />
-              </Suspense>
+              {/* <Suspense fallback={<SuspenseLoader />}> */}
+              <MarkdownRenderer content={text.toString()} />
+              {/* </Suspense> */}
 
               {!!disclaimer && (
                 <Chip
