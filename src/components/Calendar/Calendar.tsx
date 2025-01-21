@@ -7,6 +7,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Checkbox } from "@nextui-org/checkbox";
+import { daysToWeeks } from "date-fns";
 
 interface GoogleCalendarDateTime {
   date?: string;
@@ -61,41 +62,39 @@ interface GoogleCalendar {
   primary: boolean;
 }
 
-function formatEventDate(event: GoogleCalendarEvent): string {
-  // Handle all-day events
-  if (event.start.date) {
-    const startDate = new Date(event.start.date);
-    // For single-day events
-    if (event.start.date === event.end?.date) {
-      return new Intl.DateTimeFormat("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }).format(startDate);
-    }
-    // For multi-day events
-    const endDate = new Date(event.end?.date || event.start.date);
-    endDate.setDate(endDate.getDate() - 1); // Adjust end date since it's exclusive
-    return `${new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-    }).format(startDate)} - ${new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }).format(endDate)}`;
-  }
+function groupEventsByDate(
+  events: GoogleCalendarEvent[]
+): Record<string, GoogleCalendarEvent[]> {
+  const grouped: Record<string, GoogleCalendarEvent[]> = {};
 
-  // Handle events with specific times
+  events.forEach((event) => {
+    const [day, dayOfWeek] = formatDateDay(event);
+    const eventDate = `${day} ${dayOfWeek}`;
+
+    if (!grouped[eventDate]) grouped[eventDate] = [];
+
+    grouped[eventDate].push(event);
+  });
+
+  return grouped;
+}
+
+function formatDateDay(event: GoogleCalendarEvent): [string, string] {
+  const startDate = new Date(event.start.date || event.start.dateTime || "");
+
+  const day = startDate.getDate().toString();
+  const dayOfWeek = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+  }).format(startDate);
+
+  return [day, dayOfWeek];
+}
+function formatEventDate(event: GoogleCalendarEvent): string | null {
   if (event.start.dateTime && event.end?.dateTime) {
     const startDateTime = new Date(event.start.dateTime);
     const endDateTime = new Date(event.end.dateTime);
 
     return `${new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
@@ -106,7 +105,7 @@ function formatEventDate(event: GoogleCalendarEvent): string {
     }).format(endDateTime)}`;
   }
 
-  return "Date not specified";
+  return null;
 }
 
 function getEventIcon(event: GoogleCalendarEvent): string {
@@ -150,12 +149,12 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
         <span className="text-xl">{icon}</span>
         <div className="font-bold text-lg">{event.summary}</div>
       </div>
-      <div className="text-sm mt-2  relative z-[1]">
+      <div className="text-sm mt-2  relative z-[1] opacity-70">
         {formatEventDate(event)}
       </div>
       <div
         style={{ backgroundColor }}
-        className="absolute inset-0 z-[0] opacity-50 rounded-lg"
+        className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full"
       ></div>
     </div>
   );
@@ -183,11 +182,11 @@ export default function Calendar() {
     // Set up Intersection Observer for infinite scrolling
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !loading && nextPageToken) {
+        if (entry.isIntersecting && !loading && !!nextPageToken) {
           fetchEvents(nextPageToken); // Fetch next page
         }
       },
-      { rootMargin: "300px" }
+      { rootMargin: "0px" }
     );
 
     if (observerRef.current) {
@@ -224,10 +223,8 @@ export default function Calendar() {
     pageToken: string | null = null,
     calendarIds: string[] | null = null
   ) => {
-    // Prevent overlapping requests
-    if (loading || (!pageToken && calendarEvents.length > 0)) return;
+    if (calendarEvents.length <= 0) setLoading(true);
 
-    setLoading(true);
     try {
       const allEvents: GoogleCalendarEvent[] = [];
       const calendarsToFetch = calendarIds || selectedCalendars;
@@ -239,25 +236,29 @@ export default function Calendar() {
           params: { page_token: pageToken },
         });
 
-        console.log(response.data);
-
         allEvents.push(...response.data.events);
         if (response.data.nextPageToken) {
           setNextPageToken(response.data.nextPageToken);
         }
       }
 
-      const filteredEvents = allEvents.filter((event) => {
-        // Avoid duplicates by checking against the reference Set
-        if (eventIdsRef.current.has(event.id)) {
-          return false;
-        }
-        eventIdsRef.current.add(event.id); // Add to deduplication set
-        return true;
-      });
+      // Filter out duplicates and add new events
+      const newEvents = allEvents.filter(
+        (event) => !eventIdsRef.current.has(event.id)
+      );
+      newEvents.forEach((event) => eventIdsRef.current.add(event.id));
 
-      // Append unique events to the state
-      setCalendarEvents((prev) => [...prev, ...filteredEvents]);
+      // Merge new events with existing events, sort, and update state
+      setCalendarEvents((prev) => {
+        const mergedEvents = [...prev, ...newEvents];
+        console.log(mergedEvents);
+
+        return mergedEvents.sort((a, b) => {
+          const dateA = new Date(a.start.dateTime || a.start.date || "");
+          const dateB = new Date(b.start.dateTime || b.start.date || "");
+          return dateA.getTime() - dateB.getTime();
+        });
+      });
     } catch (error) {
       console.error("Error fetching calendar events:", error);
     } finally {
@@ -271,20 +272,39 @@ export default function Calendar() {
   };
 
   const handleCalendarSelect = (calendarId: string) => {
+    if (loading) return; // Prevent actions when still loading
+
     setSelectedCalendars((prev) => {
       const newSelection = prev.includes(calendarId)
         ? prev.filter((id) => id !== calendarId)
         : [...prev, calendarId];
 
-      setCalendarEvents([]);
-      eventIdsRef.current.clear();
-      setNextPageToken(null);
-
-      setTimeout(() => fetchEvents(null, newSelection), 0);
+      // If a calendar is deselected, remove its events
+      if (!newSelection.includes(calendarId)) {
+        setCalendarEvents((prevEvents) =>
+          prevEvents.filter((event) => event.organizer.email !== calendarId)
+        );
+        eventIdsRef.current = new Set(
+          Array.from(eventIdsRef.current).filter((id) =>
+            calendarEvents.find(
+              (event) => event.id === id && event.organizer.email !== calendarId
+            )
+          )
+        );
+      } else {
+        // If a new calendar is selected, fetch its events
+        fetchEvents(null, [calendarId]);
+      }
 
       return newSelection;
     });
   };
+
+  useEffect(() => {
+    if (selectedCalendars.length > 0) {
+      fetchEvents();
+    }
+  }, [selectedCalendars]);
 
   return (
     <>
@@ -297,29 +317,58 @@ export default function Calendar() {
           <div className="flex flex-wrap gap-4 justify-center pb-4">
             {!!calendars &&
               calendars?.length > 0 &&
-              calendars.map((calendar) => (
-                <Checkbox
-                  key={calendar.id}
-                  isSelected={selectedCalendars.includes(calendar.id)}
-                  onValueChange={() => handleCalendarSelect(calendar.id)}
-                  color={calendar.backgroundColor.replace("#", "") as any}
+              calendars.map((calendar, index) => (
+                <div
+                  style={{
+                    backgroundColor: `${calendar.backgroundColor}50`,
+                  }}
+                  key={index}
+                  className="py-2 px-4 rounded-lg"
                 >
-                  {calendar.summary}
-                </Checkbox>
+                  <Checkbox
+                    key={calendar.id}
+                    isSelected={selectedCalendars.includes(calendar.id)}
+                    onValueChange={() => handleCalendarSelect(calendar.id)}
+                    //   color={calendar.backgroundColor.replace("#", "") as any}
+                    color="default"
+                  >
+                    <div className="font-medium text-white">
+                      {calendar.summary}
+                    </div>
+                  </Checkbox>
+                </div>
               ))}
           </div>
         </div>
 
         <ScrollArea>
           <div className="flex flex-wrap gap-4 justify-center pb-8 max-w-screen-sm mx-auto">
-            {calendarEvents?.map((event) => (
-              <CalendarCard
-                key={event.id}
-                event={event}
-                onClick={() => handleEventClick(event)}
-                calendars={calendars}
-              />
-            ))}
+            {Object.entries(groupEventsByDate(calendarEvents)).map(
+              ([date, events]) => {
+                const [day, dayOfWeek] = date.split(" ");
+
+                return (
+                  <div key={date} className="w-full flex gap-7">
+                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px]  min-h-[60px] max-h-[60px]  rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
+                      <div className="font-normal text-sm text-[#b7ecff]">
+                        {dayOfWeek}
+                      </div>
+                      <div>{day}</div>
+                    </div>
+                    <div className="flex flex-wrap gap-4 justify-center w-full">
+                      {events.map((event) => (
+                        <CalendarCard
+                          key={event.id}
+                          event={event}
+                          onClick={() => handleEventClick(event)}
+                          calendars={calendars}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+            )}
           </div>
 
           {loading && (
