@@ -1,10 +1,10 @@
-import { apiauth } from "@/utils/apiaxios";
 import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiauth } from "@/utils/apiaxios";
 // import { ZoomSlider } from "@/components/zoom-slider";
-import { Chip } from "@nextui-org/chip";
 import { Checkbox } from "@nextui-org/checkbox";
+import { Chip } from "@nextui-org/chip";
 import {
   ConnectionLineType,
   Edge,
@@ -77,11 +77,13 @@ const CustomNode = React.memo(
         <div
           className={`${
             currentlySelectedNodeId === data.id
-              ? "outline-[#00bbff] shadow-lg"
+              ? "!outline-[#00bbff] shadow-lg"
               : "outline-zinc-700"
           } ${
-            data.isComplete ? "bg-[#092d3b]" : "bg-foreground-900"
-          } transition-colors outline outline-2 p-4 rounded-sm text-white flex flex-col gap-1 max-w-[250px] min-w-[250px] text-center`}
+            data.isComplete
+              ? "bg-[#00bbff73] outline-[#00bbff30] line-through"
+              : "bg-zinc-800"
+          } transition-all outline outline-[3px] p-4 rounded-lg text-white flex flex-row gap-1 max-w-[250px] min-w-[250px] text-center items-center justify-center`}
           onClick={() => {
             setCurrentlySelectedNodeId(data.id);
             setOpenSidebar(true);
@@ -270,7 +272,7 @@ export default function GoalPage() {
       <div
         className={`${
           openSidebar ? "visible" : "hidden"
-        } fixed right-3 bottom-3 bg-zinc-900 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950`}
+        } fixed right-3 bottom-3 bg-zinc-800 max-w-[350px] p-2 rounded-xl flex flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950`}
       >
         <div className="p-4 space-y-2">
           <div className="text-xl font-medium ">
@@ -305,13 +307,9 @@ export default function GoalPage() {
                       </div>
                     }
                   >
-                    {/* <div className="flex items-center gap-2 bg-[black] text-sm bg-opacity-40 rounded-full pl-4 pr-1 py-1 w-fit outline outline-2 outline-[#00bbff40] text-primary"> */}
                     <span className="text-white text-md pl-1">
                       {estimatedTime}
                     </span>
-
-                    {/* <Chip color="primary" variant="flat"></Chip> */}
-                    {/* </div> */}
                   </Chip>
                 ) : null;
               })()}
@@ -324,7 +322,7 @@ export default function GoalPage() {
                 startContent={
                   <Checkbox
                     color="success"
-                    lineThrough
+                    // lineThrough
                     radius="full"
                     isSelected={
                       nodes.find((node) => node.id === currentlySelectedNodeId)
@@ -341,7 +339,7 @@ export default function GoalPage() {
         </div>
         {currentlySelectedNodeId &&
           nodes.find((node) => node.id === currentlySelectedNodeId)?.data
-            ?.resources.length > 0 && (
+            ?.resources?.length > 0 && (
             <div className=" bg-black bg-opacity-40 p-5 rounded-xl">
               <div className="flex text-md font-medium gap-2 items-center pb-2">
                 <BookIcon1 width={18} />

@@ -11,7 +11,7 @@ const NotLoggedIn = lazy(() => import("@/components/NotLoggedInDialog"));
 function App() {
   return (
     <UserProvider>
-      <Suspense fallback={<SuspenseLoader />}>
+      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
         <NotLoggedIn />
         <Routes>
           <Route path="/try/*" element={<MainInterface />} />

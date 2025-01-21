@@ -31,16 +31,16 @@
     @apply text-sm; /* Specific size for h6 */
   }
 
-  ol,
-  ul {
+  .editor ol,
+  .editor ul {
     padding-left: theme("spacing.10");
   }
 
-  ol {
+  .editor ol {
     list-style-type: decimal;
   }
 
-  ul {
+  .editor ul {
     list-style-type: disc;
   }
 
@@ -309,7 +309,7 @@ main {
   gap: 0.5em;
 }
 
-.toast {
+.toast_custom {
   background-color: #00bbff !important;
   box-shadow: 0px -5px 10px 3px rgba(0, 0, 0, 0.3) !important;
 }
@@ -317,6 +317,11 @@ main {
 .toast_error {
   background-color: maroon !important;
 }
+/* 
+.custom_toast {
+  padding: 10px;
+  border-radius: 20px;
+} */
 
 .voice-recorder_maincontainer {
   border: none;
@@ -826,10 +831,13 @@ main {
 */
 
 code {
-  /* background-color: rgba(0, 0, 0, 0.5); */
   padding: 4px;
   border-radius: 10px;
   font-family: monospace !important;
+}
+
+.editor code {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
@@ -859,13 +867,18 @@ code {
   all: unset; /* Resets all styles, including preflight */
 }
 
-/* Style the placeholder text */
-.is-empty {
+/* .is-empty {
   color: rgba(255, 255, 255, 0.6);
-  /* color: #00bbff; */
 }
 
 .is-empty::before {
   content: attr(data-placeholder);
-  /* font-style: italic;  */
+} */
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: rgba(255, 255, 255, 0.6);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

@@ -72,14 +72,14 @@ export default function Notes() {
         <ScrollArea>
           <div className="flex items-center flex-col gap-2">
             <h1 className="font-bold text-center text-5xl">Notes</h1>
-            <h5 className=" text-center text-md pb-6 max-w-screen-md">
+            <div className=" text-center text-md pb-6 max-w-screen-md">
               Add and store custom notes as memories for your AI assistant,
               enabling it to recall important details and provide more
               personalized interactions over time.
-            </h5>
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 justify-center pb-8">
+          <div className="flex flex-wrap gap-4 justify-center pb-8 sm:px-[10vw]">
             <div className="flex flex-wrap gap-4">
               {notes.length > 0 &&
                 notes?.map((note, index) => (

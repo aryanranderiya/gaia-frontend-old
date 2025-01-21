@@ -90,7 +90,7 @@ export default function MainInterface() {
               </div>
               {/* <WebsiteName /> */}
 
-              <Suspense fallback={<SuspenseLoader />}>
+              <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
                 <Routes>
                   <Route path="chat/:convoIdParam" element={<MainChat />} />
                   <Route path="chat" element={<MainChat />} />
