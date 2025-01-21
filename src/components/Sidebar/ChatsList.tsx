@@ -15,6 +15,10 @@ export default function ChatsList() {
     fetchConversations();
   }, []);
 
+  useEffect(() => {
+    console.log(conversations);
+  }, [conversations]);
+
   const createNewChat = (): void => {
     navigate(`/try/chat/`);
     resetMessages();
@@ -35,18 +39,25 @@ export default function ChatsList() {
       <div className="overflow-y-auto flex flex-col gap-1 py-1 max-h-[40vh] ">
         {/* <ScrollArea className="min-h-[20vh] nax-h-[80vh]"> */}
         {conversations.length > 0 &&
-          conversations.map(
-            (conversation: {
-              conversation_id: string;
-              description: string;
-            }) => (
-              <ChatTab
-                key={conversation.conversation_id}
-                id={conversation.conversation_id}
-                name={conversation.description || "New Chat"}
-              />
+          conversations
+            .sort(
+              (a: { createdAt: string }, b: { createdAt: string }) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
             )
-          )}
+            // .reverse()
+            .map(
+              (conversation: {
+                conversation_id: string;
+                description: string;
+              }) => (
+                <ChatTab
+                  key={conversation.conversation_id}
+                  id={conversation.conversation_id}
+                  name={conversation.description || "New Chat"}
+                />
+              )
+            )}
         {/* </ScrollArea> */}
       </div>
     </div>

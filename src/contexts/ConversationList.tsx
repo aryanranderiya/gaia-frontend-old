@@ -11,6 +11,7 @@ import { apiauth } from "@/utils/apiaxios";
 interface Conversation {
   conversation_id: string;
   description: string;
+  createdAt: string;
 }
 
 interface ConversationContextType {

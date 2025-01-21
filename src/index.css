@@ -831,6 +831,7 @@ main {
 */
 
 code {
+  /* background-color: black; */
   padding: 4px;
   border-radius: 10px;
   font-family: monospace !important;

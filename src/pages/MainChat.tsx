@@ -9,6 +9,7 @@ const MainChat = React.memo(function MainChat() {
   const convoRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const location = useLocation();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleScroll = debounce((event: React.UIEvent) => {
     const { scrollTop, scrollHeight, clientHeight } =
@@ -31,6 +32,7 @@ const MainChat = React.memo(function MainChat() {
 
   useEffect(() => {
     scrollToBottom();
+    if (inputRef?.current) inputRef?.current?.focus();
   }, [location.pathname]);
 
   return (
@@ -44,6 +46,7 @@ const MainChat = React.memo(function MainChat() {
         scrollToBottom={scrollToBottom}
         isAtBottom={isAtBottom}
         isOverflowing={false}
+        inputRef={inputRef}
       />
     </>
   );

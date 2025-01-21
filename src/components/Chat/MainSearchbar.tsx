@@ -11,31 +11,26 @@ interface MainSearchbarProps {
   scrollToBottom: () => void;
   isAtBottom: boolean;
   isOverflowing: boolean;
+  inputRef: React.RefObject<HTMLTextAreaElement>;
 }
 
-export default function MainSearchbar({
+const MainSearchbar = ({
   scrollToBottom,
   isAtBottom,
   isOverflowing,
-}: MainSearchbarProps) {
+  inputRef,
+}: MainSearchbarProps) => {
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [currentHeight, setHeight] = React.useState<number>(24);
   const [searchbarText, setSearchbarText] = React.useState<string>("");
-  const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const { loading, updateConversation } = useConversation(convoIdParam ?? null);
-
-  const focusInput = () => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 10);
-  };
 
   const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     if (!searchbarText) return;
     updateConversation(searchbarText);
     setSearchbarText("");
-    focusInput();
+    inputRef.current?.focus();
     scrollToBottom();
   };
 
@@ -44,12 +39,13 @@ export default function MainSearchbar({
   ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
-      setSearchbarText((text) => text + "\n");
+      setSearchbarText((text) => `${text}\n`);
     } else if (event.key === "Enter") {
       event.preventDefault();
       handleFormSubmit();
     }
   };
+
   return (
     <div className="searchbar_container relative">
       <div
@@ -78,7 +74,7 @@ export default function MainSearchbar({
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}
             value={searchbarText}
-            ref={inputRef}
+            ref={inputRef} // Assign the ref here
             autoFocus
             isInvalid={searchbarText.length > 4500}
             onHeightChange={(height: number) => setHeight(height)}
@@ -100,4 +96,6 @@ export default function MainSearchbar({
       </div>
     </div>
   );
-}
+};
+
+export default MainSearchbar;
