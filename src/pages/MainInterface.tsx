@@ -1,6 +1,6 @@
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import WebsiteName from "@/components/TopWebsiteName";
+// import WebsiteName from "@/components/TopWebsiteName";
 import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { ConversationListProvider } from "@/contexts/ConversationList";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
