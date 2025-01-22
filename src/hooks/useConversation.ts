@@ -51,7 +51,8 @@ export const useConversation = (convoIdParam: string | null) => {
   const fetchChatStream = async (
     inputText: string,
     currentMessages: MessageType[],
-    conversationId: string
+    conversationId: string,
+    enableSearch: boolean
   ) => {
     let botResponseText = "";
     setLoading(true);
@@ -105,6 +106,7 @@ export const useConversation = (convoIdParam: string | null) => {
 
     await ApiService.fetchChatStream(
       inputText,
+      enableSearch,
       convoMessages,
       onMessage,
       onClose,
@@ -112,7 +114,10 @@ export const useConversation = (convoIdParam: string | null) => {
     );
   };
 
-  const updateConversation = async (inputText: string) => {
+  const updateConversation = async (
+    inputText: string,
+    enableSearch: boolean = false
+  ) => {
     const currentMessages: MessageType[] = [
       {
         type: "user",
@@ -136,7 +141,12 @@ export const useConversation = (convoIdParam: string | null) => {
     });
 
     // Start fetching bot response stream.
-    await fetchChatStream(inputText, currentMessages, conversationId);
+    await fetchChatStream(
+      inputText,
+      currentMessages,
+      conversationId,
+      enableSearch
+    );
   };
 
   return { loading, updateConversation };

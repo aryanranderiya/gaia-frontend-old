@@ -51,6 +51,7 @@ export const ApiService = {
 
   fetchChatStream: async (
     inputText: string,
+    enableSearch: boolean,
     convoMessages: MessageType[],
     onMessage: (data: string) => void,
     onClose: () => void,
@@ -69,6 +70,7 @@ export const ApiService = {
       signal: controller.signal,
       body: JSON.stringify({
         message: inputText,
+        search_web: enableSearch || false,
         messages: convoMessages
           .slice(-10)
           .filter(({ response }) => response.trim().length > 0)
@@ -76,7 +78,7 @@ export const ApiService = {
           .map(({ type, response }, index, array) => ({
             // role: type === "bot" ? "assistant" : type,
             role: type,
-            content: `mostRecent: ${index === array.length - 1} ${response}`,
+            content: `mostRecent: ${index === array.length - 1}. ${response}`,
           })),
       }),
       onmessage(event) {

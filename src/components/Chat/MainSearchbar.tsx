@@ -34,7 +34,7 @@ const MainSearchbar = ({
   const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     if (!searchbarText) return;
-    updateConversation(searchbarText);
+    updateConversation(searchbarText, enableSearch);
     setSearchbarText("");
     inputRef.current?.focus();
     scrollToBottom();
