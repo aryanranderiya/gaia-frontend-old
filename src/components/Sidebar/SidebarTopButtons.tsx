@@ -49,7 +49,7 @@ export default function SidebarTopButtons() {
   ];
 
   return (
-    <div className="bg-[#141414] rounded-2xl p-2 gap-2 flex flex-wrap items-center">
+    <div className="bg-[#141414] rounded-2xl p-2 gap-1 flex flex-wrap items-center justify-between">
       {buttonData.map(({ route, icon, label }) => (
         <Tooltip key={route} showArrow={true} content={label}>
           <Button

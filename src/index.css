@@ -102,12 +102,11 @@ main {
   overflow-x: hidden !important;
 }
 .sidebar {
-  display: flex;
   flex-direction: column;
   position: relative;
   justify-content: space-between;
   overflow: hidden;
-  transition: all 0.3s ease, opacity 0.1s ease;
+  transition: all 0.2s ease-in-out, opacity 0.1s ease;
   z-index: 1;
   min-width: 270px;
   max-width: 270px;
@@ -117,9 +116,9 @@ main {
 }
 
 .sidebar.hide {
-  width: 0 !important;
+  /* width: 0 !important;
   min-width: 0 !important;
-  max-width: 0 !important;
+  max-width: 0 !important; */
   transform: translateX(-100%);
   opacity: 0;
 }
@@ -882,4 +881,22 @@ code {
   float: left;
   height: 0;
   pointer-events: none;
+}
+
+/* width */
+.sidebar div::-webkit-scrollbar {
+  width: 7px;
+  border-radius: 100px;
+}
+
+/* Track */
+.sidebar div::-webkit-scrollbar-track {
+  background: #00bbff30;
+  border-radius: 100px;
+}
+
+/* Handle */
+.sidebar div::-webkit-scrollbar-thumb {
+  background: #00bbff;
+  border-radius: 100px;
 }

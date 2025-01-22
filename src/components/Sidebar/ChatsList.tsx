@@ -33,6 +33,24 @@ const getTimeFrame = (dateString: string): string => {
   return "All time";
 };
 
+// Assign a priority value to each time frame
+const timeFramePriority = (timeFrame: string): number => {
+  switch (timeFrame) {
+    case "Today":
+      return 0;
+    case "Yesterday":
+      return 1;
+    case "Previous 7 days":
+      return 2;
+    case "Previous 30 days":
+      return 3;
+    case "All time":
+      return 4;
+    default:
+      return 5; // Catch-all for unexpected cases
+  }
+};
+
 export default function ChatsList() {
   const navigate = useNavigate();
   const { resetMessages } = useConvo();
@@ -47,7 +65,7 @@ export default function ChatsList() {
     resetMessages();
   };
 
-  // Group conversations by time frame
+  // Group conversations by time frame and add index for sorting
   const groupedConversations = conversations.reduce((acc, conversation) => {
     const timeFrame = getTimeFrame(conversation.createdAt);
     if (!acc[timeFrame]) {
@@ -57,8 +75,14 @@ export default function ChatsList() {
     return acc;
   }, {} as Record<string, any[]>);
 
+  // Sort the time frames based on the priority values
+  const sortedTimeFrames = Object.entries(groupedConversations).sort(
+    ([timeFrameA], [timeFrameB]) =>
+      timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB)
+  );
+
   return (
-    <div>
+    <div className="pt-0 p-4">
       <Button
         variant="flat"
         className="w-full flex justify-between"
@@ -69,33 +93,32 @@ export default function ChatsList() {
         <PlusSignIcon width="21" color="foreground" />
       </Button>
 
-      <div className="overflow-y-auto flex flex-col gap-1 py-1 max-h-[40vh]">
-        {/* Iterate over grouped conversations */}
-        {Object.entries(groupedConversations).map(
-          ([timeFrame, conversationsGroup]) => (
-            <div key={timeFrame}>
-              <div className="font-medium px-2 text-xs pt-5">{timeFrame}</div>
-              {conversationsGroup
-                .sort(
-                  (a: { createdAt: string }, b: { createdAt: string }) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
-                )
-                .map(
-                  (conversation: {
-                    conversation_id: string;
-                    description: string;
-                  }) => (
-                    <ChatTab
-                      key={conversation.conversation_id}
-                      id={conversation.conversation_id}
-                      name={conversation.description || "New Chat"}
-                    />
-                  )
-                )}
+      <div className="flex flex-col gap-1 max-h-[80vh] relative">
+        {sortedTimeFrames.map(([timeFrame, conversationsGroup]) => (
+          <div key={timeFrame}>
+            <div className="font-medium px-2 text-xs pt-5 sticky top-0 bg-black z-[1]">
+              {timeFrame}
             </div>
-          )
-        )}
+            {conversationsGroup
+              .sort(
+                (a: { createdAt: string }, b: { createdAt: string }) =>
+                  new Date(b.createdAt).getTime() -
+                  new Date(a.createdAt).getTime()
+              )
+              .map(
+                (conversation: {
+                  conversation_id: string;
+                  description: string;
+                }) => (
+                  <ChatTab
+                    key={conversation.conversation_id}
+                    id={conversation.conversation_id}
+                    name={conversation.description || "New Chat"}
+                  />
+                )
+              )}
+          </div>
+        ))}
       </div>
     </div>
   );

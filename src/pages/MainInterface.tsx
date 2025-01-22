@@ -43,10 +43,20 @@ export default function MainInterface() {
       if (isSidebarVisible) {
         sidebarRef.current.classList.add("hide");
         contentContainerRef.current.classList.remove("hide");
+
+        setTimeout(() => {
+          if (sidebarRef?.current) {
+            sidebarRef?.current.classList.add("!hidden");
+            sidebarRef?.current.classList.remove("flex");
+          }
+        }, 300);
         setSidebarVisible(false);
       } else {
         contentContainerRef.current.classList.add("hide");
         sidebarRef.current.classList.remove("hide");
+        sidebarRef?.current.classList.remove("!hidden");
+        sidebarRef?.current.classList.add("flex");
+
         setSidebarVisible(true);
       }
     }
@@ -84,7 +94,11 @@ export default function MainInterface() {
               onClick={hideSidebar}
               className="main_chat"
             >
-              <div className="chat_sidebar_toggle_btn">
+              <div
+                className={`chat_sidebar_toggle_btn bg-black rounded-xl transition-opacity ${
+                  isSidebarVisible ? "opacity-0" : "opacity-100"
+                }`}
+              >
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
               {/* <WebsiteName /> */}

@@ -21,37 +21,40 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="sidebar" ref={sidebarref}>
-        <div className="p-4">
-          <div className="flex items-center justify-between">
-            <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+      <div className="sidebar flex" ref={sidebarref}>
+        <div className="overflow-y-auto ">
+          <div className="p-4 pb-0 ">
+            <div className="flex items-center justify-between">
+              <Tooltip
+                content="general artificial intelligence assistant"
+                placement="bottom"
+                offset={+0}
+              >
+                <div className="flex gap-2 items-center p-2">
+                  <GlobalIcon color="white" width="22" />
+                  <span>gaia</span>
+                </div>
+              </Tooltip>
 
-            <Tooltip
-              content="general artificial intelligence assistant"
-              placement="bottom"
-              offset={+0}
-            >
-              <div className="flex gap-2 items-center p-2">
-                <GlobalIcon color="white" width="22" />
-                <span>gaia</span>
-              </div>
-            </Tooltip>
+              <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+            </div>
+            {/* 
+            <div className="px-1">
+              <Button
+                variant="shadow"
+                color="primary"
+                className="w-full flex justify-between my-4 font-medium text-zinc-900"
+                onPress={() => setOpen(true)}
+              >
+                Coming Soon!
+                <StarsIcon color="zinc-900" fill="zinc-900" />
+              </Button>
+            </div> */}
+
+            <SidebarTopButtons />
+            <Hr />
           </div>
 
-          <div className="px-1">
-            <Button
-              variant="shadow"
-              color="primary"
-              className="w-full flex justify-between my-4 font-medium text-zinc-900"
-              onPress={() => setOpen(true)}
-            >
-              Coming Soon!
-              <StarsIcon color="zinc-900" fill="zinc-900" />
-            </Button>
-          </div>
-
-          <SidebarTopButtons />
-          <Hr />
           <ChatsList />
         </div>
         <UserContainer />

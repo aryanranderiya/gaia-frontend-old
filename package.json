@@ -120,6 +120,7 @@
     "d3": "^7.9.0",
     "dagre": "^0.8.5",
     "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.14.4",
     "google-translate-api": "^2.3.0",
