@@ -28,8 +28,6 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
   // text,
   // index,
 }) => {
-  // const { conversationHistory, setConversationHistory } = useConvoHistory();
-
   // const [sourceLang, setSourceLang] = useState<string>("english");
   // const [targetLang, setTargetLang] = useState<string>("en");
 

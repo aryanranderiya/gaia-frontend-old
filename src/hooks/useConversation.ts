@@ -1,16 +1,14 @@
-import fetchDate from "@/utils/fetchDate";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { MessageType } from "@/types/ConvoTypes";
 import { ApiService } from "@/utils/chatUtils";
+import fetchDate from "@/utils/fetchDate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 
 export const useConversation = (convoIdParam: string | null) => {
   const navigate = useNavigate();
-  const { setConvoHistory } = useConvoHistory();
   const { convoMessages, setConvoMessages } = useConvo();
   const { fetchConversations } = useConversationList();
   const [loading, setLoading] = useState(false);
@@ -19,55 +17,27 @@ export const useConversation = (convoIdParam: string | null) => {
     convoIdParam ? fetchMessages(convoIdParam) : navigate("/try/chat");
   }, [convoIdParam]);
 
-  // If conversation exists
   const fetchMessages = async (conversationId: string) => {
     try {
       const messages = await ApiService.fetchMessages(conversationId);
-      setConvoMessages(messages);
+      if (messages.length > 1) setConvoMessages(messages);
     } catch (e) {
       console.error("Failed to fetch messages:", e);
       navigate("/try/chat");
     }
   };
 
-  const handleConvoHistoryUpdate = (
-    conversationId: string,
-    newMessages: MessageType[],
-    description?: string
-  ) => {
-    setConvoHistory((oldHistory) => ({
-      ...oldHistory,
-      [conversationId]: {
-        ...oldHistory[conversationId],
-        description:
-          description || oldHistory[conversationId]?.description || "New Chat",
-        messages: [
-          ...(oldHistory[conversationId]?.messages || []),
-          ...newMessages,
-        ],
-      },
-    }));
-  };
-
   const createNewConversation = async (currentMessages: MessageType[]) => {
     try {
       const conversationId = uuidv1();
 
-      handleConvoHistoryUpdate(conversationId, currentMessages, "New Chat");
-
-      // Log time taken for createConversation API call
-      console.time("createConversationTime");
       await ApiService.createConversation(conversationId);
-      console.timeEnd("createConversationTime");
 
-      // Log time taken for updateConversationDescription API call
-      console.time("updateConversationDescriptionTime");
       ApiService.updateConversationDescription(
         conversationId,
         JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
         fetchConversations
       );
-      console.timeEnd("updateConversationDescriptionTime");
 
       navigate(`/try/chat/${conversationId}`);
 
@@ -93,27 +63,18 @@ export const useConversation = (convoIdParam: string | null) => {
         response: botResponseText,
         date: fetchDate(),
       };
-      //   return !!oldMessages && oldMessages?.length > 0
-      //     ? [...oldMessages.slice(0, -1), botResponse] // Updates the bot message with each chunk
-      //     : [botResponse];
-      // });
 
       setConvoMessages((oldMessages = []) => {
         // If there are no messages yet, start the conversation with the user message followed by the bot response
-        if (oldMessages.length === 0) {
-          return [currentMessages[0], botResponse];
-        }
+        if (oldMessages.length === 0) return [currentMessages[0], botResponse];
 
         // If the last message was a user message, append the bot response to it
         const lastMessage = oldMessages[oldMessages.length - 1];
-        if (lastMessage.type === "user") {
-          return [...oldMessages, botResponse];
-        }
+        if (lastMessage.type === "user") return [...oldMessages, botResponse];
 
-        // If the last message was already a bot response, update it
         return [
           ...oldMessages.slice(0, -1),
-          { ...lastMessage, response: botResponseText }, // Update last bot message with new text
+          { ...lastMessage, response: botResponseText },
         ];
       });
     };
@@ -167,10 +128,7 @@ export const useConversation = (convoIdParam: string | null) => {
 
     if (!conversationId) return setLoading(false);
 
-    // If conversation ID exists, update history and set messages only once.
-    if (convoIdParam) {
-      handleConvoHistoryUpdate(conversationId, currentMessages);
-    }
+    // Properly display the bot loading state along with the users message
     setConvoMessages((oldMessages) => {
       return oldMessages && oldMessages?.length > 0 // If there are no messages in the convo history set only the current message
         ? [...oldMessages, ...currentMessages]

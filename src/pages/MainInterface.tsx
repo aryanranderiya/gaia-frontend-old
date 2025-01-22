@@ -1,7 +1,6 @@
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SuspenseLoader from "@/components/SuspenseLoader";
 // import WebsiteName from "@/components/TopWebsiteName";
-import { ConversationHistoryProvider } from "@/contexts/ConversationHistory";
 import { ConversationListProvider } from "@/contexts/ConversationList";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
@@ -73,42 +72,40 @@ export default function MainInterface() {
   }, [isMobileScreen, isSidebarVisible]);
 
   return (
-    <ConversationHistoryProvider>
-      <ConversationListProvider>
-        <ConvoProvider>
-          <div className="main_container dark">
-            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+    <ConversationListProvider>
+      <ConvoProvider>
+        <div className="main_container dark">
+          <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
-            <div
-              ref={contentContainerRef}
-              onClick={hideSidebar}
-              className="main_chat"
-            >
-              <div className="chat_sidebar_toggle_btn">
-                <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
-              </div>
-              {/* <WebsiteName /> */}
-
-              <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                <Routes>
-                  <Route path="chat/:convoIdParam" element={<MainChat />} />
-                  <Route path="chat" element={<MainChat />} />
-                  <Route path="explore" element={<Explore />} />
-                  <Route path="calendar" element={<Calendar />} />
-                  <Route path="search" element={<SearchPage />} />
-                  <Route path="pins" element={<Pins />} />
-                  <Route path="notes" element={<Notes />} />
-                  <Route path="notes/add" element={<NotesAdd />} />
-                  <Route path="notes/:id" element={<NotesAdd />} />
-                  <Route path="goals" element={<Goals />} />
-                  <Route path="goals/:goalId" element={<GoalPage />} />
-                  <Route path="*" element={<Navigate to="/404" />} />
-                </Routes>
-              </Suspense>
+          <div
+            ref={contentContainerRef}
+            onClick={hideSidebar}
+            className="main_chat"
+          >
+            <div className="chat_sidebar_toggle_btn">
+              <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
             </div>
+            {/* <WebsiteName /> */}
+
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <Routes>
+                <Route path="chat/:convoIdParam" element={<MainChat />} />
+                <Route path="chat" element={<MainChat />} />
+                <Route path="explore" element={<Explore />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route path="search" element={<SearchPage />} />
+                <Route path="pins" element={<Pins />} />
+                <Route path="notes" element={<Notes />} />
+                <Route path="notes/add" element={<NotesAdd />} />
+                <Route path="notes/:id" element={<NotesAdd />} />
+                <Route path="goals" element={<Goals />} />
+                <Route path="goals/:goalId" element={<GoalPage />} />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Routes>
+            </Suspense>
           </div>
-        </ConvoProvider>
-      </ConversationListProvider>
-    </ConversationHistoryProvider>
+        </div>
+      </ConvoProvider>
+    </ConversationListProvider>
   );
 }

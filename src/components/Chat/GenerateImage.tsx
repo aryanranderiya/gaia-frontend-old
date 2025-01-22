@@ -16,7 +16,6 @@ import api from "@/utils/apiaxios";
 import { BrushIcon } from "../icons";
 import fetchDate from "../../utils/fetchDate";
 import { ApiService } from "@/utils/chatUtils";
-import { useConvoHistory } from "@/contexts/ConversationHistory";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -32,7 +31,6 @@ export default function GenerateImage({
   const [imagePrompt, setImagePrompt] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const { setConvoHistory } = useConvoHistory();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,21 +65,21 @@ export default function GenerateImage({
         return [...baseMessages, ...newMessages];
       });
 
-      setConvoHistory((oldHistory) => {
-        const currentConvo = oldHistory[conversationId] || { messages: [] };
-        const baseMessages = replaceLastMessage
-          ? currentConvo.messages.slice(0, -1)
-          : currentConvo.messages;
+      // setConvoHistory((oldHistory) => {
+      //   const currentConvo = oldHistory[conversationId] || { messages: [] };
+      //   const baseMessages = replaceLastMessage
+      //     ? currentConvo.messages.slice(0, -1)
+      //     : currentConvo.messages;
 
-        return {
-          ...oldHistory,
-          [conversationId]: {
-            ...currentConvo,
-            description: description || currentConvo.description || "New Chat",
-            messages: [...baseMessages, ...newMessages],
-          },
-        };
-      });
+      //   return {
+      //     ...oldHistory,
+      //     [conversationId]: {
+      //       ...currentConvo,
+      //       description: description || currentConvo.description || "New Chat",
+      //       messages: [...baseMessages, ...newMessages],
+      //     },
+      //   };
+      // });
     } catch (error) {
       console.error("Failed to update conversation:", error);
       throw new Error("Failed to update conversation state");

@@ -42,8 +42,6 @@ export const ApiService = {
     conversationId: string,
     messages: MessageType[]
   ) => {
-    console.log("updating conversation", messages);
-
     if (messages.length > 1)
       await apiauth.put(`/conversations/${conversationId}/messages`, {
         conversation_id: conversationId,
@@ -75,19 +73,13 @@ export const ApiService = {
           .slice(-10)
           .filter(({ response }) => response.trim().length > 0)
           // .filter(({ type }) => type == "user")
-          .map(({ type, response }, index, array) =>
-            // index, array
-            ({
-              // role: type === "bot" ? "assistant" : type,
-              role: type,
-              content: `mostRecent: ${index === array.length - 1} ${response}`,
-              // content: response,
-            })
-          ),
+          .map(({ type, response }, index, array) => ({
+            // role: type === "bot" ? "assistant" : type,
+            role: type,
+            content: `mostRecent: ${index === array.length - 1} ${response}`,
+          })),
       }),
       onmessage(event) {
-        console.log(event);
-
         if (event.data === "[DONE]") {
           onClose();
           controller.abort();
@@ -97,10 +89,6 @@ export const ApiService = {
         const dataJson = JSON.parse(event.data);
         const response = dataJson.response || "\n";
         onMessage(response);
-
-        // const dataJson = JSON.parse(event.data);
-        // const response = dataJson.response || "\n";
-        // onMessage(event.data);
       },
       onclose: onClose,
       onerror: onError,

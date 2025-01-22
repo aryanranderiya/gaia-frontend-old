@@ -23,10 +23,3 @@ export type ConversationType = {
   description: string; // A description or title of the conversation
   messages: MessageType[]; // An array of MessageType, representing the messages exchanged in the conversation
 };
-
-// Define the conversation history structure
-// This type represents the conversation history, where each key is a unique identifier for a conversation
-// and the value is a ConversationType object containing the details of that conversation.
-export type ConversationHistoryType = {
-  [key: string]: ConversationType; // A map where the key is a conversation ID and the value is the ConversationType object
-};
