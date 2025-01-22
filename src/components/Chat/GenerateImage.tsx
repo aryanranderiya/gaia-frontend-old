@@ -30,7 +30,7 @@ export default function GenerateImage({
   const { setConvoMessages } = useConvo();
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [imagePrompt, setImagePrompt] = useState<string>("");
-  const [isValid, setIsValid] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const { setConvoHistory } = useConvoHistory();
   const navigate = useNavigate();
@@ -103,7 +103,7 @@ export default function GenerateImage({
     }
   };
 
-  const generateImage = async (prompt: string): Promise<string> => {
+  const generateImage = async (prompt: string): Promise<[string, string]> => {
     try {
       const response = await api.post(
         "/image/generate",
@@ -112,7 +112,7 @@ export default function GenerateImage({
           headers: { "Content-Type": "application/json" },
         }
       );
-      return response.data.url;
+      return [response.data.url, response.data.improved_prompt];
     } catch (error) {
       console.error("Image generation failed:", error);
       throw new Error("Failed to generate image");
@@ -182,7 +182,7 @@ export default function GenerateImage({
 
       setOpenImageDialog(false);
 
-      const imageUrl = await generateImage(imagePrompt);
+      const [imageUrl, improved_prompt] = await generateImage(imagePrompt);
 
       const finalBotMessage: MessageType = {
         type: "bot",
@@ -190,6 +190,7 @@ export default function GenerateImage({
         date: fetchDate(),
         imageUrl,
         imagePrompt,
+        improvedImagePrompt: improved_prompt,
         isImage: true,
       };
 
@@ -269,19 +270,19 @@ export default function GenerateImage({
           <Textarea
             label="Describe the image you want to generate"
             labelPlacement="outside"
-            placeholder="e.g - Futuristic city skyline with towering skyscrapers and flying vehicles."
+            placeholder="e.g - Futuristic city skyline"
             startContent={<BrushIcon />}
             maxRows={5}
             isDisabled={loading}
-            minRows={1}
+            minRows={2}
             isRequired
             variant="faded"
             size="lg"
             color="primary"
             value={imagePrompt}
             onValueChange={handleInputChange}
-            errorMessage="This is a required input field."
-            isInvalid={!isValid}
+            // errorMessage="This is a required input field."
+            // isInvalid={!isValid}
             spellCheck={false}
             onKeyDown={handleKeyDown}
           />
@@ -302,6 +303,7 @@ export default function GenerateImage({
             onPress={handleSubmit}
             radius="full"
             isLoading={loading}
+            disabled={!isValid}
           >
             {loading ? "Generating" : "Generate"}
           </Button>

@@ -19,6 +19,7 @@ export default function ChatBubbleBot({
   disclaimer,
   date,
   imagePrompt,
+  improvedImagePrompt,
   userinputType,
   setOpenImage,
   setImageData,
@@ -56,7 +57,11 @@ export default function ChatBubbleBot({
                       setOpenImage(true);
                       // setImageSrc(imageSrc);
                       // setImagePrompt(imagePrompt);
-                      setImageData({ prompt: imagePrompt, src: imageSrc });
+                      setImageData({
+                        prompt: imagePrompt,
+                        src: imageSrc,
+                        improvedPrompt: improvedImagePrompt,
+                      });
                     }
                   }}
                   onLoad={() => setImageLoaded(true)}

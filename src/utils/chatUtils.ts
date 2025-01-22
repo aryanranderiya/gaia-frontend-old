@@ -61,6 +61,7 @@ export const ApiService = {
     convoMessages.push({ type: "user", response: inputText });
 
     const controller = new AbortController();
+
     await fetchEventSource(`${import.meta.env.VITE_BACKEND_URL}chat-stream`, {
       method: "POST",
       headers: {
@@ -72,22 +73,34 @@ export const ApiService = {
         message: inputText,
         messages: convoMessages
           .slice(-10)
-          .filter(({ response }) => response.length > 0)
+          .filter(({ response }) => response.trim().length > 0)
           // .filter(({ type }) => type == "user")
-          .map(({ type, response }, index, array) => ({
-            role: type,
-            content: `mostRecent: ${index === array.length - 1} ${response}`,
-          })),
+          .map(({ type, response }, index, array) =>
+            // index, array
+            ({
+              // role: type === "bot" ? "assistant" : type,
+              role: type,
+              content: `mostRecent: ${index === array.length - 1} ${response}`,
+              // content: response,
+            })
+          ),
       }),
       onmessage(event) {
+        console.log(event);
+
         if (event.data === "[DONE]") {
           onClose();
           controller.abort();
           return;
         }
+
         const dataJson = JSON.parse(event.data);
         const response = dataJson.response || "\n";
         onMessage(response);
+
+        // const dataJson = JSON.parse(event.data);
+        // const response = dataJson.response || "\n";
+        // onMessage(event.data);
       },
       onclose: onClose,
       onerror: onError,

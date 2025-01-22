@@ -86,9 +86,8 @@ interface ChatBubbleActionsImageProps {
   src: string;
   imagePrompt: string | undefined;
   fullWidth?: boolean;
-  setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenImage?: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 
 export function ChatBubble_Actions_Image({
   src,
@@ -166,7 +165,7 @@ export function ChatBubble_Actions_Image({
           </span>
         </Button>
       </Tooltip>
-      {fullWidth ? (
+      {fullWidth && setOpenImage ? (
         <Button
           color="danger"
           variant="ghost"

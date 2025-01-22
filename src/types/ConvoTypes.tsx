@@ -9,6 +9,7 @@ export type MessageType = {
   isImage?: boolean; // Optional: Indicates if the message contains an image
   imageUrl?: string; // Optional: URL for the image if it's an image message
   imagePrompt?: string;
+  improvedImagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
   userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")
   subtype?: "image" | "pdf" | null; // Optional: Specifies the type of file if the message contains a file (e.g., image or PDF)

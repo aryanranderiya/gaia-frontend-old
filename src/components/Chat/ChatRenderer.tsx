@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Suspense, useState } from "react";
 import SuspenseLoader from "../SuspenseLoader";
+import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 
 export default function ChatRenderer() {
@@ -29,13 +30,39 @@ export default function ChatRenderer() {
   return (
     <>
       <Dialog onOpenChange={setOpenImage} open={openImage}>
-        <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit">
+        <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit py-3 px-5">
           <img
             src={imageData?.src}
             width={"auto"}
             height={"auto"}
-            className="rounded-3xl my-2 size-[80vh] min-w-[70vh] min-h-[70vh] aspect-square"
+            className="rounded-3xl my-2 size-[65vh] min-w-[65vh] min-h-[65vh] aspect-square"
           />
+
+          <div className="flex max-w-[65vh] min-w-[65vh] justify-evenly flex-col gap-1">
+            {imageData?.prompt && (
+              <div className="w-full bg-black/30 p-3 rounded-xl">
+                <ScrollArea className="max-h-[50px]">
+                  <div className="font-medium">Your Prompt:</div>
+
+                  <div className="text-foreground-300 text-sm">
+                    {imageData.prompt}
+                  </div>
+                </ScrollArea>
+              </div>
+            )}
+            {imageData?.improvedPrompt && (
+              <div className="w-full bg-black/30 p-3 rounded-xl">
+                <ScrollArea className="h-[70px]">
+                  <div className="font-medium">Improved Prompt:</div>
+
+                  <div className="text-foreground-300 text-sm">
+                    {imageData.improvedPrompt}
+                  </div>
+                </ScrollArea>
+              </div>
+            )}
+          </div>
+
           <ChatBubble_Actions_Image
             src={imageData?.src}
             imagePrompt={imageData?.prompt}
@@ -44,6 +71,19 @@ export default function ChatRenderer() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* {openImage && (
+        <SidebarProvider>
+          <Sidebar side="right" variant="inset" className="z-10">
+            <SidebarHeader />
+            <SidebarContent>
+              <SidebarGroup />
+              <SidebarGroup />
+            </SidebarContent>
+            <SidebarFooter />
+          </Sidebar>
+        </SidebarProvider>
+      )} */}
 
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
@@ -57,6 +97,7 @@ export default function ChatRenderer() {
                 index={index}
                 isImage={message.isImage}
                 imagePrompt={message.imagePrompt}
+                improvedImagePrompt={message.improvedImagePrompt}
                 imageSrc={message.imageUrl}
                 disclaimer={message.disclaimer}
                 userinputType={message.userinputType}
