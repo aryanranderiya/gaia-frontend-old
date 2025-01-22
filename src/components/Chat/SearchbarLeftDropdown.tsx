@@ -10,9 +10,11 @@ import {
   AiImageIcon,
   FileUploadIcon,
   ImageUploadIcon,
+  InternetIcon,
   PlusSignIcon,
 } from "../icons";
 import GenerateImage from "./GenerateImage";
+import { Button } from "@nextui-org/button";
 
 export default function SearchbarLeftDropdown({
   loading,
@@ -65,7 +67,7 @@ export default function SearchbarLeftDropdown({
           <div
             className={`${
               loading ? "cursor-wait" : "cursor-pointer"
-            } z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-transparent text-small gap-2 rounded-full px-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10 mr-2`}
+            } z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-zinc-900 text-small gap-2 rounded-full px-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10 mr-[2px]`}
           >
             <PlusSignIcon />
           </div>
@@ -126,6 +128,10 @@ export default function SearchbarLeftDropdown({
         setOpenImageDialog={setOpenImageDialog}
         openImageDialog={openImageDialog}
       />
+
+      {/* <Button isIconOnly radius="full" variant="ghost">
+        <InternetIcon />
+      </Button> */}
     </>
   );
 }
