@@ -1,5 +1,6 @@
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useLoading } from "@/contexts/LoadingContext";
 import { MessageType } from "@/types/ConvoTypes";
 import { ApiService } from "@/utils/chatUtils";
 import fetchDate from "@/utils/fetchDate";
@@ -8,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 
 export const useConversation = (convoIdParam: string | null) => {
+  const { setIsLoading } = useLoading();
   const navigate = useNavigate();
   const { convoMessages, setConvoMessages } = useConvo();
   const { fetchConversations } = useConversationList();
@@ -98,6 +100,7 @@ export const useConversation = (convoIdParam: string | null) => {
         console.error("Failed to update conversation:", err);
       } finally {
         setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -120,8 +123,6 @@ export const useConversation = (convoIdParam: string | null) => {
     inputText: string,
     enableSearch: boolean = false
   ) => {
-    console.log(enableSearch);
-
     const currentMessages: MessageType[] = [
       {
         type: "user",

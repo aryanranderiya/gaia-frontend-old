@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { InternetIcon } from "../icons";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
+import { useLoading } from "@/contexts/LoadingContext";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;
@@ -29,10 +30,12 @@ const MainSearchbar = ({
   const [searchbarText, setSearchbarText] = useState<string>("");
   const [enableSearch, setEnableSearch] = useState<boolean>(false);
   const { loading, updateConversation } = useConversation(convoIdParam ?? null);
+  const { isLoading, setIsLoading } = useLoading();
 
   const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     if (!searchbarText) return;
+    setIsLoading(true);
     updateConversation(searchbarText, enableSearch);
     setSearchbarText("");
     inputRef.current?.focus();
@@ -134,7 +137,7 @@ const MainSearchbar = ({
         </div>
         <form onSubmit={handleFormSubmit}>
           <Textarea
-            disabled={loading}
+            disabled={loading && isLoading}
             radius="full"
             size="lg"
             placeholder="Ask gaia..."

@@ -109,7 +109,7 @@ export default function ChatRenderer() {
             </Suspense>
           </div>
         ) : (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div>} key={index}>
             <ChatBubbleUser
               key={index}
               text={message.response}

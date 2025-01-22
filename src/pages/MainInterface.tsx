@@ -15,6 +15,7 @@ import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
 import NotesAdd from "./NotePage";
 import SearchPage from "./Search";
+import { LoadingProvider } from "@/contexts/LoadingContext";
 
 // Lazy load the components
 const MainChat = lazy(() => import("./MainChat"));
@@ -74,37 +75,39 @@ export default function MainInterface() {
   return (
     <ConversationListProvider>
       <ConvoProvider>
-        <div className="main_container dark">
-          <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+        <LoadingProvider>
+          <div className="main_container dark">
+            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
 
-          <div
-            ref={contentContainerRef}
-            onClick={hideSidebar}
-            className="main_chat"
-          >
-            <div className="chat_sidebar_toggle_btn">
-              <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+            <div
+              ref={contentContainerRef}
+              onClick={hideSidebar}
+              className="main_chat"
+            >
+              <div className="chat_sidebar_toggle_btn">
+                <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+              </div>
+              {/* <WebsiteName /> */}
+
+              <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                <Routes>
+                  <Route path="chat/:convoIdParam" element={<MainChat />} />
+                  <Route path="chat" element={<MainChat />} />
+                  <Route path="explore" element={<Explore />} />
+                  <Route path="calendar" element={<Calendar />} />
+                  <Route path="search" element={<SearchPage />} />
+                  <Route path="pins" element={<Pins />} />
+                  <Route path="notes" element={<Notes />} />
+                  <Route path="notes/add" element={<NotesAdd />} />
+                  <Route path="notes/:id" element={<NotesAdd />} />
+                  <Route path="goals" element={<Goals />} />
+                  <Route path="goals/:goalId" element={<GoalPage />} />
+                  <Route path="*" element={<Navigate to="/404" />} />
+                </Routes>
+              </Suspense>
             </div>
-            {/* <WebsiteName /> */}
-
-            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-              <Routes>
-                <Route path="chat/:convoIdParam" element={<MainChat />} />
-                <Route path="chat" element={<MainChat />} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="calendar" element={<Calendar />} />
-                <Route path="search" element={<SearchPage />} />
-                <Route path="pins" element={<Pins />} />
-                <Route path="notes" element={<Notes />} />
-                <Route path="notes/add" element={<NotesAdd />} />
-                <Route path="notes/:id" element={<NotesAdd />} />
-                <Route path="goals" element={<Goals />} />
-                <Route path="goals/:goalId" element={<GoalPage />} />
-                <Route path="*" element={<Navigate to="/404" />} />
-              </Routes>
-            </Suspense>
           </div>
-        </div>
+        </LoadingProvider>
       </ConvoProvider>
     </ConversationListProvider>
   );

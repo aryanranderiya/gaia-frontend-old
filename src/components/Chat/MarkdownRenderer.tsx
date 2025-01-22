@@ -1,18 +1,19 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
+import { Tab, Tabs } from "@nextui-org/tabs";
 import type React from "react";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
-import { Tab, Tabs } from "@nextui-org/tabs";
 // import Mermaid from "react-mermaid2";
-import { ZoomIn, ZoomOut, Move, Download } from "lucide-react";
-const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
+import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
+import { useLoading } from "@/contexts/LoadingContext";
+const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
 
 interface MarkdownRendererProps {
   content: string;
@@ -21,8 +22,9 @@ interface MarkdownRendererProps {
 mermaid.initialize({});
 
 const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
+  const { isLoading } = useLoading();
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("preview");
+  const [activeTab, setActiveTab] = useState("code");
   const [scale, setScale] = useState(1.5);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -33,7 +35,11 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 
   useEffect(() => {
     mermaid.contentLoaded();
-  }, [children, activeTab]);
+  }, [isLoading, activeTab]);
+
+  useEffect(() => {
+    if (!isLoading) setActiveTab("preview");
+  }, [isLoading]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(children).replace(/\n$/, ""));
@@ -41,8 +47,10 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     setTimeout(() => setCopied(false), 4000);
   };
 
-  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
+  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 4));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
+
+  const resetZoom = () => setScale(1.5);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -70,22 +78,38 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   const handleMouseUp = () => setIsDragging(false);
 
   const handleDownload = () => {
-    if (mermaidRef.current) {
-      const svgData = new XMLSerializer().serializeToString(
-        mermaidRef.current.querySelector("svg")!
-      );
-      const svgBlob = new Blob([svgData], {
-        type: "image/svg+xml;charset=utf-8",
-      });
-      const svgUrl = URL.createObjectURL(svgBlob);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = svgUrl;
-      downloadLink.download = "mermaid-diagram.svg";
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }
+    if (!mermaidRef.current) return;
+
+    const svgData = new XMLSerializer().serializeToString(
+      mermaidRef.current.querySelector("svg")!
+    );
+    const svgBlob = new Blob([svgData], {
+      type: "image/svg+xml;charset=utf-8",
+    });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = "mermaid-diagram.svg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
+
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault(); // This will now work because we're using a non-passive event listener
+    const delta = e.deltaY * -0.01;
+    setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3));
+  }, []);
+
+  useEffect(() => {
+    const element = mermaidRef.current;
+    if (element) {
+      element.addEventListener("wheel", handleWheel, { passive: false });
+      return () => {
+        element.removeEventListener("wheel", handleWheel);
+      };
+    }
+  }, [handleWheel]);
 
   if (isMermaid) {
     return (
@@ -98,11 +122,12 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
               mermaid.contentLoaded();
             }, 10);
           }}
+          disabledKeys={isLoading ? ["editor"] : []}
           variant="underlined"
           className="px-3"
         >
-          <Tab key="preview" title="Preview" className="p-0">
-            <div className="p-4 bg-white relative overflow-hidden h-[30vw]">
+          <Tab key="preview" title="Flowchart" className="p-0">
+            <div className="p-4 bg-white relative overflow-hidden h-[40vw]">
               <div
                 ref={mermaidRef}
                 className="mermaid absolute select-none"
@@ -115,6 +140,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
+                // onWheel={handleWheel}
               >
                 {String(children).replace(/\n$/, "")}
               </div>
@@ -125,7 +151,15 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 <Button size="sm" onClick={handleZoomOut}>
                   <ZoomOut size={16} />
                 </Button>
-                <Button size="sm" onClick={() => setPosition({ x: 0, y: 0 })}>
+                <Button size="sm" onClick={resetZoom}>
+                  Reset Zoom
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => setPosition({ x: -50, y: -50 })}
+                >
+                  {" "}
+                  {/* Update 3: Reset position */}
                   <Move size={16} />
                 </Button>
                 <Button size="sm" onClick={handleDownload}>
