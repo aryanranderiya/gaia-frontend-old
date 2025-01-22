@@ -11,9 +11,13 @@ export interface ChatBubbleBotProps {
   text: string;
   loading?: boolean;
   isImage?: boolean;
-  image?: string | null;
+  imageSrc?: string | null;
   imagePrompt?: string;
   disclaimer?: string;
   date?: string;
   userinputType?: string;
+  setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
+  setImageData: any;
+  // setImageSrc: React.Dispatch<React.SetStateAction<string>>;
+  // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 }

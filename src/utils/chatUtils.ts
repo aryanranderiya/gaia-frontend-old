@@ -42,6 +42,8 @@ export const ApiService = {
     conversationId: string,
     messages: MessageType[]
   ) => {
+    console.log("updating conversation", messages);
+
     if (messages.length > 1)
       await apiauth.put(`/conversations/${conversationId}/messages`, {
         conversation_id: conversationId,

@@ -9,6 +9,7 @@ import TranslateDropdown from "../../Translation/TranslateDropDown";
 // import TextToSpeech from "../Audio/TextToSpeechComponent";
 import { Tooltip } from "@nextui-org/tooltip";
 import { toast } from "sonner";
+import { XIcon } from "lucide-react";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
@@ -84,11 +85,16 @@ export function ChatBubble_Actions({
 interface ChatBubbleActionsImageProps {
   src: string;
   imagePrompt: string | undefined;
+  fullWidth?: boolean;
+  setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 
 export function ChatBubble_Actions_Image({
   src,
   imagePrompt,
+  fullWidth = false,
+  setOpenImage,
 }: ChatBubbleActionsImageProps): JSX.Element {
   const downloadFromSrc = async () => {
     try {
@@ -137,17 +143,41 @@ export function ChatBubble_Actions_Image({
         placement="right"
         size="md"
         color="primary"
+        className={`${fullWidth ? "hidden" : ""}`}
       >
         <Button
-          variant="light"
-          className="w-fit p-0 h-fit rounded-md bg-transparent data-[hover=true]:bg-transparent"
-          isIconOnly
+          variant={fullWidth ? "solid" : "light"}
+          color="primary"
+          className={`w-fit ${
+            fullWidth
+              ? "px-3 py-2 "
+              : "p-0 bg-transparent data-[hover=true]:bg-transparent"
+          } h-fit rounded-lg `}
+          isIconOnly={!fullWidth}
           style={{ minWidth: "22px" }}
           onPress={downloadFromSrc}
         >
-          <DownloadSquare01Icon height="22" className="cursor-pointer" />
+          <DownloadSquare01Icon
+            height="22"
+            className={`cursor-pointer ${fullWidth ? "text-black" : ""}`}
+          />
+          <span className="text-black font-medium">
+            {fullWidth ? "Download Image" : ""}
+          </span>
         </Button>
       </Tooltip>
+      {fullWidth ? (
+        <Button
+          color="danger"
+          variant="ghost"
+          onPress={() => setOpenImage(false)}
+        >
+          <XIcon height="22" />
+          <span className="font-medium">Cancel</span>
+        </Button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

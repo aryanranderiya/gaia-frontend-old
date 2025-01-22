@@ -1,13 +1,21 @@
 // ChatRenderer.tsx
-import { Suspense } from "react";
-import StarterText from "@/components/Chat/StarterText";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import SuspenseLoader from "../SuspenseLoader";
 import ChatBubbleBot from "@/components/Chat/ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "@/components/Chat/ChatBubbles/ChatBubbleUser";
+import StarterText from "@/components/Chat/StarterText";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { Suspense, useState } from "react";
+import SuspenseLoader from "../SuspenseLoader";
+import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
+  const [openImage, setOpenImage] = useState<boolean>(false);
+  const [imageData, setImageData] = useState({
+    src: "",
+    prompt: "",
+    improvedPrompt: "",
+  });
 
   if (!!convoMessages && convoMessages?.length === 0) {
     return (
@@ -20,6 +28,23 @@ export default function ChatRenderer() {
 
   return (
     <>
+      <Dialog onOpenChange={setOpenImage} open={openImage}>
+        <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit">
+          <img
+            src={imageData?.src}
+            width={"auto"}
+            height={"auto"}
+            className="rounded-3xl my-2 size-[80vh] min-w-[70vh] min-h-[70vh] aspect-square"
+          />
+          <ChatBubble_Actions_Image
+            src={imageData?.src}
+            imagePrompt={imageData?.prompt}
+            fullWidth
+            setOpenImage={setOpenImage}
+          />
+        </DialogContent>
+      </Dialog>
+
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
           <div className="relative flex items-end gap-3" key={index}>
@@ -32,10 +57,12 @@ export default function ChatRenderer() {
                 index={index}
                 isImage={message.isImage}
                 imagePrompt={message.imagePrompt}
-                image={message.imageUrl}
+                imageSrc={message.imageUrl}
                 disclaimer={message.disclaimer}
                 userinputType={message.userinputType}
                 date={message.date}
+                setOpenImage={setOpenImage}
+                setImageData={setImageData}
               />
             </Suspense>
           </div>

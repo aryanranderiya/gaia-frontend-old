@@ -15,14 +15,23 @@ export default function ChatBubbleBot({
   text,
   loading = false,
   isImage = false,
-  image = null,
+  imageSrc = null,
   disclaimer,
   date,
   imagePrompt,
   userinputType,
+  setOpenImage,
+  setImageData,
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(!!image && image?.length > 0);
+  //   console.log(image);
+
+  //   if (!!image && image?.length > 0) setImageSrc(image);
+  // }, [image]);
 
   useEffect(() => {
     if (isImage) {
@@ -32,16 +41,24 @@ export default function ChatBubbleBot({
             <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
               <span>{text}</span>
               <Skeleton
-                isLoaded={!loading && !imageLoaded && !!image}
+                isLoaded={!loading && !imageLoaded && !!imageSrc}
                 className="rounded-3xl my-2 max-w-[250px] min-w-[250px] 
                 max-h-[250px] min-h-[250px] 
                 aspect-square"
               >
                 <img
-                  src={image as string}
+                  src={imageSrc as string}
                   width={"250px"}
                   height={"250px"}
-                  className="rounded-3xl my-2"
+                  className="rounded-3xl my-2 !cursor-pointer"
+                  onClick={() => {
+                    if (imageSrc) {
+                      setOpenImage(true);
+                      // setImageSrc(imageSrc);
+                      // setImagePrompt(imagePrompt);
+                      setImageData({ prompt: imagePrompt, src: imageSrc });
+                    }
+                  }}
                   onLoad={() => setImageLoaded(true)}
                   onError={() => setImageLoaded(true)}
                 />
@@ -100,7 +117,7 @@ export default function ChatBubbleBot({
         </>
       );
     }
-  }, [isImage, text, image, date, userinputType, disclaimer, loading]);
+  }, [isImage, text, imageSrc, date, userinputType, disclaimer, loading]);
 
   const actionsRef = useRef<HTMLDivElement>(null);
 
@@ -135,7 +152,7 @@ export default function ChatBubbleBot({
           >
             {isImage ? (
               <ChatBubble_Actions_Image
-                src={image as string}
+                src={imageSrc as string}
                 imagePrompt={imagePrompt}
               />
             ) : (

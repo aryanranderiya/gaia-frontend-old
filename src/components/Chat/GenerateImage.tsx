@@ -63,10 +63,10 @@ export default function GenerateImage({
       // Update local state
       setConvoMessages((prev) => {
         const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+        ApiService.updateConversation(conversationId, newMessages);
         return [...baseMessages, ...newMessages];
       });
 
-      // Update conversation history
       setConvoHistory((oldHistory) => {
         const currentConvo = oldHistory[conversationId] || { messages: [] };
         const baseMessages = replaceLastMessage
@@ -82,10 +82,6 @@ export default function GenerateImage({
           },
         };
       });
-
-      // Update database
-      const currentMessages = newMessages;
-      await ApiService.updateConversation(conversationId, currentMessages);
     } catch (error) {
       console.error("Failed to update conversation:", error);
       throw new Error("Failed to update conversation state");
@@ -128,29 +124,61 @@ export default function GenerateImage({
     setLoading(true);
 
     try {
-      const initialMessages: MessageType[] = [
-        {
-          type: "user",
-          response: `Generate Image: \n${imagePrompt}`,
-          date: fetchDate(),
-        },
-        {
-          type: "bot",
-          response: "Generating Image...",
-          date: fetchDate(),
-          loading: true,
-          imagePrompt,
-          isImage: true,
-        },
-      ];
+      const userMessage: MessageType = {
+        type: "user",
+        response: `Generate Image: \n${imagePrompt}`,
+        date: fetchDate(),
+      };
 
-      // Handle conversation creation or updating
+      const botLoadingMessage: MessageType = {
+        type: "bot",
+        response: "Generating Image...",
+        date: fetchDate(),
+        loading: true,
+        imagePrompt,
+        isImage: true,
+      };
+
+      const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
+
       const conversationId =
         convoIdParam || (await createNewConversation(initialMessages));
 
-      if (convoIdParam) {
-        await updateConversationState(conversationId, initialMessages);
-      }
+      // if (convoIdParam) {
+      //   await updateConversationState(conversationId, initialMessages);
+      // }
+
+      console.log(initialMessages, "initial messages");
+      console.log([...initialMessages.slice(0, -1)], "-1");
+      console.log([...initialMessages.slice(0, -2)], "-2");
+
+      // Initially set the user prompt message along with the loading bot state
+      setConvoMessages((prev) => {
+        return [
+          ...prev,
+          ...initialMessages,
+          // finalBotMessage
+        ];
+      });
+
+      // setConvoHistory((oldHistory) => {
+      //   const currentConvo = oldHistory[conversationId] || { messages: [] };
+      //   const baseMessages = currentConvo.messages;
+
+      //   return {
+      //     ...oldHistory,
+      //     [conversationId]: {
+      //       ...currentConvo,
+      //       description: currentConvo.description || "New Chat",
+      //       messages: [
+      //         ...baseMessages,
+      //         ...initialMessages,
+      //         // ...prev,
+      //         // finalBotMessage,
+      //       ],
+      //     },
+      //   };
+      // });
 
       setOpenImageDialog(false);
 
@@ -165,12 +193,48 @@ export default function GenerateImage({
         isImage: true,
       };
 
+      // Remove the user prompt from list of messages (because convo messages is set again in updateConversationState to store in the database)
+      setConvoMessages((prev) => {
+        return [...prev.slice(0, -1)];
+      });
+
+      // udpate the conversation messages, and store messages in the database
       await updateConversationState(
         conversationId,
-        [...initialMessages.slice(0, -1), finalBotMessage],
+        [userMessage, finalBotMessage],
         undefined,
         true
       );
+
+      //        conversationId: string,
+      //   newMessages: MessageType[],
+      //   description?: string,
+      //   replaceLastMessage: boolean = false
+      // ) => {
+      //   try {
+      //     // Update local state
+      //     setConvoMessages((prev) => {
+      //       const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+      //       const currentMessages = newMessages;
+      //       ApiService.updateConversation(conversationId, currentMessages);
+      //       return [...baseMessages, ...newMessages];
+      //     });
+
+      //     setConvoHistory((oldHistory) => {
+      //       const currentConvo = oldHistory[conversationId] || { messages: [] };
+      //       const baseMessages = replaceLastMessage
+      //         ? currentConvo.messages.slice(0, -1)
+      //         : currentConvo.messages;
+
+      //       return {
+      //         ...oldHistory,
+      //         [conversationId]: {
+      //           ...currentConvo,
+      //           description: description || currentConvo.description || "New Chat",
+      //           messages: [...baseMessages, ...newMessages],
+      //         },
+      //       };
+      //     });
 
       setImagePrompt("");
     } catch (error) {
