@@ -1,14 +1,16 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
+import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import { Tab, Tabs } from "@nextui-org/tabs";
 // import Mermaid from "react-mermaid2";
+import { ZoomIn, ZoomOut, Move, Download } from "lucide-react";
 const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
 import mermaid from "mermaid";
 
@@ -21,13 +23,17 @@ mermaid.initialize({});
 const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("preview");
+  const [scale, setScale] = useState(1.5);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+  const mermaidRef = useRef<HTMLDivElement>(null);
   const match = /language-(\w+)/.exec(className || "");
   const isMermaid = match && match[1] === "mermaid";
 
   useEffect(() => {
-    document.querySelector(".mermaid")?.removeAttribute("data-processed");
     mermaid.contentLoaded();
-  }, [children]);
+  }, [children, activeTab]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(children).replace(/\n$/, ""));
@@ -35,21 +41,97 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     setTimeout(() => setCopied(false), 4000);
   };
 
+  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
+  const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
+
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      setIsDragging(true);
+      setStartPosition({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y,
+      });
+    },
+    [position]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (isDragging) {
+        setPosition({
+          x: e.clientX - startPosition.x,
+          y: e.clientY - startPosition.y,
+        });
+      }
+    },
+    [isDragging, startPosition]
+  );
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  const handleDownload = () => {
+    if (mermaidRef.current) {
+      const svgData = new XMLSerializer().serializeToString(
+        mermaidRef.current.querySelector("svg")!
+      );
+      const svgBlob = new Blob([svgData], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const svgUrl = URL.createObjectURL(svgBlob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = svgUrl;
+      downloadLink.download = "mermaid-diagram.svg";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  };
+
   if (isMermaid) {
     return (
       <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
         <Tabs
           selectedKey={activeTab}
-          onSelectionChange={(key) => setActiveTab(key as string)}
-          // className=" bg-zinc-900 "
+          onSelectionChange={(key) => {
+            setActiveTab(key as string);
+            setTimeout(() => {
+              mermaid.contentLoaded();
+            }, 10);
+          }}
           variant="underlined"
           className="px-3"
         >
           <Tab key="preview" title="Preview" className="p-0">
-            <div className="p-4 bg-white">
-              <div className="mermaid">{children}</div>
-              {/* <Mermaid chart={String(children).replace(/\n$/, "")} /> */}
-              {/* <pre className="mermaid">{String(children).replace(/\n$/, "")}</pre> */}
+            <div className="p-4 bg-white relative overflow-hidden h-[30vw]">
+              <div
+                ref={mermaidRef}
+                className="mermaid absolute select-none"
+                style={{
+                  transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+                  transformOrigin: "0 0",
+                  cursor: isDragging ? "grabbing" : "grab",
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+              >
+                {String(children).replace(/\n$/, "")}
+              </div>
+              <div className="absolute bottom-2 right-2 flex gap-2">
+                <Button size="sm" onClick={handleZoomIn}>
+                  <ZoomIn size={16} />
+                </Button>
+                <Button size="sm" onClick={handleZoomOut}>
+                  <ZoomOut size={16} />
+                </Button>
+                <Button size="sm" onClick={() => setPosition({ x: 0, y: 0 })}>
+                  <Move size={16} />
+                </Button>
+                <Button size="sm" onClick={handleDownload}>
+                  <Download size={16} />
+                </Button>
+              </div>
             </div>
           </Tab>
           <Tab key="code" title="Code">
@@ -65,7 +147,6 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             </SyntaxHighlighter>
           </Tab>
         </Tabs>
-        {/* <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]"> */}
         <Button
           onPress={handleCopy}
           size="sm"
