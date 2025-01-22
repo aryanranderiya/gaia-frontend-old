@@ -1,29 +1,92 @@
 "use client";
 
-import React, { useState } from "react";
+import { Button } from "@nextui-org/button";
+import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
-const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
-import { Button } from "@nextui-org/button";
-
-// atom-one-dark
+import { Tab, Tabs } from "@nextui-org/tabs";
+// import Mermaid from "react-mermaid2";
+const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
+import mermaid from "mermaid";
 
 interface MarkdownRendererProps {
   content: string;
 }
 
+mermaid.initialize({});
+
 const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState("preview");
   const match = /language-(\w+)/.exec(className || "");
+  const isMermaid = match && match[1] === "mermaid";
+
+  useEffect(() => {
+    document.querySelector(".mermaid")?.removeAttribute("data-processed");
+    mermaid.contentLoaded();
+  }, [children]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(children).replace(/\n$/, ""));
     setCopied(true);
     setTimeout(() => setCopied(false), 4000);
   };
+
+  if (isMermaid) {
+    return (
+      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
+        <Tabs
+          selectedKey={activeTab}
+          onSelectionChange={(key) => setActiveTab(key as string)}
+          // className=" bg-zinc-900 "
+          variant="underlined"
+          className="px-3"
+        >
+          <Tab key="preview" title="Preview" className="p-0">
+            <div className="p-4 bg-white">
+              <div className="mermaid">{children}</div>
+              {/* <Mermaid chart={String(children).replace(/\n$/, "")} /> */}
+              {/* <pre className="mermaid">{String(children).replace(/\n$/, "")}</pre> */}
+            </div>
+          </Tab>
+          <Tab key="code" title="Code">
+            <SyntaxHighlighter
+              {...(props as any)}
+              style={vscDarkPlus}
+              language="mermaid"
+              PreTag="div"
+              className="m-0 p-0 !bg-black !text-[10px]"
+              showLineNumbers
+            >
+              {String(children).replace(/\n$/, "")}
+            </SyntaxHighlighter>
+          </Tab>
+        </Tabs>
+        {/* <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]"> */}
+        <Button
+          onPress={handleCopy}
+          size="sm"
+          variant="light"
+          className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
+        >
+          {copied ? (
+            <div className="flex flex-row gap-1 items-center">
+              <TaskDone01Icon width={21} color="foreground" />
+              <p>Copied!</p>
+            </div>
+          ) : (
+            <div className="flex flex-row gap-1 items-center">
+              <Task01Icon width={21} color="foreground" />
+              <p>Copy Code</p>
+            </div>
+          )}
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -57,7 +120,6 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             PreTag="div"
             className="m-0 !bg-black !text-[10px]"
             showLineNumbers
-            // wrapLongLines
           >
             {String(children).replace(/\n$/, "")}
           </SyntaxHighlighter>

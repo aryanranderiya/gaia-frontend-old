@@ -28,8 +28,6 @@ export default function ChatBubbleBot({
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  console.log(searchWeb);
-
   // useEffect(() => {
   //   console.log(!!image && image?.length > 0);
   //   console.log(image);

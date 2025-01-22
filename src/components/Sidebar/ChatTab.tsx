@@ -24,7 +24,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
     <Button
       variant="light"
       color={currentConvoId === id ? "primary" : "default"}
-      className="w-full flex justify-start pr-0 h-[35px] min-h-[35px]"
+      className="w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px]"
       onClick={() => {
         setButtonHovered(false);
         navigate(`/try/chat/${id}`);

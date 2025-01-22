@@ -5,12 +5,11 @@ import { Chip } from "@nextui-org/chip";
 import { Textarea } from "@nextui-org/input";
 import { VisuallyHidden, tv } from "@nextui-org/react";
 import { ArrowDown, Check } from "lucide-react";
-// import * as React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { InternetIcon } from "../icons";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
-import { InternetIcon } from "../icons";
-import React, { useEffect, useState } from "react";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;
@@ -76,6 +75,9 @@ const MainSearchbar = ({
 
   const toggleSearch = () => setEnableSearch((prev) => !prev);
 
+  // Extract label props and remove the ref to avoid type conflicts
+  const { ref, ...labelProps } = getLabelProps();
+
   return (
     <div className="searchbar_container relative">
       <div
@@ -96,7 +98,7 @@ const MainSearchbar = ({
 
       <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
         <div className="flex items-center justify-between mb-1">
-          <div className=" w-fit py-1 px-1 rounded-full text-sm font-medium">
+          <div className="w-fit py-1 px-1 rounded-full text-sm font-medium">
             <label {...getBaseProps()}>
               <VisuallyHidden>
                 <input {...getInputProps()} />
@@ -114,16 +116,13 @@ const MainSearchbar = ({
                   ) : null
                 }
                 variant="faded"
-                {...getLabelProps()}
+                {...labelProps}
               >
-                {/* {children ? children : isSelected ? "Web Search" : "Disabled"} */}
                 Web Search
                 <InternetIcon
                   color={isSelected ? "#000" : ""}
                   height={20}
                   width={20}
-
-                  // className="min-h-[30px] min-w-[30px]"
                 />
               </Chip>
             </label>
@@ -142,7 +141,7 @@ const MainSearchbar = ({
             onValueChange={setSearchbarText}
             onKeyDown={handleKeyDown}
             value={searchbarText}
-            ref={inputRef} // Assign the ref here
+            ref={inputRef}
             autoFocus
             isInvalid={searchbarText.length > 4500}
             onHeightChange={(height: number) => setHeight(height)}

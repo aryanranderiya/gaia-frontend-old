@@ -76,9 +76,10 @@ export const ApiService = {
           .filter(({ response }) => response.trim().length > 0)
           // .filter(({ type }) => type == "user")
           .map(({ type, response }, index, array) => ({
-            // role: type === "bot" ? "assistant" : type,
-            role: type,
-            content: `mostRecent: ${index === array.length - 1}. ${response}`,
+            role: type === "bot" ? "assistant" : type,
+            // role: type,
+            // content: `mostRecent: ${index === array.length - 1}. ${response}`,
+            content: response,
           })),
       }),
       onmessage(event) {

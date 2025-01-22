@@ -10,6 +10,7 @@ export type MessageType = {
   imageUrl?: string; // Optional: URL for the image if it's an image message
   imagePrompt?: string;
   searchWeb?: boolean | false;
+  intent?: string;
   improvedImagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
   userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")
