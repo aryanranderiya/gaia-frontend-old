@@ -3,7 +3,7 @@ import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
 import { useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
-import { Alert01Icon } from "../../icons";
+import { Alert01Icon, InternetIcon, StarsIcon } from "../../icons";
 import MarkdownRenderer from "../MarkdownRenderer";
 import {
   ChatBubble_Actions,
@@ -23,9 +23,12 @@ export default function ChatBubbleBot({
   userinputType,
   setOpenImage,
   setImageData,
+  searchWeb = false,
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  console.log(searchWeb);
 
   // useEffect(() => {
   //   console.log(!!image && image?.length > 0);
@@ -98,6 +101,20 @@ export default function ChatBubbleBot({
         <>
           <div className="chat_bubble bg-zinc-800">
             <div className="flex flex-col gap-3">
+              {searchWeb && (
+                <Chip
+                  startContent={<InternetIcon height={20} color="#00bbff" />}
+                  // endContent={
+                  //   <StarsIcon height={20} color="transparent" fill="white" />
+                  // }
+                  variant="flat"
+                  color="primary"
+                >
+                  <div className="font-medium flex items-center gap-1 text-primary">
+                    Live Search Results from the Web
+                  </div>
+                </Chip>
+              )}
               {/* TODO: Update this suspense to be a skeleton */}
               {/* <Suspense fallback={<SuspenseLoader />}> */}
               <MarkdownRenderer content={text.toString()} />

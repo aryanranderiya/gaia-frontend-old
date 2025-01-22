@@ -62,6 +62,7 @@ export const useConversation = (convoIdParam: string | null) => {
       const botResponse: MessageType = {
         type: "bot",
         response: botResponseText,
+        searchWeb: enableSearch,
         date: fetchDate(),
       };
 
@@ -86,6 +87,7 @@ export const useConversation = (convoIdParam: string | null) => {
         response: botResponseText,
         date: fetchDate(),
         loading: false,
+        searchWeb: enableSearch,
       };
 
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;
@@ -118,13 +120,21 @@ export const useConversation = (convoIdParam: string | null) => {
     inputText: string,
     enableSearch: boolean = false
   ) => {
+    console.log(enableSearch);
+
     const currentMessages: MessageType[] = [
       {
         type: "user",
         response: inputText,
+        searchWeb: enableSearch,
         date: fetchDate(),
       },
-      { type: "bot", response: "", date: fetchDate() },
+      {
+        searchWeb: enableSearch,
+        type: "bot",
+        response: "",
+        date: fetchDate(),
+      },
     ];
 
     // If no existing conversation, create a new one.

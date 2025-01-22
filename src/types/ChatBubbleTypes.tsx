@@ -3,6 +3,7 @@ export interface ChatBubbleUserProps {
   subtype?: "image" | "pdf" | null;
   file?: File | null | string;
   filename?: string;
+  searchWeb?: boolean;
   date?: string;
 }
 
@@ -11,6 +12,7 @@ export interface ChatBubbleBotProps {
   text: string;
   loading?: boolean;
   isImage?: boolean;
+  searchWeb?: boolean;
   imageSrc?: string | null;
   imagePrompt?: string;
   improvedImagePrompt?: string;

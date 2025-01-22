@@ -2,6 +2,7 @@ import { ChatBubbleUserProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { parseDate } from "../../../utils/fetchDate";
 import { PdfContainer } from "../../Documents/PdfComponent";
+import { StarsIcon } from "@/components/icons";
 
 export default function ChatBubbleUser({
   text,
@@ -9,11 +10,31 @@ export default function ChatBubbleUser({
   file = null,
   filename,
   date,
+  searchWeb = false,
 }: ChatBubbleUserProps) {
   return (
     (!!text || !!file) && (
       <div className="chat_bubble_container user">
         <div className="chat_bubble user">
+          {searchWeb && (
+            <Chip
+              endContent={
+                <StarsIcon
+                  height={22}
+                  color="transparent"
+                  fill="white"
+                  className="mr-1"
+                />
+              }
+              variant="flat"
+              className="mb-2"
+            >
+              <div className="flex items-center gap-1 font-medium text-white">
+                Searching the Web
+              </div>
+            </Chip>
+          )}
+
           {!!text && (
             <div className="flex select-text text-wrap max-w-[30vw]">
               {text}

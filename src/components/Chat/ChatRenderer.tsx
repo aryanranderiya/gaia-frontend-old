@@ -98,6 +98,7 @@ export default function ChatRenderer() {
                 isImage={message.isImage}
                 imagePrompt={message.imagePrompt}
                 improvedImagePrompt={message.improvedImagePrompt}
+                searchWeb={message.searchWeb}
                 imageSrc={message.imageUrl}
                 disclaimer={message.disclaimer}
                 userinputType={message.userinputType}
@@ -115,6 +116,7 @@ export default function ChatRenderer() {
               subtype={message.subtype || null}
               file={message.file || null}
               filename={message.filename}
+              searchWeb={message.searchWeb}
               date={message.date}
             />
           </Suspense>

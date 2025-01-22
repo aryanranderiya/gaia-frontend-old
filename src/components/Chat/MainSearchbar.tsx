@@ -74,9 +74,6 @@ const MainSearchbar = ({
 
   const styles = checkbox({ isSelected: enableSearch });
 
-  useEffect(() => {
-    console.log(enableSearch);
-  }, [enableSearch]);
   const toggleSearch = () => setEnableSearch((prev) => !prev);
 
   return (
