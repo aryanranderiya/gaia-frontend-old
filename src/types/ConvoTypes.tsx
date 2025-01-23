@@ -11,6 +11,7 @@ export type MessageType = {
   imagePrompt?: string;
   searchWeb?: boolean | false;
   intent?: string;
+  pageFetchURL?: string | "";
   improvedImagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
   userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")

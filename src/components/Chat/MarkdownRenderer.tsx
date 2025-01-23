@@ -207,7 +207,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     <>
       {!inline && match ? (
         <div className="relative flex flex-col gap-0 ">
-          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em]">
+          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
             <span className="text-sm font-mono monospace">{match[1]}</span>
             <Button
               onPress={handleCopy}

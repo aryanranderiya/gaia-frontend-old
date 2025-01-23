@@ -103,6 +103,7 @@ export default function ChatRenderer() {
                 disclaimer={message.disclaimer}
                 userinputType={message.userinputType}
                 date={message.date}
+                pageFetchURL={message.pageFetchURL}
                 setOpenImage={setOpenImage}
                 setImageData={setImageData}
               />
@@ -115,9 +116,11 @@ export default function ChatRenderer() {
               text={message.response}
               subtype={message.subtype || null}
               file={message.file || null}
+              imageUrl={message.imageUrl}
               filename={message.filename}
               searchWeb={message.searchWeb}
               date={message.date}
+              pageFetchURL={message.pageFetchURL}
             />
           </Suspense>
         )

@@ -9,6 +9,7 @@ import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
+import { ArrowUpRight } from "lucide-react";
 
 export default function ChatBubbleBot({
   index,
@@ -24,6 +25,7 @@ export default function ChatBubbleBot({
   setOpenImage,
   setImageData,
   searchWeb = false,
+  pageFetchURL,
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -113,6 +115,19 @@ export default function ChatBubbleBot({
                   </div>
                 </Chip>
               )}
+
+              {!!pageFetchURL && (
+                <Chip
+                  startContent={<ArrowUpRight height={20} color="#00bbff" />}
+                  variant="flat"
+                  color="primary"
+                >
+                  <div className="font-medium flex items-center gap-1 text-primary">
+                    {pageFetchURL?.replace(/^https?:\/\//, "")}
+                  </div>
+                </Chip>
+              )}
+              
               {/* TODO: Update this suspense to be a skeleton */}
               {/* <Suspense fallback={<SuspenseLoader />}> */}
               <MarkdownRenderer content={text.toString()} />

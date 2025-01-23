@@ -52,6 +52,7 @@ export const ApiService = {
   fetchChatStream: async (
     inputText: string,
     enableSearch: boolean,
+    pageFetchURL: string,
     convoMessages: MessageType[],
     onMessage: (data: string) => void,
     onClose: () => void,
@@ -71,6 +72,7 @@ export const ApiService = {
       body: JSON.stringify({
         message: inputText,
         search_web: enableSearch || false,
+        pageFetchURL,
         messages: convoMessages
           .slice(-10)
           .filter(({ response }) => response.trim().length > 0)

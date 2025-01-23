@@ -2,15 +2,24 @@ import { useConversation } from "@/hooks/useConversation";
 import { Button } from "@nextui-org/button";
 import { useCheckbox } from "@nextui-org/checkbox";
 import { Chip } from "@nextui-org/chip";
-import { Textarea } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
 import { VisuallyHidden, tv } from "@nextui-org/react";
-import { ArrowDown, Check } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, CloudDownload } from "lucide-react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { InternetIcon } from "../icons";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 import { useLoading } from "@/contexts/LoadingContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;
@@ -29,6 +38,8 @@ const MainSearchbar = ({
   const [currentHeight, setHeight] = useState<number>(24);
   const [searchbarText, setSearchbarText] = useState<string>("");
   const [enableSearch, setEnableSearch] = useState<boolean>(false);
+  const [pageFetchURL, setPageFetchURL] = useState<string>("");
+  const [fetchPageModal, setFetchPageModal] = useState<boolean>(false);
   const { loading, updateConversation } = useConversation(convoIdParam ?? null);
   const { isLoading, setIsLoading } = useLoading();
 
@@ -36,7 +47,7 @@ const MainSearchbar = ({
     if (e) e.preventDefault();
     if (!searchbarText) return;
     setIsLoading(true);
-    updateConversation(searchbarText, enableSearch);
+    updateConversation(searchbarText, enableSearch, pageFetchURL);
     setSearchbarText("");
     inputRef.current?.focus();
     scrollToBottom();
@@ -61,8 +72,8 @@ const MainSearchbar = ({
 
   const checkbox = tv({
     slots: {
-      base: "hover:bg-default-200 bg-[#27272A] !pr-0 border-none",
-      content: "text-default-500 flex items-center gap-1 font-medium",
+      base: "hover:bg-default-200 bg-[#27272A] !pr-0 border-none !text-sm",
+      content: "text-default-500 flex items-center gap-1",
     },
     variants: {
       isSelected: {
@@ -78,97 +89,177 @@ const MainSearchbar = ({
 
   const toggleSearch = () => setEnableSearch((prev) => !prev);
 
+  const openPageFetchModal = () => {
+    setFetchPageModal(true); // For the dialog
+  };
+
   // Extract label props and remove the ref to avoid type conflicts
   const { ref, ...labelProps } = getLabelProps();
 
   return (
-    <div className="searchbar_container relative">
-      <div
-        className={`absolute top-[-55px] flex justify-center w-full pointer-events-none transition-opacity ${
-          isOverflowing && !isAtBottom ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <Button
-          isIconOnly
-          onPress={scrollToBottom}
-          radius="full"
-          size="sm"
-          className="pointer-events-auto"
+    <>
+      <div className="searchbar_container relative">
+        <div
+          className={`absolute top-[-55px] flex justify-center w-full pointer-events-none transition-opacity ${
+            isOverflowing && !isAtBottom ? "opacity-100" : "opacity-0"
+          }`}
         >
-          <ArrowDown width={18} />
-        </Button>
-      </div>
-
-      <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
-        <div className="flex items-center justify-between mb-1">
-          <div className="w-fit py-1 px-1 rounded-full text-sm font-medium">
-            <label {...getBaseProps()}>
-              <VisuallyHidden>
-                <input {...getInputProps()} />
-              </VisuallyHidden>
-              <Chip
-                classNames={{
-                  base: styles.base(),
-                  content: styles.content(),
-                }}
-                onClick={toggleSearch}
-                color="primary"
-                startContent={
-                  isSelected ? (
-                    <Check className="ml-1 text-black" width={18} height={18} />
-                  ) : null
-                }
-                variant="faded"
-                {...labelProps}
-              >
-                Web Search
-                <InternetIcon
-                  color={isSelected ? "#000" : ""}
-                  height={20}
-                  width={20}
-                />
-              </Chip>
-            </label>
-          </div>
-
-          <div className="flex w-full justify-end text-sm mt-1 text-gray-500">
-            {searchbarText.length}/4500 words
-          </div>
-        </div>
-        <form onSubmit={handleFormSubmit}>
-          <Textarea
-            disabled={loading && isLoading}
+          <Button
+            isIconOnly
+            onPress={scrollToBottom}
             radius="full"
-            size="lg"
-            placeholder="Ask gaia..."
-            onValueChange={setSearchbarText}
-            onKeyDown={handleKeyDown}
-            value={searchbarText}
-            ref={inputRef}
-            autoFocus
-            isInvalid={searchbarText.length > 4500}
-            onHeightChange={(height: number) => setHeight(height)}
-            minRows={1}
-            maxRows={13}
-            endContent={
-              <SearchbarRightSendBtn
-                loading={loading}
-                searchbarText={searchbarText}
-                setSearchbarText={setSearchbarText}
-                handleFormSubmit={handleFormSubmit}
+            size="sm"
+            className="pointer-events-auto"
+          >
+            <ArrowDown width={18} />
+          </Button>
+        </div>
+
+        <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
+          <div className="flex items-center justify-between mb-1">
+            <div className="w-fit py-1 px-1 rounded-full text-sm">
+              <label {...getBaseProps()}>
+                <VisuallyHidden>
+                  <input {...getInputProps()} />
+                </VisuallyHidden>
+                <Chip
+                  classNames={{
+                    base: styles.base(),
+                    content: styles.content(),
+                  }}
+                  onClick={toggleSearch}
+                  color="primary"
+                  startContent={
+                    isSelected ? (
+                      <Check
+                        className="ml-1 text-black"
+                        width={18}
+                        height={18}
+                      />
+                    ) : null
+                  }
+                  variant="faded"
+                  {...labelProps}
+                >
+                  Web Search
+                  <InternetIcon
+                    color={isSelected ? "#000" : ""}
+                    height={20}
+                    width={20}
+                  />
+                </Chip>
+              </label>
+            </div>
+
+            <Chip
+              onClick={openPageFetchModal}
+              classNames={{
+                base: `hover:bg-default-200 ${
+                  pageFetchURL.length > 0 && !fetchPageModal
+                    ? "bg-[#00bbff] hover:bg-[#00bbff95]"
+                    : "bg-[#27272A] hover:bg-default-200"
+                }  !pr-0 border-none cursor-pointer`,
+                content: `text-default-500 flex items-center gap-1 ${
+                  pageFetchURL.length > 0 && !fetchPageModal
+                    ? "text-primary-foreground"
+                    : "text-default-500"
+                }  `,
+              }}
+              className="transition-all"
+              variant="faded"
+            >
+              Fetch Page
+              <ArrowUpRight
+                color={
+                  pageFetchURL.length > 0 && !fetchPageModal
+                    ? "#000"
+                    : "#a1a1a1"
+                }
+                height={20}
+                width={20}
               />
-            }
-            classNames={{
-              inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
-              innerWrapper: `${
-                currentHeight > 24 ? "items-end" : "items-center"
-              }`,
-            }}
-            startContent={<SearchbarLeftDropdown loading={loading} />}
-          />
-        </form>
+            </Chip>
+            {/* </label>
+          </div> */}
+
+            <div className="flex w-full justify-end text-sm mt-1 text-gray-500">
+              {searchbarText.length}/10000 words
+            </div>
+          </div>
+          <form onSubmit={handleFormSubmit}>
+            <Textarea
+              disabled={loading && isLoading}
+              radius="full"
+              size="lg"
+              placeholder="Ask gaia..."
+              onValueChange={setSearchbarText}
+              onKeyDown={handleKeyDown}
+              value={searchbarText}
+              ref={inputRef}
+              autoFocus
+              isInvalid={searchbarText.length > 10000}
+              onHeightChange={(height: number) => setHeight(height)}
+              minRows={1}
+              maxRows={13}
+              endContent={
+                <SearchbarRightSendBtn
+                  loading={loading}
+                  searchbarText={searchbarText}
+                  setSearchbarText={setSearchbarText}
+                  handleFormSubmit={handleFormSubmit}
+                />
+              }
+              classNames={{
+                inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
+                innerWrapper: `${
+                  currentHeight > 24 ? "items-end" : "items-center"
+                }`,
+              }}
+              startContent={<SearchbarLeftDropdown loading={loading} />}
+            />
+          </form>
+        </div>
       </div>
-    </div>
+      <Dialog open={fetchPageModal} onOpenChange={setFetchPageModal}>
+        <DialogContent className="dark text-white bg-zinc-900 border-none">
+          <DialogHeader>
+            <DialogTitle>Fetch Page</DialogTitle>
+            <DialogDescription>
+              Lorem ipsum dolor sit. to fetch data from the webpage
+            </DialogDescription>
+          </DialogHeader>
+
+          <Input
+            label="Enter URL"
+            onValueChange={setPageFetchURL}
+            value={pageFetchURL}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") setFetchPageModal(false);
+            }}
+          />
+          <DialogFooter>
+            <Button
+              color="danger"
+              variant="flat"
+              onPress={() => {
+                setPageFetchURL("");
+                setFetchPageModal(false);
+              }}
+            >
+              Clear
+            </Button>
+            <Button
+              color="primary"
+              onPress={() => {
+                setFetchPageModal(false);
+              }}
+            >
+              Fetch
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ export interface ChatBubbleUserProps {
   file?: File | null | string;
   filename?: string;
   searchWeb?: boolean;
+  pageFetchURL?: string;
   date?: string;
 }
 
@@ -21,6 +22,7 @@ export interface ChatBubbleBotProps {
   userinputType?: string;
   setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
   setImageData: any;
+  pageFetchURL?: string;
   // setImageSrc: React.Dispatch<React.SetStateAction<string>>;
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 }

@@ -3,6 +3,7 @@ import { Chip } from "@nextui-org/chip";
 import { parseDate } from "../../../utils/fetchDate";
 import { PdfContainer } from "../../Documents/PdfComponent";
 import { StarsIcon } from "@/components/icons";
+import { ArrowUpRight } from "lucide-react";
 
 export default function ChatBubbleUser({
   text,
@@ -11,6 +12,7 @@ export default function ChatBubbleUser({
   filename,
   date,
   searchWeb = false,
+  pageFetchURL,
 }: ChatBubbleUserProps) {
   return (
     (!!text || !!file) && (
@@ -34,6 +36,35 @@ export default function ChatBubbleUser({
               </div>
             </Chip>
           )}
+
+          {!!pageFetchURL && (
+            <Chip
+              startContent={
+                <ArrowUpRight height={20} color="white" className="mr-1" />
+              }
+              variant="flat"
+              className="mb-2"
+            >
+              <div className="flex items-center gap-1 font-medium text-white">
+                {pageFetchURL.replace(/^https?:\/\//, "")}
+              </div>
+            </Chip>
+          )}
+          {/* 
+          {!!pageFetchURL && (
+            <Chip
+              startContent={<ArrowUpRight height={20} color="#00bbff" />}
+              // endContent={
+              //   <StarsIcon height={20} color="transparent" fill="white" />
+              // }
+              variant="flat"
+              color="primary"
+            >
+              <div className="font-medium flex items-center gap-1 text-primary">
+                {pageFetchURL}
+              </div>
+            </Chip>
+          )} */}
 
           {!!text && (
             <div className="flex select-text text-wrap max-w-[30vw]">
