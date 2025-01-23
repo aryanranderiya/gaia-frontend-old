@@ -553,6 +553,10 @@ main {
   width: var(--uib-size);
 }
 
+.pingspinner_large {
+  --uib-size: 200px !important;
+}
+
 .pingspinner::before,
 .pingspinner::after {
   content: "";

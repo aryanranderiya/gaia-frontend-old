@@ -10,11 +10,9 @@ import {
   AiImageIcon,
   FileUploadIcon,
   ImageUploadIcon,
-  InternetIcon,
-  PlusSignIcon,
+  PlusSignIcon
 } from "../icons";
 import GenerateImage from "./GenerateImage";
-import { Button } from "@nextui-org/button";
 
 export default function SearchbarLeftDropdown({
   loading,

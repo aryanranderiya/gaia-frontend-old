@@ -3,6 +3,7 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 // import WebsiteName from "@/components/TopWebsiteName";
 import { ConversationListProvider } from "@/contexts/ConversationList";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
+import { LoadingProvider } from "@/contexts/LoadingContext";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   Navigate,
@@ -14,8 +15,6 @@ import {
 import useMediaQuery from "../hooks/MediaQuery";
 import Sidebar from "../layouts/Sidebar";
 import NotesAdd from "./NotePage";
-import SearchPage from "./Search";
-import { LoadingProvider } from "@/contexts/LoadingContext";
 
 // Lazy load the components
 const MainChat = lazy(() => import("./MainChat"));
@@ -109,7 +108,6 @@ export default function MainInterface() {
                   <Route path="chat" element={<MainChat />} />
                   <Route path="explore" element={<Explore />} />
                   <Route path="calendar" element={<Calendar />} />
-                  <Route path="search" element={<SearchPage />} />
                   <Route path="pins" element={<Pins />} />
                   <Route path="notes" element={<Notes />} />
                   <Route path="notes/add" element={<NotesAdd />} />

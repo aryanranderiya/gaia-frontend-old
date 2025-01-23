@@ -150,7 +150,14 @@ const MainSearchbar = ({
             onHeightChange={(height: number) => setHeight(height)}
             minRows={1}
             maxRows={13}
-            endContent={<SearchbarRightSendBtn loading={loading} />}
+            endContent={
+              <SearchbarRightSendBtn
+                loading={loading}
+                searchbarText={searchbarText}
+                setSearchbarText={setSearchbarText}
+                handleFormSubmit={handleFormSubmit}
+              />
+            }
             classNames={{
               inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
               innerWrapper: `${
