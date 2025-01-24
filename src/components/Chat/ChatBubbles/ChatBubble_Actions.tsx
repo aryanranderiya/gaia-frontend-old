@@ -6,7 +6,7 @@ import {
   TranslateIcon,
 } from "../../icons";
 import TranslateDropdown from "../../Translation/TranslateDropDown";
-// import TextToSpeech from "../Audio/TextToSpeechComponent";
+import TextToSpeech from "../../Audio/TextToSpeechComponent";
 import { Tooltip } from "@nextui-org/tooltip";
 import { toast } from "sonner";
 import { XIcon } from "lucide-react";
@@ -51,7 +51,7 @@ export function ChatBubble_Actions({
             <Task01Icon height="22" width="22" className="cursor-pointer" />
           </Button>
 
-          <Button
+          {/* <Button
             variant="light"
             className="w-fit p-0 h-fit rounded-md"
             isIconOnly
@@ -73,9 +73,9 @@ export function ChatBubble_Actions({
                 <TranslateIcon height="22" className="cursor-pointer" />
               </Button>
             }
-          />
+          /> */}
 
-          {/* <TextToSpeech text={text} /> */}
+          <TextToSpeech text={text} />
         </div>
       )}
     </>

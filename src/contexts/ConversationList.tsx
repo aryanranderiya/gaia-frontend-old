@@ -33,7 +33,9 @@ export const ConversationListProvider: React.FC<{ children: ReactNode }> = ({
 
   const fetchConversations = async () => {
     try {
-      const response = await apiauth.get("/conversations");
+      const response = await apiauth.get("/conversations", {
+        cache: true,
+      });
       setConversations(response?.data?.conversations || []);
     } catch (error) {
       console.error("Error fetching conversations:", error);

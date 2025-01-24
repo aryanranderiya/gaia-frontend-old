@@ -39,14 +39,19 @@ export default function ChatBubbleUser({
 
           {!!pageFetchURL && (
             <Chip
-              startContent={
-                <ArrowUpRight height={20} color="white" className="mr-1" />
-              }
+              startContent={<ArrowUpRight height={20} color="white" />}
               variant="flat"
               className="mb-2"
             >
-              <div className="flex items-center gap-1 font-medium text-white">
-                {pageFetchURL.replace(/^https?:\/\//, "")}
+              <div className="flex items-center gap-1 text-white ">
+                Fetching
+                <a
+                  href={pageFetchURL}
+                  className="!text-white font-medium hover:!text-black transition-colors"
+                  target="_blank"
+                >
+                  {pageFetchURL.replace(/^https?:\/\//, "")}{" "}
+                </a>
               </div>
             </Chip>
           )}

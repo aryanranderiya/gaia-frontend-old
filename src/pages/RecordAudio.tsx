@@ -71,7 +71,7 @@ export default function AudioTranscription() {
       // Get audio stream with specific constraints for Vosk
       streamRef.current = await navigator.mediaDevices.getUserMedia({
         audio: {
-          sampleRate: 16000,
+          sampleRate: 16_000,
           channelCount: 1,
           echoCancellation: true,
           noiseSuppression: true,
@@ -80,7 +80,7 @@ export default function AudioTranscription() {
 
       // Create audio context with specific sample rate
       audioContextRef.current = new AudioContext({
-        sampleRate: 16000,
+        sampleRate: 16_000,
       });
 
       // Create source node
@@ -97,19 +97,19 @@ export default function AudioTranscription() {
 
       // Handle audio processing
       processorRef.current.onaudioprocess = (e) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-          const audioData = e.inputBuffer.getChannelData(0);
-          const intData = new Int16Array(audioData.length);
+        if (wsRef.current?.readyState !== WebSocket.OPEN) return;
 
-          // Convert Float32Array to Int16Array for Vosk
-          for (let i = 0; i < audioData.length; i++) {
-            // Convert float32 to int16
-            intData[i] = Math.max(-1, Math.min(1, audioData[i])) * 0x7fff;
-          }
+        const audioData = e.inputBuffer.getChannelData(0);
+        const intData = new Int16Array(audioData.length);
 
-          // Send the audio data to the server
-          wsRef.current.send(intData.buffer);
+        // Convert Float32Array to Int16Array for Vosk
+        for (let i = 0; i < audioData.length; i++) {
+          // Convert float32 to int16
+          intData[i] = Math.max(-1, Math.min(1, audioData[i])) * 0x7fff;
         }
+
+        // Send the audio data to the server
+        wsRef.current.send(intData.buffer);
       };
 
       // Connect the nodes

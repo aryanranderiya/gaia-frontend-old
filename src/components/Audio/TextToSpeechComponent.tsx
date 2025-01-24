@@ -1,62 +1,81 @@
+import api from "@/utils/apiaxios";
 import { Button } from "@nextui-org/button";
-// import { VoiceIcon, VolumeHighIcon, PlayIcon } from "../icons";
-// import * as React from "react";
-// import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@nextui-org/spinner";
+import * as React from "react";
+import { VolumeHighIcon, VolumeOffIcon } from "../icons";
+import { Loader } from "lucide-react";
 
-export default function TextToSpeech() {
-  // console.log(text);
+export default function TextToSpeech({ text }: { text: string }) {
+  const [loading, setLoading] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [audio, setAudio] = React.useState<HTMLAudioElement | null>(null);
 
-  // const [loading, setLoading] = React.useState(false);
-  // const [isPaused, setIsPaused] = React.useState(false);
-  // const [isPlaying, setIsPlaying] = React.useState(false);
-  // const [icon, setIcon] = React.useState(<VoiceIcon />);
+  const handleTextToSpeech = async () => {
+    try {
+      if (isPlaying || loading) {
+        if (audio) {
+          audio.pause();
+          audio.src = "";
+        }
+        setAudio(null);
+        setIsPlaying(false);
+        setLoading(false);
+      } else {
+        setLoading(true);
 
-  // const togglePlayback = () => {
-  //   if (responsiveVoice.isPlaying()) {
-  //     if (isPaused) {
-  //       console.log("test2");
-  //       responsiveVoice.resume();
-  //       setIsPlaying(true);
-  //       setIsPaused(false);
-  //     } else {
-  //       console.log("test1");
-  //       responsiveVoice.pause();
-  //       setIsPaused(true);
-  //       setIsPlaying(false);
-  //     }
-  //   } else {
-  //     console.log("test3");
-  //     setLoading(true);
-  //     responsiveVoice.speak(text, "UK English Female", {
-  //       onstart: () => {
-  //         setLoading(false);
-  //         setIsPlaying(true);
-  //       },
-  //       onend: () => {
-  //         setIsPlaying(false);
-  //       },
-  //     });
-  //   }
-  // };
+        // API Call
+        const response = await api.post(
+          "/synthesize",
+          { text },
+          { responseType: "arraybuffer" }
+        );
 
-  // React.useEffect(() => {
-  //   if (loading) setIcon(<Spinner size="sm" color="primary" />);
-  //   else if (isPlaying) setIcon(<VolumeHighIcon color="foreground" />);
-  //   else if (isPaused) setIcon(<PlayIcon />);
-  //   else setIcon(<VoiceIcon />);
-  // }, [loading, isPaused, isPlaying]);
+        // Convert audio data to a Blob
+        const audioBlob = new Blob([response.data], { type: "audio/wav" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        // Create and play the audio
+        const newAudio = new Audio(audioUrl);
+        newAudio.play();
+        setAudio(newAudio);
+
+        setIsPlaying(true);
+        newAudio.onended = () => setIsPlaying(false);
+      }
+    } catch (error) {
+      console.error("Error synthesizing speech:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Cleanup audio when component unmounts
+  React.useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.src = "";
+      }
+    };
+  }, [audio]);
 
   return (
     <Button
-      // onPress={togglePlayback}
-      // variant={isPlaying ? "shadow" : "light"}
+      onPress={handleTextToSpeech}
       size="sm"
       className="w-fit p-0 h-fit rounded-md"
       style={{ minWidth: "22px" }}
-      color="primary"
       isIconOnly
+      variant="light"
+      disabled={loading || isPlaying}
     >
-      {/* {icon} */}
+      {loading ? (
+        <Loader className="text-[#9b9b9b] animate-spin text-[24px]" />
+      ) : isPlaying ? (
+        <VolumeOffIcon className="text-[#9b9b9b] text-[18px]" />
+      ) : (
+        <VolumeHighIcon />
+      )}
     </Button>
   );
 }

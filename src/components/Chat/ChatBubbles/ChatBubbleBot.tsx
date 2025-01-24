@@ -123,11 +123,19 @@ export default function ChatBubbleBot({
                   color="primary"
                 >
                   <div className="font-medium flex items-center gap-1 text-primary">
-                    {pageFetchURL?.replace(/^https?:\/\//, "")}
+                    {/* {pageFetchURL?.replace(/^https?:\/\//, "")} */}
+                    Fetched
+                    <a
+                      href={pageFetchURL}
+                      className="!text-[#00bbff] font-medium hover:!text-white transition-colors" 
+                      target="_blank"
+                    >
+                      {pageFetchURL.replace(/^https?:\/\//, "")}{" "}
+                    </a>
                   </div>
                 </Chip>
               )}
-              
+
               {/* TODO: Update this suspense to be a skeleton */}
               {/* <Suspense fallback={<SuspenseLoader />}> */}
               <MarkdownRenderer content={text.toString()} />

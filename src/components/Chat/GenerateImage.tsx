@@ -16,6 +16,7 @@ import api from "@/utils/apiaxios";
 import { BrushIcon } from "../icons";
 import fetchDate from "../../utils/fetchDate";
 import { ApiService } from "@/utils/chatUtils";
+import { useConversationList } from "@/contexts/ConversationList";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -32,6 +33,7 @@ export default function GenerateImage({
   const [isValid, setIsValid] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { fetchConversations } = useConversationList();
 
   useEffect(() => {
     setIsValid(imagePrompt.trim() !== "");
@@ -63,6 +65,12 @@ export default function GenerateImage({
         ApiService.updateConversation(conversationId, newMessages);
         return [...baseMessages, ...newMessages];
       });
+
+      ApiService.updateConversationDescription(
+        conversationId,
+        description || "New Chat",
+        fetchConversations
+      );
     } catch (error) {
       console.error("Failed to update conversation:", error);
       throw new Error("Failed to update conversation state");
@@ -75,7 +83,11 @@ export default function GenerateImage({
     try {
       const convoID = crypto.randomUUID();
       await ApiService.createConversation(convoID);
-      await updateConversationState(convoID, initialMessages, "Generate Image");
+      await updateConversationState(
+        convoID,
+        initialMessages,
+        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
+      );
       navigate(`/try/chat/${convoID}`);
       return convoID;
     } catch (error) {

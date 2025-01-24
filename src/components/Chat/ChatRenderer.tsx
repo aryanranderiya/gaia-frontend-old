@@ -8,6 +8,77 @@ import { Suspense, useState } from "react";
 import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
+import { Chip } from "@nextui-org/chip";
+import { Badge } from "@/components/ui/badge";
+import {
+  BlushBrush02Icon,
+  Calendar01Icon,
+  FlowchartIcon,
+  GlobalSearchIcon,
+  Mic01Icon,
+  Route02Icon,
+  StickyNote01Icon,
+} from "../icons";
+import { ArrowUpRight } from "lucide-react";
+
+const badges = [
+  {
+    variant: "secondary",
+    bgColor: "purple",
+    textColor: "purple",
+    icon: <FlowchartIcon width={17} className="text-white/60" />,
+    text: "Generate Flowcharts",
+  },
+  {
+    variant: "secondary",
+    bgColor: "emerald",
+    textColor: "emerald",
+    icon: <BlushBrush02Icon width={17} className="text-white/60" />,
+    text: "Generate Image",
+  },
+  {
+    variant: "secondary",
+    bgColor: "orange",
+    textColor: "orange",
+    icon: <Mic01Icon width={17} className="text-white/60" />,
+    text: "Voice Conversation",
+  },
+  {
+    variant: "secondary",
+    bgColor: "blue",
+    textColor: "blue",
+    icon: <GlobalSearchIcon width={17} className="text-white/60" />,
+    text: "Internet Search",
+  },
+  {
+    variant: "secondary",
+    bgColor: "primary",
+    textColor: "blue",
+    icon: <ArrowUpRight width={17} className="text-white/60" />,
+    text: "Fetch Webpage",
+  },
+  {
+    variant: "secondary",
+    bgColor: "red",
+    textColor: "red",
+    icon: <Calendar01Icon width={17} className="text-white/60" />,
+    text: "Manage Calendar",
+  },
+  {
+    variant: "secondary",
+    bgColor: "cyan",
+    textColor: "cyan",
+    icon: <StickyNote01Icon width={17} className="text-white/60" />,
+    text: "Store Memories",
+  },
+  {
+    variant: "secondary",
+    bgColor: "pink",
+    textColor: "pink",
+    icon: <Route02Icon width={17} className="text-white/60" />,
+    text: "Manage Goals",
+  },
+];
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
@@ -20,9 +91,25 @@ export default function ChatRenderer() {
 
   if (!!convoMessages && convoMessages?.length === 0) {
     return (
-      <div className="starter_container">
-        {/* <StarterEmoji /> */}
-        <StarterText />
+      <div className="flex items-center justify-center flex-1">
+        <div className="flex items-center justify-center flex-col gap-2">
+          {/* <StarterEmoji /> */}
+          <StarterText />
+          <div className="flex gap-2 flex-wrap max-w-[600px] justify-center">
+            {badges.map((badge, index) => (
+              <Badge
+                key={index}
+                variant={badge.variant as "secondary" | "default" | "outline"}
+                className={`bg-${badge.bgColor}-500 cursor-pointer bg-opacity-30 bg hover:bg-${badge.bgColor}-500 hover:bg-opacity-80 text-sm text-${badge.bgColor}-500 font-medium hover:text-white`}
+              >
+                <div className="flex items-center gap-1">
+                  {badge.icon}
+                  {badge.text}
+                </div>
+              </Badge>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -116,7 +203,6 @@ export default function ChatRenderer() {
               text={message.response}
               subtype={message.subtype || null}
               file={message.file || null}
-              imageUrl={message.imageUrl}
               filename={message.filename}
               searchWeb={message.searchWeb}
               date={message.date}

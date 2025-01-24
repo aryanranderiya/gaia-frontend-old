@@ -183,7 +183,6 @@ main {
   width: 50%;
 }
 
-.starter_container,
 .starter_container2 {
   display: flex;
   flex-direction: column;

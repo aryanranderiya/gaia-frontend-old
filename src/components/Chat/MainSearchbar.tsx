@@ -7,7 +7,7 @@ import { VisuallyHidden, tv } from "@nextui-org/react";
 import { ArrowDown, ArrowUpRight, Check, CloudDownload } from "lucide-react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { InternetIcon } from "../icons";
+import { GlobalSearchIcon, InternetIcon } from "../icons";
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 import { useLoading } from "@/contexts/LoadingContext";
@@ -45,7 +45,8 @@ const MainSearchbar = ({
 
   const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
-    if (!searchbarText) return;
+    if (!searchbarText && !isValidURL(pageFetchURL)) return;
+
     setIsLoading(true);
     updateConversation(searchbarText, enableSearch, pageFetchURL);
     setSearchbarText("");
@@ -96,6 +97,15 @@ const MainSearchbar = ({
   // Extract label props and remove the ref to avoid type conflicts
   const { ref, ...labelProps } = getLabelProps();
 
+  function isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   return (
     <>
       <div className="searchbar_container relative">
@@ -142,7 +152,7 @@ const MainSearchbar = ({
                   {...labelProps}
                 >
                   Web Search
-                  <InternetIcon
+                  <GlobalSearchIcon
                     color={isSelected ? "#000" : ""}
                     height={20}
                     width={20}
@@ -233,6 +243,8 @@ const MainSearchbar = ({
             label="Enter URL"
             onValueChange={setPageFetchURL}
             value={pageFetchURL}
+            isInvalid={!isValidURL(pageFetchURL) && pageFetchURL.length > 0}
+            errorMessage="Please enter a valid URL! (starting with https://)"
             onKeyPress={(e) => {
               if (e.key === "Enter") setFetchPageModal(false);
             }}
@@ -251,7 +263,8 @@ const MainSearchbar = ({
             <Button
               color="primary"
               onPress={() => {
-                setFetchPageModal(false);
+                if (isValidURL(pageFetchURL) && pageFetchURL.length > 0)
+                  setFetchPageModal(false);
               }}
             >
               Fetch
