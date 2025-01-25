@@ -160,7 +160,7 @@ const FlowchartDemo = () => {
               className="px-3"
             >
               <Tab key="preview" title="Flowchart" className="p-0">
-                <div className="p-4 bg-white relative overflow-hidden h-[400px] ">
+                <div className="p-4 bg-zinc-900 relative overflow-hidden h-[400px] ">
                   <div
                     ref={mermaidRef}
                     className="mermaid absolute select-none"

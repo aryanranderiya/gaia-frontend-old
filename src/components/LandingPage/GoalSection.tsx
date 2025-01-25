@@ -10,12 +10,22 @@ import { SectionHeading } from "./SectionHeading";
 export default function GoalSection() {
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
-  const [isVisible, setIsVisible] = useState(false); // State to track visibility
+  const [isVisible, setIsVisible] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   const sectionRef = useRef(null); // Reference to the section element
 
   // Intersection Observer logic
   useEffect(() => {
+    [
+      "/landing/goal_checked.png",
+      "/landing/goal_cropped.png",
+      "/landing/blur_goals.webp",
+    ].forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -115,11 +125,20 @@ export default function GoalSection() {
             Step 2: Track your progress
           </Chip>
           <img
-            src="/landing/goal_cropped.png"
+            src={
+              isComplete
+                ? "/landing/goal_checked.png"
+                : "/landing/goal_cropped.png"
+            }
             className="h-[70vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
           />
         </div>
-        <StaticSidebar hover1={hover1} isVisible={isVisible} />
+        <StaticSidebar
+          hover1={hover1}
+          isVisible={isVisible}
+          isComplete={isComplete}
+          setIsComplete={setIsComplete}
+        />
       </div>
     </div>
   );

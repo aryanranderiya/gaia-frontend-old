@@ -8,13 +8,14 @@ import { ArrowUpRight } from "lucide-react";
 export default function HeroSection() {
   return (
     <>
-      <div className="flex flex-col w-screen justify-start items-center gap-8 pt-36">
+      <div className="flex flex-col w-screen justify-start items-center gap-8 pt-32">
         <div className="flex flex-col justify-center items-center h-full">
           <div
             // text=""
             className="landingpage_maintext bg-gradient-to-b from-white to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-30% py-2"
           >
-            Introducing G.A.I.A
+            Introducing GAIA
+            {/* Your Personalised Assistant */}
           </div>
 
           <TypingAnimation

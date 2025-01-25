@@ -1,23 +1,44 @@
 import Navbar from "@/components/LandingPage/Navbar";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";
-import LoginSignup from "../pages/LoginSignup";
-import PageNotFound from "../pages/PageNotFound";
+import SuspenseLoader from "@/components/SuspenseLoader";
+const PageNotFound = lazy(() => import("../pages/PageNotFound"));
+const LoginSignup = lazy(() => import("../pages/LoginSignup"));
 // import Pricing from "../pages/Pricing";
 
 export default function Landing() {
   return (
     <>
-      {/* <ReactLenis root> */}
       <Navbar />
       <Routes>
         <Route index element={<LandingPage />} />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <PageNotFound />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <LoginSignup isLogin={true} />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <LoginSignup />
+            </Suspense>
+          }
+        />
         {/* <Route path="/pricing" element={<Pricing />} /> */}
-        <Route path="*" element={<PageNotFound />} />
-        <Route path="/login" element={<LoginSignup isLogin={true} />} />
-        <Route path="/signup" element={<LoginSignup />} />
       </Routes>
-      {/* </ReactLenis> */}
     </>
   );
 }

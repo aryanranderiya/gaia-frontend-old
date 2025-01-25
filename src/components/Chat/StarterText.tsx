@@ -1,12 +1,156 @@
 // import { Chip } from "@nextui-org/chip";
 // import { WavingHand01Icon } from "../icons";
 // import img from "/public/gaia.logo.png";
+import {
+  BlushBrush02Icon,
+  Calendar01Icon,
+  DocumentAttachmentIcon,
+  FlowchartIcon,
+  GlobalSearchIcon,
+  Mic01Icon,
+  Route02Icon,
+  StickyNote01Icon,
+} from "../icons";
+import { Badge } from "../ui/badge";
+import { ArrowUpRight } from "lucide-react";
+
+
+const badges = [
+  {
+    variant: "secondary",
+    bgClass: "bg-purple-500 hover:bg-purple-500",
+    textClass: "text-purple-500",
+    icon: (
+      <FlowchartIcon
+        width={17}
+        className="text-purple-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Generate Flowcharts",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-emerald-500 hover:bg-emerald-500",
+    textClass: "text-emerald-500",
+    icon: (
+      <BlushBrush02Icon
+        width={17}
+        className="text-emerald-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Generate Image",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-orange-500 hover:bg-orange-500",
+    textClass: "text-orange-500",
+    icon: (
+      <Mic01Icon
+        width={17}
+        className="text-orange-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Voice Conversation",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-blue-500 hover:bg-blue-500",
+    textClass: "text-blue-500",
+    icon: (
+      <GlobalSearchIcon
+        width={17}
+        className="text-blue-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Internet Search",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-lime-500 hover:bg-lime-500",
+    textClass: "text-lime-500",
+    icon: (
+      <ArrowUpRight
+        width={17}
+        className="text-lime-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Fetch Webpage",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-red-500 hover:bg-red-500",
+    textClass: "text-red-500",
+    icon: (
+      <Calendar01Icon
+        width={17}
+        className="text-red-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Manage Calendar",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-cyan-500 hover:bg-cyan-500",
+    textClass: "text-cyan-500",
+    icon: (
+      <StickyNote01Icon
+        width={17}
+        className="text-cyan-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Store Memories",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-pink-500 hover:bg-pink-500",
+    textClass: "text-pink-500",
+    icon: (
+      <Route02Icon
+        width={17}
+        className="text-pink-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Manage Goals",
+  },
+  {
+    variant: "secondary",
+    bgClass: "bg-yellow-500 hover:bg-yellow-500",
+    textClass: "text-yellow-500",
+    icon: (
+      <DocumentAttachmentIcon
+        width={17}
+        className="text-yellow-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Chat with Documents",
+  },
+];
 
 export default function StarterText() {
   return (
-    <span className="text-4xl font-medium grow flex-1 text-center">
-      {/* Hey! <WavingHand01Icon /> How may I assist you today? */}
-      What can I do for you today?
-    </span>
+    <>
+      <span className="text-4xl font-medium grow flex-1 text-center">
+        {/* Hey! <WavingHand01Icon /> How may I assist you today? */}
+        What can I do for you today?
+      </span>
+
+      <div className="text-foreground-500 text-xs -mt-1 mb-1">
+        I can do the following for you:
+      </div>
+      <div className="flex gap-2 flex-wrap max-w-[650px] justify-center">
+        {badges.map((badge, index) => (
+          <Badge
+            key={index}
+            variant={badge.variant as "secondary" | "default" | "outline"}
+            className={`${badge.bgClass} cursor-pointer bg-opacity-20 hover:bg-opacity-80 text-sm ${badge.textClass} font-medium hover:text-white group`}
+          >
+            <div className="flex items-center gap-1">
+              {badge.icon}
+              {badge.text}
+            </div>
+          </Badge>
+        ))}
+      </div>
+    </>
   );
 }

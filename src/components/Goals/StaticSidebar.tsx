@@ -2,28 +2,26 @@ import { Checkbox } from "@nextui-org/checkbox";
 import { Chip } from "@nextui-org/chip";
 import { Clock } from "lucide-react";
 import { BookIcon1 } from "../icons";
+import React from "react";
 
 const StaticSidebar = ({
   hover1,
   isVisible,
+  isComplete,
+  setIsComplete,
 }: {
   hover1: boolean;
   isVisible: boolean;
+  isComplete: boolean;
+  setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  // Static data for the sidebar
-  const label = "Machine Learning Fundamentals";
+  const label = "Task Name";
   const details = [
-    "Understand supervised and unsupervised learning",
-    "Learn regression, classification, clustering",
-    "Familiarize with cross-validation",
+    "When you click on a task after setting a goal, this sidebar appears. You can mark the task as complete and see the estimated time and resources needed to finish it!",
   ];
   const estimatedTime = "1 month";
   // const isComplete = false; // Static completion status
-  const resources = [
-    "Machine Learning Crash Course",
-    "Scikit-learn Documentation",
-    "Cross-Validation Tutorial",
-  ];
+  const resources = ["Resource 1", "Resource 2", "Resource 3"];
 
   return (
     <div
@@ -35,7 +33,7 @@ const StaticSidebar = ({
       <div className="p-4 space-y-2">
         <div className="text-xl font-medium">{label}</div>
         <div className="text-md -mt-2 text-foreground-600 pb-4">
-          {details.join(", ")}
+          {details.join(" ")}
         </div>
         <div className="space-y-4">
           {estimatedTime && (
@@ -62,6 +60,8 @@ const StaticSidebar = ({
               <Checkbox
                 color="success"
                 radius="full"
+                isSelected={isComplete}
+                onValueChange={setIsComplete}
                 // isSelected={isComplete}
                 // onValueChange={handleCheckboxClick} // No need for a function, as it's static
               >
@@ -82,9 +82,9 @@ const StaticSidebar = ({
             {resources.map((resource, index) => (
               <a
                 key={index}
-                href={`https://www.google.com/search?q=${resource.split("+")}`}
+                // href={`https://www.google.com/search?q=${resource.split("+")}`}
                 target="__blank"
-                className="hover:text-[#00bbff] underline underline-offset-4"
+                className="hover:text-[#00bbff] underline underline-offset-4 cursor-pointer"
               >
                 <li>{resource}</li>
               </a>

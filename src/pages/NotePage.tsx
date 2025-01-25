@@ -12,16 +12,31 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { ArrowLeft, CircleX, TriangleAlert } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/dropdown";
+const Dropdown = lazy(() =>
+  import("@nextui-org/dropdown").then((mod) => ({ default: mod.Dropdown }))
+);
+const DropdownItem = lazy(() =>
+  import("@nextui-org/dropdown").then((mod) => ({ default: mod.DropdownItem }))
+);
+const DropdownMenu = lazy(() =>
+  import("@nextui-org/dropdown").then((mod) => ({ default: mod.DropdownMenu }))
+);
+const DropdownTrigger = lazy(() =>
+  import("@nextui-org/dropdown").then((mod) => ({
+    default: mod.DropdownTrigger,
+  }))
+);
 
 interface Note {
   id: string;
@@ -195,23 +210,25 @@ export default function NotesAdd() {
           </Button>
         </Link>
 
-        <Dropdown className="dark">
-          <DropdownTrigger>
-            <Button size="icon" variant={"ghost"}>
-              <DotsVerticalIcon width={20} height={20} />
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            <DropdownItem
-              key="delete"
-              className="text-danger"
-              color="danger"
-              onPress={deleteNote}
-            >
-              Delete Note
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        <Suspense fallback={<Spinner />}>
+          <Dropdown className="dark">
+            <DropdownTrigger>
+              <Button size="icon" variant={"ghost"}>
+                <DotsVerticalIcon width={20} height={20} />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              <DropdownItem
+                key="delete"
+                className="text-danger"
+                color="danger"
+                onPress={deleteNote}
+              >
+                Delete Note
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Suspense>
       </div>
 
       {isLoading ? (

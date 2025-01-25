@@ -1,11 +1,12 @@
+import SuspenseLoader from "@/components/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
 import { Alert01Icon, InternetIcon } from "../../icons";
-import MarkdownRenderer from "../MarkdownRenderer";
+const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
@@ -136,9 +137,9 @@ export default function ChatBubbleBot({
               )}
 
               {/* TODO: Update this suspense to be a skeleton */}
-              {/* <Suspense fallback={<SuspenseLoader />}> */}
-              <MarkdownRenderer content={text.toString()} />
-              {/* </Suspense> */}
+              <Suspense fallback={<SuspenseLoader />}>
+                <MarkdownRenderer content={text.toString()} />
+              </Suspense>
 
               {!!disclaimer && (
                 <Chip

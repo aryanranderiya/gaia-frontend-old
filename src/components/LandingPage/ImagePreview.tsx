@@ -1,17 +1,27 @@
+// import StarterEmoji from "../Chat/StarterEmoji";
+// import StarterText from "../Chat/StarterText";
 import { Safari } from "../ui/safari";
-// import image_png from "./images/homepage_image.png";
-// import image_webp from "./images/homepage_image.webp";
 
 export default function ImagePreview() {
   return (
     <div className="flex items-center justify-center h-fit w-screen mt-14 sm:mb-0 mb-[20vh]">
-      <div className="min-w-[160%] sm:min-w-[70%] sm:max-w-[70%]">
+      <div className="min-w-[160%] sm:min-w-[70%] sm:max-w-[70%] relative">
         <Safari
           url="yourgaia.io"
           mode="simple"
           className="size-full"
           imageSrc="/landing/screenshot.png"
         />
+        {/* <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full">
+          <div className="flex items-center justify-center flex-1 ">
+            <div className="flex items-center justify-center flex-col gap-2">
+              <StarterEmoji />
+
+              <StarterText />
+            </div>
+          </div>
+        </div>
+         */}
       </div>
     </div>
   );

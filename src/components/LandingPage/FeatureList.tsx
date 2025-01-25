@@ -4,7 +4,8 @@ import {
   GoogleDriveIcon,
   LanguageSkillIcon,
   Mail01Icon,
-  PinIcon
+  PinIcon,
+  BubbleChatLockIcon,
 } from "../icons";
 
 const list = [
@@ -39,6 +40,11 @@ const list = [
     description: "Supports document & media uploads",
     icon: <FileUploadIcon width={35} height={35} />,
   },
+  {
+    title: "End-to-End Encryption",
+    description: "Support for End to End Encryption for increased privacy",
+    icon: <BubbleChatLockIcon width={35} height={35} />,
+  },
 
   // {
   //   title: "Internet",
@@ -62,7 +68,7 @@ const list = [
     ),
   },
   {
-    title: "and many more...",
+    description: "and many more features coming soon...",
   },
 ];
 
@@ -72,7 +78,7 @@ export function Feature({
   description,
 }: {
   icon?: React.ReactNode;
-  title: string;
+  title?: string;
   description?: string;
 }) {
   return (

@@ -10,28 +10,28 @@ const imageOptions = [
   {
     title: "Golden Retriever",
     prompt: "cute, golden retriever",
-    src: "/generated/golden_retriever.png",
+    src: "/generated/golden_retriever.webp",
   },
   {
     title: "Mountains",
     prompt: "breathtaking, mountains, lake, realistic",
-    src: "/generated/landscape.png",
+    src: "/generated/landscape.webp",
   },
   {
     title: "Car",
     prompt: "black porsche, sunset",
-    src: "/generated/car.png",
+    src: "/generated/car.webp",
   },
   {
     title: "Abstract",
     prompt: "abstract, vibrant colors, geometric shapes",
-    src: "/generated/abstract.png",
+    src: "/generated/abstract.webp",
   },
 
   {
     title: "Husky",
     prompt: "cute, husky",
-    src: "/generated/husky.png",
+    src: "/generated/husky.webp",
   },
 ];
 

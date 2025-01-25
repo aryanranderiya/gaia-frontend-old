@@ -2,7 +2,6 @@ import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
-// import { ZoomSlider } from "@/components/zoom-slider";
 import { Checkbox } from "@nextui-org/checkbox";
 import { Chip } from "@nextui-org/chip";
 import {
@@ -11,12 +10,12 @@ import {
   Handle,
   Node,
   Position,
-  ReactFlow,
   ReactFlowInstance,
   ReactFlowProvider,
 } from "@xyflow/react";
+import { ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import dagre from "dagre"; // Import dagre for layout
+import dagre from "dagre";
 import { Clock } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -132,7 +131,6 @@ export default function GoalPage() {
       const goal = response.data;
 
       if (goal?.roadmap) {
-
         setGoalData(goal);
         setLoading(false);
 
@@ -341,39 +339,37 @@ export default function GoalPage() {
           <div>
             {currentlySelectedNodeId && (
               <>
-                {
-                  (() => {
-                    const selectedNode = nodes.find(
-                      (node) => node.id === currentlySelectedNodeId
-                    );
+                {(() => {
+                  const selectedNode = nodes.find(
+                    (node) => node.id === currentlySelectedNodeId
+                  );
 
-                    return selectedNode?.data?.resources &&
+                  return selectedNode?.data?.resources &&
                     selectedNode?.data?.resources?.length > 0 ? (
-                      <div className="bg-black bg-opacity-40 p-5 rounded-xl">
-                        <div className="flex text-md font-medium gap-2 items-center pb-2">
-                          <BookIcon1 width={18} />
-                          Resources
-                        </div>
-                        <div className="text-sm">
-                          {selectedNode.data.resources.map(
-                            (resource, index) => (
-                              <a
-                                key={index}
-                                href={`https://www.google.com/search?q=${resource.split(
-                                    "+"
-                                  )}`}
-                                target="__blank"
-                                className="hover:text-[#00bbff] underline underline-offset-4"
-                              >
-                                <li>{resource}</li>
-                              </a>
-                            )
-                          )}
-                        </div>
+                    <div className="bg-black bg-opacity-40 p-5 rounded-xl">
+                      <div className="flex text-md font-medium gap-2 items-center pb-2">
+                        <BookIcon1 width={18} />
+                        Resources
                       </div>
-                    ) : <div>No resources available.</div>;
-                  })()
-                }
+                      <div className="text-sm">
+                        {selectedNode.data.resources.map((resource, index) => (
+                          <a
+                            key={index}
+                            href={`https://www.google.com/search?q=${resource.split(
+                              "+"
+                            )}`}
+                            target="__blank"
+                            className="hover:text-[#00bbff] underline underline-offset-4"
+                          >
+                            <li>{resource}</li>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div>No resources available.</div>
+                  );
+                })()}
               </>
             )}
           </div>

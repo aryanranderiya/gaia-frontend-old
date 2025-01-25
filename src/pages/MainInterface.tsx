@@ -13,10 +13,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
-import Sidebar from "../layouts/Sidebar";
-import NotesAdd from "./NotePage";
 
 // Lazy load the components
+const Sidebar = lazy(() => import("../layouts/Sidebar"));
 const MainChat = lazy(() => import("./MainChat"));
 const Explore = lazy(() => import("./Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
@@ -24,6 +23,7 @@ const Pins = lazy(() => import("./Pins"));
 const Notes = lazy(() => import("./Notes"));
 const Goals = lazy(() => import("./Goals"));
 const GoalPage = lazy(() => import("./GoalPage"));
+const NotesAdd = lazy(() => import("./NotePage"));
 
 export default function MainInterface() {
   const location = useLocation();
@@ -86,8 +86,9 @@ export default function MainInterface() {
       <ConvoProvider>
         <LoadingProvider>
           <div className="main_container dark">
-            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
-
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+            </Suspense>
             <div
               ref={contentContainerRef}
               onClick={hideSidebar}
@@ -100,23 +101,84 @@ export default function MainInterface() {
               >
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
-              {/* <WebsiteName /> */}
 
-              <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                <Routes>
-                  <Route path="chat/:convoIdParam" element={<MainChat />} />
-                  <Route path="chat" element={<MainChat />} />
-                  <Route path="explore" element={<Explore />} />
-                  <Route path="calendar" element={<Calendar />} />
-                  <Route path="pins" element={<Pins />} />
-                  <Route path="notes" element={<Notes />} />
-                  <Route path="notes/add" element={<NotesAdd />} />
-                  <Route path="notes/:id" element={<NotesAdd />} />
-                  <Route path="goals" element={<Goals />} />
-                  <Route path="goals/:goalId" element={<GoalPage />} />
-                  <Route path="*" element={<Navigate to="/404" />} />
-                </Routes>
-              </Suspense>
+              <Routes>
+                <Route path="chat/:convoIdParam" element={<MainChat />} />
+                <Route path="chat" element={<MainChat />} />
+
+                <Route
+                  path="explore"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Explore />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="calendar"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Calendar />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="pins"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Pins />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="notes"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Notes />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="notes/add"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <NotesAdd />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="notes/:id"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <NotesAdd />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="goals"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Goals />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="goals/:goalId"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <GoalPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Navigate to="/404" />
+                    </Suspense>
+                  }
+                />
+              </Routes>
             </div>
           </div>
         </LoadingProvider>
