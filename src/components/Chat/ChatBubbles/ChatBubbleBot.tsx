@@ -1,18 +1,17 @@
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
+import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
-import { Alert01Icon, InternetIcon, StarsIcon } from "../../icons";
+import { Alert01Icon, InternetIcon } from "../../icons";
 import MarkdownRenderer from "../MarkdownRenderer";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import { ArrowUpRight } from "lucide-react";
 
 export default function ChatBubbleBot({
-  index,
   text,
   loading = false,
   isImage = false,
@@ -127,7 +126,7 @@ export default function ChatBubbleBot({
                     Fetched
                     <a
                       href={pageFetchURL}
-                      className="!text-[#00bbff] font-medium hover:!text-white transition-colors" 
+                      className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
                       target="_blank"
                     >
                       {pageFetchURL.replace(/^https?:\/\//, "")}{" "}
@@ -199,7 +198,7 @@ export default function ChatBubbleBot({
                 imagePrompt={imagePrompt}
               />
             ) : (
-              <ChatBubble_Actions loading={loading} text={text} index={index} />
+              <ChatBubble_Actions loading={loading} text={text} />
             )}
           </div>
         )}

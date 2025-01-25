@@ -1,26 +1,18 @@
 import { Button } from "@nextui-org/button";
-import {
-  DownloadSquare01Icon,
-  PinIcon,
-  Task01Icon,
-  TranslateIcon,
-} from "../../icons";
-import TranslateDropdown from "../../Translation/TranslateDropDown";
-import TextToSpeech from "../../Audio/TextToSpeechComponent";
 import { Tooltip } from "@nextui-org/tooltip";
-import { toast } from "sonner";
 import { XIcon } from "lucide-react";
+import { toast } from "sonner";
+import TextToSpeech from "../../Audio/TextToSpeechComponent";
+import { DownloadSquare01Icon, Task01Icon } from "../../icons";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
   text: string;
-  index: number;
 }
 
 export function ChatBubble_Actions({
   loading,
   text,
-  index,
 }: ChatBubbleActionsProps): JSX.Element {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);

@@ -1,25 +1,24 @@
-import { useConversation } from "@/hooks/useConversation";
-import { Button } from "@nextui-org/button";
-import { useCheckbox } from "@nextui-org/checkbox";
-import { Chip } from "@nextui-org/chip";
-import { Input, Textarea } from "@nextui-org/input";
-import { VisuallyHidden, tv } from "@nextui-org/react";
-import { ArrowDown, ArrowUpRight, Check, CloudDownload } from "lucide-react";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { GlobalSearchIcon, InternetIcon } from "../icons";
-import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
-import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
-import { useLoading } from "@/contexts/LoadingContext";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
+import { useLoading } from "@/contexts/LoadingContext";
+import { useConversation } from "@/hooks/useConversation";
+import { Button } from "@nextui-org/button";
+import { useCheckbox } from "@nextui-org/checkbox";
+import { Chip } from "@nextui-org/chip";
+import { Input, Textarea } from "@nextui-org/input";
+import { VisuallyHidden, tv } from "@nextui-org/react";
+import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { GlobalSearchIcon } from "../icons";
+import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
+import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;

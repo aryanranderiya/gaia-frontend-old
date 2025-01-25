@@ -9,7 +9,7 @@ export interface ChatBubbleUserProps {
 }
 
 export interface ChatBubbleBotProps {
-  index: number;
+  // index: number;
   text: string;
   loading?: boolean;
   isImage?: boolean;

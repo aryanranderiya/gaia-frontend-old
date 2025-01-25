@@ -8,7 +8,7 @@ import {
   Heading6,
 } from "lucide-react";
 
-const BubbleMenuComponent = ({ editor }) => {
+const BubbleMenuComponent = ({ editor }: { editor: any }) => {
   if (!editor) {
     return null;
   }

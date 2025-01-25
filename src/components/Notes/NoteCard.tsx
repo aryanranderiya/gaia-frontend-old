@@ -3,8 +3,6 @@ import { Note } from "@/pages/Notes";
 // import { useState } from "react";
 import { convert } from "html-to-text";
 import { Link } from "react-router-dom";
-import { TriangleFilledIcon } from "../icons";
-import { TriangleRight } from "lucide-react";
 
 export default function NoteCard({
   note,

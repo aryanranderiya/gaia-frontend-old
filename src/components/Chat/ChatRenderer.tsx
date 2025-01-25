@@ -2,14 +2,11 @@
 import ChatBubbleBot from "@/components/Chat/ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "@/components/Chat/ChatBubbles/ChatBubbleUser";
 import StarterText from "@/components/Chat/StarterText";
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { ArrowUpRight } from "lucide-react";
 import { Suspense, useState } from "react";
-import SuspenseLoader from "../SuspenseLoader";
-import { ScrollArea } from "../ui/scroll-area";
-import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
-import { Chip } from "@nextui-org/chip";
-import { Badge } from "@/components/ui/badge";
 import {
   BlushBrush02Icon,
   Calendar01Icon,
@@ -20,7 +17,9 @@ import {
   Route02Icon,
   StickyNote01Icon,
 } from "../icons";
-import { ArrowUpRight } from "lucide-react";
+import SuspenseLoader from "../SuspenseLoader";
+import { ScrollArea } from "../ui/scroll-area";
+import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import StarterEmoji from "./StarterEmoji";
 
 const badges = [
@@ -251,7 +250,6 @@ export default function ChatRenderer() {
               <ChatBubbleBot
                 text={message.response}
                 loading={message.loading}
-                index={index}
                 isImage={message.isImage}
                 imagePrompt={message.imagePrompt}
                 improvedImagePrompt={message.improvedImagePrompt}

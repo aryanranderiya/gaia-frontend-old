@@ -1,11 +1,11 @@
-import { Note } from "@/pages/Notes";
+// import { Note } from "@/pages/Notes";
 import { Button } from "@nextui-org/button";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
+  // ModalHeader,
 } from "@nextui-org/modal";
 import {
   Dropdown,
@@ -18,12 +18,12 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons";
 export function NoteDialog({
   openDialog,
   setOpenDialog,
-  note,
+  // note,
   onDelete,
 }: {
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
-  note: Note;
+  // note: Note;
   onDelete: () => void;
 }) {
   return (
@@ -35,10 +35,10 @@ export function NoteDialog({
       backdrop="blur"
     >
       <ModalContent>
-        <ModalHeader className="flex flex-col gap-1">{note.title}</ModalHeader>
+        {/* <ModalHeader className="flex flex-col gap-1">{note.title}</ModalHeader> */}
 
         <ModalBody>
-          <p className="text-md">{note.description}</p>
+          {/* <p className="text-md">{note.description}</p> */}
 
           {/* Dropdown for options */}
           <Dropdown className="dark">
