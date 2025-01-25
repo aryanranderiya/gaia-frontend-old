@@ -1,9 +1,9 @@
 export function SimpleChatBubbleUser({
   children,
-  hideMobile,
+  hideMobile = false,
 }: {
   children: any;
-  hideMobile: boolean;
+  hideMobile?: boolean;
 }) {
   if (hideMobile) return <></>;
 
