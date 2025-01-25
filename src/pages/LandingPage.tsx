@@ -18,13 +18,17 @@ export default function LandingPage() {
     <>
       <ScrollArea>
         <div className="landing_page relative select-none">
-          <div className="fixed inset-0 bg-gradient-to-b from-[#00bbff30] to-black z-[-1] top-0 h-screen"></div>
+          <div className="fixed inset-0 bg-gradient-to-b from-[#00bbff30] to-black z-[-1] top-0 h-screen" />
           <HeroSection />
           <ImagePreview />
           <Internet />
           <GoalSection />
-          <ImageGeneration />
-          <FlowchartDemo />
+          <div className="w-screen flex justify-center h-screen items-center">
+            <div className="flex w-[80vw]">
+              <ImageGeneration />
+              <FlowchartDemo />
+            </div>
+          </div>
           {/* <FeatureList /> */}
 
           {/* 

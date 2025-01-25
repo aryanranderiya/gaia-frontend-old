@@ -69,7 +69,7 @@ export default function GoalSection() {
             Step 1: Enter your goal
           </Chip>
           <img
-            src="/landing/blur_goals.png"
+            src="/landing/blur_goals.webp"
             className="h-[70vh] w-full object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
           />
 

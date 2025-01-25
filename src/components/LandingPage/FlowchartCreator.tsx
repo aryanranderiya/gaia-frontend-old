@@ -118,8 +118,8 @@ const FlowchartDemo = () => {
   }, [handleWheel]);
 
   return (
-    <div className="h-screen flex flex-row justify-center items-center gap-5">
-      <div className="flex items-start flex-col justify-center h-full gap-5">
+    <div className="h-[80vh] flex flex-col justify-start items-center gap-16 w-full p-4">
+      <div className="flex items-start flex-col justify-start gap-5 min-h-32">
         <SectionHeading
           heading={"Create flowcharts with ease"}
           subheading={
@@ -128,7 +128,9 @@ const FlowchartDemo = () => {
           icon={<FlowchartIcon color="#ffffff90" width={45} height={45} />}
         />
       </div>
-      <div className="min-w-[37vw] w-fit space-y-4 bg-black p-10 rounded-3xl">
+
+      {/* <div className="min-w-[37vw] w-fit space-y-4 bg-black p-10 rounded-3xl"> */}
+      <div className="w-[80%] bg-black p-10 rounded-3xl space-y-4">
         <SimpleChatBubbleUser>
           Explain how a full-stack web application works using a simple
           flowchart

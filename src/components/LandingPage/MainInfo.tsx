@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/button";
-import GradualSpacing from "../MagicUI/gradual-spacing";
+// import GradualSpacing from "../MagicUI/gradual-spacing";
 import TypingAnimation from "../MagicUI/typing-animation";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@nextui-org/avatar";
@@ -10,10 +10,12 @@ export default function HeroSection() {
     <>
       <div className="flex flex-col w-screen justify-start items-center gap-8 pt-36">
         <div className="flex flex-col justify-center items-center h-full">
-          <GradualSpacing
-            text="Introducing G.A.I.A"
+          <div
+            // text=""
             className="landingpage_maintext bg-gradient-to-b from-white to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-30% py-4"
-          />
+          >
+            Introducing G.A.I.A
+          </div>
 
           <TypingAnimation
             text="A personalised AI Assistant, tailored for you."
