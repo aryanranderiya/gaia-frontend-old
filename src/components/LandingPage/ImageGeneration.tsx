@@ -66,14 +66,19 @@ export default function ImageGeneration() {
   //     </div>
 
   return (
-    <div className="h-[80vh] flex flex-col justify-start items-center gap-16 w-full p-4">
+    <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center gap-16 w-full p-4">
       <div className="flex items-start flex-col justify-start gap-5 relative min-h-32">
         <SectionHeading
           heading={"Image Generation"}
           subheading={
             "Create stunning images for free with cutting-edge AI, powered by Stable Diffusion."
           }
-          icon={<AiImageIcon color="#ffffff90" width={45} height={45} />}
+          icon={
+            <AiImageIcon
+              color="#ffffff90"
+              className="sm:size-[45px] size-[35px]"
+            />
+          }
         />
         <div className="flex flex-wrap gap-2 justify-start">
           {imageOptions.map((option, index) => (
@@ -90,16 +95,16 @@ export default function ImageGeneration() {
           ))}
         </div>
 
-        <div className="w-full justify-start flex h-full absolute left-10 top-36">
+        <div className="w-full sm:justify-start justify-end flex h-full absolute left-10 top-36 pointer-events-none">
           <img
             src="/landing/try_it_out.png"
             alt="Try it out"
-            className="size-[100px] object-contain -rotate-12 relative right-0 opacity-90"
+            className="size-[100px] object-contain -rotate-12  opacity-90 sm:right-0 right-14 relative sm:top-0 top-7 pointer-events-none"
           />
         </div>
       </div>
-      <div className="w-[65%] bg-black p-10 rounded-3xl">
-        <SimpleChatBubbleUser>
+      <div className="sm:w-[65%] w-full bg-black sm:p-10 p-3 rounded-3xl">
+        <SimpleChatBubbleUser hideMobile={true}>
           Generate Image: {selectedOption?.prompt}
         </SimpleChatBubbleUser>
         <div className="chat_bubble bg-zinc-800 mt-4 !rounded-2xl">

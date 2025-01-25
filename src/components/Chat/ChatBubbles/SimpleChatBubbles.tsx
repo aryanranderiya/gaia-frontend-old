@@ -1,4 +1,12 @@
-export function SimpleChatBubbleUser({ children }: { children: any }) {
+export function SimpleChatBubbleUser({
+  children,
+  hideMobile,
+}: {
+  children: any;
+  hideMobile: boolean;
+}) {
+  if (hideMobile) return <></>;
+
   return (
     <div className="chat_bubble_container user">
       <div className="chat_bubble user !select-none">

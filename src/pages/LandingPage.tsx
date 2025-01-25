@@ -23,8 +23,8 @@ export default function LandingPage() {
           <ImagePreview />
           <Internet />
           <GoalSection />
-          <div className="w-screen flex justify-center h-screen items-center">
-            <div className="flex w-[80vw]">
+          <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 pt-[10vh]">
+            <div className="flex sm:w-[80vw] w-screen sm:flex-row flex-col">
               <ImageGeneration />
               <FlowchartDemo />
             </div>

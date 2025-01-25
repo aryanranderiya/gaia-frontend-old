@@ -40,7 +40,7 @@ export default function GoalSection() {
   return (
     <div
       ref={sectionRef} // Attach ref to the section
-      className={`flex items-center flex-col min-h-screen relative transition-all`}
+      className={`flex items-center flex-col min-h-screen relative transition-all p-4 sm:mt-0 mt-20`}
     >
       <SectionHeading
         heading={"Manage your Goals"}
@@ -50,13 +50,11 @@ export default function GoalSection() {
         icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
       />
 
-      <StaticSidebar hover1={hover1} isVisible={isVisible} />
-
-      <div className="flex gap-7 p-10 items-center justify-center">
+      <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 sm:p-10 p-2 items-center justify-center sm:flex-row flex-col">
         <div
-          className={` space-y-5 transition-all relative ${
-            hover1 ? "w-[40%]" : "w-[30%]"
-          } ${hover2 ? "opacity-30" : "opacity-100"}`}
+          className={` space-y-5 transition-all relative w-full ${
+            hover1 ? "sm:w-[40%]" : "sm:w-[30%]"
+          } ${hover2 ? "opacity-20" : "opacity-100"}`}
           onMouseOver={() => setHover1(true)}
           onMouseOut={() => setHover1(false)}
         >
@@ -70,11 +68,11 @@ export default function GoalSection() {
           </Chip>
           <img
             src="/landing/blur_goals.webp"
-            className="h-[70vh] w-full object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
+            className="sm:h-[70vh] h-fit outline-transparent w-full object-cover rounded-3xl sm:outline hover:sm:!outline-[#00bbff] sm:outline-zinc-800 transition-all sm:flex hidden"
           />
 
-          <div className="absolute min-h-full w-full left-0 top-0 flex items-center justify-center">
-            <div className="bg-zinc-900 w-[530px] p-7 rounded-xl space-y-3">
+          <div className="sm:absolute relative min-h-full w-full left-0 top-0 flex items-center justify-center">
+            <div className="bg-zinc-900 sm:w-[530px] w-full sm:p-7 p-3 rounded-xl space-y-3">
               <div className="text-lg font-medium">Add Goal</div>
               <div className="text-sm">
                 I will help you create a step-by-step plan to achieve your goal!
@@ -92,11 +90,19 @@ export default function GoalSection() {
             </div>
           </div>
         </div>
-
+        {/* 
         <div
           className={`space-y-5 flex flex-col items-end transition-all  ${
             hover2 ? "w-[60%]" : "w-[50%]"
           } ${hover1 ? "opacity-30" : "opacity-100"}`}
+          onMouseOver={() => setHover2(true)}
+          onMouseOut={() => setHover2(false)}
+        > */}
+
+        <div
+          className={`space-y-5 flex flex-col sm:items-end items-start transition-all ${
+            hover2 ? "sm:w-[60%]" : "sm:w-[50%]"
+          } ${hover1 ? "opacity-20" : "opacity-100"}`}
           onMouseOver={() => setHover2(true)}
           onMouseOut={() => setHover2(false)}
         >
@@ -113,6 +119,7 @@ export default function GoalSection() {
             className="h-[70vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
           />
         </div>
+        <StaticSidebar hover1={hover1} isVisible={isVisible} />
       </div>
     </div>
   );

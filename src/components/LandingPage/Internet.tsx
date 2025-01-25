@@ -44,7 +44,9 @@ function SearchWeb() {
             ></path>
           </svg>
         </div>
-        <div className="flex text-wrap max-w-[25vw]">What is Deep Seek?</div>
+        <div className="flex text-wrap max-w-[25vw]">
+          Who is the current president of America?
+        </div>
       </SimpleChatBubbleUser>
 
       <SimpleChatBubbleBot>
@@ -90,19 +92,16 @@ function SearchWeb() {
           </div>
           <div className="prose dark:prose-invert sm:max-w-[500px]">
             <p>
-              DeepSeek is a Chinese AI start-up that has developed a new AI
-              system that can match the capabilities of cutting-edge chatbots
-              from companies like OpenAI and Google. DeepSeek-V3 is an
-              open-weight large language model that leverages a Mixture of
-              Experts (MoE) architecture, designed to enhance efficiency and
-              performance. It has achieved a significant breakthrough in ...
+              The current president of the United States is Donald John Trump,
+              who was sworn into office on January 20, 2025, according to the
+              information provided by USA Gov.
             </p>
           </div>
         </div>
       </SimpleChatBubbleBot>
-      <span className="text-xs text-white text-opacity-40 flex flex-col p-1 relative bottom-2">
+      {/* <span className="text-xs text-white text-opacity-40 flex flex-col p-1 relative bottom-2">
         10:37 PM 25th Jan 2025
-      </span>
+      </span> */}
     </>
   );
 }
@@ -135,7 +134,7 @@ function FetchWebpage() {
                 className="!text-white font-medium hover:!text-black transition-colors"
                 target="_blank"
               >
-                www.heroui.com/docs/components/modal{" "}
+                heroui.com/docs...
               </a>
             </div>
           </span>
@@ -168,18 +167,15 @@ function FetchWebpage() {
                 className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
                 target="_blank"
               >
-                www.heroui.com/docs/components/modal{" "}
+                heroui.com/docs...
               </a>
             </div>
           </span>
         </div>
         <div className="mt-3 sm:max-w-[500px]">
           The webpage appears to be the documentation for HeroUI (previously
-          NextUI), a React UI library. It provides information on how to create
-          a modal using HeroUI. To create a modal using HeroUI, you can use the
-          Modal component and its related components, such as ModalContent,
-          ModalHeader, ModalBody, and ModalFooter. Here is an example of how to
-          create a basic modal...
+          NextUI), a React UI library. Here is an example of how to create a
+          basic modal using HeroUI...
           <div></div>
         </div>
       </SimpleChatBubbleBot>
@@ -192,15 +188,18 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen flex items-center flex-col space-y-20 min-h-screen my-10 justify-center">
-      <div className="text-6xl font-bold flex items-center gap-4">
+    <div className="w-screen flex items-center flex-col sm:space-y-20 space-y-5 min-h-screen my-10 justify-center">
+      <div className="sm:text-6xl text-4xl font-bold flex items-center gap-4">
         Use the Internet
-        <InternetIcon color="#ffffff80" width={55} height={55} />
+        <InternetIcon
+          color="#ffffff80"
+          className="sm:size-[55px] size-[45px]"
+        />
       </div>
 
-      <div className="justify-around flex gap-11 w-screen-md">
+      <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
         <div
-          className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
+          className={`sm:w-[30vw] w-[95%] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
             hover2 ? "opacity-40" : "opacity-100"
           }`}
           onMouseOver={() => setHover1(true)}
@@ -216,8 +215,12 @@ export default function Internet() {
           <SearchWeb />
         </div>
 
-        <div
+        {/* <div
           className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
+            hover1 ? "opacity-40" : "opacity-100"
+            }`} */}
+        <div
+          className={`sm:w-[30vw] w-[95%] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
             hover1 ? "opacity-40" : "opacity-100"
           }`}
           onMouseOver={() => setHover2(true)}

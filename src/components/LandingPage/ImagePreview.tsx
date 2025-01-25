@@ -4,8 +4,8 @@ import { Safari } from "../ui/safari";
 
 export default function ImagePreview() {
   return (
-    <div className="flex items-center justify-center h-fit w-screen mt-14">
-      <div className="w-full max-w-[70%]">
+    <div className="flex items-center justify-center h-fit w-screen mt-14 sm:mb-0 mb-[20vh]">
+      <div className="min-w-[160%] sm:min-w-[70%] sm:max-w-[70%]">
         <Safari
           url="yourgaia.io"
           mode="simple"

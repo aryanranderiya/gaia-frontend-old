@@ -9,7 +9,7 @@ export function SectionHeading({
 }) {
   return (
     <div>
-      <div className="text-5xl font-bold flex items-center gap-4 mb-3">
+      <div className="sm:text-5xl text-2xl font-bold flex items-center gap-2 mb-3">
         {icon}
         <span>{heading}</span>
       </div>

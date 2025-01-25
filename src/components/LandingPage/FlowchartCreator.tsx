@@ -118,19 +118,25 @@ const FlowchartDemo = () => {
   }, [handleWheel]);
 
   return (
-    <div className="h-[80vh] flex flex-col justify-start items-center gap-16 w-full p-4">
+    <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4">
       <div className="flex items-start flex-col justify-start gap-5 min-h-32">
         <SectionHeading
           heading={"Create flowcharts with ease"}
           subheading={
             "Turn ideas into clear, interactive visuals instantly—using Mermaid"
           }
-          icon={<FlowchartIcon color="#ffffff90" width={45} height={45} />}
+          icon={
+            <FlowchartIcon
+              color="#ffffff90"
+              className="sm:size-[45px] size-[35px]"
+            />
+          }
         />
       </div>
 
       {/* <div className="min-w-[37vw] w-fit space-y-4 bg-black p-10 rounded-3xl"> */}
-      <div className="w-[80%] bg-black p-10 rounded-3xl space-y-4">
+      {/* <div className="w-[80%] bg-black p-10 rounded-3xl space-y-4"> */}
+      <div className="sm:w-[80%] w-full bg-black sm:p-10 p-3 rounded-3xl space-y-4">
         <SimpleChatBubbleUser>
           Explain how a full-stack web application works using a simple
           flowchart
@@ -141,7 +147,7 @@ const FlowchartDemo = () => {
             Here's a simple flowchart explaining how a full-stack web
             application works:
           </div>
-          <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-t-[15px] w-[500px] pb-8">
+          <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-t-[15px] sm:w-[500px] pb-8">
             <Tabs
               selectedKey={activeTab}
               onSelectionChange={(key) => {
