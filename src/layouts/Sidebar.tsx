@@ -5,9 +5,7 @@ import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
-import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
-import { StarsIcon } from "lucide-react";
 import { LegacyRef, useState } from "react";
 
 export default function Sidebar({
@@ -32,6 +30,12 @@ export default function Sidebar({
               >
                 <div className="flex gap-2 items-center p-2">
                   <GlobalIcon color="white" width="22" />
+                  {/* <img
+                    src={"/gaialogo.png"}
+                    width={25}
+                    height={25}
+                    // className="animate-bounce2"
+                  /> */}
                   <span>gaia</span>
                 </div>
               </Tooltip>

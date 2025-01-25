@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   BlushBrush02Icon,
   Calendar01Icon,
+  DocumentAttachmentIcon,
   FlowchartIcon,
   GlobalSearchIcon,
   Mic01Icon,
@@ -20,63 +21,116 @@ import {
   StickyNote01Icon,
 } from "../icons";
 import { ArrowUpRight } from "lucide-react";
+import StarterEmoji from "./StarterEmoji";
 
 const badges = [
   {
     variant: "secondary",
     bgColor: "purple",
     textColor: "purple",
-    icon: <FlowchartIcon width={17} className="text-white/60" />,
+    icon: (
+      <FlowchartIcon
+        width={17}
+        className="text-purple-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Generate Flowcharts",
   },
   {
     variant: "secondary",
     bgColor: "emerald",
     textColor: "emerald",
-    icon: <BlushBrush02Icon width={17} className="text-white/60" />,
+    icon: (
+      <BlushBrush02Icon
+        width={17}
+        className="text-emerald-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Generate Image",
   },
   {
     variant: "secondary",
     bgColor: "orange",
     textColor: "orange",
-    icon: <Mic01Icon width={17} className="text-white/60" />,
+    icon: (
+      <Mic01Icon
+        width={17}
+        className="text-orange-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Voice Conversation",
   },
   {
     variant: "secondary",
     bgColor: "blue",
     textColor: "blue",
-    icon: <GlobalSearchIcon width={17} className="text-white/60" />,
+    icon: (
+      <GlobalSearchIcon
+        width={17}
+        className="text-blue-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Internet Search",
   },
   {
     variant: "secondary",
-    bgColor: "primary",
-    textColor: "blue",
-    icon: <ArrowUpRight width={17} className="text-white/60" />,
+    bgColor: "lime",
+    textColor: "lime",
+    icon: (
+      <ArrowUpRight
+        width={17}
+        className="text-lime-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Fetch Webpage",
   },
   {
     variant: "secondary",
     bgColor: "red",
     textColor: "red",
-    icon: <Calendar01Icon width={17} className="text-white/60" />,
+    icon: (
+      <Calendar01Icon
+        width={17}
+        className="text-red-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Manage Calendar",
   },
   {
     variant: "secondary",
     bgColor: "cyan",
     textColor: "cyan",
-    icon: <StickyNote01Icon width={17} className="text-white/60" />,
+    icon: (
+      <StickyNote01Icon
+        width={17}
+        className="text-cyan-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Store Memories",
   },
   {
     variant: "secondary",
     bgColor: "pink",
     textColor: "pink",
-    icon: <Route02Icon width={17} className="text-white/60" />,
+    icon: (
+      <Route02Icon
+        width={17}
+        className="text-pink-500 group-hover:text-white transition-colors"
+      />
+    ),
     text: "Manage Goals",
+  },
+  {
+    variant: "secondary",
+    bgColor: "yellow",
+    textColor: "yellow",
+    icon: (
+      <DocumentAttachmentIcon
+        width={17}
+        className="text-yellow-500 group-hover:text-white transition-colors"
+      />
+    ),
+    text: "Chat with Documents",
   },
 ];
 
@@ -93,14 +147,23 @@ export default function ChatRenderer() {
     return (
       <div className="flex items-center justify-center flex-1">
         <div className="flex items-center justify-center flex-col gap-2">
-          {/* <StarterEmoji /> */}
+          <StarterEmoji />
+          {/* <img
+            src={"/gaialogo.png"}
+            width={200}
+            height={200}
+            className="animate-bounce2"
+          /> */}
           <StarterText />
-          <div className="flex gap-2 flex-wrap max-w-[600px] justify-center">
+          <div className="text-foreground-500 text-xs -mt-1 mb-1">
+            I can do the following for you:
+          </div>
+          <div className="flex gap-2 flex-wrap max-w-[650px] justify-center">
             {badges.map((badge, index) => (
               <Badge
                 key={index}
                 variant={badge.variant as "secondary" | "default" | "outline"}
-                className={`bg-${badge.bgColor}-500 cursor-pointer bg-opacity-30 bg hover:bg-${badge.bgColor}-500 hover:bg-opacity-80 text-sm text-${badge.bgColor}-500 font-medium hover:text-white`}
+                className={`bg-${badge.bgColor}-500 cursor-pointera bg-opacity-20 bg hover:bg-${badge.bgColor}-500 hover:bg-opacity-80 text-sm text-${badge.bgColor}-500 font-medium hover:text-white group`}
               >
                 <div className="flex items-center gap-1">
                   {badge.icon}
@@ -176,7 +239,14 @@ export default function ChatRenderer() {
         message.type === "bot" ? (
           <div className="relative flex items-end gap-3" key={index}>
             <div className="pingspinner relative bottom-9" />
-
+            {/* <img
+              src={"/gaialogo.png"}
+              width={40}
+              height={40}
+              className={`${
+                message.loading ? "animate-spin" : ""
+              } relative bottom-9`}
+            /> */}
             <Suspense fallback={<SuspenseLoader />}>
               <ChatBubbleBot
                 text={message.response}

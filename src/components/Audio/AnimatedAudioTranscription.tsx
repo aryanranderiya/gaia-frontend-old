@@ -13,6 +13,7 @@ import { Tooltip } from "@nextui-org/tooltip";
 import { AnimatePresence } from "framer-motion";
 import { Mic, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Mic02Icon } from "../icons";
 // import MicrophoneBtn from "./MicrophoneBtn";
 
 export default function AnimatedAudioTranscription({
@@ -207,9 +208,19 @@ export default function AnimatedAudioTranscription({
                 />
               </motion.div> */}
               <div
-                className="pingspinner pingspinner_large"
+                className="pingspinner pingspinner_large relative"
                 // onClick={isRecording ? stopRecording : startRecording}
-              />
+              >
+                <div className="h-full w-full absolute items-center justify-center flex z-[2]">
+                  {" "}
+                  <Mic02Icon
+                    className="text-xl"
+                    width={50}
+                    height={50}
+                    color="white"
+                  />
+                </div>
+              </div>
             </AnimatePresence>
           </div>
           {transcription && (

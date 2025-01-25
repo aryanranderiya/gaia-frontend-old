@@ -1,5 +1,6 @@
 // import { Chip } from "@nextui-org/chip";
 // import { WavingHand01Icon } from "../icons";
+// import img from "/public/gaia.logo.png";
 
 export default function StarterText() {
   return (

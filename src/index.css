@@ -199,7 +199,7 @@ main {
 }
 
 .starter_emoji {
-  max-width: 220px;
+  max-width: 150px;
   cursor: pointer;
 }
 
@@ -902,4 +902,29 @@ code {
 .sidebar div::-webkit-scrollbar-thumb {
   background: #00bbff;
   border-radius: 100px;
+}
+
+.animate-bounce2 {
+  /* animation: bounce2 1s infinite ease-in; */
+  animation: bounce2 1s infinite cubic-bezier(0.8, 0, 1, 1),
+    rotate2 3s infinite ease;
+}
+
+@keyframes rotate2 {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25%);
+  }
 }

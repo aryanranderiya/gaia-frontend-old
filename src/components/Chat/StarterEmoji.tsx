@@ -50,7 +50,7 @@ export default function StarterEmoji() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(changeSmiley, 5000);
+    const timer = setTimeout(changeSmiley, 1500);
     return () => clearTimeout(timer);
   }, [currentSmiley]);
 
