@@ -52,9 +52,9 @@ export default function GoalSection() {
 
       <StaticSidebar hover1={hover1} isVisible={isVisible} />
 
-      <div className="flex gap-4 p-10 items-center justify-center">
+      <div className="flex gap-7 p-10 items-center justify-center">
         <div
-          className={` space-y-3 transition-all relative ${
+          className={` space-y-5 transition-all relative ${
             hover1 ? "w-[40%]" : "w-[30%]"
           } ${hover2 ? "opacity-30" : "opacity-100"}`}
           onMouseOver={() => setHover1(true)}
@@ -70,7 +70,7 @@ export default function GoalSection() {
           </Chip>
           <img
             src="/landing/blur_goals.png"
-            className="h-[70vh] w-full object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-700 transition-all"
+            className="h-[70vh] w-full object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
           />
 
           <div className="absolute min-h-full w-full left-0 top-0 flex items-center justify-center">
@@ -94,8 +94,8 @@ export default function GoalSection() {
         </div>
 
         <div
-          className={`space-y-3 flex flex-col items-end transition-all  ${
-            hover2 ? "w-[70%]" : "w-[50%]"
+          className={`space-y-5 flex flex-col items-end transition-all  ${
+            hover2 ? "w-[60%]" : "w-[50%]"
           } ${hover1 ? "opacity-30" : "opacity-100"}`}
           onMouseOver={() => setHover2(true)}
           onMouseOut={() => setHover2(false)}
@@ -110,7 +110,7 @@ export default function GoalSection() {
           </Chip>
           <img
             src="/landing/goal_cropped.png"
-            className="h-[70vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-700 transition-all"
+            className="h-[70vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
           />
         </div>
       </div>

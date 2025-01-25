@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/button";
 import GradualSpacing from "../MagicUI/gradual-spacing";
 import TypingAnimation from "../MagicUI/typing-animation";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
-import { Avatar, AvatarGroup } from "@nextui-org/avatar";
+// import { Avatar, AvatarGroup } from "@nextui-org/avatar";
 import { ArrowUpRight } from "lucide-react";
 
 export default function HeroSection() {

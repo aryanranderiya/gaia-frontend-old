@@ -1,38 +1,33 @@
 import {
-  LanguageSkillIcon,
-  ComputerPhoneSyncIcon,
-  VoiceIcon,
-  PinIcon,
-  AccountSetting02Icon,
+  CalendarIcon,
   FileUploadIcon,
   GoogleDriveIcon,
-  CalendarIcon,
+  LanguageSkillIcon,
   Mail01Icon,
-  InternetIcon,
-  Target02Icon,
+  PinIcon
 } from "../icons";
 
 const list = [
-  {
-    title: "Personalised",
-    description: "Tailored to your preferences",
-    icon: <AccountSetting02Icon width={35} height={35} />,
-  },
+  // {
+  //   title: "Personalised",
+  //   description: "Tailored to your preferences",
+  //   icon: <AccountSetting02Icon width={35} height={35} />,
+  // },
   {
     title: "Multi-Lingual",
     description: "Support for multiple languages",
     icon: <LanguageSkillIcon width={35} height={35} />,
   },
-  {
-    title: "Cross-Platform",
-    description: "Available on multiple devices",
-    icon: <ComputerPhoneSyncIcon width={35} height={35} />,
-  },
-  {
-    title: "Voice Activated",
-    description: "Activated using your voice",
-    icon: <VoiceIcon width={35} height={35} />,
-  },
+  // {
+  //   title: "Cross-Platform",
+  //   description: "Available on multiple devices",
+  //   icon: <ComputerPhoneSyncIcon width={35} height={35} />,
+  // },
+  // {
+  //   title: "Voice Activated",
+  //   description: "Activated using your voice",
+  //   icon: <VoiceIcon width={35} height={35} />,
+  // },
 
   {
     title: "Save Messages",
@@ -44,16 +39,17 @@ const list = [
     description: "Supports document & media uploads",
     icon: <FileUploadIcon width={35} height={35} />,
   },
-  {
-    title: "Internet",
-    description: "Connected to the web",
-    icon: <InternetIcon width={35} height={35} />,
-  },
-  {
-    title: "Goal Management",
-    description: "Track & Manage your goals",
-    icon: <Target02Icon width={35} height={35} />,
-  },
+
+  // {
+  //   title: "Internet",
+  //   description: "Connected to the web",
+  //   icon: <InternetIcon width={35} height={35} />,
+  // },
+  // {
+  //   title: "Goal Management",
+  //   description: "Track & Manage your goals",
+  //   icon: <Target02Icon width={35} height={35} />,
+  // },
   {
     title: "Integrated",
     description: "Integrate into existing workspaces",
@@ -65,6 +61,9 @@ const list = [
       </div>
     ),
   },
+  {
+    title: "and many more...",
+  },
 ];
 
 export function Feature({
@@ -72,12 +71,12 @@ export function Feature({
   title,
   description,
 }: {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   title: string;
-  description: string;
+  description?: string;
 }) {
   return (
-    <div className="md:w-[32%] w-full flex flex-col gap-2 max-h-fit bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all">
+    <div className="md:w-[32%] w-full flex flex-col gap-2 bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
       {icon}
       <span className="font-medium text-xl">{title}</span>
       <span className="text-foreground text-opacity-45 text-md">
@@ -90,7 +89,7 @@ export function Feature({
 export default function FeatureList() {
   return (
     <div className="flex justify-center items-center p-5 flex-col min-h-screen ">
-      <span className="font-medium text-3xl">Upcoming Feature list</span>
+      <span className="font-medium text-3xl">Coming Soon!</span>
       <div className="flex rounded-3xl bg-foreground-50 my-6 p-10 flex-wrap gap-2 gap-y-5 justify-around md:w-[55vw] h-fit ">
         {list.map((item, index) => (
           <Feature

@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import SuspenseLoader from "./components/SuspenseLoader";
-import Record from "./pages/RecordAudio";
+// import Record from "./pages/RecordAudio";
 
 // Lazy load components
 const MainInterface = lazy(() => import("./pages/MainInterface"));
@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/try/*" element={<MainInterface />} />
           <Route path="/*" element={<Landing />} />
-          <Route path="/record" element={<Record />} />
+          {/* <Route path="/record" element={<Record />} /> */}
         </Routes>
       </Suspense>
     </UserProvider>

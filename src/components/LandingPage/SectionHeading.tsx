@@ -1,4 +1,12 @@
-export function SectionHeading({ heading, subheading, icon }) {
+export function SectionHeading({
+  heading,
+  subheading,
+  icon,
+}: {
+  heading: string;
+  subheading: string;
+  icon: any;
+}) {
   return (
     <div>
       <div className="text-5xl font-bold flex items-center gap-4 mb-3">

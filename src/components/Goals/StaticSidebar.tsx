@@ -3,7 +3,13 @@ import { Chip } from "@nextui-org/chip";
 import { Clock } from "lucide-react";
 import { BookIcon1 } from "../icons";
 
-const StaticSidebar = ({ hover1, isVisible }) => {
+const StaticSidebar = ({
+  hover1,
+  isVisible,
+}: {
+  hover1: boolean;
+  isVisible: boolean;
+}) => {
   // Static data for the sidebar
   const label = "Machine Learning Fundamentals";
   const details = [
@@ -12,7 +18,7 @@ const StaticSidebar = ({ hover1, isVisible }) => {
     "Familiarize with cross-validation",
   ];
   const estimatedTime = "1 month";
-  const isComplete = false; // Static completion status
+  // const isComplete = false; // Static completion status
   const resources = [
     "Machine Learning Crash Course",
     "Scikit-learn Documentation",

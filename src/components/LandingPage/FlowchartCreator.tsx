@@ -1,14 +1,13 @@
-import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@nextui-org/button";
-import mermaid from "mermaid";
 import { Tab, Tabs } from "@nextui-org/tabs";
-import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
-import { FlowchartIcon, Task01Icon, TaskDone01Icon } from "../icons";
-import { ResetIcon } from "@radix-ui/react-icons";
+import { Download, ZoomIn, ZoomOut } from "lucide-react";
+import mermaid from "mermaid";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "../Chat/ChatBubbles/SimpleChatBubbles";
+import { FlowchartIcon, Task01Icon, TaskDone01Icon } from "../icons";
 import { SectionHeading } from "./SectionHeading";
 
 mermaid.initialize({});
@@ -27,17 +26,28 @@ const FlowchartDemo = () => {
   }, [activeTab]);
 
   const flowchartCode = `flowchart TD
-  A["Client Request"] --> B["Load Balancer"]
-  B --> C["Web Server"]
-  C --> D["Application Server"]
-  D --> E{"Authentication"}
-  E -->|"Yes"| F["Database"]
-  E -->|"No"| G["Error Page"]
-  F -->|"Data Retrieved"| H["Application Logic"]
-  H --> I["Processed Data"]
-  I --> J["Web Server"]
-  J --> K["Client Response"]
-  G --> K`;
+    style A fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style B fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style C fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style D fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style E fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style F fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style G fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style H fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style I fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style J fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    style K fill:#00bbff, stroke:#00bbff90, stroke-width:3px
+    A["Client Request"] --> B["Load Balancer"]
+    B --> C["Web Server"]
+    C --> D["Application Server"]
+    D --> E{"Authentication"}
+    E -->|"Yes"| F["Database"]
+    E -->|"No"| G["Error Page"]
+    F -->|"Data Retrieved"| H["Application Logic"]
+    H --> I["Processed Data"]
+    I --> J["Web Server"]
+    J --> K["Client Response"]
+    G --> K`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(flowchartCode).replace(/\n$/, ""));
@@ -47,8 +57,6 @@ const FlowchartDemo = () => {
 
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 4));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
-
-  const resetZoom = () => setScale(1.5);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {

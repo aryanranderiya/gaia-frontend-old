@@ -44,7 +44,7 @@ function SearchWeb() {
             ></path>
           </svg>
         </div>
-        <div className="flex text-wrap max-w-[30vw]">What is Deep Seek?</div>
+        <div className="flex text-wrap max-w-[25vw]">What is Deep Seek?</div>
       </SimpleChatBubbleUser>
 
       <SimpleChatBubbleBot>
@@ -88,7 +88,7 @@ function SearchWeb() {
               </div>
             </span>
           </div>
-          <div className="prose dark:prose-invert max-w-none">
+          <div className="prose dark:prose-invert sm:max-w-[500px]">
             <p>
               DeepSeek is a Chinese AI start-up that has developed a new AI
               system that can match the capabilities of cutting-edge chatbots
@@ -140,7 +140,7 @@ function FetchWebpage() {
             </div>
           </span>
         </div>
-        What is on this webpage? How can I create a Modal using HeroUI?
+        What is on this webpage? How can I create a Modal using this?
       </SimpleChatBubbleUser>
 
       <SimpleChatBubbleBot>
@@ -173,13 +173,14 @@ function FetchWebpage() {
             </div>
           </span>
         </div>
-        <div className="mt-3 max-w-[500px]">
+        <div className="mt-3 sm:max-w-[500px]">
           The webpage appears to be the documentation for HeroUI (previously
           NextUI), a React UI library. It provides information on how to create
           a modal using HeroUI. To create a modal using HeroUI, you can use the
           Modal component and its related components, such as ModalContent,
           ModalHeader, ModalBody, and ModalFooter. Here is an example of how to
-          create a basic modal:
+          create a basic modal...
+          <div></div>
         </div>
       </SimpleChatBubbleBot>
     </>
@@ -191,15 +192,15 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen flex items-center flex-col space-y-20 min-h-screen justify-center">
+    <div className="w-screen flex items-center flex-col space-y-20 min-h-screen my-10 justify-center">
       <div className="text-6xl font-bold flex items-center gap-4">
         Use the Internet
         <InternetIcon color="#ffffff80" width={55} height={55} />
       </div>
 
-      <div className="justify-around flex gap-11">
+      <div className="justify-around flex gap-11 w-screen-md">
         <div
-          className={`w-[35vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
+          className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
             hover2 ? "opacity-40" : "opacity-100"
           }`}
           onMouseOver={() => setHover1(true)}
@@ -216,7 +217,7 @@ export default function Internet() {
         </div>
 
         <div
-          className={`w-[35vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
+          className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
             hover1 ? "opacity-40" : "opacity-100"
           }`}
           onMouseOver={() => setHover2(true)}

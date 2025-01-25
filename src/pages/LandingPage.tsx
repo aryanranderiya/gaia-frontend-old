@@ -5,11 +5,13 @@ import ImagePreview from "@/components/LandingPage/ImagePreview";
 // import TextInformation from "@/components/LandingPage/TextInformation";
 // import WaitListButton from "@/components/LandingPage/WaitlistModal";
 // import FeatureList from "@/components/LandingPage/FeatureList";
-import FlowchartDemo from "@/components/LandingPage/FlowchartCreater";
+import FlowchartDemo from "@/components/LandingPage/FlowchartCreator";
 import ImageGeneration from "@/components/LandingPage/ImageGeneration";
-import MadeBy from "@/components/LandingPage/MadeBy";
 import Internet from "@/components/LandingPage/Internet";
 import GoalSection from "@/components/LandingPage/GoalSection";
+// import FeatureList from "@/components/LandingPage/FeatureList";
+import FinalSection from "./FinalSection";
+import Footer from "@/components/LandingPage/Footer";
 
 export default function LandingPage() {
   return (
@@ -22,8 +24,8 @@ export default function LandingPage() {
           <Internet />
           <GoalSection />
           <ImageGeneration />
-          {/* <FeatureList /> */}
           <FlowchartDemo />
+          {/* <FeatureList /> */}
 
           {/* 
           <TextInformation
@@ -41,7 +43,9 @@ export default function LandingPage() {
             }
           />
           <IntegrationCircles /> */}
-          <MadeBy />
+          <FinalSection />
+          {/* <MadeBy /> */}
+          <Footer />
         </div>
       </ScrollArea>
     </>

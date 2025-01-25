@@ -1,31 +1,35 @@
 "use client";
 
-import { useState } from "react";
 import { Chip } from "@nextui-org/chip";
+import { useState } from "react";
 import { SimpleChatBubbleUser } from "../Chat/ChatBubbles/SimpleChatBubbles";
-import { AiImageIcon, WavingHand01Icon } from "../icons";
-import { WandSparklesIcon } from "lucide-react";
+import { AiImageIcon } from "../icons";
 import { SectionHeading } from "./SectionHeading";
 
 const imageOptions = [
   {
+    title: "Golden Retriever",
     prompt: "cute, golden retriever",
     src: "/generated/golden_retriever.png",
   },
   {
+    title: "Mountains",
     prompt: "breathtaking, mountains, lake, realistic",
     src: "/generated/landscape.png",
   },
   {
+    title: "Car",
     prompt: "black porsche, sunset",
     src: "/generated/car.png",
   },
   {
+    title: "Abstract",
     prompt: "abstract, vibrant colors, geometric shapes",
     src: "/generated/abstract.png",
   },
 
   {
+    title: "Husky",
     prompt: "cute, husky",
     src: "/generated/husky.png",
   },
@@ -61,9 +65,17 @@ export default function ImageGeneration() {
                 size="lg"
                 className="cursor-pointer"
               >
-                {`Option ${index + 1}`}
+                {option.title}
               </Chip>
             ))}
+          </div>
+
+          <div className="w-full justify-center flex h-full">
+            <img
+              src="/landing/try_it_out.png"
+              alt="Try it out"
+              className="size-[100px] object-contain -rotate-12 relative right-7 top-7 opacity-90"
+            />
           </div>
         </div>
 
