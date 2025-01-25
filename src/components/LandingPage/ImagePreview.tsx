@@ -6,6 +6,11 @@ export default function ImagePreview() {
     <div className="landing_img_parent">
       <div className="landing_img_container">
         <img
+          src={"/landing/landing_pc.png"}
+          alt="Homepage Image with screenshots of GAIA"
+          className="rounded-3xl scale-100"
+        />
+        <img
           src={image_png}
           srcSet={image_webp}
           alt="Homepage Image with screenshots of GAIA"

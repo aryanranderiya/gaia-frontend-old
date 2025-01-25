@@ -126,7 +126,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
           className="px-3"
         >
           <Tab key="preview" title="Flowchart" className="p-0">
-            <div className="p-4 bg-white relative overflow-hidden h-[40vw]">
+            <div className="p-4 bg-white relative overflow-hidden h-[400px]">
               <div
                 ref={mermaidRef}
                 className="mermaid absolute select-none"

@@ -1,24 +1,29 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import HeroSection from "@/components/LandingPage/MainInfo";
-import IntegrationCircles from "@/components/LandingPage/IntegrationCircles";
+import { ScrollArea } from "@/components/ui/scroll-area";
+// import IntegrationCircles from "@/components/LandingPage/IntegrationCircles";
 import ImagePreview from "@/components/LandingPage/ImagePreview";
-import TextInformation from "@/components/LandingPage/TextInformation";
-import WaitListButton from "@/components/LandingPage/WaitlistModal";
-import MadeBy from "@/components/LandingPage/MadeBy";
-import FeatureList from "@/components/LandingPage/FeatureList";
+// import TextInformation from "@/components/LandingPage/TextInformation";
+// import WaitListButton from "@/components/LandingPage/WaitlistModal";
+// import FeatureList from "@/components/LandingPage/FeatureList";
+import FlowchartDemo from "@/components/LandingPage/FlowchartCreater";
 import ImageGeneration from "@/components/LandingPage/ImageGeneration";
+import MadeBy from "@/components/LandingPage/MadeBy";
+import Internet from "@/components/LandingPage/Internet";
 
 export default function LandingPage() {
   return (
     <>
       <ScrollArea>
-        <div className="landing_page">
+        <div className="landing_page relative">
+          <div className="fixed inset-0 bg-gradient-to-b from-[#00bbff30] to-black z-[-1] top-0 h-screen"></div>
           <HeroSection />
-            <ImageGeneration />
           <ImagePreview />
+          <ImageGeneration />
+          <Internet />
+          {/* <FeatureList /> */}
+          <FlowchartDemo />
 
-          <FeatureList />
-
+          {/* 
           <TextInformation
             alignleft={false}
             title={"Signup for our Waitlist!"}
@@ -33,7 +38,7 @@ export default function LandingPage() {
               />
             }
           />
-          <IntegrationCircles />
+          <IntegrationCircles /> */}
           <MadeBy />
         </div>
       </ScrollArea>
