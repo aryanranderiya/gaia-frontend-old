@@ -222,7 +222,6 @@ export default function FileUpload({
               value={textContent}
               errorMessage="This is a required input field."
               isInvalid={isValid}
-              spellCheck={false}
               size="lg"
               onKeyDown={handleKeyDown}
               onValueChange={(value: string) => {

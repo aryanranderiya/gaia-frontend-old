@@ -215,7 +215,6 @@ export default function GenerateImage({
             onValueChange={handleInputChange}
             // errorMessage="This is a required input field."
             // isInvalid={!isValid}
-            spellCheck={false}
             onKeyDown={handleKeyDown}
           />
         </ModalBody>
