@@ -25,8 +25,8 @@ import StarterEmoji from "./StarterEmoji";
 const badges = [
   {
     variant: "secondary",
-    bgColor: "purple",
-    textColor: "purple",
+    bgClass: "bg-purple-500 hover:bg-purple-500",
+    textClass: "text-purple-500",
     icon: (
       <FlowchartIcon
         width={17}
@@ -37,8 +37,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "emerald",
-    textColor: "emerald",
+    bgClass: "bg-emerald-500 hover:bg-emerald-500",
+    textClass: "text-emerald-500",
     icon: (
       <BlushBrush02Icon
         width={17}
@@ -49,8 +49,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "orange",
-    textColor: "orange",
+    bgClass: "bg-orange-500 hover:bg-orange-500",
+    textClass: "text-orange-500",
     icon: (
       <Mic01Icon
         width={17}
@@ -61,8 +61,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "blue",
-    textColor: "blue",
+    bgClass: "bg-blue-500 hover:bg-blue-500",
+    textClass: "text-blue-500",
     icon: (
       <GlobalSearchIcon
         width={17}
@@ -73,8 +73,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "lime",
-    textColor: "lime",
+    bgClass: "bg-lime-500 hover:bg-lime-500",
+    textClass: "text-lime-500",
     icon: (
       <ArrowUpRight
         width={17}
@@ -85,8 +85,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "red",
-    textColor: "red",
+    bgClass: "bg-red-500 hover:bg-red-500",
+    textClass: "text-red-500",
     icon: (
       <Calendar01Icon
         width={17}
@@ -97,8 +97,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "cyan",
-    textColor: "cyan",
+    bgClass: "bg-cyan-500 hover:bg-cyan-500",
+    textClass: "text-cyan-500",
     icon: (
       <StickyNote01Icon
         width={17}
@@ -109,8 +109,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "pink",
-    textColor: "pink",
+    bgClass: "bg-pink-500 hover:bg-pink-500",
+    textClass: "text-pink-500",
     icon: (
       <Route02Icon
         width={17}
@@ -121,8 +121,8 @@ const badges = [
   },
   {
     variant: "secondary",
-    bgColor: "yellow",
-    textColor: "yellow",
+    bgClass: "bg-yellow-500 hover:bg-yellow-500",
+    textClass: "text-yellow-500",
     icon: (
       <DocumentAttachmentIcon
         width={17}
@@ -162,7 +162,7 @@ export default function ChatRenderer() {
               <Badge
                 key={index}
                 variant={badge.variant as "secondary" | "default" | "outline"}
-                className={`bg-${badge.bgColor}-500 cursor-pointera bg-opacity-20 bg hover:bg-${badge.bgColor}-500 hover:bg-opacity-80 text-sm text-${badge.bgColor}-500 font-medium hover:text-white group`}
+                className={`${badge.bgClass} cursor-pointer bg-opacity-20 hover:bg-opacity-80 text-sm ${badge.textClass} font-medium hover:text-white group`}
               >
                 <div className="flex items-center gap-1">
                   {badge.icon}

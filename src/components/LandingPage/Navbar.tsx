@@ -2,7 +2,7 @@ import { useUser } from "@/contexts/UserContext";
 import { Button } from "@nextui-org/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useMediaQuery from "../../hooks/MediaQuery";
 import {
   Chatting01Icon,
@@ -23,7 +23,7 @@ import { apiauth } from "@/utils/apiaxios";
 
 export default function Navbar() {
   const { user, setUserData } = useUser();
-
+  const location = useLocation();
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
 
@@ -43,7 +43,7 @@ export default function Navbar() {
           response?.data?.picture
         );
       } catch (err) {
-        navigate("/login");
+        if (location.pathname.startsWith("/try")) navigate("/login");
       }
     };
 

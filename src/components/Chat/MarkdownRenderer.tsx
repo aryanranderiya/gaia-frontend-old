@@ -9,7 +9,6 @@ import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
-// import Mermaid from "react-mermaid2";
 import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
 import { useLoading } from "@/contexts/LoadingContext";
