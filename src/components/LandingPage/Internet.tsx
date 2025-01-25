@@ -8,114 +8,101 @@ import { InternetIcon } from "../icons";
 function SearchWeb() {
   return (
     <>
-      <div className="chat_bubble_container user">
-        <div className="chat_bubble user">
-          <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default/40 text-default-700 mb-2">
-            <span className="flex-1 text-inherit font-normal px-2 pr-1">
-              <div className="flex items-center gap-1 font-medium text-white">
-                Searching the Web
-              </div>
-            </span>
+      <SimpleChatBubbleUser>
+        <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default/40 text-default-700 mb-2">
+          <span className="flex-1 text-inherit font-normal px-2 pr-1">
+            <div className="flex items-center gap-1 font-medium text-white">
+              Searching the Web
+            </div>
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="22"
+            fill="white"
+            color="transparent"
+            className="max-h-[80%] mr-1"
+          >
+            <path
+              d="M3 12C7.5 12 12 7.5 12 3C12 7.5 16.5 12 21 12C16.5 12 12 16.5 12 21C12 16.5 7.5 12 3 12Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M2 19.5C2.83333 19.5 4.5 17.8333 4.5 17C4.5 17.8333 6.16667 19.5 7 19.5C6.16667 19.5 4.5 21.1667 4.5 22C4.5 21.1667 2.83333 19.5 2 19.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M16 5C17 5 19 3 19 2C19 3 21 5 22 5C21 5 19 7 19 8C19 7 17 5 16 5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </div>
+        <div className="flex text-wrap max-w-[30vw]">What is Deep Seek?</div>
+      </SimpleChatBubbleUser>
+
+      <SimpleChatBubbleBot>
+        <div className="flex flex-col gap-3">
+          <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-primary/20 text-primary-600">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               width="24"
-              height="22"
-              fill="white"
-              color="transparent"
-              className="max-h-[80%] mr-1"
+              height="20"
+              color="#00bbff"
+              fill="none"
+              className="max-h-[80%]"
             >
-              <path
-                d="M3 12C7.5 12 12 7.5 12 3C12 7.5 16.5 12 21 12C16.5 12 12 16.5 12 21C12 16.5 7.5 12 3 12Z"
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
                 stroke="currentColor"
                 stroke-width="1.5"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M2 19.5C2.83333 19.5 4.5 17.8333 4.5 17C4.5 17.8333 6.16667 19.5 7 19.5C6.16667 19.5 4.5 21.1667 4.5 22C4.5 21.1667 2.83333 19.5 2 19.5Z"
+              ></circle>
+              <ellipse
+                cx="12"
+                cy="12"
+                rx="4"
+                ry="10"
                 stroke="currentColor"
                 stroke-width="1.5"
-                stroke-linejoin="round"
-              ></path>
+              ></ellipse>
               <path
-                d="M16 5C17 5 19 3 19 2C19 3 21 5 22 5C21 5 19 7 19 8C19 7 17 5 16 5Z"
+                d="M2 12H22"
                 stroke="currentColor"
                 stroke-width="1.5"
+                stroke-linecap="round"
                 stroke-linejoin="round"
               ></path>
             </svg>
-          </div>
-          <div className="flex select-text text-wrap max-w-[30vw]">
-            What is Deep Seek?
-          </div>
-        </div>
-      </div>
-
-      <div className="relative flex items-end gap-3">
-        <div>
-          <div className="chatbubblebot_parent">
-            <div className="chat_bubble_container ">
-              <div className="chat_bubble bg-zinc-800">
-                <div className="flex flex-col gap-3">
-                  <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-primary/20 text-primary-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="20"
-                      color="#00bbff"
-                      fill="none"
-                      className="max-h-[80%]"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                      ></circle>
-                      <ellipse
-                        cx="12"
-                        cy="12"
-                        rx="4"
-                        ry="10"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                      ></ellipse>
-                      <path
-                        d="M2 12H22"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                    <span className="flex-1 text-inherit font-normal px-2 pl-1">
-                      <div className="font-medium flex items-center gap-1 text-primary">
-                        Live Search Results from the Web
-                      </div>
-                    </span>
-                  </div>
-                  <div className="prose dark:prose-invert max-w-none">
-                    <p>
-                      DeepSeek is a Chinese AI start-up that has developed a new
-                      AI system that can match the capabilities of cutting-edge
-                      chatbots from companies like OpenAI and Google.
-                      DeepSeek-V3 is an open-weight large language model that
-                      leverages a Mixture of Experts (MoE) architecture,
-                      designed to enhance efficiency and performance. It has
-                      achieved a significant breakthrough in ...
-                    </p>
-                  </div>
-                </div>
+            <span className="flex-1 text-inherit font-normal px-2 pl-1">
+              <div className="font-medium flex items-center gap-1 text-primary">
+                Live Search Results from the Web
               </div>
-              <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
-                10:37 PM 25th Jan 2025
-              </span>
-            </div>
+            </span>
+          </div>
+          <div className="prose dark:prose-invert max-w-none">
+            <p>
+              DeepSeek is a Chinese AI start-up that has developed a new AI
+              system that can match the capabilities of cutting-edge chatbots
+              from companies like OpenAI and Google. DeepSeek-V3 is an
+              open-weight large language model that leverages a Mixture of
+              Experts (MoE) architecture, designed to enhance efficiency and
+              performance. It has achieved a significant breakthrough in ...
+            </p>
           </div>
         </div>
-      </div>
+      </SimpleChatBubbleBot>
+      <span className="text-xs text-white text-opacity-40 flex flex-col p-1 relative bottom-2">
+        10:37 PM 25th Jan 2025
+      </span>
     </>
   );
 }

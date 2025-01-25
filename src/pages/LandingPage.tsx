@@ -9,17 +9,19 @@ import FlowchartDemo from "@/components/LandingPage/FlowchartCreater";
 import ImageGeneration from "@/components/LandingPage/ImageGeneration";
 import MadeBy from "@/components/LandingPage/MadeBy";
 import Internet from "@/components/LandingPage/Internet";
+import GoalSection from "@/components/LandingPage/GoalSection";
 
 export default function LandingPage() {
   return (
     <>
       <ScrollArea>
-        <div className="landing_page relative">
+        <div className="landing_page relative select-none">
           <div className="fixed inset-0 bg-gradient-to-b from-[#00bbff30] to-black z-[-1] top-0 h-screen"></div>
           <HeroSection />
           <ImagePreview />
-          <ImageGeneration />
           <Internet />
+          <GoalSection />
+          <ImageGeneration />
           {/* <FeatureList /> */}
           <FlowchartDemo />
 

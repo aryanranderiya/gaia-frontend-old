@@ -34,10 +34,7 @@ const imageOptions = [
 export default function ImageGeneration() {
   const [selectedOption, setSelectedOption] = useState<
     (typeof imageOptions)[0] | null
-  >({
-    prompt: "breathtaking, mountains, lake, realistic",
-    src: "/generated/landscape.png",
-  });
+  >(imageOptions[0]);
 
   const handleOptionClick = (option: (typeof imageOptions)[0]) => {
     setSelectedOption(option);

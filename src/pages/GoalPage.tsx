@@ -130,10 +130,8 @@ export default function GoalPage() {
       setLoading(true);
       const response = await apiauth.get(`/goals/${goalId}`);
       const goal = response.data;
-      console.log(goal?.roadmap);
 
       if (goal?.roadmap) {
-        console.log("this is a test");
 
         setGoalData(goal);
         setLoading(false);
