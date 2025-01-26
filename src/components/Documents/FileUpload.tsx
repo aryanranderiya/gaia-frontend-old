@@ -1,12 +1,12 @@
-// import { useConvoHistory } from "@/contexts/ConversationHistory";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { MessageType } from "@/types/ConvoTypes";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/spinner";
 import imageCompression from "browser-image-compression";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import api from "@/utils/apiaxios";
-import { Cancel01Icon, NoteDoneIcon, SentIcon } from "../icons";
+import api, { apiauth } from "@/utils/apiaxios";
 import {
   Dialog,
   DialogContent,
@@ -15,47 +15,41 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { PdfContainer } from "./PdfComponent";
+import fetchDate from "@/utils/fetchDate";
+import { useNavigate, useParams } from "react-router-dom";
+import { useConversationList } from "@/contexts/ConversationList";
+import { ApiService } from "@/utils/chatUtils";
 
 interface FileUploadProps {
   isImage: boolean;
   fileInputRef: React.RefObject<HTMLInputElement>;
 }
 
-// interface ConversationItem {
-//   type: "user" | "bot";
-//   response: string;
-//   subtype?: "image" | "pdf";
-//   file?: string | File;
-//   date: string;
-//   filename?: string;
-//   loading?: boolean;
-//   disclaimer?: string;
-// }
-
 export default function FileUpload({
   isImage,
   fileInputRef,
 }: FileUploadProps): JSX.Element {
-  // const {
-  //   convoHistory: conversationHistory,
-  //   setConvoHistory: setConversationHistory,
-  // } = useConvoHistory();
+  const { setConvoMessages } = useConvo();
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
+  const { fetchConversations } = useConversationList();
+  const navigate = useNavigate();
 
-  const [file, setFile] = React.useState<File | null>(null);
-  const [fileLoading, setFileLoading] = React.useState<boolean>(false);
-  const [textContent, setTextContent] = React.useState<string>("");
-  const [isValid, setIsValid] = React.useState<boolean>(false);
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [botResponse, setBotResponse] = React.useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileLoading, setFileLoading] = useState<boolean>(false);
+  const [textContent, setTextContent] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  React.useEffect(() => {
-    if (open === false) closeModal();
-  }, [open]);
+  useEffect(() => {
+    setIsValid(textContent.trim() !== "");
+  }, [textContent]);
 
   const closeModal = (): void => {
     if (fileInputRef.current) fileInputRef.current.value = "";
     setTextContent("");
     setFile(null);
+    setOpen(false);
   };
 
   const handleFileSelect = async (
@@ -64,9 +58,9 @@ export default function FileUpload({
     setFileLoading(true);
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
+
     setOpen(true);
 
-    console.log(selectedFile);
     if (isImage && selectedFile.size > 2000000) {
       try {
         const compressedFile = await imageCompression(selectedFile, {
@@ -75,101 +69,136 @@ export default function FileUpload({
           useWebWorker: true,
         });
         setFile(compressedFile);
-        setFileLoading(false);
       } catch (error) {
-        console.error(error);
+        console.error("Image compression failed:", error);
       }
     } else {
       setFile(selectedFile);
-      setFileLoading(false);
+    }
+    setFileLoading(false);
+  };
+
+  const updateConversationState = async (
+    conversationId: string,
+    newMessages: MessageType[],
+    description?: string,
+    replaceLastMessage: boolean = false
+  ) => {
+    try {
+      setConvoMessages((prev) => {
+        const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+        return [...baseMessages, ...newMessages];
+      });
+
+      ApiService.updateConversationDescription(
+        conversationId,
+        description || "New Chat",
+        fetchConversations
+      );
+    } catch (error) {
+      console.error("Failed to update conversation:", error);
+      throw new Error("Failed to update conversation state");
     }
   };
 
-  // function updateWithResponse(): void {
-  //   if (conversationHistory.length > 0 && !!botResponse) {
-  //     const updatedHistory = [...conversationHistory];
-  //     const lastItemIndex = updatedHistory.length - 1;
-  //     const lastItem = updatedHistory[lastItemIndex];
+  const createNewConversation = async (
+    initialMessages: MessageType[]
+  ): Promise<string> => {
+    try {
+      const convoID = crypto.randomUUID();
+      await ApiService.createConversation(convoID);
+      await updateConversationState(
+        convoID,
+        initialMessages,
+        `File Upload: ${initialMessages[0]?.response || ""}`
+      );
+      navigate(`/try/chat/${convoID}`);
+      return convoID;
+    } catch (error) {
+      console.error("Failed to create conversation:", error);
+      throw new Error("Failed to create new conversation");
+    }
+  };
 
-  //     if (lastItem.type === "bot") {
-  //       lastItem.response = botResponse;
-  //       lastItem.loading = false;
-  //       setConversationHistory(updatedHistory);
-  //     }
-  //   }
-  // }
-
-  React.useEffect(() => {
-    // updateWithResponse();
-  }, [botResponse]);
-
-  const submitForm = async (): Promise<void> => {
-    setIsValid(textContent.trim() === "");
-    if (textContent.trim() === "") return;
-
-    closeModal();
-    setOpen(false);
-    // setConversationHistory((prevHistory: ConversationItem[]) => [
-    //   ...prevHistory,
-    //   {
-    //     type: "user",
-    //     response: textContent,
-    //     subtype: isImage ? "image" : "pdf",
-    //     file: isImage && file ? URL.createObjectURL(file) : file,
-    //     date: fetchDate(),
-    //     filename: file?.name,
-    //   },
-    //   {
-    //     type: "bot",
-    //     loading: true,
-    //     disclaimer: "GAIA can make mistakes. Check important info.",
-    //     date: fetchDate(),
-    //     response: "",
-    //   },
-    // ]);
-
-    if (!file) return;
-
+  const uploadFile = async (conversationId: string): Promise<string> => {
+    if (!file) throw new Error("No file selected");
     const formData = new FormData();
     formData.append("message", textContent);
     formData.append("file", file);
+    formData.append("conversation_id", conversationId);
 
     try {
-      const response = await api.post<{ response: string }>(
-        isImage ? "/image" : "/document",
+      const response = await apiauth.post(
+        isImage ? "/image" : "/document/query",
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
+
       console.log(response);
-      setBotResponse(response.data.response);
+
+      return response.data.response.response;
     } catch (error) {
-      console.error(error);
+      console.error("File upload failed:", error);
+      throw new Error("Failed to upload file");
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isValid || loading || !file) return;
+    setLoading(true);
+
+    try {
+      const userMessage: MessageType = {
+        type: "user",
+        response: textContent,
+        file: URL.createObjectURL(file),
+        filename: file.name,
+        date: fetchDate(),
+      };
+
+      const botLoadingMessage: MessageType = {
+        type: "bot",
+        response: "Processing your file...",
+        date: fetchDate(),
+        loading: true,
+      };
+
+      const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
+      const conversationId =
+        convoIdParam || (await createNewConversation(initialMessages));
+
+      setConvoMessages((prev) => [...prev, ...initialMessages]);
+      closeModal();
+
+      const botResponse = await uploadFile(conversationId);
+
+      const finalBotMessage: MessageType = {
+        type: "bot",
+        response: botResponse,
+        date: fetchDate(),
+      };
+
+      setConvoMessages((prev) => [...prev.slice(0, -1), finalBotMessage]);
+
+      await updateConversationState(
+        conversationId,
+        [userMessage, finalBotMessage],
+        undefined,
+        true
+      );
+    } catch (error) {
       toast.error("Uh oh! Something went wrong.", {
         classNames: {
           toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_error",
-          title: " text-sm",
+          title: "text-sm",
           description: "text-sm",
         },
         duration: 3000,
         description:
-          "There was a problem with uploading documents. Please try again later.\n",
+          "There was a problem with uploading your file. Please try again later.",
       });
-    }
-  };
-
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
-    if (event.key === "Enter" && event.shiftKey) {
-      event.preventDefault();
-      setTextContent((text) => text + "\n");
-    } else if (event.key === "Enter" && textContent.trim() !== "") {
-      event.preventDefault();
-      submitForm();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -187,14 +216,14 @@ export default function FileUpload({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-zinc-900 text-white w-[400px] md:rounded-2xl rounded-2xl border-none">
           <DialogHeader>
-            <DialogTitle> Your File Upload</DialogTitle>
+            <DialogTitle>Upload File</DialogTitle>
           </DialogHeader>
           <div>
             {fileLoading ? (
               <div className="h-[250px] w-[350px] bg-black bg-opacity-40 rounded-3xl flex justify-center items-center">
                 <Spinner size="lg" color="primary" />
               </div>
-            ) : isImage && !!file ? (
+            ) : isImage && file ? (
               <img
                 src={URL.createObjectURL(file)}
                 className="rounded-3xl my-2 object-cover h-[250px] w-[350px]"
@@ -209,10 +238,10 @@ export default function FileUpload({
               label={`What do you want to do with this ${
                 isImage ? "image" : "file"
               }?`}
-              placeholder={`e.g - ${
-                isImage ? "What is in this image?" : "Summarise this document"
+              placeholder={`e.g., ${
+                isImage ? "What is in this image?" : "Summarize this document"
               }`}
-              startContent={<NoteDoneIcon />}
+              startContent={null}
               maxRows={3}
               minRows={2}
               labelPlacement="outside"
@@ -220,33 +249,29 @@ export default function FileUpload({
               variant="faded"
               color="primary"
               value={textContent}
-              errorMessage="This is a required input field."
-              isInvalid={isValid}
+              isInvalid={!isValid}
               size="lg"
-              onKeyDown={handleKeyDown}
-              onValueChange={(value: string) => {
-                setTextContent(value);
-                setIsValid(value.trim() === "");
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && textContent.trim() !== "") {
+                  event.preventDefault();
+                  handleSubmit();
+                }
               }}
+              onValueChange={(value: string) => setTextContent(value)}
             />
           </div>
           <DialogFooter className="flex flex-row !justify-between w-full">
-            <Button
-              color="danger"
-              variant="flat"
-              onClick={() => setOpen(false)}
-              startContent={<Cancel01Icon color="danger" width="20" />}
-            >
+            <Button color="danger" variant="flat" onClick={closeModal}>
               Cancel
             </Button>
 
             <Button
               color="primary"
-              onClick={submitForm}
-              endContent={<SentIcon color="black" width="20" />}
-              disabled={isValid}
+              onClick={handleSubmit}
+              isLoading={loading}
+              disabled={!isValid || loading}
             >
-              Send
+              {loading ? "Uploading" : "Submit"}
             </Button>
           </DialogFooter>
         </DialogContent>

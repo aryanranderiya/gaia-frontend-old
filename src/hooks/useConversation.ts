@@ -41,7 +41,7 @@ export const useConversation = (convoIdParam: string | null) => {
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
           fetchConversations
         );
-      }, 5000);
+      }, 1000);
 
       navigate(`/try/chat/${conversationId}`);
 
