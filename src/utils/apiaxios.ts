@@ -7,12 +7,12 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-const instanceauth = axios.create({
+export const apiauth = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
 });
 
-export const apiauth = setupCache(instanceauth);
+// export const apiauth_cache = setupCache(apiauth);
 export const api = setupCache(instance);
 
 export default api;

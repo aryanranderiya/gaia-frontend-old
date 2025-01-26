@@ -11,7 +11,8 @@ export interface Note {
   id: string;
   // title?: string;
   // description?: string;
-  note: string;
+  content: string;
+  plaintext: string;
 }
 
 export default function Notes() {

@@ -15,13 +15,14 @@ import {
   useState,
 } from "react";
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismAsyncLight, SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
 const ReactMarkdown = lazy(() => import("react-markdown"));
-// const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
+const SyntaxHighlighter = PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
 
 interface MarkdownRendererProps {
   content: string;

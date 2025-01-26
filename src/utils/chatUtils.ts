@@ -68,6 +68,7 @@ export const ApiService = {
         "Content-Type": "application/json",
         Accept: "text/event-stream",
       },
+      credentials: "include",
       signal: controller.signal,
       body: JSON.stringify({
         message: inputText,

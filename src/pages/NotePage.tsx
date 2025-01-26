@@ -2,6 +2,12 @@ import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
 import { MenuBar } from "@/components/Notes/NotesMenuBar";
 import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
 import { Spinner } from "@nextui-org/spinner";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -12,45 +18,35 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { ArrowLeft, CircleX, TriangleAlert } from "lucide-react";
-import {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-
-const Dropdown = lazy(() =>
-  import("@nextui-org/dropdown").then((mod) => ({ default: mod.Dropdown }))
-);
-const DropdownItem = lazy(() =>
-  import("@nextui-org/dropdown").then((mod) => ({ default: mod.DropdownItem }))
-);
-const DropdownMenu = lazy(() =>
-  import("@nextui-org/dropdown").then((mod) => ({ default: mod.DropdownMenu }))
-);
-const DropdownTrigger = lazy(() =>
-  import("@nextui-org/dropdown").then((mod) => ({
-    default: mod.DropdownTrigger,
-  }))
-);
+import { convert } from "html-to-text";
 
 interface Note {
   id: string;
   title: string;
-  note: string;
+  content: string;
+  plaintext: string;
 }
 
 export default function NotesAdd() {
   const { id } = useParams();
   const location = useLocation();
-  const [note, setNote] = useState<Note>({ id: "", title: "", note: "" });
-  const [oldNote, setOldNote] = useState<string>("");
+  const [note, setNote] = useState<Note>({
+    id: "",
+    title: "",
+    content: "",
+    plaintext: "",
+  });
+  const [oldNote, setOldNote] = useState<Note>({
+    id: "",
+    title: "",
+    content: "",
+    plaintext: "",
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isSaving, setIsSaving] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -70,7 +66,7 @@ export default function NotesAdd() {
         },
       }),
     ],
-    content: note.note,
+    content: note.content,
     onUpdate: ({ editor }) => {
       const noteContent = editor.getHTML();
 
@@ -108,13 +104,13 @@ export default function NotesAdd() {
         ));
       }
 
-      setNote((prev) => ({ ...prev, note: noteContent }));
+      setNote((prev) => ({ ...prev, content: noteContent }));
     },
   });
 
   const unsavedChanges = useMemo(() => {
     return (
-      note.note !== oldNote && editor?.storage?.characterCount?.characters() > 0
+      note !== oldNote && editor?.storage?.characterCount?.characters() > 0
     );
   }, [note, oldNote, editor]);
 
@@ -128,9 +124,9 @@ export default function NotesAdd() {
         const response = await apiauth.get(`/notes/${id}`);
         const fetchedNote = response.data as Note; // Type cast the response
         setNote(fetchedNote);
-        setOldNote(fetchedNote.note);
+        setOldNote(fetchedNote);
         setHasUnsavedChanges(false);
-        editor?.commands.setContent(fetchedNote.note);
+        editor?.commands.setContent(fetchedNote.content);
       } catch (error) {
         console.error("Error fetching note:", error);
       }
@@ -152,11 +148,12 @@ export default function NotesAdd() {
       const method = id ? "PUT" : "POST";
       const url = id ? `/notes/${id}` : `/notes`;
       await apiauth[method.toLowerCase() as "put" | "post"](url, {
-        note: note.note,
+        content: note.content,
+        plaintext: convert(note.content),
       });
 
       toast.success("Note has been saved");
-      setOldNote(note.note);
+      setOldNote(note);
 
       setHasUnsavedChanges(false);
     } catch (error) {

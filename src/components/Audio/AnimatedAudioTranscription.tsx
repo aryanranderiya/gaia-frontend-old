@@ -85,8 +85,8 @@ export default function AnimatedAudioTranscription({
         audio: {
           sampleRate: 16_000,
           channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
+          // echoCancellation: true,
+          // noiseSuppression: true,
         },
       });
 
@@ -175,7 +175,7 @@ export default function AnimatedAudioTranscription({
             radius="full"
             aria-label="Send message"
             color="default"
-            type="submit"
+            type="button"
             variant="faded"
             className="mr-1"
             onPress={() => setIsOpen(true)}

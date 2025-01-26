@@ -35,11 +35,13 @@ export const useConversation = (convoIdParam: string | null) => {
 
       await ApiService.createConversation(conversationId);
 
-      ApiService.updateConversationDescription(
-        conversationId,
-        JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
-        fetchConversations
-      );
+      setTimeout(() => {
+        ApiService.updateConversationDescription(
+          conversationId,
+          JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
+          fetchConversations
+        );
+      }, 5000);
 
       navigate(`/try/chat/${conversationId}`);
 
@@ -145,18 +147,17 @@ export const useConversation = (convoIdParam: string | null) => {
       },
     ];
 
-    // If no existing conversation, create a new one.
-    const conversationId =
-      convoIdParam || (await createNewConversation(currentMessages));
-
-    if (!conversationId) return setLoading(false);
-
-    // Properly display the bot loading state along with the users message
     setConvoMessages((oldMessages) => {
       return oldMessages && oldMessages?.length > 0 // If there are no messages in the convo history set only the current message
         ? [...oldMessages, ...currentMessages]
         : [...currentMessages];
     });
+
+    // If no existing conversation, create a new one.
+    const conversationId =
+      convoIdParam || (await createNewConversation(currentMessages));
+
+    if (!conversationId) return setLoading(false);
 
     // Start fetching bot response stream.
     await fetchChatStream(

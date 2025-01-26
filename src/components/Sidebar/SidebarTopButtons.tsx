@@ -56,11 +56,13 @@ export default function SidebarTopButtons() {
             className="w-fit"
             isIconOnly
             size="lg"
+            // variant="flat"
+            variant={location.pathname === route ? "solid" : "flat"}
             color={location.pathname === route ? "primary" : "default"}
             onClick={() => navigate(route)}
           >
             {React.cloneElement(icon, {
-              color: "white",
+              color: location.pathname === route ? "#000000AA" : "#FFFFFFAA",
             })}
           </Button>
         </Tooltip>

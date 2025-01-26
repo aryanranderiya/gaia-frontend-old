@@ -28,7 +28,7 @@ export default function NoteCard({
           />
         </div> */}
         <div className="font-normal text-md whitespace-wrap overflow-hidden overflow-ellipsis min-h-7 max-h-[100px]">
-          {convert(note.note)}
+          {note.plaintext}
         </div>
 
         {/* <ScrollArea>
