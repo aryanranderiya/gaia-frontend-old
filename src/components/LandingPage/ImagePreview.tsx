@@ -1,15 +1,30 @@
 // import StarterEmoji from "../Chat/StarterEmoji";
 // import StarterText from "../Chat/StarterText";
+import { useState } from "react";
 import { Safari } from "../ui/safari";
+import { Spinner } from "@nextui-org/spinner";
 
 export default function ImagePreview() {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
   return (
     <div className="flex items-center justify-center h-fit w-screen mt-14 sm:mb-0 mb-[20vh]">
       <div className="min-w-[160%] sm:min-w-[70%] sm:max-w-[70%] relative">
+        {!isImageLoaded && (
+          <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full bg-zinc-950 rounded-xl">
+            <Spinner size="lg" />
+          </div>
+        )}
+
         <Safari
           url="yourgaia.io"
           mode="simple"
           className="size-full"
+          handleImageLoad={handleImageLoad}
           imageSrc="/landing/screenshot.png"
         />
         {/* <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full">

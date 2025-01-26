@@ -9,12 +9,14 @@ export interface SafariProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
   mode?: SafariMode;
+  handleImageLoad?: () => void;
 }
 
 export function Safari({
   imageSrc,
   videoSrc,
   url,
+  handleImageLoad,
   width = 1203,
   height = 753,
   mode = "default",
@@ -131,6 +133,7 @@ export function Safari({
             y="52"
             preserveAspectRatio="xMidYMid slice"
             clipPath="url(#roundedBottom)"
+            onLoad={handleImageLoad}
           />
         )}
         {videoSrc && (
