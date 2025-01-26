@@ -1,7 +1,6 @@
 // import { NoteDialog } from "@/components/Notes/NoteCardDialog";
 import { Note } from "@/pages/Notes";
 // import { useState } from "react";
-import { convert } from "html-to-text";
 import { Link } from "react-router-dom";
 
 export default function NoteCard({

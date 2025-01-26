@@ -3,14 +3,10 @@ import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Button } from "@nextui-org/button";
 import { isToday, isYesterday, subDays } from "date-fns";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChatTab } from "./ChatTab";
-import SuspenseLoader from "../SuspenseLoader";
-import { Spinner } from "@nextui-org/spinner";
-import { Loader, Loader2 } from "lucide-react";
-
-// Function to determine time frame based on createdAt
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
 
