@@ -237,7 +237,6 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             </Button>
           </div>
           <SyntaxHighlighter
-            {...(props as any)}
             style={vscDarkPlus}
             language={match[1]}
             PreTag="div"
