@@ -102,7 +102,11 @@ export default function ChatRenderer() {
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
           <div className="relative flex items-end gap-3" key={index}>
-            <div className="pingspinner relative bottom-9" />
+            <div
+              className={`pingspinner relative ${
+                message.loading ? "bottom-3" : "bottom-9"
+              }`}
+            />
             {/* <img
               src={"/gaialogo.png"}
               width={40}

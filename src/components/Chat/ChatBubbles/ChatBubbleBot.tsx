@@ -2,16 +2,15 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
-import { ArrowUpRight, Check, Loader2 } from "lucide-react";
+import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
-import { Alert01Icon, InternetIcon } from "../../icons";
-const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
+import { InternetIcon } from "../../icons";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import { Spinner } from "@nextui-org/spinner";
+const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
 export default function ChatBubbleBot({
   text,
@@ -139,7 +138,7 @@ export default function ChatBubbleBot({
               )}
 
               {!!filename && (
-                <Chip variant="flat" color="primary">
+                <Chip variant="flat" color="primary" size="lg">
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <Loader2
@@ -168,8 +167,15 @@ export default function ChatBubbleBot({
               {!!disclaimer && (
                 <Chip
                   size="sm"
-                  className="text-xs font-medium text-foreground-700"
-                  startContent={<Alert01Icon height="17" />}
+                  color="warning"
+                  variant="flat"
+                  className="text-xs font-medium text-warning-500"
+                  startContent={
+                    <AlertTriangleIcon
+                      height="17"
+                      className="text-warning-500"
+                    />
+                  }
                 >
                   {disclaimer}
                 </Chip>

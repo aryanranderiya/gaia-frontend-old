@@ -20,6 +20,7 @@ import {
 } from "../ui/dialog";
 import { PdfContainer } from "./PdfComponent";
 import { v1 as uuidv1 } from "uuid";
+import { FileIcon } from "lucide-react";
 
 interface FileUploadProps {
   isImage: boolean;
@@ -228,6 +229,8 @@ export default function FileUpload({
         date: fetchDate(),
         loading: false,
         filename: file.name,
+        disclaimer:
+          " Please try to be as specific as you can with your question when talking with documents!",
       };
 
       setConvoMessages((prev) => [...prev.slice(0, -1), finalBotMessage]);
@@ -275,7 +278,7 @@ export default function FileUpload({
             <DialogTitle>Upload File</DialogTitle>
           </DialogHeader>
           <div>
-            {fileLoading ? (
+            {/* {fileLoading ? (
               <div className="h-[250px] w-[350px] bg-black bg-opacity-40 rounded-3xl flex justify-center items-center">
                 <Spinner size="lg" color="primary" />
               </div>
@@ -287,6 +290,21 @@ export default function FileUpload({
               />
             ) : (
               <PdfContainer file={file} />
+            )} */}
+
+            {file && (
+              <div className="bg-[#00bbff] rounded-xl p-3 text-black mb-2">
+                <div className="flex items-center gap-3">
+                  <FileIcon />
+                  <div>
+                    <div className="font-medium">
+                      {file.name?.split(".")[0].slice(0, 25)}
+                      {file.name?.length > 25 ? "... " : "."}
+                      {file.name?.split(".")[1]}
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
 
             <Textarea

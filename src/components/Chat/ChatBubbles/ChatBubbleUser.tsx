@@ -71,7 +71,7 @@ export default function ChatBubbleUser({
           )} */}
 
           {filename && (
-            <div className="bg-black/30 rounded-2xl p-3 text-white mb-2">
+            <div className="bg-black/30 rounded-xl p-3 text-white mb-2">
               <div className="flex items-center gap-3">
                 <File />
                 <div>
