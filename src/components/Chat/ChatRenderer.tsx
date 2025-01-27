@@ -28,29 +28,25 @@ export default function ChatRenderer() {
   });
 
   useEffect(() => {
-    console.log(messageId);
-    console.log(convoMessages);
-    console.log(location.state);
-
     if (messageId && convoMessages.length > 0) scrollToMessage(messageId);
   }, [messageId, convoMessages]);
 
   const scrollToMessage = (messageId: string) => {
     if (!messageId) return;
-    
+
     const messageElement = document.getElementById(messageId);
-    if (messageElement) {
-      messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
-      messageElement.style.transition = "all 0.3s ease";
+    if (!messageElement) return;
+
+    messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    messageElement.style.transition = "all 0.3s ease";
+
+    setTimeout(() => {
+      messageElement.style.scale = "1.07";
 
       setTimeout(() => {
-        messageElement.style.scale = "1.07";
-
-        setTimeout(() => {
-          messageElement.style.scale = "1";
-        }, 300);
+        messageElement.style.scale = "1";
       }, 300);
-    }
+    }, 300);
   };
 
   if (!!convoMessages && convoMessages?.length === 0) {
@@ -72,6 +68,7 @@ export default function ChatRenderer() {
 
   return (
     <>
+      {/* Image Generation Dialog Box */}
       <Dialog onOpenChange={setOpenImage} open={openImage}>
         <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit py-3 px-5">
           <img
@@ -97,7 +94,6 @@ export default function ChatRenderer() {
               <div className="w-full bg-black/30 p-3 rounded-xl">
                 <ScrollArea className="h-[70px]">
                   <div className="font-medium">Improved Prompt:</div>
-
                   <div className="text-foreground-300 text-sm">
                     {imageData.improvedPrompt}
                   </div>
@@ -114,19 +110,6 @@ export default function ChatRenderer() {
           />
         </DialogContent>
       </Dialog>
-
-      {/* {openImage && (
-        <SidebarProvider>
-          <Sidebar side="right" variant="inset" className="z-10">
-            <SidebarHeader />
-            <SidebarContent>
-              <SidebarGroup />
-              <SidebarGroup />
-            </SidebarContent>
-            <SidebarFooter />
-          </Sidebar>
-        </SidebarProvider>
-      )} */}
 
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
@@ -161,6 +144,7 @@ export default function ChatRenderer() {
                 setOpenImage={setOpenImage}
                 setImageData={setImageData}
                 filename={message.filename}
+                pinned={message.pinned}
               />
             </Suspense>
           </div>

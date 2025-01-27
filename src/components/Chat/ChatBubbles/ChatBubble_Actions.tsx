@@ -3,17 +3,40 @@ import { Tooltip } from "@nextui-org/tooltip";
 import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 import TextToSpeech from "../../Audio/TextToSpeechComponent";
-import { DownloadSquare01Icon, Task01Icon } from "../../icons";
+import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../icons";
+import { apiauth } from "@/utils/apiaxios";
+import { useParams } from "react-router-dom";
+import { useConversation } from "@/hooks/useConversation";
+import { ApiService } from "@/utils/chatUtils";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
   text: string;
+  pinned?: boolean;
+  message_id: string;
 }
 
 export function ChatBubble_Actions({
+  message_id,
   loading,
   text,
+  pinned = false,
 }: ChatBubbleActionsProps): JSX.Element {
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
+  const { setConvoMessages } = useConvo();
+
+  console.log(pinned);
+
+  const fetchMessages = async (conversationId: string) => {
+    try {
+      const messages = await ApiService.fetchMessages(conversationId);
+      if (messages.length > 1) setConvoMessages(messages);
+    } catch (e) {
+      console.error("Failed to fetch messages:", e);
+    }
+  };
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard", {
@@ -27,6 +50,25 @@ export function ChatBubble_Actions({
       description: `${text.substring(0, 35)}...`,
       icon: <Task01Icon height="23" color="black" />,
     });
+  };
+
+  const handlePinToggle = async () => {
+    try {
+      if (!convoIdParam) return;
+
+      await fetchMessages(convoIdParam);
+
+      await apiauth.put(
+        `/conversations/${convoIdParam}/messages/${message_id}/pin`,
+        {
+          pinned: !pinned,
+        }
+      );
+
+      await fetchMessages(convoIdParam);
+    } catch (error) {
+      console.error("Failed to update chat name", error);
+    }
   };
 
   return (
@@ -43,15 +85,24 @@ export function ChatBubble_Actions({
             <Task01Icon height="22" width="22" className="cursor-pointer" />
           </Button>
 
-          {/* <Button
-            variant="light"
+          <Button
             className="w-fit p-0 h-fit rounded-md"
             isIconOnly
+            variant="light"
+            color={pinned ? "primary" : "default"}
+            // variant={pinned ? "solid" : "light"}
             style={{ minWidth: "22px" }}
+            onClick={handlePinToggle}
           >
-            <PinIcon height="22" />
+            <PinIcon
+              height="22"
+              width="22"
+              fill={pinned ? "#00bbff" : "transparent"}
+              color={pinned ? "#00bbff" : "#9b9b9b"}
+              className={`cursor-pointer`}
+            />
           </Button>
-
+          {/*
           <TranslateDropdown
             text={text}
             index={index}

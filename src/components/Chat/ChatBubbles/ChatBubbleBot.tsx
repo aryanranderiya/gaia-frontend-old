@@ -28,9 +28,8 @@ export default function ChatBubbleBot({
   pageFetchURL,
   filename,
   message_id,
+  pinned,
 }: ChatBubbleBotProps) {
-  console.log("hey", message_id);
-
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
@@ -277,7 +276,12 @@ export default function ChatBubbleBot({
                 imagePrompt={imagePrompt}
               />
             ) : (
-              <ChatBubble_Actions loading={loading} text={text} />
+              <ChatBubble_Actions
+                message_id={message_id}
+                loading={loading}
+                text={text}
+                pinned={pinned}
+              />
             )}
           </div>
         )}

@@ -7,6 +7,7 @@ export interface ChatBubbleUserProps {
   searchWeb?: boolean;
   pageFetchURL?: string;
   date?: string;
+  pinned?: boolean;
 }
 
 export interface ChatBubbleBotProps {
@@ -26,6 +27,7 @@ export interface ChatBubbleBotProps {
   setImageData: any;
   pageFetchURL?: string;
   filename?: string;
+  pinned?: boolean;
   // setImageSrc: React.Dispatch<React.SetStateAction<string>>;
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 }

@@ -1,14 +1,14 @@
 import { InternetIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Chip } from "@nextui-org/chip";
+import { apiauth } from "@/utils/apiaxios";
+import { parseDate } from "@/utils/fetchDate";
 import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/spinner";
 import { ArrowUpRight, SearchIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { apiauth } from "@/utils/apiaxios";
-import { parseDate } from "@/utils/fetchDate";
 
 // Define types for fetched messages
 interface Message {
@@ -18,6 +18,7 @@ interface Message {
     searchWeb: boolean;
     pageFetchURL: string;
     date: string;
+    type: string;
   };
   conversation_id: string;
 }
@@ -33,11 +34,6 @@ export default function Search() {
       const response = await apiauth.get("/search/messages", {
         params: { query: searchQuery },
       });
-      console.log(response.data);
-      console.log(response.data.results);
-      console.log(response.data.results.length);
-
-      // Assuming the response has a structure like { messages: Message[] }
       setFetchedResults(response.data.results);
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -67,7 +63,7 @@ export default function Search() {
               <div>
                 {!!fetchedResults && fetchedResults?.length > 0 ? (
                   <div className="grid gap-3 px-[10%] grid-cols-[repeat(auto-fill,_minmax(15vw,_1fr))]">
-                    {fetchedResults.map((result, index) => (
+                    {fetchedResults.map((result) => (
                       <Link
                         key={result.message.message_id}
                         to={`/try/chat/${result.conversation_id}`}

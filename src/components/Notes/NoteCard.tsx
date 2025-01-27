@@ -15,7 +15,7 @@ export default function NoteCard({
   return (
     <Link to={`./${note.id}`}>
       <div
-        className="bg-white/20 hover:bg-[#00bbff80] hover:-translate-y-1 transition-all min-w-[250px] max-w-[250px] max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative"
+        className="bg-black/80 hover:bg-zinc-700 hover:-translate-y-1 transition-all min-w-[250px] max-w-[250px] max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative outline outline-2 outline-zinc-700"
         // onClick={() => setOpenDialog(true)} // Open dialog on click
       >
         {/* <div className="absolute rotate-[-90deg] top-[-3px] -right-2 shadow-sm">
