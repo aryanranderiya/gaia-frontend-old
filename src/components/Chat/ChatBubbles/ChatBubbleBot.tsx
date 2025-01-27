@@ -30,6 +30,47 @@ export default function ChatBubbleBot({
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [fileScanningText, setFileScanningText] = useState(
+    "Uploading Document..."
+  );
+
+  useEffect(() => {
+    if (loading && !!filename) {
+      const updateFileScanningText = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+        console.log("Step 1 completed: Processing File...Please Wait");
+        setFileScanningText("Processing File...Please Wait");
+
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+        console.log("Step 2 completed: Document analysis in progress...");
+        setFileScanningText("Document analysis in progress...");
+
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+        console.log("Step 3 completed: Converting file format...");
+        setFileScanningText("Converting file format...");
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        console.log("Step 4 completed: Extracting text from document...");
+        setFileScanningText("Extracting text from document...");
+
+        await new Promise((resolve) => setTimeout(resolve, 4000));
+        console.log("Step 5 completed: Analyzing document content...");
+        setFileScanningText("Analyzing document content...");
+
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        console.log("Step 6 completed: Processing document... Please wait...");
+        setFileScanningText("Processing document... Please wait...");
+
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        console.log(
+          "Step 7 completed: Document upload complete, processing metadata..."
+        );
+        setFileScanningText("Document upload complete, processing metadata...");
+      };
+
+      updateFileScanningText();
+    }
+  }, [filename, loading]);
 
   // useEffect(() => {
   //   console.log(!!image && image?.length > 0);
@@ -146,7 +187,7 @@ export default function ChatBubbleBot({
                         width={17}
                         height={17}
                       />
-                      Scanning Documents...
+                      {fileScanningText}
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
@@ -190,7 +231,16 @@ export default function ChatBubbleBot({
         </>
       );
     }
-  }, [isImage, text, imageSrc, date, userinputType, disclaimer, loading]);
+  }, [
+    isImage,
+    text,
+    imageSrc,
+    date,
+    userinputType,
+    disclaimer,
+    loading,
+    fileScanningText,
+  ]);
 
   const actionsRef = useRef<HTMLDivElement>(null);
 

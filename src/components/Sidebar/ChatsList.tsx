@@ -7,6 +7,7 @@ import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChatTab } from "./ChatTab";
+
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
 
@@ -93,14 +94,20 @@ export default function ChatsList() {
       timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB)
   );
 
+  const starredConversations = conversations.filter(
+    (conversation) => conversation.starred
+  );
+
   return (
     <div className="pt-0 p-4">
       <Button
-        variant="flat"
-        className="w-full flex justify-between"
+        className="w-full flex justify-between mt-2 font-medium"
         onPress={createNewChat}
-        size="lg"
-        color={location.pathname === "/try/chat" ? "primary" : "default"}
+        size="md"
+        color="primary"
+        // variant="flat"
+        variant={location.pathname === "/try/chat" ? "flat" : "solid"}
+        // color={location.pathname === "/try/chat" ? "primary" : "default"}
       >
         Create new chat
         <PlusSignIcon width="21" color="foreground" />
@@ -113,31 +120,62 @@ export default function ChatsList() {
             <Loader className="animate-spin text-[#00bbff]" />
           </div>
         ) : (
-          sortedTimeFrames.map(([timeFrame, conversationsGroup]) => (
-            <div key={timeFrame}>
-              <div className="font-medium px-2 text-xs pt-5 sticky top-0 bg-black z-[1]">
-                {timeFrame}
+          <>
+            {/* <div className="bg-zinc-700 rounded-lg min-h-4"> */}
+            <div className="bg-zinc-900 min-h-[50px] pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
+              <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
+                Starred Chats
               </div>
-              {conversationsGroup
-                .sort(
-                  (a: { createdAt: string }, b: { createdAt: string }) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
-                )
-                .map(
-                  (conversation: {
-                    conversation_id: string;
-                    description: string;
-                  }) => (
-                    <ChatTab
-                      key={conversation.conversation_id}
-                      id={conversation.conversation_id}
-                      name={conversation.description || "New Chat"}
-                    />
+              <div className="flex w-full px-1 flex-col">
+                {starredConversations.length > 0 ? (
+                  starredConversations.map(
+                    (conversation: {
+                      conversation_id: string;
+                      description: string;
+                    }) => (
+                      <ChatTab
+                        key={conversation.conversation_id}
+                        id={conversation.conversation_id}
+                        name={conversation.description || "New Chat"}
+                        starred={conversation.starred}
+                      />
+                    )
                   )
+                ) : (
+                  <div className="text-xs text-center text-foreground-500 pt-2 pb-3">
+                    No Starred Chats yet.
+                  </div>
                 )}
+              </div>
             </div>
-          ))
+
+            {sortedTimeFrames.map(([timeFrame, conversationsGroup]) => (
+              <div key={timeFrame}>
+                <div className="font-medium px-2 text-xs pt-5 sticky top-0 bg-black z-[1]">
+                  {timeFrame}
+                </div>
+                {conversationsGroup
+                  .sort(
+                    (a: { createdAt: string }, b: { createdAt: string }) =>
+                      new Date(b.createdAt).getTime() -
+                      new Date(a.createdAt).getTime()
+                  )
+                  .map(
+                    (conversation: {
+                      conversation_id: string;
+                      description: string;
+                    }) => (
+                      <ChatTab
+                        key={conversation.conversation_id}
+                        id={conversation.conversation_id}
+                        name={conversation.description || "New Chat"}
+                        starred={conversation.starred}
+                      />
+                    )
+                  )}
+              </div>
+            ))}
+          </>
         )}
       </div>
     </div>

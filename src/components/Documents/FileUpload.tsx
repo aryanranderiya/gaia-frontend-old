@@ -206,6 +206,7 @@ export default function FileUpload({
           date: fetchDate(),
           loading: true,
           filename: file.name,
+          disclaimer: "Please wait. This may take a while.",
         },
       ];
       // setConvoMessages((prev) => [...prev, ...currentMessages]);

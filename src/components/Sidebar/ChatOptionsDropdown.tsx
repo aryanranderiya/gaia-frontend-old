@@ -1,7 +1,7 @@
-import { apiauth } from "@/utils/apiaxios";
 import { PencilEdit02Icon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@nextui-org/button";
 import {
   Dropdown,
@@ -18,7 +18,7 @@ import {
   ModalHeader,
 } from "@nextui-org/modal";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Trash } from "lucide-react";
+import { Star, Trash } from "lucide-react";
 import { SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,10 +26,12 @@ export default function ChatOptionsDropdown({
   buttonHovered,
   chatId,
   chatName,
+  starred = false,
 }: {
   buttonHovered: boolean;
   chatId: string;
   chatName: string;
+  starred: boolean;
 }) {
   const { fetchConversations } = useConversationList();
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
@@ -40,6 +42,18 @@ export default function ChatOptionsDropdown({
   const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();
   const { resetMessages } = useConvo();
+
+  const handleStarToggle = async () => {
+    try {
+      await apiauth.put(`/conversations/${chatId}/star`, {
+        starred: !starred,
+      });
+      setIsOpen(false);
+      fetchConversations();
+    } catch (error) {
+      console.error("Failed to update chat name", error);
+    }
+  };
 
   const handleEdit = async () => {
     if (!newName) return;
@@ -94,15 +108,20 @@ export default function ChatOptionsDropdown({
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
+          <DropdownItem key="edit" textValue="Star" onPress={handleStarToggle}>
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <Star width={16} color="white" />
+              {starred ? "Remove from" : "Add to"} Starred
+            </div>
+          </DropdownItem>
           <DropdownItem
             key="edit"
             textValue="Rename"
-            className="w-fit"
             onPress={() => openModal("edit")}
           >
-            <div className="flex flex-row gap-2 justify-between items-center">
+            <div className="flex flex-row gap-2 items-center justify-between">
               <PencilEdit02Icon width={16} color="white" />
-              Rename
+              Rename Chat
             </div>
           </DropdownItem>
           <DropdownItem
@@ -116,7 +135,7 @@ export default function ChatOptionsDropdown({
           >
             <div className="flex flex-row gap-2 items-center justify-between">
               <Trash width={16} color={dangerStateHovered ? "white" : "red"} />
-              Delete
+              Delete Chat
             </div>
           </DropdownItem>
         </DropdownMenu>

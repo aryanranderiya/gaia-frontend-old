@@ -56,7 +56,7 @@ export default function Sidebar({
             </div> */}
 
             <SidebarTopButtons />
-            <Hr />
+            {/* <Hr /> */}
           </div>
 
           <ChatsList />

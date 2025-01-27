@@ -3,13 +3,15 @@ import { Button } from "@nextui-org/button";
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ChatOptionsDropdown from "./ChatOptionsDropdown";
+import { Star } from "lucide-react";
 
 interface ChatTabProps {
   name: string;
   id: string;
+  starred: boolean;
 }
 
-export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
+export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
   const navigate = useNavigate();
   const [currentConvoId, setCurrentConvoId] = useState<string | null>(null);
   const location = useLocation();
@@ -29,12 +31,21 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
         setButtonHovered(false);
         navigate(`/try/chat/${id}`);
       }}
+      radius="sm"
       startContent={
-        <Chatting01Icon
-          width="19"
-          className="min-w-[19px] w-[19px]"
-          color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
-        />
+        starred ? (
+          <Star
+            width="19"
+            className="min-w-[17px] w-[17px]"
+            color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+          />
+        ) : (
+          <Chatting01Icon
+            width="19"
+            className="min-w-[17px] w-[17px]"
+            color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+          />
+        )
       }
       onMouseOver={() => setButtonHovered(true)}
       onMouseOut={() => setButtonHovered(false)}
@@ -43,6 +54,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id }) => {
           buttonHovered={buttonHovered}
           chatId={id}
           chatName={name}
+          starred={starred}
         />
       }
     >
