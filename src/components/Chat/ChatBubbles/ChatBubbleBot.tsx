@@ -27,7 +27,10 @@ export default function ChatBubbleBot({
   searchWeb = false,
   pageFetchURL,
   filename,
+  message_id,
 }: ChatBubbleBotProps) {
+  console.log("hey", message_id);
+
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
@@ -38,33 +41,24 @@ export default function ChatBubbleBot({
     if (loading && !!filename) {
       const updateFileScanningText = async () => {
         await new Promise((resolve) => setTimeout(resolve, 2500));
-        console.log("Step 1 completed: Processing File...Please Wait");
         setFileScanningText("Processing File...Please Wait");
 
         await new Promise((resolve) => setTimeout(resolve, 2500));
-        console.log("Step 2 completed: Document analysis in progress...");
         setFileScanningText("Document analysis in progress...");
 
         await new Promise((resolve) => setTimeout(resolve, 2500));
-        console.log("Step 3 completed: Converting file format...");
         setFileScanningText("Converting file format...");
 
         await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log("Step 4 completed: Extracting text from document...");
         setFileScanningText("Extracting text from document...");
 
         await new Promise((resolve) => setTimeout(resolve, 4000));
-        console.log("Step 5 completed: Analyzing document content...");
         setFileScanningText("Analyzing document content...");
 
         await new Promise((resolve) => setTimeout(resolve, 5000));
-        console.log("Step 6 completed: Processing document... Please wait...");
         setFileScanningText("Processing document... Please wait...");
 
         await new Promise((resolve) => setTimeout(resolve, 5000));
-        console.log(
-          "Step 7 completed: Document upload complete, processing metadata..."
-        );
         setFileScanningText("Document upload complete, processing metadata...");
       };
 
@@ -260,7 +254,11 @@ export default function ChatBubbleBot({
 
   return (
     (!!text || loading || isImage) && (
-      <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <div
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        id={message_id}
+      >
         <div className="chatbubblebot_parent">
           {/* <Avatar src={smiley} className="smiley_avatar" />{" "} */}
 

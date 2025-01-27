@@ -1,4 +1,5 @@
 export interface ChatBubbleUserProps {
+  message_id: string;
   text?: string;
   subtype?: "image" | "pdf" | null;
   file?: File | null | string;
@@ -10,6 +11,7 @@ export interface ChatBubbleUserProps {
 
 export interface ChatBubbleBotProps {
   // index: number;
+  message_id: string;
   text: string;
   loading?: boolean;
   isImage?: boolean;

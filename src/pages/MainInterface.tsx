@@ -13,6 +13,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
+import Search from "./Search";
 
 // Lazy load the components
 const Sidebar = lazy(() => import("../layouts/Sidebar"));
@@ -167,6 +168,15 @@ export default function MainInterface() {
                   element={
                     <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
                       <GoalPage />
+                    </Suspense>
+                  }
+                />
+
+                <Route
+                  path="search"
+                  element={
+                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                      <Search />
                     </Suspense>
                   }
                 />

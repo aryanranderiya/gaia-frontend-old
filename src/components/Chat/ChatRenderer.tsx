@@ -2,11 +2,12 @@
 import StarterText from "@/components/Chat/StarterText";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import StarterEmoji from "./StarterEmoji";
+import { useLocation } from "react-router-dom";
 
 const ChatBubbleBot = React.lazy(
   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
@@ -18,11 +19,37 @@ const ChatBubbleUser = React.lazy(
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
   const [openImage, setOpenImage] = useState<boolean>(false);
+  const location = useLocation();
+  const { messageId } = location.state || {};
   const [imageData, setImageData] = useState({
     src: "",
     prompt: "",
     improvedPrompt: "",
   });
+
+  useEffect(() => {
+    console.log(messageId);
+    console.log(convoMessages);
+    console.log(location.state);
+
+    if (messageId && convoMessages.length > 0) scrollToMessage(messageId);
+  }, [messageId, convoMessages]);
+
+  const scrollToMessage = (messageId) => {
+    const messageElement = document.getElementById(messageId);
+    if (messageElement) {
+      messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      messageElement.style.transition = "all 0.3s ease";
+
+      setTimeout(() => {
+        messageElement.style.scale = "1.07";
+
+        setTimeout(() => {
+          messageElement.style.scale = "1";
+        }, 300);
+      }, 300);
+    }
+  };
 
   if (!!convoMessages && convoMessages?.length === 0) {
     return (
@@ -117,6 +144,7 @@ export default function ChatRenderer() {
             /> */}
             <Suspense fallback={<SuspenseLoader />}>
               <ChatBubbleBot
+                message_id={message.message_id}
                 text={message.response}
                 loading={message.loading}
                 isImage={message.isImage}
@@ -137,6 +165,7 @@ export default function ChatRenderer() {
         ) : (
           <Suspense fallback={<div>Loading...</div>} key={index}>
             <ChatBubbleUser
+              message_id={message.message_id}
               key={index}
               text={message.response}
               subtype={message.subtype || null}

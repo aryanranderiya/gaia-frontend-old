@@ -12,10 +12,11 @@ export default function ChatBubbleUser({
   date,
   searchWeb = false,
   pageFetchURL,
+  message_id,
 }: ChatBubbleUserProps) {
   return (
     !!text && (
-      <div className="chat_bubble_container user">
+      <div className="chat_bubble_container user" id={message_id}>
         <div className="chat_bubble user">
           {searchWeb && (
             <Chip

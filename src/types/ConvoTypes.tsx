@@ -2,6 +2,7 @@
 // This type represents an individual message, including details about whether it's from the user or bot,
 // the content of the message, its date, and optional fields for loading state, images, files, etc.
 export type MessageType = {
+  message_id: string;
   type: "user" | "bot"; // Indicates whether the message is from the "user" or the "bot"
   response: string; // The content of the message, typically text
   date?: string | ""; // The date when the message was sent, formatted as DateType, or an empty string
