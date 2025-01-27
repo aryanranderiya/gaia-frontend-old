@@ -9,6 +9,7 @@ import {
   StickyNote01Icon,
   // PinIcon,
 } from "../icons";
+import { SearchIcon } from "lucide-react";
 // import { SearchIcon } from "lucide-react";
 
 export default function SidebarTopButtons() {
@@ -21,11 +22,11 @@ export default function SidebarTopButtons() {
       icon: <DiscoverCircleIcon width={27} height={27} />,
       label: "Explore",
     },
-    // {
-    //   route: "/try/search",
-    //   icon: <SearchIcon width={27} height={27} />,
-    //   label: "Search",
-    // },
+    {
+      route: "/try/search",
+      icon: <SearchIcon width={26} height={26} />,
+      label: "Search",
+    },
     // {
     //   route: "/try/pins",
     //   icon: <PinIcon width={27} height={27} />,

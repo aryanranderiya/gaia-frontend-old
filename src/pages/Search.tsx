@@ -1,60 +1,177 @@
+import { InternetIcon } from "@/components/icons";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { useState } from "react";
-import axios from "axios";
-import { apiauth } from "@/utils/apiaxios";
+import { Spinner } from "@nextui-org/spinner";
+import { ArrowUpRight, SearchIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { apiauth } from "@/utils/apiaxios";
+import { parseDate } from "@/utils/fetchDate";
+
+// Define types for fetched messages
+interface Message {
+  message: {
+    message_id: string;
+    response: string;
+    searchWeb: boolean;
+    pageFetchURL: string;
+    date: string;
+  };
+  conversation_id: string;
+}
 
 export default function Search() {
-  const [fetchedMessages, setFetchedMessages] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [fetchedResults, setFetchedResults] = useState<Message[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = async () => {
+    setLoading(true);
     try {
       const response = await apiauth.get("/search/messages", {
         params: { query: searchQuery },
       });
-      console.log(response);
+      console.log(response.data);
+      console.log(response.data.results);
+      console.log(response.data.results.length);
 
-      setFetchedMessages(response.data.messages); // Assuming the response contains messages in 'messages'
+      // Assuming the response has a structure like { messages: Message[] }
+      setFetchedResults(response.data.results);
     } catch (error) {
       console.error("Error fetching messages:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Input
-        placeholder="Enter a message to search"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <Button onClick={handleSearch}>Search</Button>
-
-      <div>
-        {fetchedMessages.length > 0 ? (
-          <div className="flex flex-wrap gap-3">
-            {fetchedMessages.map((message, index) => (
-              <>
-                {console.log(message.message.message_id)}
-                <Link
-                  //   to={{
-                  //     pathname: `/try/chat/${message.conversation_id}`,
-                  //     // state: { messageId: message.message.message_id }, // Correctly passing the state here
-                  //     state: { messageId: "test_message_id" },
-                  //   }}
-                  to={`/try/chat/${message.conversation_id}`}
-                  state={{ messageId: message.message.message_id }}
-                  className="bg-white/20 p-3 rounded-lg"
-                >
-                  {message.message.response || message.response}
-                </Link>
-              </>
-            ))}
+      <div className="flex flex-col justify-between h-full">
+        <ScrollArea>
+          <div className="flex items-center flex-col gap-2">
+            <h1 className="font-bold text-center text-5xl">Search</h1>
+            <div className=" text-center text-md pb-6 max-w-screen-md">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis,
+              sed!
+            </div>
           </div>
-        ) : (
-          <p>No messages found</p>
-        )}
+
+          {loading ? (
+            <div className="h-[80vh] flex items-center justify-center">
+              <Spinner />
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-4 justify-center pb-8 ">
+              <div>
+                {!!fetchedResults && fetchedResults?.length > 0 ? (
+                  <div className="grid gap-3 px-[10%] grid-cols-[repeat(auto-fill,_minmax(15vw,_1fr))]">
+                    {fetchedResults.map((result, index) => (
+                      <Link
+                        key={result.message.message_id}
+                        to={`/try/chat/${result.conversation_id}`}
+                        state={{ messageId: result.message.message_id }}
+                        className="bg-black p-3 rounded-xl h-full overflow-hidden max-h-[190px] min-h-[190px] flex flex-col gap-2 outline outline-zinc-800 outline-2 hover:bg-zinc-800 transition-colors"
+                      >
+                        <Chip
+                          className="min-h-7"
+                          color={
+                            result.message.type == "bot" ? "primary" : "default"
+                          }
+                        >
+                          {result.message.type == "bot"
+                            ? "From GAIA"
+                            : "From You"}
+                        </Chip>
+
+                        <div>
+                          {result.message?.searchWeb && (
+                            <Chip
+                              size="sm"
+                              startContent={
+                                <InternetIcon height={20} color="#00bbff" />
+                              }
+                              variant="flat"
+                              color="primary"
+                            >
+                              <div className="font-medium flex items-center gap-1 text-primary">
+                                Live Search Results from the Web
+                              </div>
+                            </Chip>
+                          )}
+
+                          {!!result.message?.pageFetchURL && (
+                            <Chip
+                              size="sm"
+                              startContent={
+                                <ArrowUpRight height={20} color="#00bbff" />
+                              }
+                              variant="flat"
+                              color="primary"
+                            >
+                              <div className="font-medium flex items-center gap-1 text-primary">
+                                Fetched
+                                <a
+                                  href={result.message.pageFetchURL}
+                                  className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
+                                  target="_blank"
+                                >
+                                  {result.message.pageFetchURL.replace(
+                                    /^https?:\/\//,
+                                    ""
+                                  )}
+                                </a>
+                              </div>
+                            </Chip>
+                          )}
+                        </div>
+                        <div className="max-h-[140px] overflow-hidden text-sm">
+                          {result.message?.response?.slice(0, 350)}
+                          {result?.message?.response?.length > 350 ? "..." : ""}
+                        </div>
+                        <div className="text-xs mt-auto text-foreground-400">
+                          {parseDate(result?.message?.date)}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          )}
+        </ScrollArea>
+
+        <div className="absolute left-0 bottom-5 flex justify-center items-center w-full z-10">
+          <div className="flex items-center gap-3 max-w-screen-sm w-full">
+            <Input
+              placeholder="Enter a message to search:   "
+              value={searchQuery}
+              size="lg"
+              variant="faded"
+              radius="full"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full"
+              classNames={{ inputWrapper: "pr-1" }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
+              endContent={
+                <Button
+                  onClick={handleSearch}
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                >
+                  <SearchIcon />
+                </Button>
+              }
+            />
+          </div>
+        </div>
+        <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
     </>
   );

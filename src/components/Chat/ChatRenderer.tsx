@@ -20,7 +20,7 @@ export default function ChatRenderer() {
   const { convoMessages } = useConvo();
   const [openImage, setOpenImage] = useState<boolean>(false);
   const location = useLocation();
-  const { messageId } = location.state || {};
+  const { messageId } = location.state || "";
   const [imageData, setImageData] = useState({
     src: "",
     prompt: "",
@@ -35,7 +35,9 @@ export default function ChatRenderer() {
     if (messageId && convoMessages.length > 0) scrollToMessage(messageId);
   }, [messageId, convoMessages]);
 
-  const scrollToMessage = (messageId) => {
+  const scrollToMessage = (messageId: string) => {
+    if (!messageId) return;
+    
     const messageElement = document.getElementById(messageId);
     if (messageElement) {
       messageElement.scrollIntoView({ behavior: "smooth", block: "center" });

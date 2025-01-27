@@ -1,5 +1,5 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
-import Hr from "@/components/HorizontalRuler";
+// import Hr from "@/components/HorizontalRuler";
 import { GlobalIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
