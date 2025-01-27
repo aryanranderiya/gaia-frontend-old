@@ -1,21 +1,20 @@
 import { ChatBubbleUserProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { parseDate } from "../../../utils/fetchDate";
-import { PdfContainer } from "../../Documents/PdfComponent";
+// import { PdfContainer } from "../../Documents/PdfComponent";
 import { StarsIcon } from "@/components/icons";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, File } from "lucide-react";
 
 export default function ChatBubbleUser({
   text,
   subtype = null,
-  file = null,
   filename,
   date,
   searchWeb = false,
   pageFetchURL,
 }: ChatBubbleUserProps) {
   return (
-    (!!text || !!file) && (
+    !!text && (
       <div className="chat_bubble_container user">
         <div className="chat_bubble user">
           {searchWeb && (
@@ -71,21 +70,36 @@ export default function ChatBubbleUser({
             </Chip>
           )} */}
 
+          {filename && (
+            <div className="bg-black/30 rounded-2xl p-3 text-white mb-2">
+              <div className="flex items-center gap-3">
+                <File />
+                <div>
+                  <div className="font-medium">
+                    {filename?.split(".")[0].slice(0, 25)}
+                    {filename?.length > 25 ? "... " : "."}
+                    {filename?.split(".")[1]}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {!!text && (
             <div className="flex select-text text-wrap max-w-[30vw]">
               {text}
             </div>
           )}
 
-          {subtype === "image" && typeof file === "string" && (
+          {/* {subtype === "image" && typeof file === "string" && (
             <div className="flex flex-col items-center gap-2 max-w-[250px] whitespace-nowrap text-ellipsis overflow-hidden">
-              <img
+              {/* <img
                 src={file} // Ensured this is a string by checking the type
                 width={"250px"}
                 height={"250px"}
                 content-type="image/png"
                 className="rounded-2xl mt-1"
-              />
+              /> 
               {filename && (
                 <Chip
                   color="default"
@@ -96,11 +110,11 @@ export default function ChatBubbleUser({
                 </Chip>
               )}
             </div>
-          )}
+          )} */}
 
-          {subtype === "pdf" && file instanceof File && (
+          {/* {subtype === "pdf" && file instanceof File && (
             <PdfContainer file={file} chat_bubble={true} />
-          )}
+          )} */}
         </div>
         <div className="flex justify-end">
           {date && (

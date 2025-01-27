@@ -54,6 +54,7 @@ export const ApiService = {
     enableSearch: boolean,
     pageFetchURL: string,
     convoMessages: MessageType[],
+    conversationId: string,
     onMessage: (data: string) => void,
     onClose: () => void,
     onError: (err: any) => void
@@ -71,6 +72,7 @@ export const ApiService = {
       credentials: "include",
       signal: controller.signal,
       body: JSON.stringify({
+        conversation_id: conversationId,
         message: inputText,
         search_web: enableSearch || false,
         pageFetchURL,

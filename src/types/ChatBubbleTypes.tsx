@@ -23,6 +23,7 @@ export interface ChatBubbleBotProps {
   setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
   setImageData: any;
   pageFetchURL?: string;
+  filename?: string;
   // setImageSrc: React.Dispatch<React.SetStateAction<string>>;
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 }

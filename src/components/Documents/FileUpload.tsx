@@ -1,12 +1,16 @@
+import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { MessageType } from "@/types/ConvoTypes";
+import { apiauth } from "@/utils/apiaxios";
+import { ApiService } from "@/utils/chatUtils";
+import fetchDate from "@/utils/fetchDate";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/spinner";
 import imageCompression from "browser-image-compression";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import api, { apiauth } from "@/utils/apiaxios";
 import {
   Dialog,
   DialogContent,
@@ -15,10 +19,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { PdfContainer } from "./PdfComponent";
-import fetchDate from "@/utils/fetchDate";
-import { useNavigate, useParams } from "react-router-dom";
-import { useConversationList } from "@/contexts/ConversationList";
-import { ApiService } from "@/utils/chatUtils";
+import { v1 as uuidv1 } from "uuid";
 
 interface FileUploadProps {
   isImage: boolean;
@@ -78,49 +79,90 @@ export default function FileUpload({
     setFileLoading(false);
   };
 
-  const updateConversationState = async (
-    conversationId: string,
-    newMessages: MessageType[],
-    description?: string,
-    replaceLastMessage: boolean = false
-  ) => {
-    try {
-      setConvoMessages((prev) => {
-        const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
-        return [...baseMessages, ...newMessages];
-      });
+  // const updateConversationState = async (
+  //   conversationId: string,
+  //   newMessages: MessageType[],
+  //   description?: string,
+  //   replaceLastMessage: boolean = false
+  // ) => {
+  //   try {
+  //     setConvoMessages((prev) => {
+  //       const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+  //       return [...baseMessages, ...newMessages];
+  //     });
 
-      ApiService.updateConversationDescription(
-        conversationId,
-        description || "New Chat",
-        fetchConversations
-      );
-    } catch (error) {
-      console.error("Failed to update conversation:", error);
-      throw new Error("Failed to update conversation state");
+  //     const finalizedBotResponse: MessageType = {
+  //       type: "bot",
+  //       response: botResponseText,
+  //       date: fetchDate(),
+  //       loading: false,
+  //       searchWeb: enableSearch,
+  //       pageFetchURL,
+  //     };
+
+  //     currentMessages[currentMessages.length - 1] = finalizedBotResponse;
+
+  //     await ApiService.updateConversation(conversationId, currentMessages);
+
+  //     // ApiService.updateConversationDescription(
+  //     //   conversationId,
+  //     //   description || "New Chat",
+  //     //   fetchConversations
+  //     // );
+  //   } catch (error) {
+  //     console.error("Failed to update conversation:", error);
+  //     throw new Error("Failed to update conversation state");
+  //   }
+  // };
+
+  const createNewConversation = async (currentMessages: MessageType[]) => {
+    const conversationId = uuidv1();
+    try {
+      await ApiService.createConversation(conversationId);
+
+      setTimeout(() => {
+        ApiService.updateConversationDescription(
+          conversationId,
+          JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
+          fetchConversations
+        );
+      }, 1000);
+
+      navigate(`/try/chat/${conversationId}`);
+
+      return conversationId;
+    } catch (err) {
+      console.error("Failed to create conversation:", err);
+      return conversationId;
     }
   };
 
-  const createNewConversation = async (
-    initialMessages: MessageType[]
-  ): Promise<string> => {
-    try {
-      const convoID = crypto.randomUUID();
-      await ApiService.createConversation(convoID);
-      await updateConversationState(
-        convoID,
-        initialMessages,
-        `File Upload: ${initialMessages[0]?.response || ""}`
-      );
-      navigate(`/try/chat/${convoID}`);
-      return convoID;
-    } catch (error) {
-      console.error("Failed to create conversation:", error);
-      throw new Error("Failed to create new conversation");
-    }
-  };
+  // const createNewConversation = async (
+  //   initialMessages: MessageType[]
+  // ): Promise<string> => {
+  //   try {
+  //     const convoID = crypto.randomUUID();
+  //     await ApiService.createConversation(convoID);
+  //     // await updateConversationState(
+  //     //   convoID,
+  //     //   initialMessages,
+  //     //   `File Upload: ${initialMessages[0]?.response || ""}`
+  //     // );
 
-  const uploadFile = async (conversationId: string): Promise<string> => {
+  //     setConvoMessages((prev) => {
+  //       const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+  //       return [...baseMessages, ...newMessages];
+  //     });
+
+  //     navigate(`/try/chat/${convoID}`);
+  //     return convoID;
+  //   } catch (error) {
+  //     console.error("Failed to create conversation:", error);
+  //     throw new Error("Failed to create new conversation");
+  //   }
+  // };
+
+  const uploadFile = async (conversationId: string = ""): Promise<string> => {
     if (!file) throw new Error("No file selected");
     const formData = new FormData();
     formData.append("message", textContent);
@@ -148,26 +190,34 @@ export default function FileUpload({
     setLoading(true);
 
     try {
-      const userMessage: MessageType = {
-        type: "user",
-        response: textContent,
-        file: URL.createObjectURL(file),
-        filename: file.name,
-        date: fetchDate(),
-      };
+      console.log(file);
 
-      const botLoadingMessage: MessageType = {
-        type: "bot",
-        response: "Processing your file...",
-        date: fetchDate(),
-        loading: true,
-      };
+      const currentMessages: MessageType[] = [
+        {
+          type: "user",
+          response: textContent,
+          filename: file.name,
+          date: fetchDate(),
+        },
+        {
+          type: "bot",
+          response: "",
+          date: fetchDate(),
+          loading: true,
+          filename: file.name,
+        },
+      ];
+      // setConvoMessages((prev) => [...prev, ...currentMessages]);
 
-      const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
+      setConvoMessages((oldMessages) => {
+        return oldMessages && oldMessages?.length > 0
+          ? [...oldMessages, ...currentMessages]
+          : [...currentMessages];
+      });
+
       const conversationId =
-        convoIdParam || (await createNewConversation(initialMessages));
+        convoIdParam || (await createNewConversation(currentMessages));
 
-      setConvoMessages((prev) => [...prev, ...initialMessages]);
       closeModal();
 
       const botResponse = await uploadFile(conversationId);
@@ -176,16 +226,22 @@ export default function FileUpload({
         type: "bot",
         response: botResponse,
         date: fetchDate(),
+        loading: false,
+        filename: file.name,
       };
 
       setConvoMessages((prev) => [...prev.slice(0, -1), finalBotMessage]);
 
-      await updateConversationState(
-        conversationId,
-        [userMessage, finalBotMessage],
-        undefined,
-        true
-      );
+      currentMessages[currentMessages.length - 1] = finalBotMessage;
+
+      await ApiService.updateConversation(conversationId, currentMessages);
+
+      // await updateConversationState(
+      //   conversationId,
+      //   [userMessage, finalBotMessage],
+      //   undefined,
+      //   true
+      // );
     } catch (error) {
       toast.error("Uh oh! Something went wrong.", {
         classNames: {

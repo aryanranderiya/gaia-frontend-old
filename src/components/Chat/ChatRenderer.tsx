@@ -126,6 +126,7 @@ export default function ChatRenderer() {
                 pageFetchURL={message.pageFetchURL}
                 setOpenImage={setOpenImage}
                 setImageData={setImageData}
+                filename={message.filename}
               />
             </Suspense>
           </div>
@@ -135,7 +136,6 @@ export default function ChatRenderer() {
               key={index}
               text={message.response}
               subtype={message.subtype || null}
-              file={message.file || null}
               filename={message.filename}
               searchWeb={message.searchWeb}
               date={message.date}

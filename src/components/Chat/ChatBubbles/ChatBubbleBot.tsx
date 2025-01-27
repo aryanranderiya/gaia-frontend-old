@@ -2,7 +2,7 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
 import { Alert01Icon, InternetIcon } from "../../icons";
@@ -11,6 +11,7 @@ import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
+import { Spinner } from "@nextui-org/spinner";
 
 export default function ChatBubbleBot({
   text,
@@ -26,6 +27,7 @@ export default function ChatBubbleBot({
   setImageData,
   searchWeb = false,
   pageFetchURL,
+  filename,
 }: ChatBubbleBotProps) {
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -136,10 +138,32 @@ export default function ChatBubbleBot({
                 </Chip>
               )}
 
+              {!!filename && (
+                <Chip variant="flat" color="primary">
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2
+                        className="animate-spin text-white"
+                        width={17}
+                        height={17}
+                      />
+                      Scanning Documents...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Check width={17} height={17} className="text-white" />
+                      Document Uploaded!
+                    </div>
+                  )}
+                </Chip>
+              )}
+
               {/* TODO: Update this suspense to be a skeleton */}
-              <Suspense fallback={<SuspenseLoader />}>
-                <MarkdownRenderer content={text.toString()} />
-              </Suspense>
+              {!!text && (
+                <Suspense fallback={<SuspenseLoader />}>
+                  <MarkdownRenderer content={text.toString()} />
+                </Suspense>
+              )}
 
               {!!disclaimer && (
                 <Chip

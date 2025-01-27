@@ -119,6 +119,7 @@ export const useConversation = (convoIdParam: string | null) => {
       enableSearch,
       pageFetchURL,
       convoMessages,
+      conversationId,
       onMessage,
       onClose,
       onError
