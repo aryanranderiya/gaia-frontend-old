@@ -7,7 +7,7 @@ import { ArrowUpRight, File } from "lucide-react";
 
 export default function ChatBubbleUser({
   text,
-  subtype = null,
+  // subtype = null,
   filename,
   date,
   searchWeb = false,

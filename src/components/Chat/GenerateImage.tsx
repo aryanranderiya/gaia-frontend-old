@@ -17,6 +17,7 @@ import { BrushIcon } from "../icons";
 import fetchDate from "../../utils/fetchDate";
 import { ApiService } from "@/utils/chatUtils";
 import { useConversationList } from "@/contexts/ConversationList";
+import ObjectID from "bson-objectid";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -117,10 +118,14 @@ export default function GenerateImage({
     setLoading(true);
 
     try {
+      const bot_message_id = String(ObjectID());
+      const user_message_id = String(ObjectID());
+
       const userMessage: MessageType = {
         type: "user",
         response: `Generate Image: \n${imagePrompt}`,
         date: fetchDate(),
+        message_id: user_message_id,
       };
 
       const botLoadingMessage: MessageType = {
@@ -130,6 +135,7 @@ export default function GenerateImage({
         loading: true,
         imagePrompt,
         isImage: true,
+        message_id: bot_message_id,
       };
 
       const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
@@ -154,6 +160,7 @@ export default function GenerateImage({
         imagePrompt,
         improvedImagePrompt: improved_prompt,
         isImage: true,
+        message_id: bot_message_id,
       };
 
       // Remove the user prompt from list of messages (because convo messages is set again in updateConversationState to store in the database)

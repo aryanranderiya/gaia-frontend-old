@@ -1,15 +1,15 @@
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
+import { SearchIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
+  NotificationIcon,
   PinIcon,
   Route02Icon,
   StickyNote01Icon,
-  // DiscoverCircleIcon,
 } from "../icons";
-import { SearchIcon } from "lucide-react";
 
 export default function SidebarTopButtons() {
   const navigate = useNavigate();
@@ -25,6 +25,11 @@ export default function SidebarTopButtons() {
       route: "/try/search",
       icon: <SearchIcon width={26} height={26} />,
       label: "Search",
+    },
+    {
+      route: "/try/notifications",
+      icon: <NotificationIcon width={27} height={27} />,
+      label: "Notifications",
     },
     {
       route: "/try/pins",

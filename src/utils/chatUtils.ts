@@ -60,7 +60,11 @@ export const ApiService = {
     onClose: () => void,
     onError: (err: any) => void
   ) => {
-    convoMessages.push({ type: "user", response: inputText });
+    convoMessages.push({
+      type: "user",
+      response: inputText,
+      message_id: "",
+    });
 
     const controller = new AbortController();
 

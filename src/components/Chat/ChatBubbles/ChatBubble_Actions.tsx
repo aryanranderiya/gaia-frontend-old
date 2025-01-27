@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import TextToSpeech from "../../Audio/TextToSpeechComponent";
 import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../icons";
-import { useEffect } from "react";
 
 interface ChatBubbleActionsProps {
   loading: boolean;

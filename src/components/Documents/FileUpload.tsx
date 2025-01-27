@@ -6,11 +6,12 @@ import { ApiService } from "@/utils/chatUtils";
 import fetchDate from "@/utils/fetchDate";
 import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
-import { Spinner } from "@nextui-org/spinner";
 import imageCompression from "browser-image-compression";
+import { FileIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { v1 as uuidv1 } from "uuid";
 import {
   Dialog,
   DialogContent,
@@ -18,9 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { PdfContainer } from "./PdfComponent";
-import { v1 as uuidv1 } from "uuid";
-import { FileIcon } from "lucide-react";
+import ObjectID from "bson-objectid";
 
 interface FileUploadProps {
   isImage: boolean;
@@ -37,7 +36,7 @@ export default function FileUpload({
   const navigate = useNavigate();
 
   const [file, setFile] = useState<File | null>(null);
-  const [fileLoading, setFileLoading] = useState<boolean>(false);
+  // const [fileLoading, setFileLoading] = useState<boolean>(false);
   const [textContent, setTextContent] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
@@ -57,7 +56,7 @@ export default function FileUpload({
   const handleFileSelect = async (
     event: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
-    setFileLoading(true);
+    // setFileLoading(true);
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
 
@@ -77,7 +76,7 @@ export default function FileUpload({
     } else {
       setFile(selectedFile);
     }
-    setFileLoading(false);
+    // setFileLoading(false);
   };
 
   // const updateConversationState = async (
@@ -193,15 +192,20 @@ export default function FileUpload({
     try {
       console.log(file);
 
+      const bot_message_id = String(ObjectID());
+      const user_message_id = String(ObjectID());
+
       const currentMessages: MessageType[] = [
         {
           type: "user",
+          message_id: user_message_id,
           response: textContent,
           filename: file.name,
           date: fetchDate(),
         },
         {
           type: "bot",
+          message_id: bot_message_id,
           response: "",
           date: fetchDate(),
           loading: true,
@@ -226,6 +230,7 @@ export default function FileUpload({
 
       const finalBotMessage: MessageType = {
         type: "bot",
+        message_id: bot_message_id,
         response: botResponse,
         date: fetchDate(),
         loading: false,
