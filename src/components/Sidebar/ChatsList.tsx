@@ -78,7 +78,6 @@ export default function ChatsList() {
     resetMessages();
   };
 
-  // Group conversations by time frame and add index for sorting
   const groupedConversations = conversations.reduce((acc, conversation) => {
     const timeFrame = getTimeFrame(conversation.createdAt);
     if (!acc[timeFrame]) {
@@ -122,7 +121,7 @@ export default function ChatsList() {
         ) : (
           <>
             {/* <div className="bg-zinc-700 rounded-lg min-h-4"> */}
-            <div className="bg-zinc-900 min-h-[50px] pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
+            <div className="bg-zinc-900 min-h-[75px] pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
               <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
                 Starred Chats
               </div>
@@ -132,12 +131,13 @@ export default function ChatsList() {
                     (conversation: {
                       conversation_id: string;
                       description: string;
+                      starred?: boolean;
                     }) => (
                       <ChatTab
                         key={conversation.conversation_id}
                         id={conversation.conversation_id}
                         name={conversation.description || "New Chat"}
-                        starred={conversation.starred}
+                        starred={conversation.starred || false}
                       />
                     )
                   )
@@ -163,6 +163,7 @@ export default function ChatsList() {
                   .map(
                     (conversation: {
                       conversation_id: string;
+                      starred: boolean;
                       description: string;
                     }) => (
                       <ChatTab

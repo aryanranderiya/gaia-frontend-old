@@ -1,14 +1,14 @@
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { apiauth } from "@/utils/apiaxios";
+import { ApiService } from "@/utils/chatUtils";
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
 import { XIcon } from "lucide-react";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import TextToSpeech from "../../Audio/TextToSpeechComponent";
 import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../icons";
-import { apiauth } from "@/utils/apiaxios";
-import { useParams } from "react-router-dom";
-import { useConversation } from "@/hooks/useConversation";
-import { ApiService } from "@/utils/chatUtils";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useEffect } from "react";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
@@ -25,17 +25,6 @@ export function ChatBubble_Actions({
 }: ChatBubbleActionsProps): JSX.Element {
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const { setConvoMessages } = useConvo();
-
-  console.log(pinned);
-
-  const fetchMessages = async (conversationId: string) => {
-    try {
-      const messages = await ApiService.fetchMessages(conversationId);
-      if (messages.length > 1) setConvoMessages(messages);
-    } catch (e) {
-      console.error("Failed to fetch messages:", e);
-    }
-  };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
@@ -56,16 +45,22 @@ export function ChatBubble_Actions({
     try {
       if (!convoIdParam) return;
 
-      await fetchMessages(convoIdParam);
+      // Fetch updated messages first
+      // const messages = await ApiService.fetchMessages(convoIdParam);
+      // setConvoMessages(messages);
 
+      if (!message_id) return;
+
+      // Pin/unpin the message
       await apiauth.put(
         `/conversations/${convoIdParam}/messages/${message_id}/pin`,
-        {
-          pinned: !pinned,
-        }
+        { pinned: !pinned }
       );
 
-      await fetchMessages(convoIdParam);
+      console.log("Updated pin route");
+      // Fetch messages again to reflect the pin state
+      const updatedMessages = await ApiService.fetchMessages(convoIdParam);
+      setConvoMessages(updatedMessages);
     } catch (error) {
       console.error("Failed to update chat name", error);
     }

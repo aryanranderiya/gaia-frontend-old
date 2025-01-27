@@ -8270,6 +8270,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bson-objectid@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "bson-objectid@npm:2.0.4"
+  checksum: 10c0/9dbe55a8cd5ed5ddae0c971429a34caadcf38bc5b98070302e740be2e3c04ab2280925c8f4cba28c88e13f51018dff7d674c610370847286e27e6d76c8990a3f
+  languageName: node
+  linkType: hard
+
 "cacache@npm:^18.0.0":
   version: 18.0.4
   resolution: "cacache@npm:18.0.4"
@@ -15981,6 +15988,7 @@ __metadata:
     axios: "npm:^1.7.2"
     axios-cache-interceptor: "npm:^1.6.2"
     browser-image-compression: "npm:^2.0.2"
+    bson-objectid: "npm:^2.0.4"
     canvas-confetti: "npm:^1.9.3"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"

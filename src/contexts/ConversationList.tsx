@@ -7,11 +7,11 @@ import React, {
 } from "react";
 import { apiauth } from "@/utils/apiaxios";
 
-// Define the context type
+// Define the context type1
 interface Conversation {
   conversation_id: string;
   description: string;
-  starred: boolean;
+  starred?: boolean;
   createdAt: string;
 }
 

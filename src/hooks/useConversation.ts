@@ -7,6 +7,7 @@ import fetchDate from "@/utils/fetchDate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
+import ObjectID from "bson-objectid";
 
 export const useConversation = (convoIdParam: string | null) => {
   const { setIsLoading } = useLoading();
@@ -57,7 +58,8 @@ export const useConversation = (convoIdParam: string | null) => {
     currentMessages: MessageType[],
     conversationId: string,
     enableSearch: boolean,
-    pageFetchURL: string
+    pageFetchURL: string,
+    bot_message_id: string
   ) => {
     let botResponseText = "";
     setLoading(true);
@@ -66,6 +68,7 @@ export const useConversation = (convoIdParam: string | null) => {
       botResponseText += response;
       const botResponse: MessageType = {
         type: "bot",
+        message_id: bot_message_id,
         response: botResponseText,
         searchWeb: enableSearch,
         pageFetchURL,
@@ -95,6 +98,7 @@ export const useConversation = (convoIdParam: string | null) => {
         loading: false,
         searchWeb: enableSearch,
         pageFetchURL,
+        message_id: bot_message_id,
       };
 
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;
@@ -131,6 +135,8 @@ export const useConversation = (convoIdParam: string | null) => {
     enableSearch: boolean = false,
     pageFetchURL: string
   ) => {
+    const bot_message_id = String(ObjectID());
+
     const currentMessages: MessageType[] = [
       {
         type: "user",
@@ -138,12 +144,14 @@ export const useConversation = (convoIdParam: string | null) => {
         searchWeb: enableSearch,
         pageFetchURL,
         date: fetchDate(),
+        message_id: String(ObjectID()),
       },
       {
         searchWeb: enableSearch,
         pageFetchURL,
         type: "bot",
         response: "",
+        message_id: bot_message_id,
         date: fetchDate(),
       },
     ];
@@ -166,7 +174,8 @@ export const useConversation = (convoIdParam: string | null) => {
       currentMessages,
       conversationId,
       enableSearch,
-      pageFetchURL
+      pageFetchURL,
+      bot_message_id
     );
   };
 

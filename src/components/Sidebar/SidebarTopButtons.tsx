@@ -4,34 +4,33 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
-  DiscoverCircleIcon,
+  PinIcon,
   Route02Icon,
   StickyNote01Icon,
-  // PinIcon,
+  // DiscoverCircleIcon,
 } from "../icons";
 import { SearchIcon } from "lucide-react";
-// import { SearchIcon } from "lucide-react";
 
 export default function SidebarTopButtons() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const buttonData = [
-    {
-      route: "/try/explore",
-      icon: <DiscoverCircleIcon width={27} height={27} />,
-      label: "Explore",
-    },
+    // {
+    //   route: "/try/explore",
+    //   icon: <DiscoverCircleIcon width={27} height={27} />,
+    //   label: "Explore",
+    // },
     {
       route: "/try/search",
       icon: <SearchIcon width={26} height={26} />,
       label: "Search",
     },
-    // {
-    //   route: "/try/pins",
-    //   icon: <PinIcon width={27} height={27} />,
-    //   label: "Pins",
-    // },
+    {
+      route: "/try/pins",
+      icon: <PinIcon width={27} height={27} />,
+      label: "Pins",
+    },
     {
       route: "/try/calendar",
       icon: <CalendarIcon width={27} height={27} />,
@@ -50,13 +49,14 @@ export default function SidebarTopButtons() {
   ];
 
   return (
-    <div className="bg-[#141414] rounded-2xl p-2 gap-1 flex flex-wrap items-center justify-between">
+    <div className="bg-[#141414] rounded-2xl p-2 gap-1 grid grid-cols-4 items-start grid-rows-2">
       {buttonData.map(({ route, icon, label }) => (
         <Tooltip key={route} showArrow={true} content={label}>
           <Button
-            className="w-fit"
+            className="w-full"
             isIconOnly
             size="lg"
+            radius="lg"
             // variant="flat"
             variant={location.pathname === route ? "solid" : "flat"}
             color={location.pathname === route ? "primary" : "default"}
