@@ -1,14 +1,14 @@
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { MessageType } from "@/types/ConvoTypes";
-import { Button } from "@nextui-org/button";
-import { Textarea } from "@nextui-org/input";
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";

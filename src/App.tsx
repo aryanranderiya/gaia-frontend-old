@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import SuspenseLoader from "./components/SuspenseLoader";
@@ -8,6 +8,7 @@ const MainInterface = lazy(() => import("./pages/MainInterface"));
 
 function App() {
   const location = useLocation();
+  const [onboardingOpen, setOnboardingOpen] = useState(true);
 
   useEffect(() => {
     const { pathname } = location;
@@ -61,6 +62,8 @@ function App() {
 
     titleElement.textContent = title;
   }, [location]);
+
+  window.document.documentElement.classList.add("dark");
 
   return (
     <UserProvider>

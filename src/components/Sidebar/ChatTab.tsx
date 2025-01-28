@@ -1,5 +1,5 @@
 import { Chatting01Icon } from "@/components/icons";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ChatOptionsDropdown from "./ChatOptionsDropdown";

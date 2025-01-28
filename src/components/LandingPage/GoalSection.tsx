@@ -1,6 +1,6 @@
-import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
-import { Input } from "@nextui-org/input";
+import { Button } from "@heroui/button";
+import { Chip } from "@heroui/chip";
+import { Input } from "@heroui/input";
 import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import StaticSidebar from "../Goals/StaticSidebar";

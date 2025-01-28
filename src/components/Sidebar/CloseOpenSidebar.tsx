@@ -1,5 +1,5 @@
 import useMediaQuery from "@/hooks/MediaQuery";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { Menu02Icon, SidebarLeftIcon } from "../icons";
 
 export interface CloseOpenSidebarBtnProps {

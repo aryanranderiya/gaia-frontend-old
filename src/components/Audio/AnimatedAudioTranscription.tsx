@@ -7,9 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@nextui-org/button";
-import { Textarea } from "@nextui-org/input";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
+import { Tooltip } from "@heroui/tooltip";
 import { AnimatePresence } from "framer-motion";
 import { Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

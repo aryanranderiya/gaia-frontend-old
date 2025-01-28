@@ -1,6 +1,6 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { SentIcon } from "../icons";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@heroui/tooltip";
 import AnimatedAudioTranscription from "../Audio/AnimatedAudioTranscription";
 // import MicrophoneBtn from "../Audio/MicrophoneBtn";
 

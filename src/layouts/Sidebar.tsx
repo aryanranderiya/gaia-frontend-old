@@ -5,7 +5,7 @@ import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@heroui/tooltip";
 import { LegacyRef, useState } from "react";
 
 export default function Sidebar({
@@ -31,7 +31,7 @@ export default function Sidebar({
                 <div className="flex gap-2 items-center p-2">
                   <GlobalIcon color="white" width="22" />
                   {/* <img
-                    src={"/gaialogo.png"}
+                    src={"/gaialogo.png"}e
                     width={25}
                     height={25}
                     // className="animate-bounce2"

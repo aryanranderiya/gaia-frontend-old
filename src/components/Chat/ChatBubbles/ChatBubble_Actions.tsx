@@ -1,8 +1,8 @@
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { apiauth } from "@/utils/apiaxios";
 import { ApiService } from "@/utils/chatUtils";
-import { Button } from "@nextui-org/button";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Button } from "@heroui/button";
+import { Tooltip } from "@heroui/tooltip";
 import { XIcon } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";

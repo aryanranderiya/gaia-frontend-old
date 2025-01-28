@@ -7,11 +7,11 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 // import Lottie from "react-lottie";
 // import recordingAnimation from "../lotties/recording.json";
 import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 // Define props type for the MicrophoneBtn component
 interface MicrophoneBtnProps {

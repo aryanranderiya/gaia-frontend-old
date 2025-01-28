@@ -3,7 +3,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
+} from "@heroui/dropdown";
 import { useEffect, useRef, useState } from "react";
 import FileUpload from "../Documents/FileUpload";
 import {

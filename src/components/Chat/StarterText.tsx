@@ -1,4 +1,4 @@
-// import { Chip } from "@nextui-org/chip";
+// import { Chip } from "@heroui/chip";
 // import { WavingHand01Icon } from "../icons";
 // import img from "/public/gaia.logo.png";
 import {
@@ -13,7 +13,6 @@ import {
 } from "../icons";
 import { Badge } from "../ui/badge";
 import { ArrowUpRight } from "lucide-react";
-
 
 const badges = [
   {
@@ -134,21 +133,20 @@ export default function StarterText() {
         What can I do for you today?
       </span>
 
-      <div className="text-foreground-500 text-xs -mt-1 mb-1">
+      {/* <div className="text-foreground-500 text-xs -mt-1 mb-1">
         I can do the following for you:
-      </div>
+      </div> */}
       <div className="flex gap-2 flex-wrap max-w-[650px] justify-center">
         {badges.map((badge, index) => (
-          <Badge
+          <div
             key={index}
-            variant={badge.variant as "secondary" | "default" | "outline"}
-            className={`${badge.bgClass} cursor-pointer bg-opacity-20 hover:bg-opacity-80 text-sm ${badge.textClass} font-medium hover:text-white group`}
+            className={`${badge.bgClass} cursor-pointer bg-opacity-20 hover:bg-opacity-80 text-sm ${badge.textClass} font-medium hover:text-white group px-2 rounded-full transition-all`}
           >
             <div className="flex items-center gap-1">
               {badge.icon}
               {badge.text}
             </div>
-          </Badge>
+          </div>
         ))}
       </div>
     </>

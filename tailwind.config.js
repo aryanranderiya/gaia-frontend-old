@@ -1,4 +1,4 @@
-import { nextui } from "@nextui-org/theme";
+import { heroui } from "@heroui/theme";
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -12,10 +12,15 @@ module.exports = {
     "./src/layouts/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
+      command: {
+        bg: "#1E293B", // Background color
+        text: "#F8FAFC", // Text color
+        border: "#334155", // Border color
+      },
       animation: {
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         grid: "grid 15s linear infinite",
@@ -77,11 +82,11 @@ module.exports = {
       },
     },
   },
-  darkMode: ["class", "class"],
+  darkMode: "class",
   plugins: [
     addVariablesForColors,
     require("tailwindcss-animate"),
-    nextui({
+    heroui({
       themes: {
         dark: {
           colors: {

@@ -3,8 +3,8 @@ import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { GoalCard } from "@/components/Goals/GoalCard";
 import { Target04Icon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/spinner";
+import { Button } from "@heroui/button";
+import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

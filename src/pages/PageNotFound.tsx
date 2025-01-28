@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { useNavigate } from "react-router-dom";
 import { LinkBackwardIcon } from "@/components/icons";
 

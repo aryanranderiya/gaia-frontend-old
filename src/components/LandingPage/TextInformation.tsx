@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { Link } from "react-router-dom";
 import { ColoredLine } from "../HorizontalRuler";
 import WordPullUp from "../MagicUI/word-pull-up";

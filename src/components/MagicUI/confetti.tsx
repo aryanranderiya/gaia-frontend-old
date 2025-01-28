@@ -15,7 +15,7 @@ import type {
   Options as ConfettiOptions,
 } from "canvas-confetti";
 
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 type Api = {
   fire: (options?: ConfettiOptions) => void;

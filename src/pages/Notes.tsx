@@ -2,8 +2,8 @@ import { StickyNote01Icon } from "@/components/icons";
 import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
-import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/spinner";
+import { Button } from "@heroui/button";
+import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

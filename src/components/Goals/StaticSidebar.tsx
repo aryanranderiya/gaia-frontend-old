@@ -1,5 +1,5 @@
-import { Checkbox } from "@nextui-org/checkbox";
-import { Chip } from "@nextui-org/chip";
+import { Checkbox } from "@heroui/checkbox";
+import { Chip } from "@heroui/chip";
 import { Clock } from "lucide-react";
 import { BookIcon1 } from "../icons";
 import React from "react";

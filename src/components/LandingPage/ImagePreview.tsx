@@ -2,7 +2,7 @@
 // import StarterText from "../Chat/StarterText";
 import { useState } from "react";
 import { Safari } from "../ui/safari";
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@heroui/spinner";
 
 export default function ImagePreview() {
   const [isImageLoaded, setIsImageLoaded] = useState(false);

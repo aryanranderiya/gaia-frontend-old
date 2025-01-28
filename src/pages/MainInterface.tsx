@@ -13,7 +13,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
-import Search from "./Search";
+import Search from "../components/Search/Search";
 
 // Lazy load the components
 const Sidebar = lazy(() => import("../layouts/Sidebar"));
@@ -87,9 +87,9 @@ export default function MainInterface() {
       <ConvoProvider>
         <LoadingProvider>
           <div className="main_container dark">
-            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-              <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
-            </Suspense>
+            {/* <Suspense fallback={<SuspenseLoader fullHeight={true} />}> */}
+            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+            {/* </Suspense> */}
             <div
               ref={contentContainerRef}
               onClick={hideSidebar}

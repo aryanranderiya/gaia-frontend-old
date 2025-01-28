@@ -1,8 +1,8 @@
 import { ArrowLeft01Icon, StarsIcon, Tick02Icon } from "@/components/icons";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
-import { Tab, Tabs } from "@nextui-org/tabs";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Button } from "@heroui/button";
+import { Chip } from "@heroui/chip";
+import { Tab, Tabs } from "@heroui/tabs";
 
 function FAQAccordion() {
   const faqItems = [

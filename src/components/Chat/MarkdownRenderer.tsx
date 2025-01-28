@@ -1,8 +1,8 @@
 "use client";
 
 import { useLoading } from "@/contexts/LoadingContext";
-import { Button } from "@nextui-org/button";
-import { Tab, Tabs } from "@nextui-org/tabs";
+import { Button } from "@heroui/button";
+import { Tab, Tabs } from "@heroui/tabs";
 import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
 import type React from "react";
@@ -122,7 +122,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 
   if (isMermaid) {
     return (
-      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
+      (<div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
         <Tabs
           selectedKey={activeTab}
           onSelectionChange={(key) => {
@@ -208,55 +208,53 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             </div>
           )}
         </Button>
-      </div>
+      </div>)
     );
   }
 
-  return (
-    <>
-      {!inline && match ? (
-        <div className="relative flex flex-col gap-0 ">
-          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
-            <span className="text-sm font-mono monospace">{match[1]}</span>
-            <Button
-              onPress={handleCopy}
-              size="sm"
-              variant="light"
-              className="text-foreground hover:text-gray-300 text-xs"
-            >
-              {copied ? (
-                <div className="flex flex-row gap-1 items-center">
-                  <TaskDone01Icon width={21} color="foreground" />
-                  <p>Copied!</p>
-                </div>
-              ) : (
-                <div className="flex flex-row gap-1 items-center">
-                  <Task01Icon width={21} color="foreground" />
-                  <p>Copy Code</p>
-                </div>
-              )}
-            </Button>
-          </div>
-          <SyntaxHighlighter
-            style={vscDarkPlus}
-            language={match[1]}
-            PreTag="div"
-            className="m-0 !bg-black !text-[10px]"
-            showLineNumbers
+  return (<>
+    {!inline && match ? (
+      <div className="relative flex flex-col gap-0 ">
+        <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
+          <span className="text-sm font-mono monospace">{match[1]}</span>
+          <Button
+            onPress={handleCopy}
+            size="sm"
+            variant="light"
+            className="text-foreground hover:text-gray-300 text-xs"
           >
-            {String(children).replace(/\n$/, "")}
-          </SyntaxHighlighter>
+            {copied ? (
+              <div className="flex flex-row gap-1 items-center">
+                <TaskDone01Icon width={21} color="foreground" />
+                <p>Copied!</p>
+              </div>
+            ) : (
+              <div className="flex flex-row gap-1 items-center">
+                <Task01Icon width={21} color="foreground" />
+                <p>Copy Code</p>
+              </div>
+            )}
+          </Button>
         </div>
-      ) : (
-        <code
-          className={className + " bg-black bg-opacity-40 rounded-sm"}
-          {...props}
+        <SyntaxHighlighter
+          style={vscDarkPlus}
+          language={match[1]}
+          PreTag="div"
+          className="m-0 !bg-black !text-[10px]"
+          showLineNumbers
         >
-          {children}
-        </code>
-      )}
-    </>
-  );
+          {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
+      </div>
+    ) : (
+      <code
+        className={className + " bg-black bg-opacity-40 rounded-sm"}
+        {...props}
+      >
+        {children}
+      </code>
+    )}
+  </>);
 };
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({

@@ -2,21 +2,21 @@ import { PencilEdit02Icon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { apiauth } from "@/utils/apiaxios";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
-import { Input } from "@nextui-org/input";
+} from "@heroui/dropdown";
+import { Input } from "@heroui/input";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Star, Trash } from "lucide-react";
 import { SetStateAction, useState } from "react";

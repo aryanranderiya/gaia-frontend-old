@@ -1,5 +1,5 @@
 import { useUser } from "@/contexts/UserContext";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

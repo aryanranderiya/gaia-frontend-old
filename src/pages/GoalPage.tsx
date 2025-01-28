@@ -2,8 +2,8 @@ import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
-import { Checkbox } from "@nextui-org/checkbox";
-import { Chip } from "@nextui-org/chip";
+import { Checkbox } from "@heroui/checkbox";
+import { Chip } from "@heroui/chip";
 import {
   ConnectionLineType,
   Edge,

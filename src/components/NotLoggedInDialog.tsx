@@ -5,7 +5,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 export default function NotLoggedIn() {
   return (

@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/button";
-import { Tab, Tabs } from "@nextui-org/tabs";
+import { Button } from "@heroui/button";
+import { Tab, Tabs } from "@heroui/tabs";
 import { Download, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -118,7 +118,7 @@ const FlowchartDemo = () => {
   }, [handleWheel]);
 
   return (
-    <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4">
+    (<div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4">
       <div className="flex items-start flex-col justify-start gap-5 min-h-32">
         <SectionHeading
           heading={"Create flowcharts with ease"}
@@ -133,7 +133,6 @@ const FlowchartDemo = () => {
           }
         />
       </div>
-
       {/* <div className="min-w-[37vw] w-fit space-y-4 bg-black p-10 rounded-3xl"> */}
       {/* <div className="w-[80%] bg-black p-10 rounded-3xl space-y-4"> */}
       <div className="sm:w-[80%] w-full bg-black sm:p-10 p-3 rounded-3xl space-y-4">
@@ -211,7 +210,7 @@ const FlowchartDemo = () => {
           </div>
         </SimpleChatBubbleBot>
       </div>
-    </div>
+    </div>)
   );
 };
 

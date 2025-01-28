@@ -1,6 +1,6 @@
 import { apiauth } from "@/utils/apiaxios";
-import { Checkbox } from "@nextui-org/checkbox";
-import { Spinner } from "@nextui-org/spinner";
+import { Checkbox } from "@heroui/checkbox";
+import { Spinner } from "@heroui/spinner";
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { ScrollArea } from "../ui/scroll-area";

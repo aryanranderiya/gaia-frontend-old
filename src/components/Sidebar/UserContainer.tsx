@@ -1,8 +1,8 @@
 import { useUser } from "@/contexts/UserContext";
 import useFetchUser from "@/hooks/useFetchUser";
-import { User } from "@nextui-org/user";
+import { User } from "@heroui/user";
 import SettingsMenu from "./SettingsMenu";
-// import { Spinner } from "@nextui-org/spinner";
+// import { Spinner } from "@heroui/spinner";
 
 const UserContainer: React.FC = () => {
   const { user } = useUser();

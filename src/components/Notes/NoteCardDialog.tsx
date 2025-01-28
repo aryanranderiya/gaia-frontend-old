@@ -1,18 +1,18 @@
 // import { Note } from "@/pages/Notes";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   // ModalHeader,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/dropdown";
+} from "@heroui/dropdown";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 
 export function NoteDialog({

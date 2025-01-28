@@ -16,7 +16,7 @@ import smiley15 from "../Smileys/15.webp";
 import smiley16 from "../Smileys/16.webp";
 import smiley23 from "../Smileys/23.webp";
 import smiley24 from "../Smileys/24.webp";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@heroui/tooltip";
 import { useEffect, useState } from "react";
 
 export default function StarterEmoji() {

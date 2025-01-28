@@ -1,7 +1,7 @@
 import SuspenseLoader from "@/components/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
-import { Chip } from "@nextui-org/chip";
-import { Skeleton } from "@nextui-org/skeleton";
+import { Chip } from "@heroui/chip";
+import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";

@@ -1,6 +1,6 @@
 import api from "@/utils/apiaxios";
-import { Button } from "@nextui-org/button";
-// import { Spinner } from "@nextui-org/spinner";
+import { Button } from "@heroui/button";
+// import { Spinner } from "@heroui/spinner";
 import * as React from "react";
 import { VolumeHighIcon, VolumeOffIcon } from "../icons";
 import { Loader } from "lucide-react";

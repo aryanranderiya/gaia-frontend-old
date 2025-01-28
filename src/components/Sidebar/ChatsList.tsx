@@ -1,7 +1,7 @@
 import { PlusSignIcon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { isToday, isYesterday, subDays } from "date-fns";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -47,7 +47,7 @@ const timeFramePriority = (timeFrame: string): number => {
     case "All time":
       return 4;
     default:
-      return 5; // Catch-all for unexpected cases
+      return 5;
   }
 };
 

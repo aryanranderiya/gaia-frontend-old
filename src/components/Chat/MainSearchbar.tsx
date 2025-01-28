@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useConversation } from "@/hooks/useConversation";
-import { Button } from "@nextui-org/button";
-import { useCheckbox } from "@nextui-org/checkbox";
-import { Chip } from "@nextui-org/chip";
-import { Input, Textarea } from "@nextui-org/input";
-import { VisuallyHidden, tv } from "@nextui-org/react";
+import { Button } from "@heroui/button";
+import { useCheckbox } from "@heroui/checkbox";
+import { Chip } from "@heroui/chip";
+import { Input, Textarea } from "@heroui/input";
+import { VisuallyHidden, tv } from "@heroui/react";
 import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";

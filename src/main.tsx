@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -10,7 +10,7 @@ import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
-  return <NextUIProvider navigate={navigate}>{children}</NextUIProvider>;
+  return <HeroUIProvider navigate={navigate}>{children}</HeroUIProvider>;
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

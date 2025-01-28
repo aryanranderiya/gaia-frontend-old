@@ -1,5 +1,5 @@
 import StarterEmoji from "@/components/Chat/StarterEmoji";
-import { Tabs, Tab } from "@nextui-org/tabs";
+import { Tabs, Tab } from "@heroui/tabs";
 import {
   GoogleDriveIcon,
   Target02Icon,

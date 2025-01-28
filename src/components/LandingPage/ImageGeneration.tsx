@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@nextui-org/chip";
+import { Chip } from "@heroui/chip";
 import { useState, useEffect } from "react";
 import { SimpleChatBubbleUser } from "../Chat/ChatBubbles/SimpleChatBubbles";
 import { AiImageIcon } from "../icons";

@@ -5,10 +5,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
-import { Switch } from "@nextui-org/switch";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
+import { Switch } from "@heroui/switch";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   KeyboardEvent as ReactKeyboardEvent,
