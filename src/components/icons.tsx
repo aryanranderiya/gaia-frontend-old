@@ -2855,7 +2855,6 @@ export const TriangleFilledIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <title>triangle-filled</title>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="drop" fill="#000000" transform="translate(32.000000, 42.666667)">
         <path

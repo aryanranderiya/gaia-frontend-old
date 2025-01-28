@@ -121,11 +121,11 @@ export default function ChatsList() {
         ) : (
           <>
             {/* <div className="bg-zinc-700 rounded-lg min-h-4"> */}
-            <div className="bg-zinc-900 min-h-[75px] pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
+            <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
               <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
                 Starred Chats
               </div>
-              <div className="flex w-full px-1 flex-col">
+              <div className="flex w-full px-1 flex-col ">
                 {starredConversations.length > 0 ? (
                   starredConversations.map(
                     (conversation: {

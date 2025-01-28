@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
+  DiscoverCircleIcon,
   NotificationIcon,
   PinIcon,
   Route02Icon,
@@ -16,18 +17,18 @@ export default function SidebarTopButtons() {
   const location = useLocation();
 
   const buttonData = [
-    // {
-    //   route: "/try/explore",
-    //   icon: <DiscoverCircleIcon width={27} height={27} />,
-    //   label: "Explore",
-    // },
+    {
+      route: "/try/explore",
+      icon: <DiscoverCircleIcon width={27} height={27} />,
+      label: "Explore",
+    },
     {
       route: "/try/search",
       icon: <SearchIcon width={26} height={26} />,
       label: "Search",
     },
     {
-      route: "/try/notifications",
+      route: "/try/search",
       icon: <NotificationIcon width={27} height={27} />,
       label: "Notifications",
     },

@@ -11,7 +11,7 @@ import { Button } from "@nextui-org/button";
 import { Textarea } from "@nextui-org/input";
 import { Tooltip } from "@nextui-org/tooltip";
 import { AnimatePresence } from "framer-motion";
-import { Mic, Send, X } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Mic02Icon } from "../icons";
 // import MicrophoneBtn from "./MicrophoneBtn";
@@ -181,7 +181,7 @@ export default function AnimatedAudioTranscription({
             onPress={() => setIsOpen(true)}
             // className={`${loading && "cursor-wait"}`}
           >
-            <Mic className="text-zinc-400" />
+            <Mic02Icon className="text-zinc-400" />
             {/* <Mic className="text-[#ffffff70]" /> */}
           </Button>
         </Tooltip>

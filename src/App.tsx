@@ -1,5 +1,5 @@
-import { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import SuspenseLoader from "./components/SuspenseLoader";
 import Landing from "./layouts/Landing";
@@ -7,6 +7,61 @@ import NotLoggedIn from "@/components/NotLoggedInDialog";
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const { pathname } = location;
+    let title;
+
+    if (/^\/try\/chat\/[^/]+$/.test(pathname)) {
+      const titleElement = document.querySelector("title");
+      if (titleElement && titleElement?.id != "chat_title") {
+        titleElement.remove();
+      }
+      return;
+    }
+
+    let titleElement = document.querySelector("title");
+    if (!titleElement) {
+      titleElement = document.createElement("title");
+      document.head.appendChild(titleElement);
+    }
+
+    switch (pathname) {
+      case "/try/chat":
+        title = "GAIA - New Chat";
+        break;
+      case "/try/search":
+        title = "GAIA - Search";
+        break;
+      case "/try/goals":
+        title = "GAIA - Goals";
+        break;
+      case "/try/notes":
+        title = "GAIA - Notes";
+        break;
+      case "/try/pins":
+        title = "GAIA - Pins";
+        break;
+      case "/terms":
+        title = "GAIA - Terms of Service";
+        break;
+      case "/privacy":
+        title = "GAIA - Privacy Policy";
+        break;
+      case "/login":
+        title = "Login to GAIA";
+        break;
+      case "/signup":
+        title = "Signup for GAIA";
+        break;
+      default:
+        title = "GAIA";
+    }
+
+    titleElement.textContent = title;
+  }, [location]);
+
   return (
     <UserProvider>
       <NotLoggedIn />

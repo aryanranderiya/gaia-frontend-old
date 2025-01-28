@@ -30,16 +30,16 @@ const list = [
   //   icon: <VoiceIcon width={35} height={35} />,
   // },
 
-  {
-    title: "Save Messages",
-    description: "Pin & save messages for later",
-    icon: <PinIcon width={35} height={35} />,
-  },
-  {
-    title: "File Upload",
-    description: "Supports document & media uploads",
-    icon: <FileUploadIcon width={35} height={35} />,
-  },
+  // {
+  //   title: "Save Messages",
+  //   description: "Pin & save messages for later",
+  //   icon: <PinIcon width={35} height={35} />,
+  // },
+  // {
+  //   title: "File Upload",
+  //   description: "Supports document & media uploads",
+  //   icon: <FileUploadIcon width={35} height={35} />,
+  // },
   {
     title: "End-to-End Encryption",
     description: "Support for End to End Encryption for increased privacy",

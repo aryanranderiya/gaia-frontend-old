@@ -2,12 +2,13 @@
 import StarterText from "@/components/Chat/StarterText";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import StarterEmoji from "./StarterEmoji";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { useConversationList } from "@/contexts/ConversationList";
 
 const ChatBubbleBot = React.lazy(
   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
@@ -18,9 +19,11 @@ const ChatBubbleUser = React.lazy(
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
+  const { conversations } = useConversationList();
   const [openImage, setOpenImage] = useState<boolean>(false);
   const location = useLocation();
   const { messageId } = location.state || "";
+  const { convoIdParam } = useParams<{ convoIdParam: string }>();
   const [imageData, setImageData] = useState({
     src: "",
     prompt: "",
@@ -66,9 +69,27 @@ export default function ChatRenderer() {
     );
   }
 
+  // useEffect(() => {
+  //   const title =
+  //     conversations.find(
+  //       (convo) =>
+  //         convo.conversation_id === "19648170-dd3f-11ef-944e-5d64ac3b30d2"
+  //     )?.description || "GAIA";
+
+  //   document.title = `GAIA - ${title}` || "GAIA";
+  // }, []);
+
   return (
     <>
+      {/* {conversations.find()} */}
       {/* Image Generation Dialog Box */}
+      <title id="chat_title">
+        {`${
+          conversations.find((convo) => convo.conversation_id === convoIdParam)
+            ?.description || ""
+        }` || "GAIA"}
+      </title>
+
       <Dialog onOpenChange={setOpenImage} open={openImage}>
         <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit py-3 px-5">
           <img
