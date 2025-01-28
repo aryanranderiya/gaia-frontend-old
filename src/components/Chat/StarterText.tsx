@@ -1,6 +1,7 @@
 // import { Chip } from "@heroui/chip";
 // import { WavingHand01Icon } from "../icons";
 // import img from "/public/gaia.logo.png";
+import { ArrowUpRight } from "lucide-react";
 import {
   BlushBrush02Icon,
   Calendar01Icon,
@@ -11,8 +12,6 @@ import {
   Route02Icon,
   StickyNote01Icon,
 } from "../icons";
-import { Badge } from "../ui/badge";
-import { ArrowUpRight } from "lucide-react";
 
 const badges = [
   {

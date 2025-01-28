@@ -38,20 +38,8 @@ export function parseDate(isoDateString: string): string {
 
 export function parseDate2(isoDateString: string): string {
   const date = new Date(isoDateString);
-  const optionsTime: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  };
   const optionsMonth: Intl.DateTimeFormatOptions = { month: "short" };
-  const optionsYear: Intl.DateTimeFormatOptions = { year: "2-digit" };
-
-  // const time = date
-  //   .toLocaleString(navigator.language, optionsTime)
-  //   .toUpperCase();
   const month = date.toLocaleString(navigator.language, optionsMonth);
-  const year = date.toLocaleString(navigator.language, optionsYear);
   const day = date.getDate();
-
   return `${day}${nth(day)} ${month}`.trim();
 }

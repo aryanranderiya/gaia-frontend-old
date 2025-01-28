@@ -2,12 +2,10 @@ import { InternetIcon, PinIcon } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
 import { parseDate } from "@/utils/fetchDate";
-import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
-import { CircleBackslashIcon } from "@radix-ui/react-icons";
-import { ArrowUpRight, DeleteIcon, SearchIcon } from "lucide-react";
+import { ArrowUpRight, DeleteIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

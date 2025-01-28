@@ -1,11 +1,9 @@
 import {
+  BubbleChatLockIcon,
   CalendarIcon,
-  FileUploadIcon,
   GoogleDriveIcon,
   LanguageSkillIcon,
-  Mail01Icon,
-  PinIcon,
-  BubbleChatLockIcon,
+  Mail01Icon
 } from "../icons";
 
 const list = [

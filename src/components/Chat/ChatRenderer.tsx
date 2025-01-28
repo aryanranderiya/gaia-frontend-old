@@ -1,14 +1,14 @@
 // ChatRenderer.tsx
 import StarterText from "@/components/Chat/StarterText";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import StarterEmoji from "./StarterEmoji";
-import { useLocation, useParams } from "react-router-dom";
-import { useConversationList } from "@/contexts/ConversationList";
 
 const ChatBubbleBot = React.lazy(
   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
