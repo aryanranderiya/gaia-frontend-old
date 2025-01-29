@@ -54,10 +54,13 @@ export default function HeroSection() {
             radius="full"
             variant="shadow"
             size="lg"
-            className="font-medium mt-8"
+            className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
           >
             <div className="flex items-center gap-1">
-              Get Started -<span className="font-normal">It's free!</span>
+              Get Started
+              <span className="font-normal max-w-0 opacity-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-[opacity] duration-200 ease group-hover:transition-[max-width] group-hover:duration-200 overflow-hidden whitespace-nowrap">
+                &#8212; It's free!
+              </span>
               <ArrowUpRight />
             </div>
           </Button>

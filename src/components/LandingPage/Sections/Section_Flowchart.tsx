@@ -7,8 +7,7 @@ import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
-import { FlowchartIcon, Task01Icon, TaskDone01Icon } from "../icons";
-import { SectionHeading } from "../misc/SectionHeading";
+import { FlowchartIcon, Task01Icon, TaskDone01Icon } from "@/components/icons";
 import LandingPage1Layout from "@/layouts/LandingPage1";
 
 mermaid.initialize({});
@@ -127,87 +126,92 @@ const FlowchartDemo = () => {
       icon={
         <FlowchartIcon
           color="#ffffff90"
-          className="sm:size-[45px] size-[35px]"
+          className="sm:size-[30px] size-[30px]"
         />
       }
     >
-      <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4">
-        <div className="sm:w-[80%] w-full bg-black sm:p-10 p-3 rounded-3xl space-y-4">
+      {/* <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4"> */}
+      {/* <div className="sm:w-[80%] w-full bg-black sm:p-10 p-3 rounded-3xl space-y-4"> */}
+
+      <div className="w-100% flex justify-end">
+        <div className="w-[80%]">
           <SimpleChatBubbleUser>
             Explain how a full-stack web application works using a simple
             flowchart
           </SimpleChatBubbleUser>
-
-          <SimpleChatBubbleBot>
-            <div className="mb-3">
-              Here's a simple flowchart explaining how a full-stack web
-              application works:
-            </div>
-            <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-t-[15px] pb-8">
-              <Tabs
-                selectedKey={activeTab}
-                onSelectionChange={(key) => {
-                  setActiveTab(key as string);
-                  setTimeout(() => {
-                    mermaid.contentLoaded();
-                  }, 10);
-                }}
-                variant="underlined"
-                className="px-3"
-              >
-                <Tab key="preview" title="Flowchart" className="p-0">
-                  <div className="p-4 bg-zinc-900 relative overflow-hidden h-[400px] ">
-                    <div
-                      ref={mermaidRef}
-                      className="mermaid absolute select-none"
-                      style={{
-                        transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-                        transformOrigin: "0 0",
-                        cursor: isDragging ? "grabbing" : "grab",
-                      }}
-                      onMouseDown={handleMouseDown}
-                      onMouseMove={handleMouseMove}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseUp}
-                    >
-                      {String(flowchartCode).replace(/\n$/, "")}
-                    </div>
-                    <div className="absolute bottom-2 right-2 flex gap-2">
-                      <Button size="sm" onClick={handleZoomIn}>
-                        <ZoomIn size={16} />
-                      </Button>
-                      <Button size="sm" onClick={handleZoomOut}>
-                        <ZoomOut size={16} />
-                      </Button>
-                      <Button size="sm" onClick={handleDownload}>
-                        <Download size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                </Tab>
-              </Tabs>
-              <Button
-                onPress={handleCopy}
-                size="sm"
-                variant="light"
-                className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
-              >
-                {copied ? (
-                  <div className="flex flex-row gap-1 items-center">
-                    <TaskDone01Icon width={21} color="foreground" />
-                    <p>Copied!</p>
-                  </div>
-                ) : (
-                  <div className="flex flex-row gap-1 items-center">
-                    <Task01Icon width={21} color="foreground" />
-                    <p>Copy Code</p>
-                  </div>
-                )}
-              </Button>
-            </div>
-          </SimpleChatBubbleBot>
         </div>
       </div>
+
+      <SimpleChatBubbleBot>
+        <div className="mb-3">
+          Here's a simple flowchart explaining how a full-stack web application
+          works:
+        </div>
+        <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-t-[15px] pb-8">
+          <Tabs
+            selectedKey={activeTab}
+            onSelectionChange={(key) => {
+              setActiveTab(key as string);
+              setTimeout(() => {
+                mermaid.contentLoaded();
+              }, 10);
+            }}
+            variant="underlined"
+            className="px-3"
+          >
+            <Tab key="preview" title="Flowchart" className="p-0">
+              <div className="p-4 bg-zinc-900 relative overflow-hidden h-[320px] rounded-full ">
+                <div
+                  ref={mermaidRef}
+                  className="mermaid absolute select-none"
+                  style={{
+                    transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+                    transformOrigin: "0 0",
+                    cursor: isDragging ? "grabbing" : "grab",
+                  }}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseUp}
+                >
+                  {String(flowchartCode).replace(/\n$/, "")}
+                </div>
+                <div className="absolute bottom-2 right-2 flex gap-2">
+                  <Button size="sm" onClick={handleZoomIn}>
+                    <ZoomIn size={16} />
+                  </Button>
+                  <Button size="sm" onClick={handleZoomOut}>
+                    <ZoomOut size={16} />
+                  </Button>
+                  <Button size="sm" onClick={handleDownload}>
+                    <Download size={16} />
+                  </Button>
+                </div>
+              </div>
+            </Tab>
+          </Tabs>
+          <Button
+            onPress={handleCopy}
+            size="sm"
+            variant="light"
+            className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
+          >
+            {copied ? (
+              <div className="flex flex-row gap-1 items-center">
+                <TaskDone01Icon width={21} color="foreground" />
+                <p>Copied!</p>
+              </div>
+            ) : (
+              <div className="flex flex-row gap-1 items-center">
+                <Task01Icon width={21} color="foreground" />
+                <p>Copy Code</p>
+              </div>
+            )}
+          </Button>
+        </div>
+      </SimpleChatBubbleBot>
+      {/* </div> */}
+      {/* // </div> */}
     </LandingPage1Layout>
   );
 };
