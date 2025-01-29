@@ -38,7 +38,7 @@ export default function ImageGeneration() {
 
   return (
     <LandingPage1Layout
-      heading="Image Generation"
+      heading="Generate Images"
       subheading="Create stunning, realistic images for free with Stable Diffusion"
       icon={
         <AiImageIcon color="#ffffff90" className="sm:size-[30px] size-[30px]" />

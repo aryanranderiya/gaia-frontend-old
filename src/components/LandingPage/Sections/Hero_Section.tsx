@@ -31,15 +31,15 @@ export default function HeroSection() {
           </div>
 
           <div className="py-3">
-            {/* <div className="text-8xl bg-gradient-to-b from-white to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-50% max-w-screen-lg -my-2">
+            <div className="text-8xl bg-gradient-to-b from-zinc-200 to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-800 from-50% max-w-screen-lg -my-2">
               Your Personalised AI
             </div>
-            <div className="text-8xl bg-gradient-to-b from-white to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-zinc-700 from-50% max-w-screen-lg -my-2">
+            <div className="text-8xl bg-gradient-to-b from-zinc-200 to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-800 from-50% max-w-screen-lg -my-2">
               Assistant awaits.
-            </div> */}
-            <div className="text-8xl max-w-screen-lg text-center font-medium helvetica leading-none">
-              Your Personalised AI Assistant awaits.
             </div>
+            {/* <div className="text-8xl max-w-screen-lg text-center font-medium helvetica leading-none">
+              // Your Personalised AI Assistant awaits. //{" "}
+            </div> */}
           </div>
 
           <TypingAnimation

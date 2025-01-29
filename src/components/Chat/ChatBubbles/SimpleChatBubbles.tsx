@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 export function SimpleChatBubbleUser({
   children,
   hideMobile = false,
@@ -18,11 +20,19 @@ export function SimpleChatBubbleUser({
   );
 }
 
-export function SimpleChatBubbleBot({ children }: { children: any }) {
+export function SimpleChatBubbleBot({
+  className,
+  children,
+}: {
+  children: any;
+  className?: string;
+}) {
   return (
-    <div className="relative flex items-end gap-3">
+    <div className={"relative flex items-end gap-3"}>
       {/* <div className="pingspinner relative" /> */}
-      <div className="chat_bubble bg-zinc-800 !select-none">{children}</div>
+      <div className={cn("chat_bubble bg-zinc-800 !select-none", className)}>
+        {children}
+      </div>
     </div>
   );
 }

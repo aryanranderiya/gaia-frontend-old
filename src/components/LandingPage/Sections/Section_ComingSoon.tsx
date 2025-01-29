@@ -80,7 +80,7 @@ export function Feature({
   description?: string;
 }) {
   return (
-    <div className="md:w-[32%] w-full flex flex-col gap-2 bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
+    <div className="w-full flex flex-col gap-2 bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
       {icon}
       <span className="font-medium text-xl">{title}</span>
       <span className="text-foreground text-opacity-45 text-md">
@@ -94,7 +94,7 @@ export default function FeatureList() {
   return (
     <div className="flex justify-center items-center p-5 flex-col min-h-screen ">
       <span className="font-medium text-3xl">Coming Soon!</span>
-      <div className="flex rounded-3xl bg-foreground-50 my-6 p-10 flex-wrap gap-2 gap-y-5 justify-around md:w-[55vw] h-fit ">
+      <div className="rounded-3xl bg-foreground-50 my-6 p-10 gap-2 gap-y-5 grid grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
         {list.map((item, index) => (
           <Feature
             key={index}

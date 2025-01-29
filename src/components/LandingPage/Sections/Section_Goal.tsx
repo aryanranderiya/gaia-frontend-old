@@ -50,9 +50,9 @@ export default function GoalSection() {
   return (
     <div
       ref={sectionRef}
-      className={`flex flex-col items-center min-h-screen relative transition-all p-4 sm:mt-0 mt-20 `}
+      className={`flex flex-col items-center min-h-screen relative transition-all p-4 sm:mt-0 my-24 `}
     >
-      <div className="max-w-screen-lg w-full">
+      <div className="max-w-screen-xl w-full">
         <SectionHeading
           heading={"Manage your Goals"}
           subheading={
@@ -62,26 +62,38 @@ export default function GoalSection() {
         />
       </div>
 
-      <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 items-center justify-center sm:flex-row flex-col max-w-screen-lg">
+      <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 items-center justify-center sm:flex-row flex-col max-w-screen-xl">
         <div
-          className={` space-y-5 transition-all relative w-full ${
-            hover1 ? "sm:w-[60%]" : "sm:w-[45%]"
+          className={` space-y-5 transition-all relative w-full bg-zinc-950 outline rounded-3xl p-3 ${
+            hover1
+              ? "sm:w-[60%] sm:!outline-[#00bbff] "
+              : "sm:w-[45%] sm:outline-zinc-900"
           } ${hover2 ? "opacity-20" : "opacity-100"}`}
           onMouseOver={() => setHover1(true)}
           onMouseOut={() => setHover1(false)}
         >
-          <Chip
+          {/* <Chip
             variant="shadow"
             color="primary"
             classNames={{ content: "font-medium" }}
           >
             Step 1: Enter your goal
-          </Chip>
+          </Chip> */}
+
+          <div className="flex items-start flex-col gap-2 px-2 pt-2">
+            <Chip
+              variant="shadow"
+              color="primary"
+              classNames={{ content: "font-medium" }}
+            >
+              Step 1
+            </Chip>
+
+            <div className="font-medium text-2xl">Enter your Goal</div>
+          </div>
           <img
             src="/landing/blur_goals.webp"
-            className={`sm:h-[60vh] h-fit outline-transparent w-full object-cover rounded-3xl sm:outline ${
-              hover1 ? "sm:!outline-[#00bbff] " : "sm:outline-zinc-900"
-            } transition-all sm:flex hidden`}
+            className={`sm:h-[60vh] h-fit w-full object-cover rounded-3xl transition-all sm:flex hidden`}
           />
 
           <div className="sm:absolute relative min-h-full w-full left-0 top-0 flex items-center justify-center">
@@ -105,26 +117,32 @@ export default function GoalSection() {
         </div>
 
         <div
-          className={`space-y-5 flex flex-col sm:items-end items-start transition-all ${
-            hover2 ? "sm:w-[60%]" : "sm:w-[50%]"
+          className={` space-y-5 transition-all relative w-full bg-zinc-950 outline rounded-3xl p-3 ${
+            hover2
+              ? "sm:w-[80%] sm:!outline-[#00bbff] "
+              : "sm:w-[60%] sm:outline-zinc-900"
           } ${hover1 ? "opacity-20" : "opacity-100"}`}
           onMouseOver={() => setHover2(true)}
           onMouseOut={() => setHover2(false)}
         >
-          <Chip
-            variant="shadow"
-            color="primary"
-            classNames={{ content: "font-medium" }}
-          >
-            Step 2: Track your progress
-          </Chip>
+          <div className="flex items-start flex-col gap-2">
+            <Chip
+              variant="shadow"
+              color="primary"
+              classNames={{ content: "font-medium" }}
+            >
+              Step 2
+            </Chip>
+
+            <div className="font-medium text-2xl">Track your progress</div>
+          </div>
           <img
             src={
               isComplete
                 ? "/landing/goal_checked.png"
                 : "/landing/goal_cropped.png"
             }
-            className="h-[60vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-900 transition-all"
+            className="h-[60vh] w-full object-top object-cover rounded-3xl transition-all"
           />
         </div>
         <StaticSidebar

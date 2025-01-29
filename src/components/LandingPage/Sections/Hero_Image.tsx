@@ -5,6 +5,7 @@ import { Safari } from "../../ui/safari";
 import { Spinner } from "@heroui/spinner";
 import { GridPattern } from "../../ui/grid-pattern";
 import { cn } from "@/lib/utils";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 export default function ImagePreview() {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -21,7 +22,7 @@ export default function ImagePreview() {
         x={-1}
         y={-1}
         className={cn(
-          "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] max-h-[120vh] top-[50vh]"
+          "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] max-h-[120vh] top-[40vh]"
         )}
       />
 
@@ -32,13 +33,21 @@ export default function ImagePreview() {
           </div>
         )}
 
-        <Safari
-          url="yourgaia.io"
-          mode="simple"
-          className="size-full shadow-[0px_0px_200px_#00bbff70] rounded-xl outline outline-[#00bbff] outline-[2px] animate-pulse-shadow"
-          handleImageLoad={handleImageLoad}
-          imageSrc="/landing/screenshot.png"
-        />
+        {/* shadow-[0px_0px_200px_#00bbff70] animate-pulse-shadow */}
+        <ShineBorder
+          className="size-full rounded-xl bg-zinc-800 p-0 animate-pulse-shadow"
+          color={["#00bbff", "#27272a"]}
+          borderWidth={3}
+          duration={7}
+          borderRadius={10}
+        >
+          <Safari
+            url="yourgaia.io"
+            mode="simple"
+            handleImageLoad={handleImageLoad}
+            imageSrc="/landing/screenshot.png"
+          />
+        </ShineBorder>
       </div>
     </div>
   );

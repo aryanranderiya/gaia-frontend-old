@@ -189,8 +189,8 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen min-h-screen my-10 justify-center items-center flex">
-      <div className="max-w-screen-lg w-full flex flex-col sm:space-y-10 space-y-5 ">
+    <div className="w-screen mt-72 mb-24 min-h-[70vh] justify-center items-center flex">
+      <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
         <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon
             color="#ffffff80"
@@ -201,7 +201,7 @@ export default function Internet() {
 
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <div
-            className={`sm:w-[30vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
+            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
               hover2 ? "opacity-40" : "opacity-100"
             }`}
             onMouseOver={() => setHover1(true)}
@@ -227,7 +227,7 @@ export default function Internet() {
             hover1 ? "opacity-40" : "opacity-100"
             }`} */}
           <div
-            className={`sm:w-[30vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
+            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
               hover1 ? "opacity-40" : "opacity-100"
             }`}
             onMouseOver={() => setHover2(true)}

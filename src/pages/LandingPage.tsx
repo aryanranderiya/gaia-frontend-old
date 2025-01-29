@@ -1,11 +1,16 @@
-import { Suspense, lazy, useEffect } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import SuspenseLoader from "@/components/SuspenseLoader";
 import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
 import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
+import AllFeatures from "@/components/LandingPage/Sections/Section_AllFeatures";
+import Section_Document from "@/components/LandingPage/Sections/Section_Documents";
+import Section_Notes from "@/components/LandingPage/Sections/Section_Notes";
+import TargetAudience from "@/components/LandingPage/Sections/Section_TargetAudience";
+import Section_ConvoManagement from "@/components/LandingPage/Sections/Sections_ConvoManagement";
+import SuspenseLoader from "@/components/SuspenseLoader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Suspense, lazy, useEffect } from "react";
 
-const FeatureList = lazy(
-  () => import("@/components/LandingPage/Sections/FeatureList")
+const ComingSoon = lazy(
+  () => import("@/components/LandingPage/Sections/Section_ComingSoon")
 );
 const FlowchartDemo = lazy(
   () => import("@/components/LandingPage/Sections/Section_Flowchart")
@@ -32,11 +37,13 @@ export default function LandingPage() {
   return (
     <ScrollArea>
       <div className="landing_page relative select-none">
-        <div className="fixed inset-0 bg-gradient-to-b from-[#00bbff30] to-black z-[-1] top-0 h-screen" />
+        <div className="fixed inset-0 bg-gradient-to-b bg-[#00bbff15] z-[-1] top-0 h-screen" />
 
+        {/* <div className=" bg-gradient-to-b from-[#00bbff30] via-black to-black"> */}
         <HeroSection />
 
         <ImagePreview />
+        {/* </div> */}
 
         <Suspense fallback={<SuspenseLoader />}>
           <Internet />
@@ -47,7 +54,11 @@ export default function LandingPage() {
         </Suspense>
 
         <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 pt-[10vh]">
-          <div className="grid w-screen max-w-screen-2xl gap-4 sm:grid-cols-3 grid-cols-1">
+          <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1">
+            <Suspense fallback={<SuspenseLoader />}>
+              <Section_Notes />
+            </Suspense>
+
             <Suspense fallback={<SuspenseLoader />}>
               <ImageGeneration />
             </Suspense>
@@ -57,12 +68,25 @@ export default function LandingPage() {
             </Suspense>
 
             <Suspense fallback={<SuspenseLoader />}>
-              <FlowchartDemo />
+              <Section_Document />
+            </Suspense>
+
+            <Suspense fallback={<SuspenseLoader />}>
+              <Section_ConvoManagement />
             </Suspense>
           </div>
         </div>
+
         <Suspense fallback={<SuspenseLoader />}>
-          <FeatureList />
+          <AllFeatures />
+        </Suspense>
+
+        <Suspense fallback={<SuspenseLoader />}>
+          <TargetAudience />
+        </Suspense>
+
+        <Suspense fallback={<SuspenseLoader />}>
+          <ComingSoon />
         </Suspense>
 
         <Suspense fallback={<SuspenseLoader />}>

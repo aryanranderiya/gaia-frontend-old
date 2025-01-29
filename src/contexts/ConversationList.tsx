@@ -59,7 +59,7 @@ export const useConversationList = (): ConversationContextType => {
   const context = useContext(ConversationContext);
   if (!context) {
     throw new Error(
-      "useConversations must be used within a ConversationProvider"
+      "useConversationList must be used within a ConversationProvider"
     );
   }
   return context;

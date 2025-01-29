@@ -130,11 +130,8 @@ const FlowchartDemo = () => {
         />
       }
     >
-      {/* <div className="sm:h-[80vh] h-screen flex flex-col justify-start items-center sm:gap-16 w-full p-4"> */}
-      {/* <div className="sm:w-[80%] w-full bg-black sm:p-10 p-3 rounded-3xl space-y-4"> */}
-
       <div className="w-100% flex justify-end">
-        <div className="w-[80%]">
+        <div className="w-[95%]">
           <SimpleChatBubbleUser>
             Explain how a full-stack web application works using a simple
             flowchart
@@ -142,12 +139,12 @@ const FlowchartDemo = () => {
         </div>
       </div>
 
-      <SimpleChatBubbleBot>
+      <SimpleChatBubbleBot className={"!rounded-2xl"}>
         <div className="mb-3">
           Here's a simple flowchart explaining how a full-stack web application
           works:
         </div>
-        <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-t-[15px] pb-8">
+        <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-[15px] pb-8">
           <Tabs
             selectedKey={activeTab}
             onSelectionChange={(key) => {
@@ -160,10 +157,10 @@ const FlowchartDemo = () => {
             className="px-3"
           >
             <Tab key="preview" title="Flowchart" className="p-0">
-              <div className="p-4 bg-zinc-900 relative overflow-hidden h-[320px] rounded-full ">
+              <div className="p-4 bg-zinc-900 relative overflow-hidden h-[320px] ">
                 <div
                   ref={mermaidRef}
-                  className="mermaid absolute select-none"
+                  className="mermaid absolute select-none "
                   style={{
                     transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
                     transformOrigin: "0 0",

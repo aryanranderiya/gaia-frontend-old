@@ -52,7 +52,7 @@ export default function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="navbar_content">
+      <div className="navbar_content w-full max-w-screen-xl">
         <Button
           variant="light"
           radius="full"
