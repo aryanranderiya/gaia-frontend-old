@@ -6,10 +6,11 @@ import {
 import { GlobalSearchIcon, InternetIcon } from "../../icons";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "../misc/SectionHeading";
+import { AnimatedSection } from "../misc/AnimatedSection";
 
 function SearchWeb() {
   return (
-    <>
+    <AnimatedSection className="space-y-3">
       <SimpleChatBubbleUser>
         <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default/40 text-default-700 mb-2">
           <span className="flex-1 text-inherit font-normal px-2 pr-1">
@@ -104,13 +105,13 @@ function SearchWeb() {
       {/* <span className="text-xs text-white text-opacity-40 flex flex-col p-1 relative bottom-2">
         10:37 PM 25th Jan 2025
       </span> */}
-    </>
+    </AnimatedSection>
   );
 }
 
 function FetchWebpage() {
   return (
-    <>
+    <AnimatedSection className="space-y-3">
       <SimpleChatBubbleUser>
         <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default/40 text-default-700 mb-2">
           <svg
@@ -181,7 +182,7 @@ function FetchWebpage() {
           <div></div>
         </div>
       </SimpleChatBubbleBot>
-    </>
+    </AnimatedSection>
   );
 }
 
@@ -190,7 +191,7 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen mt-72 mb-24 min-h-[60vh] justify-center items-center flex">
+    <AnimatedSection className="w-screen mt-72 mb-24 min-h-[60vh] justify-center items-center flex">
       <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
         {/* <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon
@@ -258,6 +259,6 @@ export default function Internet() {
           </div>
         </div>
       </div>
-    </div>
+    </AnimatedSection>
   );
 }

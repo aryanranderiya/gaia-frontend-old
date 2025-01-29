@@ -8,6 +8,7 @@ import {
   Target02Icon,
 } from "@/components/icons";
 import { MagicCard } from "@/components/ui/magic-card";
+import { AnimatedSection } from "../misc/AnimatedSection";
 
 function FeatureCard({
   feature,
@@ -24,8 +25,8 @@ function FeatureCard({
     >
       <div className=" items-center flex justify-center flex-col min-w-full w-full">
         <div className="py-5 bg-transparent !rounded-none">{feature.icon}</div>
-        <div className="font-medium text-md">{feature.title}</div>
-        <div className="text-foreground-400 font-medium">
+        <div className="font-medium text-md text-center">{feature.title}</div>
+        <div className="text-foreground-400 font-medium text-center">
           {feature.description}
         </div>
       </div>
@@ -38,61 +39,58 @@ export default function WhatCanYouDo() {
     {
       icon: <BubbleConversationChatIcon />,
       title: "Smart Conversations",
-      description: "test",
+      description: "Chat naturally and get instant answers.",
     },
     {
       icon: <BlushBrush02Icon />,
       title: "Generate Images",
-      description: "test",
+      description: "Create AI-generated images from text.",
     },
     {
       icon: <Calendar01Icon />,
       title: "Calendar Management",
-      description: "test",
+      description: "Schedule events and set reminders.",
     },
     {
       icon: <Calendar01Icon />,
       title: "Store Memories",
-      description: "test",
+      description: "Save and recall important moments.",
     },
     {
       icon: <StickyNote01Icon />,
       title: "Take Notes",
-      description: "test",
+      description: "Store notes for GAIA to remember.",
     },
     {
       icon: <Target02Icon />,
       title: "Manage Goals",
-      description: "test",
+      description: "Create Roadmaps, Track progress, Achieve goals.",
     },
     {
       icon: <DocumentAttachmentIcon />,
       title: "Understand Documents",
-      description: "test",
+      description: "Analyze and understand documents easily.",
     },
     {
       icon: <GlobalSearchIcon />,
       title: "Use the Internet",
-      description: "test",
+      description: "Search and browse real-time information.",
     },
   ];
 
   return (
-    <div className="w-screen flex items-center min-h-screen mt-[20vh] justify-center flex-col">
+    <AnimatedSection className="w-screen flex items-center min-h-screen mt-[20vh] justify-center flex-col">
       <div className="font-medium text-xl">What can GAIA do for you?</div>
       <div className="max-w-screen-lg w-full min-h-fit rounded-3xl p-10 items-center grid grid-cols-4 relative">
         <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
-          <div className="size-[250px] blur-[100px] bg-[#00bbff] z-[-1] relative top-[40px]"></div>
+          <div className="size-[250px] blur-[100px] bg-[#00bbff] z-[-1] relative top-[40px]" />
         </div>
 
-        {/* <div className="absolute inset-0">
-          <img src="landing/sphere.png" />
-        </div> */}
-        {features.map((feature) => (
-          <FeatureCard feature={feature} />
+        {features.map((feature, index) => (
+          <FeatureCard feature={feature} key={index} />
         ))}
       </div>
       <div className="text-md text-foreground-500">and much more...</div>
-    </div>
+    </AnimatedSection>
   );
 }

@@ -34,10 +34,7 @@ import { SearchCard } from "./SearchCard";
 import { Chip } from "@heroui/chip";
 
 const pages = [
-  // { name: "Calendar", path: "/try/calendar", icon: <Calendar01Icon /> },
-  // { name: "Explore", path: "/try/explore" icon: <DiscoverCircleIcon/>},
-  // { name: "Notes", path: "/try/notes" icon:<},
-  // { name: "Goals", path: "/try/goals" },
+
   {
     path: "/try/explore",
     icon: (
@@ -46,31 +43,31 @@ const pages = [
         color="#9b9b9b"
       />
     ),
-    name: "Explore",
+    name: "Go to Explore",
   },
   {
     path: "/try/pins",
     icon: <PinIcon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />,
-    name: "Pins",
+    name: "Go to Pins",
   },
   {
     path: "/try/calendar",
     icon: (
       <Calendar01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
-    name: "Calendar",
+    name: "Go to Calendar",
   },
   {
     path: "/try/notes",
     icon: (
       <StickyNote01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
-    name: "Notes",
+    name: "Go to Notes",
   },
   {
     path: "/try/goals",
     icon: <Route02Icon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />,
-    name: "Goals",
+    name: "Go to Goals",
   },
 ];
 

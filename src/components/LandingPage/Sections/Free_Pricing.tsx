@@ -27,6 +27,7 @@ export default function FreePricing() {
             price={0}
             type="secondary"
             features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
+            className="rounded-2xl"
             featurestitle={
               <div className="flex flex-col mb-1 !border-none">
                 <span>What's Included?</span>

@@ -95,6 +95,7 @@ interface PricingCardProps {
   featurestitle: React.ReactNode;
   features?: string[];
   durationIsMonth: boolean;
+  className?: string;
 }
 
 export function PricingCard({
@@ -105,11 +106,12 @@ export function PricingCard({
   featurestitle,
   features,
   durationIsMonth,
+  className,
 }: PricingCardProps) {
   return (
     <>
       <div
-        className={`bg-white w-full relative ${
+        className={`bg-white w-full relative ${className} ${
           type === "main"
             ? "bg-opacity-[15%]"
             : "bg-opacity-[7%] backdrop-blur-xl"

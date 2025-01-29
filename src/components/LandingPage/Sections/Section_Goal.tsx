@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import StaticSidebar from "../../Goals/StaticSidebar";
 import { Target02Icon } from "../../icons";
 import { SectionHeading } from "../misc/SectionHeading";
+import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function GoalSection() {
   const [hover1, setHover1] = useState(false);
@@ -48,20 +49,20 @@ export default function GoalSection() {
   }, []);
 
   return (
-    <div
-      ref={sectionRef}
+    <AnimatedSection
       className={`flex flex-col items-center min-h-screen relative transition-all p-4 sm:mt-0 my-24 `}
     >
-      <div className="max-w-screen-xl w-full">
-        <SectionHeading
-          heading={"Manage your Goals"}
-          subheading={
-            "Simply enter what goal you want to achieve, and GAIA will help create a step by step actionable plan, along with a timeline and resources to help achieve the goal"
-          }
-          icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
-        />
+      <div>
+        <div className="max-w-screen-xl w-screen" ref={sectionRef}>
+          <SectionHeading
+            heading={"Manage your Goals"}
+            subheading={
+              "Simply enter what goal you want to achieve, and GAIA will help create a step by step actionable plan, along with a timeline and resources to help achieve the goal"
+            }
+            icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
+          />
+        </div>
       </div>
-
       <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 items-center justify-center sm:flex-row flex-col max-w-screen-xl">
         <div
           className={` space-y-5 transition-all relative w-full bg-zinc-950 outline rounded-3xl p-3 ${
@@ -152,6 +153,6 @@ export default function GoalSection() {
           setIsComplete={setIsComplete}
         />
       </div>
-    </div>
+    </AnimatedSection>
   );
 }

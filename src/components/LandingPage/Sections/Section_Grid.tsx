@@ -1,5 +1,6 @@
 import SuspenseLoader from "@/components/SuspenseLoader";
 import { Suspense, lazy } from "react";
+import { AnimatedSection } from "../misc/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
   () => import("@/components/LandingPage/Sections/Sections_ConvoManagement")
@@ -31,31 +32,33 @@ export default function Section_Grid() {
         GAIA has everything you need.
       </div>
 
-      <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0]">
+      <div className="w-screen max-w-screen-xl relative z-[0]">
         <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
           <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative"></div>
           <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]"></div>
         </div>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <Section_Notes />
-        </Suspense>
+        <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0]">
+          <Suspense fallback={<SuspenseLoader />}>
+            <Section_Notes />
+          </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <ImageGeneration />
-        </Suspense>
+          <Suspense fallback={<SuspenseLoader />}>
+            <ImageGeneration />
+          </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <FlowchartDemo />
-        </Suspense>
+          <Suspense fallback={<SuspenseLoader />}>
+            <FlowchartDemo />
+          </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <Section_Document />
-        </Suspense>
+          <Suspense fallback={<SuspenseLoader />}>
+            <Section_Document />
+          </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <Section_ConvoManagement />
-        </Suspense>
+          <Suspense fallback={<SuspenseLoader />}>
+            <Section_ConvoManagement />
+          </Suspense>
+        </AnimatedSection>
       </div>
     </div>
   );
