@@ -64,8 +64,9 @@ export default function LandingPage() {
           </div>
 
           <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0]">
-            <div className="h-full w-full absolute top-0 flex items-start justify-center">
+            <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
               <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative"></div>
+              <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]"></div>
             </div>
 
             <Suspense fallback={<SuspenseLoader />}>

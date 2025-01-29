@@ -5,6 +5,7 @@ import LandingPage from "../pages/Landing";
 import SuspenseLoader from "@/components/SuspenseLoader";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
+import Pricing from "@/pages/Pricing";
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
 const LoginSignup = lazy(() => import("../pages/LoginSignup"));
 // import Pricing from "../pages/Pricing";
@@ -60,7 +61,7 @@ export default function Landing() {
           }
         />
 
-        {/* <Route path="/pricing" element={<Pricing />} /> */}
+        <Route path="/pricing" element={<Pricing />} />
       </Routes>
     </>
   );
