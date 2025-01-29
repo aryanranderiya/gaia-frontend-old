@@ -3,13 +3,13 @@ import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useMediaQuery from "../../hooks/MediaQuery";
+import useMediaQuery from "../../../hooks/MediaQuery";
 import {
   Chatting01Icon,
   CommentAdd01Icon,
   Home01Icon,
   Menu01Icon,
-} from "../icons";
+} from "../../icons";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "../../ui/sheet";
 import WaitListButton from "./WaitlistModal";
 import { apiauth } from "@/utils/apiaxios";
 

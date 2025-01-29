@@ -3,8 +3,8 @@ import {
   CalendarIcon,
   GoogleDriveIcon,
   LanguageSkillIcon,
-  Mail01Icon
-} from "../icons";
+  Mail01Icon,
+} from "../../icons";
 
 const list = [
   // {

@@ -1,4 +1,4 @@
-import OrbitingCircles from "../MagicUI/orbiting-circles";
+import OrbitingCircles from "../../MagicUI/orbiting-circles";
 import {
   GoogleCalendar,
   GoogleDrive,
@@ -8,7 +8,7 @@ import {
   SmartPhone01Icon,
   Gmail,
   Watch02Icon,
-} from "../icons";
+} from "../../icons";
 
 function MiddleIcons() {
   return (

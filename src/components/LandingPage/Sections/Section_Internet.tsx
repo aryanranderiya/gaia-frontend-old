@@ -2,8 +2,9 @@ import { useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
-} from "../Chat/ChatBubbles/SimpleChatBubbles";
-import { InternetIcon } from "../icons";
+} from "../../Chat/ChatBubbles/SimpleChatBubbles";
+import { GlobalSearchIcon, InternetIcon } from "../../icons";
+import { ArrowUpRight } from "lucide-react";
 
 function SearchWeb() {
   return (
@@ -139,7 +140,7 @@ function FetchWebpage() {
             </div>
           </span>
         </div>
-        What is on this webpage? How can I create a Modal using this?
+        How can I create a Modal with this component?
       </SimpleChatBubbleUser>
 
       <SimpleChatBubbleBot>
@@ -188,54 +189,64 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen flex items-center flex-col sm:space-y-20 space-y-5 min-h-screen my-10 justify-center">
-      <div className="sm:text-6xl text-4xl font-bold flex items-center gap-4">
-        Use the Internet
-        <InternetIcon
-          color="#ffffff80"
-          className="sm:size-[55px] size-[45px]"
-        />
-      </div>
-
-      <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
-        <div
-          className={`sm:w-[30vw] w-[95%] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
-            hover2 ? "opacity-40" : "opacity-100"
-          }`}
-          onMouseOver={() => setHover1(true)}
-          onMouseOut={() => setHover1(false)}
-        >
-          <div className="text-center mb-6 p-5">
-            <div className="font-medium text-3xl ">Search The Web</div>
-            <div className="text-foreground-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Similique, molestias.
-            </div>
-          </div>
-          <SearchWeb />
+    <div className="w-screen min-h-screen my-10 justify-center items-center flex">
+      <div className="max-w-screen-lg w-full flex flex-col sm:space-y-10 space-y-5 ">
+        <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
+          <InternetIcon
+            color="#ffffff80"
+            className="sm:size-[55px] size-[45px]"
+          />
+          Use the Internet
         </div>
 
-        {/* <div
+        <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
+          <div
+            className={`sm:w-[30vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
+              hover2 ? "opacity-40" : "opacity-100"
+            }`}
+            onMouseOver={() => setHover1(true)}
+            onMouseOut={() => setHover1(false)}
+          >
+            <div className="mb-6 p-5 space-y-1">
+              <div className="font-medium text-3xl flex items-center w-full justify-between">
+                Search The Web
+                <GlobalSearchIcon
+                  color="#ffffff60"
+                  className="sm:size-[35px] size-[35px]"
+                />
+              </div>
+              <div className="text-foreground-500">
+                Use the Internet to fetch up-to-date answers
+              </div>
+            </div>
+            <SearchWeb />
+          </div>
+
+          {/* <div
           className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
             hover1 ? "opacity-40" : "opacity-100"
             }`} */}
-        <div
-          className={`sm:w-[30vw] w-[95%] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
-            hover1 ? "opacity-40" : "opacity-100"
-          }`}
-          onMouseOver={() => setHover2(true)}
-          onMouseOut={() => setHover2(false)}
-        >
-          <div className="text-center mb-6 p-5">
-            <div className="font-medium text-3xl ">
-              Chat with content from a webpage
+          <div
+            className={`sm:w-[30vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${
+              hover1 ? "opacity-40" : "opacity-100"
+            }`}
+            onMouseOver={() => setHover2(true)}
+            onMouseOut={() => setHover2(false)}
+          >
+            <div className="mb-6 p-5 space-y-1">
+              <div className="font-medium text-3xl flex items-center w-full justify-between">
+                Fetch Webpages
+                <ArrowUpRight
+                  color="#ffffff60"
+                  className="sm:size-[35px] size-[35px]"
+                />
+              </div>
+              <div className="text-foreground-500">
+                Chat with content from a webpage
+              </div>
             </div>
-            <div className="text-foreground-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Similique, molestias.
-            </div>
+            <FetchWebpage />
           </div>
-          <FetchWebpage />
         </div>
       </div>
     </div>

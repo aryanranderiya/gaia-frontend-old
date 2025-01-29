@@ -2,21 +2,21 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { toast } from "sonner";
 import api from "@/utils/apiaxios";
-import PartySmiley from "../Smileys/20.webp";
-import createConfetti from "./CreateConfetti";
+import PartySmiley from "@/components/Smileys/20.webp";
+import createConfetti from "@/hooks/CreateConfetti";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import {
   ArrowUpRight01Icon,
   Mail01Icon,
   Calendar01Icon,
   Cancel01Icon,
-} from "../icons";
+} from "../../icons";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useEffect, useMemo, useState } from "react";
 

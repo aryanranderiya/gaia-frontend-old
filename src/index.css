@@ -69,6 +69,20 @@
   }
 }
 
+.pulsating-shadow {
+  animation: pulseShadow 2s infinite ease-in-out;
+}
+
+@keyframes pulseShadow {
+  0%,
+  100% {
+    box-shadow: 0px 0px 200px rgba(0, 187, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0px 0px 200px rgba(0, 187, 255, 1);
+  }
+}
+
 /* * {
   user-select: none;
 } */
@@ -434,12 +448,6 @@ main {
   justify-content: space-between;
   padding: 0 3px;
   outline: 2px rgba(255, 255, 255, 0.08) solid;
-}
-
-.landingpage_maintext {
-  font-size: clamp(2.8em, 10vw, 6em);
-  margin: 0 !important;
-  z-index: 1;
 }
 
 .arrow_diagonal_btn {

@@ -3,8 +3,8 @@ import { Button } from "@heroui/button";
 import * as React from "react";
 import { toast } from "sonner";
 import api from "@/utils/apiaxios";
-import createConfetti from "./CreateConfetti.js";
-import { CheckmarkCircle02Icon } from "../icons";
+import createConfetti from "../../../hooks/CreateConfetti.js";
+import { CheckmarkCircle02Icon } from "../../icons.js";
 
 export default function WaitlistOnlyInput() {
   const [loading, setLoading] = React.useState<boolean>(false);

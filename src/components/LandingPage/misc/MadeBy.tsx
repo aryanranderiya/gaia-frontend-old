@@ -1,5 +1,5 @@
 import { Button } from "@heroui/button";
-import { Github } from "../icons";
+import { Github } from "../../icons";
 
 export default function MadeBy() {
   return (

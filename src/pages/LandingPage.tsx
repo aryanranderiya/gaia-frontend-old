@@ -1,19 +1,25 @@
 import { Suspense, lazy, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import ImagePreview from "@/components/LandingPage/ImagePreview";
-import HeroSection from "@/components/LandingPage/MainInfo";
+import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
+import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
 
-const FeatureList = lazy(() => import("@/components/LandingPage/FeatureList"));
+const FeatureList = lazy(
+  () => import("@/components/LandingPage/Sections/FeatureList")
+);
 const FlowchartDemo = lazy(
-  () => import("@/components/LandingPage/FlowchartCreator")
+  () => import("@/components/LandingPage/Sections/Section_Flowchart")
 );
-const Footer = lazy(() => import("@/components/LandingPage/Footer"));
-const GoalSection = lazy(() => import("@/components/LandingPage/GoalSection"));
+const Footer = lazy(() => import("@/components/LandingPage/misc/Footer"));
+const GoalSection = lazy(
+  () => import("@/components/LandingPage/Sections/Section_Goal")
+);
 const ImageGeneration = lazy(
-  () => import("@/components/LandingPage/ImageGeneration")
+  () => import("@/components/LandingPage/Sections/Section_GenerateImage")
 );
-const Internet = lazy(() => import("@/components/LandingPage/Internet"));
+const Internet = lazy(
+  () => import("@/components/LandingPage/Sections/Section_Internet")
+);
 const FinalSection = lazy(() => import("./FinalSection"));
 
 export default function LandingPage() {
@@ -41,9 +47,13 @@ export default function LandingPage() {
         </Suspense>
 
         <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 pt-[10vh]">
-          <div className="flex sm:w-[80vw] w-screen sm:flex-row flex-col">
+          <div className="grid w-screen max-w-screen-2xl gap-4 sm:grid-cols-3 grid-cols-1">
             <Suspense fallback={<SuspenseLoader />}>
               <ImageGeneration />
+            </Suspense>
+
+            <Suspense fallback={<SuspenseLoader />}>
+              <FlowchartDemo />
             </Suspense>
 
             <Suspense fallback={<SuspenseLoader />}>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import MadeBy from "@/components/LandingPage/MadeBy";
+import MadeBy from "@/components/LandingPage/misc/MadeBy";
 
 export default function Footer() {
   return (

@@ -1,4 +1,4 @@
-import Navbar from "@/components/LandingPage/Navbar";
+import Navbar from "@/components/LandingPage/misc/Navbar";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";

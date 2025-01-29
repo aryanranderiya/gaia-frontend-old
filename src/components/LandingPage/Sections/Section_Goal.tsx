@@ -3,9 +3,9 @@ import { Chip } from "@heroui/chip";
 import { Input } from "@heroui/input";
 import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import StaticSidebar from "../Goals/StaticSidebar";
-import { Target02Icon } from "../icons";
-import { SectionHeading } from "./SectionHeading";
+import StaticSidebar from "../../Goals/StaticSidebar";
+import { Target02Icon } from "../../icons";
+import { SectionHeading } from "../misc/SectionHeading";
 
 export default function GoalSection() {
   const [hover1, setHover1] = useState(false);
@@ -49,21 +49,23 @@ export default function GoalSection() {
 
   return (
     <div
-      ref={sectionRef} // Attach ref to the section
-      className={`flex items-center flex-col min-h-screen relative transition-all p-4 sm:mt-0 mt-20`}
+      ref={sectionRef}
+      className={`flex flex-col items-center min-h-screen relative transition-all p-4 sm:mt-0 mt-20 `}
     >
-      <SectionHeading
-        heading={"Manage your Goals"}
-        subheading={
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, eius?"
-        }
-        icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
-      />
+      <div className="max-w-screen-lg w-full">
+        <SectionHeading
+          heading={"Manage your Goals"}
+          subheading={
+            "Simply enter what goal you want to achieve, and GAIA will help create a step by step actionable plan, along with a timeline and resources to help achieve the goal"
+          }
+          icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
+        />
+      </div>
 
-      <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 sm:p-10 p-2 items-center justify-center sm:flex-row flex-col">
+      <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 items-center justify-center sm:flex-row flex-col max-w-screen-lg">
         <div
           className={` space-y-5 transition-all relative w-full ${
-            hover1 ? "sm:w-[40%]" : "sm:w-[30%]"
+            hover1 ? "sm:w-[60%]" : "sm:w-[45%]"
           } ${hover2 ? "opacity-20" : "opacity-100"}`}
           onMouseOver={() => setHover1(true)}
           onMouseOut={() => setHover1(false)}
@@ -71,14 +73,15 @@ export default function GoalSection() {
           <Chip
             variant="shadow"
             color="primary"
-            size="lg"
             classNames={{ content: "font-medium" }}
           >
             Step 1: Enter your goal
           </Chip>
           <img
             src="/landing/blur_goals.webp"
-            className="sm:h-[70vh] h-fit outline-transparent w-full object-cover rounded-3xl sm:outline hover:sm:!outline-[#00bbff] sm:outline-zinc-800 transition-all sm:flex hidden"
+            className={`sm:h-[60vh] h-fit outline-transparent w-full object-cover rounded-3xl sm:outline ${
+              hover1 ? "sm:!outline-[#00bbff] " : "sm:outline-zinc-900"
+            } transition-all sm:flex hidden`}
           />
 
           <div className="sm:absolute relative min-h-full w-full left-0 top-0 flex items-center justify-center">
@@ -100,14 +103,6 @@ export default function GoalSection() {
             </div>
           </div>
         </div>
-        {/* 
-        <div
-          className={`space-y-5 flex flex-col items-end transition-all  ${
-            hover2 ? "w-[60%]" : "w-[50%]"
-          } ${hover1 ? "opacity-30" : "opacity-100"}`}
-          onMouseOver={() => setHover2(true)}
-          onMouseOut={() => setHover2(false)}
-        > */}
 
         <div
           className={`space-y-5 flex flex-col sm:items-end items-start transition-all ${
@@ -119,7 +114,6 @@ export default function GoalSection() {
           <Chip
             variant="shadow"
             color="primary"
-            size="lg"
             classNames={{ content: "font-medium" }}
           >
             Step 2: Track your progress
@@ -130,7 +124,7 @@ export default function GoalSection() {
                 ? "/landing/goal_checked.png"
                 : "/landing/goal_cropped.png"
             }
-            className="h-[70vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-800 transition-all"
+            className="h-[60vh] w-full object-top object-cover rounded-3xl outline hover:!outline-[#00bbff] outline-zinc-900 transition-all"
           />
         </div>
         <StaticSidebar

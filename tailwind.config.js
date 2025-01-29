@@ -17,17 +17,23 @@ module.exports = {
   theme: {
     extend: {
       command: {
-        bg: "#1E293B", // Background color
-        text: "#F8FAFC", // Text color
-        border: "#334155", // Border color
+        bg: "#1E293B",
+        text: "#F8FAFC",
+        border: "#334155",
       },
       animation: {
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         grid: "grid 15s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "shiny-text": "shiny-text 8s infinite",
+        "pulse-shadow": "pulseShadow 2s infinite ease-in-out",
       },
       keyframes: {
+        pulseShadow: {
+          "0%, 100%": { boxShadow: "0px 0px 170px #00bbff" },
+          "50%": { boxShadow: "0px 0px 50px #00bbff10" },
+        },
         orbit: {
           "0%": {
             transform:
@@ -62,6 +68,14 @@ module.exports = {
             height: "0",
           },
         },
+        "shiny-text": {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shiny-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shiny-width)) 0",
+          },
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -82,7 +96,7 @@ module.exports = {
       },
     },
   },
-  darkMode: "class",
+  darkMode: ["class", "class"],
   plugins: [
     addVariablesForColors,
     require("tailwindcss-animate"),

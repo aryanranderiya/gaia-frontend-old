@@ -12,6 +12,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      "@icons": "/src/components/icons.tsx",
       "@components": "/src/components",
       "@contexts": "/src/contexts",
       "@layouts": "/src/layouts",
@@ -20,21 +21,21 @@ export default defineConfig({
       "@*": "/src/*",
     },
   },
-//  build: {
-//     rollupOptions: {
-//       output: {
-//         manualChunks(id) {
-//           if (id.includes("node_modules")) {
-//             // return "nodemodules";
-//             return id
-//               .toString()
-//               .split("node_modules/")[1]
-//               .split("/")[0]
-//               .toString();
-//           }
-//         },
-//       },
-//     },
-//     chunkSizeWarningLimit: 500,
-//   }, 
+  //  build: {
+  //     rollupOptions: {
+  //       output: {
+  //         manualChunks(id) {
+  //           if (id.includes("node_modules")) {
+  //             // return "nodemodules";
+  //             return id
+  //               .toString()
+  //               .split("node_modules/")[1]
+  //               .split("/")[0]
+  //               .toString();
+  //           }
+  //         },
+  //       },
+  //     },
+  //     chunkSizeWarningLimit: 500,
+  //   },
 });
