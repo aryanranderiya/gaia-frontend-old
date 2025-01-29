@@ -1,13 +1,13 @@
 import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
 import { MenuBar } from "@/components/Notes/NotesMenuBar";
 import { Button } from "@/components/ui/button";
-import { apiauth } from "@/utils/apiaxios";
 import {
-  Dropdown,
-  DropdownItem,
   DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { apiauth } from "@/utils/apiaxios";
 import { Spinner } from "@heroui/spinner";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -17,11 +17,11 @@ import Typography from "@tiptap/extension-typography";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { ArrowLeft, CircleX, TriangleAlert } from "lucide-react";
+import { convert } from "html-to-text";
+import { ArrowLeft, CircleX, Trash2, TriangleAlert } from "lucide-react";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { convert } from "html-to-text";
 
 interface Note {
   id: string;
@@ -208,23 +208,19 @@ export default function NotesAdd() {
         </Link>
 
         <Suspense fallback={<Spinner />}>
-          <Dropdown className="dark">
-            <DropdownTrigger>
-              <Button size="icon" variant={"ghost"}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="icon" variant="ghost">
                 <DotsVerticalIcon width={20} height={20} />
               </Button>
-            </DropdownTrigger>
-            <DropdownMenu>
-              <DropdownItem
-                key="delete"
-                className="text-danger"
-                color="danger"
-                onPress={deleteNote}
-              >
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem className="text-red-500" onClick={deleteNote}>
+                <Trash2 className="mr-2 h-4 w-4" />
                 Delete Note
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </Suspense>
       </div>
 

@@ -35,7 +35,7 @@ export default function ImagePreview() {
 
         {/* shadow-[0px_0px_200px_#00bbff70] animate-pulse-shadow */}
         <ShineBorder
-          className="size-full rounded-xl bg-zinc-800 p-0 animate-pulse-shadow"
+          className="size-full w-fit !min-w-fit rounded-xl bg-zinc-800 p-0 animate-pulse-shadow"
           color={["#00bbff", "#27272a"]}
           borderWidth={3}
           duration={7}
@@ -44,6 +44,7 @@ export default function ImagePreview() {
           <Safari
             url="heygaia.io"
             mode="simple"
+            className="w-full"
             handleImageLoad={handleImageLoad}
             imageSrc="/landing/screenshot.png"
           />
