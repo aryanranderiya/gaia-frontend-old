@@ -90,19 +90,21 @@ export function Feature({
   );
 }
 
-export default function FeatureList() {
+export default function Section_ComingSoon() {
   return (
-    <div className="flex justify-center items-center p-5 flex-col min-h-screen ">
-      <span className="font-medium text-3xl">Coming Soon!</span>
-      <div className="rounded-3xl bg-foreground-50 my-6 p-10 gap-2 gap-y-5 grid grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
-        {list.map((item, index) => (
-          <Feature
-            key={index}
-            icon={item.icon}
-            title={item.title}
-            description={item.description}
-          />
-        ))}
+    <div className="flex justify-center items-center min-h-[90vh] h-fit z-[1] relative">
+      <div className="flex justify-center items-center p-5 flex-col">
+        <span className="font-medium text-3xl">Coming Soon!</span>
+        <div className="rounded-3xl bg-foreground-50 my-6 p-10 gap-2 gap-y-5 grid grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
+          {list.map((item, index) => (
+            <Feature
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

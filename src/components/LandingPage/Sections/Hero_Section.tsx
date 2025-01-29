@@ -1,6 +1,5 @@
 import { Button } from "@heroui/button";
 // import GradualSpacing from "../MagicUI/gradual-spacing";
-import TypingAnimation from "../../MagicUI/typing-animation";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 import { cn } from "@/lib/utils";
@@ -49,8 +48,7 @@ export default function HeroSection() {
             duration={20}
           /> */}
           <div className="text-foreground-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus,
-            aliquam.
+            The most capable personalised virtual assistant is here
           </div>
 
           <Button

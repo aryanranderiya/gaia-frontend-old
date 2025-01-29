@@ -83,7 +83,7 @@ export default function TargetAudience() {
   const [current, setCurrent] = useState<TargetData>(targetData[0]);
 
   return (
-    <div className="w-screen flex items-center min-h-[150vh] justify-center my-20 flex-col">
+    <div className="w-screen flex items-center min-h-screen justify-center pt-32 flex-col">
       <div className="w-full max-w-screen-xl py-5 space-y-2">
         <div className="font-medium text-5xl">For Everyone</div>
         <div className="font-normal text-md w-[30%] text-foreground-500">

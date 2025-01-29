@@ -84,15 +84,15 @@ export const PinCard: React.FC<PinCardProps> = ({
       </div>
 
       <div className="text-xs mt-auto text-foreground-400">
-        {parseDate(message.date)}
+        {parseDate(message.date as string)}
       </div>
     </Link>
   );
 };
 
 export default function Pins() {
-  const [fetchedResults, setFetchedResults] = useState([]);
-  const [filteredResults, setFilteredResults] = useState([]);
+  const [fetchedResults, setFetchedResults] = useState<any[]>([]);
+  const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 

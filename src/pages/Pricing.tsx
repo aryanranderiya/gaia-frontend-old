@@ -109,7 +109,11 @@ export function PricingCard({
   return (
     <>
       <div
-        className={`bg-white w-full relative ${type === "main" ? "bg-opacity-[15%]" : "bg-opacity-[7%]"} `}
+        className={`bg-white w-full relative ${
+          type === "main"
+            ? "bg-opacity-[15%]"
+            : "bg-opacity-[7%] backdrop-blur-xl"
+        } `}
       >
         {type === "main" && (
           <div className="absolute -top-7 w-full flex justify-center bg-primary !rounded-tr-3xl !rounded-tl-3xl !rounded-bl-none !rounded-br-none text-black text-sm py-1 items-center gap-1 mostpopular_banner">

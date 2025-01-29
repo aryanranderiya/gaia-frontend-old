@@ -12,7 +12,7 @@ import { MagicCard } from "@/components/ui/magic-card";
 function FeatureCard({
   feature,
 }: {
-  feature: { icon: string; title: string; description: string };
+  feature: { icon: JSX.Element; title: string; description: string };
 }) {
   return (
     <MagicCard
@@ -78,9 +78,16 @@ export default function WhatCanYouDo() {
   ];
 
   return (
-    <div className="w-screen flex items-center min-h-fit pt-[20vh] justify-center my-20 flex-col">
+    <div className="w-screen flex items-center min-h-screen mt-[20vh] justify-center flex-col">
       <div className="font-medium text-xl">What can GAIA do for you?</div>
-      <div className="max-w-screen-lg w-full min-h-fit rounded-3xl p-10 overflow-hidden items-center grid grid-cols-4">
+      <div className="max-w-screen-lg w-full min-h-fit rounded-3xl p-10 items-center grid grid-cols-4 relative">
+        <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
+          <div className="size-[250px] blur-[100px] bg-[#00bbff] z-[-1] relative top-[40px]"></div>
+        </div>
+
+        {/* <div className="absolute inset-0">
+          <img src="landing/sphere.png" />
+        </div> */}
         {features.map((feature) => (
           <FeatureCard feature={feature} />
         ))}

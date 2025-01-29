@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 
 export default function FinalSection() {
   return (
-    <div className="flex w-screen items-center flex-col sm:p-24 p-5 sm:min-h-[60vh] min-h-[50vh] bg-gradient-to-t from-[#00bbff30] to-black justify-center">
+    <div className="flex w-screen items-center flex-col sm:p-24 p-5 sm:min-h-[40vh] min-h-[50vh] bg-gradient-to-t from-[#00bbff30] to-black justify-center">
       <div className="flex w-full flex-col items-center gap-3 justify-center">
         <div className="sm:text-6xl text-4xl font-medium">
           Get Started for Free

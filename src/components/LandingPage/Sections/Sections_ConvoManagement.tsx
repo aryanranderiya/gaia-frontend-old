@@ -27,7 +27,6 @@ const dummyMessages = [
 ];
 
 import { StickyNote01Icon, Tick02Icon } from "@/components/icons";
-import { ChatTab } from "@/components/Sidebar/ChatTab";
 import {
   Command,
   CommandGroup,
@@ -36,9 +35,9 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { useState } from "react";
-import { Button } from "@heroui/button";
 
 const dummyResults = {
   conversations: [
@@ -80,7 +79,7 @@ export function DummySearchCommand() {
     notes: true,
   });
 
-  const handleChipClick = (type) => {
+  const handleChipClick = (type: "messages" | "conversations" | "notes") => {
     setChipsVisibility((prev) => ({ ...prev, [type]: !prev[type] }));
   };
 
@@ -185,28 +184,40 @@ export function SidebarComponent() {
       title: "Starred Chats",
       conversations: [
         { name: "How do I start a blog?", active: true, starred: true },
-        { name: "Explain quantum computing", starred: true },
+        { name: "Explain quantum computing", starred: true, active: false },
       ],
     },
     {
       title: "Today",
       conversations: [
-        { name: "Help me debug this code" },
-        { name: "Best practices for UI design?" },
+        { name: "Help me debug this code", active: false, starred: false },
+        {
+          name: "Best practices for UI design?",
+          active: false,
+          starred: false,
+        },
       ],
     },
     {
       title: "Yesterday",
       conversations: [
-        { name: "Optimize my SQL query" },
-        { name: "How does recursion work?" },
+        { name: "Optimize my SQL query", active: false, starred: false },
+        { name: "How does recursion work?", active: false, starred: false },
       ],
     },
     {
       title: "Last 30 Days",
       conversations: [
-        { name: "How do neural networks learn?" },
-        { name: "Generate a daily workout plan" },
+        {
+          name: "How do neural networks learn?",
+          active: false,
+          starred: false,
+        },
+        {
+          name: "Generate a daily workout plan",
+          active: false,
+          starred: false,
+        },
       ],
     },
   ];

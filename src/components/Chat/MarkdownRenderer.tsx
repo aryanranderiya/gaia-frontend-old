@@ -16,13 +16,17 @@ import {
 } from "react";
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 // import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import { PrismAsyncLight, SyntaxHighlighterProps } from "react-syntax-highlighter";
+import {
+  PrismAsyncLight,
+  SyntaxHighlighterProps,
+} from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
 const ReactMarkdown = lazy(() => import("react-markdown"));
-const SyntaxHighlighter = PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
+const SyntaxHighlighter =
+  PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
 
 interface MarkdownRendererProps {
   content: string;
@@ -122,7 +126,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 
   if (isMermaid) {
     return (
-      (<div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
+      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
         <Tabs
           selectedKey={activeTab}
           onSelectionChange={(key) => {
@@ -208,53 +212,55 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             </div>
           )}
         </Button>
-      </div>)
+      </div>
     );
   }
 
-  return (<>
-    {!inline && match ? (
-      <div className="relative flex flex-col gap-0 ">
-        <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
-          <span className="text-sm font-mono monospace">{match[1]}</span>
-          <Button
-            onPress={handleCopy}
-            size="sm"
-            variant="light"
-            className="text-foreground hover:text-gray-300 text-xs"
+  return (
+    <>
+      {!inline && match ? (
+        <div className="relative flex flex-col gap-0 ">
+          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
+            <span className="text-sm font-mono monospace">{match[1]}</span>
+            <Button
+              onPress={handleCopy}
+              size="sm"
+              variant="light"
+              className="text-foreground hover:text-gray-300 text-xs"
+            >
+              {copied ? (
+                <div className="flex flex-row gap-1 items-center">
+                  <TaskDone01Icon width={21} color="foreground" />
+                  <p>Copied!</p>
+                </div>
+              ) : (
+                <div className="flex flex-row gap-1 items-center">
+                  <Task01Icon width={21} color="foreground" />
+                  <p>Copy Code</p>
+                </div>
+              )}
+            </Button>
+          </div>
+          <SyntaxHighlighter
+            style={vscDarkPlus}
+            language={match[1]}
+            PreTag="div"
+            className="m-0 !bg-black !text-[10px] max-w-[35vw] overflow-x-visible"
+            showLineNumbers
           >
-            {copied ? (
-              <div className="flex flex-row gap-1 items-center">
-                <TaskDone01Icon width={21} color="foreground" />
-                <p>Copied!</p>
-              </div>
-            ) : (
-              <div className="flex flex-row gap-1 items-center">
-                <Task01Icon width={21} color="foreground" />
-                <p>Copy Code</p>
-              </div>
-            )}
-          </Button>
+            {String(children).replace(/\n$/, "")}
+          </SyntaxHighlighter>
         </div>
-        <SyntaxHighlighter
-          style={vscDarkPlus}
-          language={match[1]}
-          PreTag="div"
-          className="m-0 !bg-black !text-[10px]"
-          showLineNumbers
+      ) : (
+        <code
+          className={className + " bg-black bg-opacity-40 rounded-sm"}
+          {...props}
         >
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
-      </div>
-    ) : (
-      <code
-        className={className + " bg-black bg-opacity-40 rounded-sm"}
-        {...props}
-      >
-        {children}
-      </code>
-    )}
-  </>);
+          {children}
+        </code>
+      )}
+    </>
+  );
 };
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
