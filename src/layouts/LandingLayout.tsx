@@ -1,7 +1,7 @@
 import Navbar from "@/components/LandingPage/misc/Navbar";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "../pages/LandingPage";
+import LandingPage from "../pages/Landing";
 import SuspenseLoader from "@/components/SuspenseLoader";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";

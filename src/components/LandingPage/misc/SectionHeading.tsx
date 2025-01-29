@@ -13,14 +13,14 @@ export function SectionHeading({
     <div>
       <div
         className={`${
-          smallHeading ? "sm:text-3xl" : "sm:text-5xl"
+          smallHeading ? "sm:text-3xl" : "sm:text-4xl"
         } text-2xl font-bold flex items-center gap-4 mb-2`}
       >
         {icon}
         <span>{heading}</span>
       </div>
       <div
-        className={` text-foreground-500 max-w-screen-sm ${
+        className={` text-foreground-500 max-w-screen-md ${
           smallHeading ? "text-md" : "text-lg"
         }`}
       >

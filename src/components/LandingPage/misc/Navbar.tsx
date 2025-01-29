@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useMediaQuery from "../../../hooks/MediaQuery";
 import {
-  Chatting01Icon,
+  BubbleConversationChatIcon,
   CommentAdd01Icon,
   Home01Icon,
   Menu01Icon,
@@ -138,7 +138,9 @@ export default function Navbar() {
                 radius="full"
                 size="md"
                 className="font-medium"
-                endContent={<Chatting01Icon color="foreground" width="17" />}
+                endContent={
+                  <BubbleConversationChatIcon color="foreground" width="17" />
+                }
                 onPress={() => navigate("/try/chat")}
               >
                 Chat

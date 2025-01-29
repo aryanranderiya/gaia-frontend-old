@@ -42,7 +42,7 @@ export default function ImagePreview() {
           borderRadius={10}
         >
           <Safari
-            url="yourgaia.io"
+            url="heygaia.io"
             mode="simple"
             handleImageLoad={handleImageLoad}
             imageSrc="/landing/screenshot.png"

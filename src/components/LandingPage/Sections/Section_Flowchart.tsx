@@ -119,10 +119,8 @@ const FlowchartDemo = () => {
 
   return (
     <LandingPage1Layout
-      heading={"Create flowcharts with ease"}
-      subheading={
-        "Turn ideas into clear, interactive visuals instantly—using Mermaid"
-      }
+      heading={"Create flowcharts"}
+      subheading={"Easily turn ideas into clear, interactive visuals instantly"}
       icon={
         <FlowchartIcon
           color="#ffffff90"

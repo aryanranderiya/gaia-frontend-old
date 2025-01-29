@@ -27,7 +27,11 @@ const StaticSidebar = ({
     <div
       className={`sm:fixed relative sm:right-3 sm:bottom-3 bg-zinc-800 max-w-[350px] p-2 rounded-xl  flex-col gap-3 z-10 shadow-lg outline outline-2 outline-zinc-950 sm:flex hidden 
      ${hover1 ? "sm:brightness-50" : "brightness-100"} 
-        ${isVisible ? `sm:opacity-100` : "sm:opacity-0"} transition-all
+        ${
+          isVisible
+            ? `sm:opacity-100 pointer-events-auto`
+            : "sm:opacity-0 pointer-events-none"
+        } transition-all
     `}
     >
       <div className="p-4 space-y-2">

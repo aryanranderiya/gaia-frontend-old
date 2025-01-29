@@ -3,7 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
-import Landing from "./layouts/Landing";
+import Landing from "./layouts/LandingLayout";
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 
 function App() {

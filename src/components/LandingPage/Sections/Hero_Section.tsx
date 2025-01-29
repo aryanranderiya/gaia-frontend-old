@@ -31,10 +31,10 @@ export default function HeroSection() {
           </div>
 
           <div className="py-3">
-            <div className="text-8xl bg-gradient-to-b from-zinc-200 to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-800 from-50% max-w-screen-lg -my-2">
-              Your Personalised AI
+            <div className="text-8xl bg-gradient-to-b from-zinc-200 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-700 from-50% max-w-screen-lg -my-2">
+              Your Personal AI
             </div>
-            <div className="text-8xl bg-gradient-to-b from-zinc-200 to-gray-200-300/50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-800 from-50% max-w-screen-lg -my-2">
+            <div className="text-8xl bg-gradient-to-b from-zinc-200 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-700 from-50% max-w-screen-lg -my-2">
               Assistant awaits.
             </div>
             {/* <div className="text-8xl max-w-screen-lg text-center font-medium helvetica leading-none">
@@ -42,12 +42,16 @@ export default function HeroSection() {
             </div> */}
           </div>
 
-          <TypingAnimation
+          {/* <TypingAnimation
             text="Lorem ipsum, dolor sit amet consectetur adipisicing elit."
             // text="A personalised AI Assistant, tailored for you."
             className="text-lg font-normal py-0 leading-7 sm:text-xl text-foreground-500"
             duration={20}
-          />
+          /> */}
+          <div className="text-foreground-500">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus,
+            aliquam.
+          </div>
 
           <Button
             color="primary"

@@ -90,7 +90,7 @@ export function MagicCard({
           noRadius ? "rounded-none" : "rounded-xl"
         }  bg-background`}
       />
-      <div className="relative z-30">{children}</div>
+      <div className="relative z-30 w-full">{children}</div>
       <motion.div
         className={`pointer-events-none absolute inset-px z-10 ${
           noRadius ? "rounded-none" : "rounded-xl"

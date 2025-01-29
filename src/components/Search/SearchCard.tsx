@@ -3,7 +3,11 @@ import { Chip } from "@heroui/chip";
 import { Link } from "react-router-dom";
 import { GlobeIcon, ArrowUpRight } from "lucide-react";
 import { CommandItem } from "../ui/command";
-import { BubbleChatIcon, Chatting01Icon, StickyNote01Icon } from "../icons";
+import {
+  BubbleChatIcon,
+  BubbleConversationChatIcon,
+  StickyNote01Icon,
+} from "../icons";
 
 interface SearchCardProps {
   result: any;
@@ -64,7 +68,10 @@ const defaultConfigs = {
   },
   conversation: {
     icon: (
-      <Chatting01Icon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />
+      <BubbleConversationChatIcon
+        color="#9b9b9b"
+        className="min-h-[22px] min-w-[22px]"
+      />
     ),
     linkTo: (result: any) => `/try/chat/${result.conversation_id}`,
     bodyContent: (result: any) => (

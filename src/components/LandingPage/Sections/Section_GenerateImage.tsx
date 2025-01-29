@@ -23,7 +23,7 @@ const imageOptions = [
     prompt: "abstract, vibrant colors, geometric shapes",
     src: "/generated/abstract.webp",
   },
-  { title: "Husky", prompt: "cute, husky", src: "/generated/husky.webp" },
+  // { title: "Husky", prompt: "cute, husky", src: "/generated/husky.webp" },
 ];
 
 export default function ImageGeneration() {
@@ -39,7 +39,7 @@ export default function ImageGeneration() {
   return (
     <LandingPage1Layout
       heading="Generate Images"
-      subheading="Create stunning, realistic images for free with Stable Diffusion"
+      subheading="Create stunning & realistic images for free"
       icon={
         <AiImageIcon color="#ffffff90" className="sm:size-[30px] size-[30px]" />
       }

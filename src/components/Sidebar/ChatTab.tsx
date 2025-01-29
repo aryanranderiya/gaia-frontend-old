@@ -1,4 +1,4 @@
-import { Chatting01Icon } from "@/components/icons";
+import { BubbleConversationChatIcon } from "@/components/icons";
 import { Button } from "@heroui/button";
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -40,7 +40,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
             color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
           />
         ) : (
-          <Chatting01Icon
+          <BubbleConversationChatIcon
             width="19"
             className="min-w-[17px] w-[17px]"
             color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}

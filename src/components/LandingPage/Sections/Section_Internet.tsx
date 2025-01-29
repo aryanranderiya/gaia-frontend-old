@@ -5,6 +5,7 @@ import {
 } from "../../Chat/ChatBubbles/SimpleChatBubbles";
 import { GlobalSearchIcon, InternetIcon } from "../../icons";
 import { ArrowUpRight } from "lucide-react";
+import { SectionHeading } from "../misc/SectionHeading";
 
 function SearchWeb() {
   return (
@@ -189,16 +190,24 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <div className="w-screen mt-72 mb-24 min-h-[70vh] justify-center items-center flex">
+    <div className="w-screen mt-72 mb-24 min-h-[60vh] justify-center items-center flex">
       <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
-        <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
+        {/* <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon
             color="#ffffff80"
             className="sm:size-[55px] size-[45px]"
           />
           Use the Internet
         </div>
+        <div>utilise the power of the web to</div> */}
 
+        <SectionHeading
+          heading={"Use the Internet"}
+          subheading={
+            "GAIA has access to the internet to provide you with smarter, and more personalised responses!"
+          }
+          icon={<InternetIcon color="#ffffff90" width={45} height={45} />}
+        />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <div
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-950 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] sm:min-h-fit min-h-[70vh] flex justify-center flex-col ${

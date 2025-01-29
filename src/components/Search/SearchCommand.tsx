@@ -22,7 +22,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   BubbleChatIcon,
   Calendar01Icon,
-  Chatting01Icon,
+  BubbleConversationChatIcon,
   DiscoverCircleIcon,
   PencilEdit02Icon,
   PinIcon,
@@ -219,7 +219,7 @@ export default function SearchCommand({
               className="cursor-pointer"
               classNames={{ content: "font-medium" }}
               startContent={
-                <Chatting01Icon
+                <BubbleConversationChatIcon
                   color={chipsVisibility.conversations ? "#000000" : "#9b9b9b"}
                 />
               }

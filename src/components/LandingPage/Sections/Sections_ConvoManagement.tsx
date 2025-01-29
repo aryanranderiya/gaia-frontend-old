@@ -1,4 +1,8 @@
-import { BubbleChatIcon, Chatting01Icon, PinIcon } from "@/components/icons";
+import {
+  BubbleChatIcon,
+  BubbleConversationChatIcon,
+  PinIcon,
+} from "@/components/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LandingPage1Layout from "@/layouts/LandingPage1";
 import { PinCard } from "@/pages/Pins";
@@ -235,7 +239,7 @@ export function SidebarComponent() {
                       color={chat?.active ? "#00bbff" : "#9b9b9b"}
                     />
                   ) : (
-                    <Chatting01Icon
+                    <BubbleConversationChatIcon
                       width="19"
                       className="min-w-[17px] w-[17px]"
                     />
