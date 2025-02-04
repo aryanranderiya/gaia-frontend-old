@@ -11,11 +11,11 @@ import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col w-screen justify-start items-center gap-8 pt-32 h-[60vh]">
+    <div className="flex flex-col w-screen justify-start items-center gap-8 sm:pt-32 pt-16 h-[60vh]">
       <div className="fixed top-0 left-0 w-screen">
         <Spotlight duration={15} />
       </div>
-      <AnimatedSection className="flex flex-col justify-center items-center h-full">
+      <AnimatedSection className="flex flex-col justify-center items-center h-full z-[2] relative">
         <div
           className={cn(
             "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800"
@@ -34,14 +34,14 @@ export default function HeroSection() {
         </div>
 
         <div className="py-3">
-          <div className="text-8xl bg-gradient-to-b from-zinc-200 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-700 from-50% max-w-screen-lg -my-2">
+          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-zinc-100 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-500 max-w-screen-lg sm:-my-2">
             Your Personal AI Assistant awaits.
           </div>
         </div>
 
         <TypingAnimation
           text="Lorem ipsum, dolor sit amet consectetur adipisicing elit."
-          className="text-lg font-normal py-0 leading-7 sm:text-xl text-foreground-600"
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-foreground-600"
           duration={20}
         />
 

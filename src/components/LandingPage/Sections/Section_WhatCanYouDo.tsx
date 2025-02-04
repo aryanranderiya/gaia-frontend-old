@@ -24,7 +24,9 @@ function FeatureCard({
       noRadius={true}
     >
       <div className=" items-center flex justify-center flex-col min-w-full w-full">
-        <div className="py-5 bg-transparent !rounded-none">{feature.icon}</div>
+        <div className="sm:py-5 py-2 bg-transparent !rounded-none">
+          {feature.icon}
+        </div>
         <div className="font-medium text-md text-center">{feature.title}</div>
         <div className="text-foreground-400 font-medium text-center">
           {feature.description}
@@ -79,9 +81,9 @@ export default function WhatCanYouDo() {
   ];
 
   return (
-    <AnimatedSection className="w-screen flex items-center min-h-screen mt-[20vh] justify-center flex-col">
+    <AnimatedSection className="w-screen flex items-center min-h-screen mt-[20vh] justify-center flex-col z-[1] relative">
       <div className="font-medium text-xl">What can GAIA do for you?</div>
-      <div className="max-w-screen-lg w-full min-h-fit rounded-3xl p-10 items-center grid grid-cols-4 relative">
+      <div className="max-w-screen-lg w-full min-h-fit rounded-3xl p-10 items-center grid sm:grid-cols-4 grid-cols-1 relative">
         <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
           <div className="size-[250px] blur-[100px] bg-[#00bbff] z-[-1] relative top-[40px]" />
         </div>

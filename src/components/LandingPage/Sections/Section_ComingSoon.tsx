@@ -80,7 +80,7 @@ export function Feature({
   description?: string;
 }) {
   return (
-    <div className="w-full flex flex-col gap-2 bg-black bg-opacity-50 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
+    <div className="w-full flex flex-col gap-2 bg-zinc-950 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
       {icon}
       <span className="font-medium text-xl">{title}</span>
       <span className="text-foreground text-opacity-45 text-md">
@@ -93,9 +93,9 @@ export function Feature({
 export default function Section_ComingSoon() {
   return (
     <div className="flex justify-center items-center min-h-[90vh] h-fit z-[1] relative">
-      <div className="flex justify-center items-center p-5 flex-col">
+      <div className="flex justify-center items-center sm:p-5 p-2 flex-col">
         <span className="font-medium text-3xl">Coming Soon!</span>
-        <div className="rounded-3xl bg-foreground-50 my-6 p-10 gap-2 gap-y-5 grid grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
+        <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
           {list.map((item, index) => (
             <Feature
               key={index}

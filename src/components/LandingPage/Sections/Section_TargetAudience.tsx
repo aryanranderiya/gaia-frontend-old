@@ -40,11 +40,11 @@ const TargetCard = ({
       "cursor-pointer transition-all"
     )}
   >
-    <div className="font-medium text-2xl flex items-center gap-2">
+    <div className="font-medium sm:text-2xl text-xl flex items-center gap-2">
       {icon}
       {title}
     </div>
-    <div className="text-lg">{description}</div>
+    <div className="sm:text-lg text-medium">{description}</div>
   </div>
 );
 
@@ -83,16 +83,16 @@ export default function TargetAudience() {
   const [current, setCurrent] = useState<TargetData>(targetData[0]);
 
   return (
-    <div className="w-screen flex items-center min-h-screen justify-center pt-32 flex-col">
-      <div className="w-full max-w-screen-xl py-5 space-y-2">
+    <div className="w-screen flex items-center min-h-screen justify-center pt-32 flex-col p-5 sm:p-0 z-[1] relative">
+      <div className="w-full max-w-screen-xl py-5 space-y-2 sm:text-start text-center">
         <div className="font-medium text-5xl">For Everyone</div>
-        <div className="font-normal text-md w-[30%] text-foreground-500">
+        <div className="font-normal text-md sm:w-[30%] text-foreground-500">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum,
           assumenda.
         </div>
       </div>
-      <div className="max-w-screen-xl w-full bg-zinc-900 min-h-[80vh] rounded-3xl outline outline-zinc-900 flex flex-col p-10 overflow-hidden items-center">
-        <div className="w-full justify-start gap-10 grid grid-cols-4">
+      <div className="max-w-screen-xl w-full bg-zinc-900 min-h-[80vh] rounded-3xl outline outline-zinc-900 flex flex-col sm:p-10 p-0 overflow-hidden items-center">
+        <div className="w-full justify-start gap-10 grid sm:grid-cols-4 sm:p-0 p-5">
           {targetData.map((item, index) => (
             <TargetCard
               key={index}
@@ -108,7 +108,7 @@ export default function TargetAudience() {
         <img
           src={current.img}
           alt="GAIA Screenshot"
-          className="relative top-[10vh] rounded-2xl outline-zinc-700 outline-[4px] outline overflow-hidden min-w-[95%] max-w-[95%]"
+          className="relative sm:top-[10vh] sm:mb-0 mb-3 rounded-2xl outline-zinc-700 outline-[4px] outline overflow-hidden min-w-[95%] max-w-[95%] "
         />
       </div>
     </div>

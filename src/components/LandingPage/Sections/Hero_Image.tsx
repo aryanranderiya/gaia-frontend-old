@@ -24,11 +24,11 @@ export default function ImagePreview() {
           x={-1}
           y={-1}
           className={cn(
-            "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] max-h-[120vh] top-[40vh]"
+            "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] sm:max-h-[120vh] max-h-[70vh] top-[50vh]"
           )}
         />
 
-        <div className="relative">
+        <div className="relative sm:scale-100 scale-[175%]">
           {/* {!isImageLoaded && (
             <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full bg-zinc-950 rounded-xl">
               <Spinner size="lg" />

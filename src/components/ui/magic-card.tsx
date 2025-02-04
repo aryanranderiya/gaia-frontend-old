@@ -88,7 +88,7 @@ export function MagicCard({
       <div
         className={`absolute inset-px z-10 ${
           noRadius ? "rounded-none" : "rounded-xl"
-        }  bg-background`}
+        }  bg-background sm:opacity-90  opacity-50`}
       />
       <div className="relative z-30 w-full">{children}</div>
       <motion.div

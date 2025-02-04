@@ -10,7 +10,7 @@ export function SectionHeading({
   smallHeading?: boolean;
 }) {
   return (
-    <div>
+    <div className="sm:p-0 p-7 z-[1] relative">
       <div
         className={`${
           smallHeading ? "sm:text-3xl" : "sm:text-4xl"

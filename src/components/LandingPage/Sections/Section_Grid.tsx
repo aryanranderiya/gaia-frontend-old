@@ -24,8 +24,8 @@ const ImageGeneration = lazy(
 
 export default function Section_Grid() {
   return (
-    <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 pt-[10vh] flex-col ">
-      <div className="font-medium text-5xl relative z-[1]">
+    <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 pt-[10vh] flex-col p-5">
+      <div className="font-medium text-5xl relative z-[1] text-center">
         Ditch all other chatbots!
       </div>
       <div className="text-foreground-600 mb-4 relative z-[1]">
@@ -38,7 +38,7 @@ export default function Section_Grid() {
           <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]"></div>
         </div>
 
-        <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0]">
+        <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
           <Suspense fallback={<SuspenseLoader />}>
             <Section_Notes />
           </Suspense>

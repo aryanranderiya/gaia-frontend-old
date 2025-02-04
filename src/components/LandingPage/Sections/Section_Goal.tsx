@@ -70,7 +70,7 @@ export default function GoalSection() {
       </div>
       <div className="flex sm:gap-7 gap-20 sm:pt-10 pt-12 items-center justify-center sm:flex-row flex-col max-w-screen-xl">
         <div
-          className={` space-y-5 transition-all relative w-full bg-zinc-950 outline rounded-3xl p-3 ${
+          className={` space-y-5 transition-all relative w-full bg-zinc-950 sm:outline rounded-3xl p-3 outline-none ${
             hover1
               ? "sm:w-[60%] sm:!outline-[#00bbff] "
               : "sm:w-[45%] sm:outline-zinc-900"
@@ -124,7 +124,7 @@ export default function GoalSection() {
         </div>
 
         <div
-          className={` space-y-5 transition-all relative w-full bg-zinc-950 outline rounded-3xl p-3 ${
+          className={` space-y-5 transition-all relative w-full bg-zinc-950 sm:outline rounded-3xl p-3 ${
             hover2
               ? "sm:w-[80%] sm:!outline-[#00bbff] "
               : "sm:w-[60%] sm:outline-zinc-900"

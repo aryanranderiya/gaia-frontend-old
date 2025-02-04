@@ -1,7 +1,7 @@
+import { motion } from "framer-motion";
 import { Children, useMemo, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { cn } from "@/lib/utils";
-import { LazyMotion, domAnimation, m } from "motion/react";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface AnimatedSectionProps {
 
 export function AnimatedSection({
   children,
-  staggerDelay = 0.4,
+  staggerDelay = 0.3,
   className = "",
 }: AnimatedSectionProps) {
   const ref = useRef(null);
@@ -41,20 +41,18 @@ export function AnimatedSection({
   );
 
   return (
-    <LazyMotion features={domAnimation}>
-      <m.div
-        ref={ref}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        className={cn(className)} // Ensure cn is optimized
-      >
-        {Children.map(children, (child, index) => (
-          <m.div key={index} variants={itemVariants}>
-            {child}
-          </m.div>
-        ))}
-      </m.div>
-    </LazyMotion>
+    <motion.div
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      className={cn(className)}
+    >
+      {Children.map(children, (child, index) => (
+        <motion.div key={index} variants={itemVariants}>
+          {child}
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
