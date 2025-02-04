@@ -142,7 +142,7 @@ const FlowchartDemo = () => {
           Here's a simple flowchart explaining how a full-stack web application
           works:
         </div>
-        <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-[15px] pb-8">
+        <div className="relative flex flex-col gap-0 bg-zinc-950 !rounded-[15px] overflow-hidden">
           <Tabs
             selectedKey={activeTab}
             onSelectionChange={(key: Key) => {
@@ -155,7 +155,7 @@ const FlowchartDemo = () => {
             className="px-3"
           >
             <Tab key="preview" title="Flowchart" className="p-0">
-              <div className="p-4 bg-zinc-900 relative overflow-hidden h-[320px] ">
+              <div className="p-4 bg-zinc-950 relative overflow-hidden h-[320px] ">
                 <div
                   ref={mermaidRef}
                   className="mermaid absolute select-none "

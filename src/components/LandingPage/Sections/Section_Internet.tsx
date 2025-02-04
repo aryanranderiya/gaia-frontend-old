@@ -211,7 +211,7 @@ export default function Internet() {
         />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <div
-            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
+            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover2 ? "opacity-40" : "opacity-100"
             }`}
             onMouseOver={() => setHover1(true)}
@@ -237,7 +237,7 @@ export default function Internet() {
             hover1 ? "opacity-40" : "opacity-100"
             }`} */}
           <div
-            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-900 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
+            className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover1 ? "opacity-40" : "opacity-100"
             }`}
             onMouseOver={() => setHover2(true)}

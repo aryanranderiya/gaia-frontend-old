@@ -17,11 +17,19 @@ export default function LandingPage() {
 
     setTimeout(() => {
       setLoad(true);
-    }, 300);
+    }, 200);
+
+    document.documentElement.style.overflowY = "scroll";
+
+    return () => {
+      document.documentElement.style.overflowY = "auto";
+    };
   }, []);
 
+  // className = "landing_page relative select-none overflow-y-scroll";
   return (
-    <div className="landing_page relative select-none overflow-y-scroll">
+    // <ScrollArea className="h-fit" type="scroll">
+    <div className="relative min-h-screen overflow-hidden">
       <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
 
       <HeroSection />
@@ -33,5 +41,6 @@ export default function LandingPage() {
         </Suspense>
       )}
     </div>
+    // {/* </ScrollArea> */}
   );
 }

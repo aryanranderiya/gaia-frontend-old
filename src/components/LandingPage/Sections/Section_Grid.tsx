@@ -38,10 +38,10 @@ export default function Section_Grid() {
           <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]"></div>
         </div>
 
-        <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
-          <Suspense fallback={<SuspenseLoader />}>
-            <Section_Notes />
-          </Suspense>
+        <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
+          {/* <Suspense fallback={<SuspenseLoader />}> */}
+          <Section_Notes />
+          {/* </Suspense> */}
 
           <Suspense fallback={<SuspenseLoader />}>
             <ImageGeneration />
@@ -58,7 +58,7 @@ export default function Section_Grid() {
           <Suspense fallback={<SuspenseLoader />}>
             <Section_ConvoManagement />
           </Suspense>
-        </AnimatedSection>
+        </div>
       </div>
     </div>
   );
