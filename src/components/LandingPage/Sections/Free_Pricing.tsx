@@ -14,7 +14,8 @@ export default function FreePricing() {
 
       <div className="absolute inset-0 flex items-center justify-center h-full w-full">
         <img
-          src="landing/sphere.png"
+          src="landing/sphere.webp"
+          alt="Sphere background"
           className="h-full max-w-[50vw] object-contain top-[40vh] relative filter z-[-1]"
         />
       </div>

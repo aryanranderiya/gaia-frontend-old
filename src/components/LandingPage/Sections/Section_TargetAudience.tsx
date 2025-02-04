@@ -107,6 +107,7 @@ export default function TargetAudience() {
         </div>
         <img
           src={current.img}
+          alt="GAIA Screenshot"
           className="relative top-[10vh] rounded-2xl outline-zinc-700 outline-[4px] outline overflow-hidden min-w-[95%] max-w-[95%]"
         />
       </div>

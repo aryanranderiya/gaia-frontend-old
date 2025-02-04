@@ -30,9 +30,11 @@ export default function ImageGeneration() {
   const [selectedOption, setSelectedOption] = useState(imageOptions[0]);
 
   useEffect(() => {
-    imageOptions.forEach((option) => {
-      const img = new Image();
-      img.src = option.src;
+    imageOptions.forEach((option, index) => {
+      setTimeout(() => {
+        const img = new Image();
+        img.src = option.src;
+      }, 1000 * (index + 1));
     });
   }, []);
 

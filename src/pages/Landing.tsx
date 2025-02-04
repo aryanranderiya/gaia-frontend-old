@@ -1,7 +1,7 @@
 import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
 import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { Suspense, lazy, useEffect } from "react";
 
 const Section_Grid = lazy(
@@ -40,57 +40,58 @@ export default function LandingPage() {
   useEffect(() => {
     const img = new Image();
     img.src = "/landing/screenshot.png";
-    img.decode(); // Hint to browser to decode image early
+    img.decode();
   }, []);
 
+  // <ScrollArea>
   return (
-    <ScrollArea>
-      <div className="landing_page relative select-none">
-        <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
+    <div className="landing_page relative select-none overflow-y-scroll">
+      <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
 
-        <HeroSection />
-        <ImagePreview />
+      <HeroSection />
+      <ImagePreview />
 
-        {/* <TheSearchForAssistants /> */}
-        <Suspense fallback={<SuspenseLoader />}>
-          <WhatCanYouDo />
-        </Suspense>
+      {/* <TheSearchForAssistants /> */}
+      <Suspense fallback={<SuspenseLoader />}>
+        <WhatCanYouDo />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <Internet />
-        </Suspense>
+      <Suspense fallback={<SuspenseLoader />}>
+        <Internet />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <GoalSection />
-        </Suspense>
+      <Suspense fallback={<SuspenseLoader />}>
+        <GoalSection />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <Section_Grid />
-        </Suspense>
+      <Suspense fallback={<SuspenseLoader />}>
+        <Section_Grid />
+      </Suspense>
+{/* 
+      <Suspense fallback={<SuspenseLoader />}>
+        <AllFeatures />
+      </Suspense> */}
 
-        {/* 
-        <Suspense fallback={<SuspenseLoader />}>
-          <AllFeatures />
-        </Suspense> */}
+      <Suspense fallback={<SuspenseLoader />}>
+        <TargetAudience />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <TargetAudience />
-        </Suspense>
+      <FreePricing />
 
-        <FreePricing />
+      <Suspense fallback={<SuspenseLoader />}>
+        <ComingSoon />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <ComingSoon />
-        </Suspense>
+      <Suspense fallback={<SuspenseLoader />}>
+        <FinalSection />
+      </Suspense>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <FinalSection />
-        </Suspense>
-
-        <Suspense fallback={<SuspenseLoader />}>
-          <Footer />
-        </Suspense>
-      </div>
-    </ScrollArea>
+      <Suspense fallback={<SuspenseLoader />}>
+        <Footer />
+      </Suspense>
+    </div>
   );
+}
+{
+  /* </ScrollArea> */
 }

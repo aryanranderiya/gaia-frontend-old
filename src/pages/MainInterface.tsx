@@ -13,10 +13,11 @@ import {
   useNavigate,
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
-import Search from "../components/Search/Search";
+import { Toaster } from "@/components/ui/sonner";
 
 // Lazy load the components
 const Sidebar = lazy(() => import("../layouts/Sidebar"));
+const Search = lazy(() => import("@/components/Search/Search"));
 const MainChat = lazy(() => import("./MainChat"));
 const Explore = lazy(() => import("./Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
@@ -25,6 +26,7 @@ const Notes = lazy(() => import("./Notes"));
 const Goals = lazy(() => import("./Goals"));
 const GoalPage = lazy(() => import("./GoalPage"));
 const NotesAdd = lazy(() => import("./NotePage"));
+const NotLoggedIn = lazy(() => import("@/components/NotLoggedInDialog"));
 
 export default function MainInterface() {
   const location = useLocation();
@@ -88,6 +90,12 @@ export default function MainInterface() {
         <LoadingProvider>
           <div className="main_container dark">
             {/* <Suspense fallback={<SuspenseLoader fullHeight={true} />}> */}
+            <Toaster richColors />
+
+            <Suspense fallback={<SuspenseLoader />}>
+              <NotLoggedIn />
+            </Suspense>
+
             <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
             {/* </Suspense> */}
             <div

@@ -1,5 +1,4 @@
-import { Spinner } from "@heroui/spinner";
-
+import { Loader } from "lucide-react";
 export default function SuspenseLoader({
   fullHeight = false,
 }: {
@@ -11,7 +10,8 @@ export default function SuspenseLoader({
         fullHeight ? "h-screen" : "h-full"
       } flex items-center justify-center p-3`}
     >
-      <Spinner size="lg" color="primary" />
+      <Loader className="animate-spin text-primary" width={30} height={30} />
+      {/* <Spinner size="lg" color="primary" /> */}
     </div>
   );
 }

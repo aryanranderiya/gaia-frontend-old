@@ -125,16 +125,30 @@ export function Safari({
           </>
         ) : null}
         {imageSrc && (
-          <image
-            href={imageSrc}
-            width="1200"
-            height="700"
-            x="1"
-            y="52"
-            preserveAspectRatio="xMidYMid slice"
-            clipPath="url(#roundedBottom)"
-            onLoad={handleImageLoad}
-          />
+          <>
+            {/* 
+          <svg>
+            <foreignObject x="1" y="52" width="1200" height="800">
+              <img
+                src={imageSrc}
+                // width="1200"
+                // height="800"
+                className="h-full w-full object-cover"
+                onLoad={handleImageLoad}
+              />
+            </foreignObject>
+          </svg> */}
+            <image
+              href={imageSrc}
+              width="1200"
+              height="700"
+              x="1"
+              y="52"
+              preserveAspectRatio="xMidYMid slice"
+              clipPath="url(#roundedBottom)"
+              onLoad={handleImageLoad}
+            />
+          </>
         )}
         {videoSrc && (
           <foreignObject

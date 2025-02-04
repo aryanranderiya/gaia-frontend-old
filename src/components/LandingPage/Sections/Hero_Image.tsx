@@ -1,19 +1,19 @@
 // import StarterEmoji from "../Chat/StarterEmoji";
 // import StarterText from "../Chat/StarterText";
-import { useState } from "react";
+// import { useState } from "react";
 import { Safari } from "../../ui/safari";
-import { Spinner } from "@heroui/spinner";
+// import { Spinner } from "@heroui/spinner";
 import { GridPattern } from "../../ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function ImagePreview() {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  // const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-  const handleImageLoad = () => {
-    setIsImageLoaded(true);
-  };
+  // const handleImageLoad = () => {
+  //   setIsImageLoaded(true);
+  // };
 
   return (
     <AnimatedSection>
@@ -29,11 +29,11 @@ export default function ImagePreview() {
         />
 
         <div className="relative">
-          {!isImageLoaded && (
+          {/* {!isImageLoaded && (
             <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full bg-zinc-950 rounded-xl">
               <Spinner size="lg" />
             </div>
-          )}
+          )} */}
 
           {/* shadow-[0px_0px_200px_#00bbff70] animate-pulse-shadow */}
           <ShineBorder
@@ -46,8 +46,8 @@ export default function ImagePreview() {
             <Safari
               url="heygaia.io"
               mode="simple"
-              className="w-full"
-              handleImageLoad={handleImageLoad}
+              className="w-full h-fit"
+              // handleImageLoad={handleImageLoad}
               imageSrc="/landing/screenshot.png"
             />
           </ShineBorder>

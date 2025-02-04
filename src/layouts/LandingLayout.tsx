@@ -1,8 +1,8 @@
-import Navbar from "@/components/LandingPage/misc/Navbar";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import SuspenseLoader from "@/components/SuspenseLoader";
 
+const Navbar = lazy(() => import("@/components/LandingPage/misc/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const TermsOfService = lazy(() => import("@/pages/PrivacyPolicy"));
 const PrivacyPolicy = lazy(() => import("@/pages/TermsOfService"));
@@ -16,7 +16,10 @@ export default function Landing() {
     <>
       <title>GAIA</title>
 
+      {/* <Suspense fallback={<SuspenseLoader />}>
+      </Suspense> */}
       <Navbar />
+
       <Routes>
         <Route index element={<LandingPage />} />
         <Route
@@ -62,7 +65,14 @@ export default function Landing() {
           }
         />
 
-        <Route path="/pricing" element={<Pricing />} />
+        <Route
+          path="/pricing"
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <Pricing />
+            </Suspense>
+          }
+        />
       </Routes>
     </>
   );

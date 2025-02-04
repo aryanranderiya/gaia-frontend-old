@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
 import { Download, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Key, useCallback, useEffect, useRef, useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
@@ -145,7 +145,7 @@ const FlowchartDemo = () => {
         <div className="relative flex flex-col gap-0 bg-zinc-900 !rounded-[15px] pb-8">
           <Tabs
             selectedKey={activeTab}
-            onSelectionChange={(key) => {
+            onSelectionChange={(key: Key) => {
               setActiveTab(key as string);
               setTimeout(() => {
                 mermaid.contentLoaded();

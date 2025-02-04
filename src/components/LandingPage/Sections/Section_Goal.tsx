@@ -19,12 +19,17 @@ export default function GoalSection() {
   // Intersection Observer logic
   useEffect(() => {
     [
-      "/landing/goal_checked.png",
-      "/landing/goal_cropped.png",
+      "/landing/goal_checked.webp",
+      "/landing/goal_cropped.webp",
       "/landing/blur_goals.webp",
     ].forEach((image) => {
-      const img = new Image();
-      img.src = image;
+      setTimeout(
+        () => {
+          const img = new Image();
+          img.src = image;
+        },
+        image == "/landing/goal_cropped.webp" ? 1000 : 0
+      );
     });
 
     const observer = new IntersectionObserver(
@@ -95,6 +100,7 @@ export default function GoalSection() {
           <img
             src="/landing/blur_goals.webp"
             className={`sm:h-[60vh] h-fit w-full object-cover rounded-3xl transition-all sm:flex hidden`}
+            alt="Create a Goal Background"
           />
 
           <div className="sm:absolute relative min-h-full w-full left-0 top-0 flex items-center justify-center">
@@ -140,9 +146,10 @@ export default function GoalSection() {
           <img
             src={
               isComplete
-                ? "/landing/goal_checked.png"
-                : "/landing/goal_cropped.png"
+                ? "/landing/goal_checked.webp"
+                : "/landing/goal_cropped.webp"
             }
+            alt="Flowchart of created goal"
             className="h-[60vh] w-full object-top object-cover rounded-3xl transition-all"
           />
         </div>

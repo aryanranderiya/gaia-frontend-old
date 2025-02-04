@@ -82,7 +82,7 @@ const StaticSidebar = ({
             <BookIcon1 width={18} />
             Resources
           </div>
-          <div className="text-sm">
+          <ul className="text-sm">
             {resources.map((resource, index) => (
               <a
                 key={index}
@@ -93,7 +93,7 @@ const StaticSidebar = ({
                 <li>{resource}</li>
               </a>
             ))}
-          </div>
+          </ul>
         </div>
       ) : (
         <div>No resources available.</div>

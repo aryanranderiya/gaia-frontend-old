@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { Children, useMemo, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import React from "react";
 import { cn } from "@/lib/utils";
+import { LazyMotion, domAnimation, m } from "motion/react";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -18,35 +17,44 @@ export function AnimatedSection({
   const ref = useRef(null);
   const isVisible = useIntersectionObserver(ref);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: staggerDelay,
+  // Memoize variants to prevent unnecessary recalculations
+  const containerVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          when: "beforeChildren",
+          staggerChildren: staggerDelay,
+        },
       },
-    },
-  };
+    }),
+    [staggerDelay]
+  );
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0 },
-  };
+  const itemVariants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 50 },
+      visible: { opacity: 1, y: 0 },
+    }),
+    []
+  );
 
   return (
-    <motion.div
-      ref={ref}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
-      className={cn(className)}
-    >
-      {React.Children.map(children, (child, index) => (
-        <motion.div key={index} variants={itemVariants}>
-          {child}
-        </motion.div>
-      ))}
-    </motion.div>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        ref={ref}
+        variants={containerVariants}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        className={cn(className)} // Ensure cn is optimized
+      >
+        {Children.map(children, (child, index) => (
+          <m.div key={index} variants={itemVariants}>
+            {child}
+          </m.div>
+        ))}
+      </m.div>
+    </LazyMotion>
   );
 }

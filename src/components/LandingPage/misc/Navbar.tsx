@@ -3,7 +3,7 @@ import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useMediaQuery from "../../../hooks/MediaQuery";
+import useMediaQuery from "@/hooks/MediaQuery";
 import {
   BubbleConversationChatIcon,
   CommentAdd01Icon,
@@ -18,7 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../ui/sheet";
-import WaitListButton from "./WaitlistModal";
+// import WaitListButton from "./WaitlistModal";
 import { apiauth } from "@/utils/apiaxios";
 
 export default function Navbar() {
@@ -116,7 +116,7 @@ export default function Navbar() {
                     Feedback
                   </Button>
 
-                  <WaitListButton
+                  {/* <WaitListButton
                     text="Waitlist Signup"
                     props={{
                       variant: "ghost",
@@ -124,7 +124,7 @@ export default function Navbar() {
                       radius: "md",
                       className: "font-normal",
                     }}
-                  />
+                  /> */}
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
