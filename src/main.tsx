@@ -1,7 +1,7 @@
 import ErrorBoundary from "@/components/ErrorBoundary.tsx";
 import { HeroUIProvider } from "@heroui/system";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { lazy, ReactNode } from "react";
+import { ReactNode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App.tsx";
