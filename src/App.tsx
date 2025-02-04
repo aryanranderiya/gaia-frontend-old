@@ -2,9 +2,10 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
-import Landing from "./layouts/LandingLayout";
+
 const MainInterface = lazy(() => import("./pages/MainInterface"));
-// const Landing = lazy(() => import("./layouts/LandingLayout"));
+const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
+// import LandingLayout from "./layouts/LandingLayout";
 
 function App() {
   const location = useLocation();
@@ -76,7 +77,14 @@ function App() {
             </Suspense>
           }
         />
-        <Route path="/*" element={<Landing />} />
+        <Route
+          path="/*"
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <LandingLayout />
+            </Suspense>
+          }
+        />
         {/* <Route path="/record" element={<Record />} /> */}
       </Routes>
     </UserProvider>

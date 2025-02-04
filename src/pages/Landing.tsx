@@ -1,49 +1,25 @@
 import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
 import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
 import SuspenseLoader from "@/components/SuspenseLoader";
-// import { ScrollArea } from "@/components/ui/scroll-area";
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 
-const Section_Grid = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Grid")
+const LazyLoadedSections = lazy(
+  () => import("@/components/LandingPage/Sections/Sections_Lazy")
 );
-
-const FreePricing = lazy(
-  () => import("@/components/LandingPage/Sections/Free_Pricing")
-);
-
-const WhatCanYouDo = lazy(
-  () => import("@/components/LandingPage/Sections/Section_WhatCanYouDo")
-);
-
-const TargetAudience = lazy(
-  () => import("@/components/LandingPage/Sections/Section_TargetAudience")
-);
-
-const ComingSoon = lazy(
-  () => import("@/components/LandingPage/Sections/Section_ComingSoon")
-);
-
-const Footer = lazy(() => import("@/components/LandingPage/misc/Footer"));
-
-const GoalSection = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Goal")
-);
-
-const Internet = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Internet")
-);
-
-const FinalSection = lazy(() => import("./FinalSection"));
 
 export default function LandingPage() {
+  const [load, setLoad] = useState(false);
+
   useEffect(() => {
     const img = new Image();
     img.src = "/landing/screenshot.png";
     img.decode();
+
+    setTimeout(() => {
+      setLoad(true);
+    }, 300);
   }, []);
 
-  // <ScrollArea>
   return (
     <div className="landing_page relative select-none overflow-y-scroll">
       <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
@@ -51,47 +27,11 @@ export default function LandingPage() {
       <HeroSection />
       <ImagePreview />
 
-      {/* <TheSearchForAssistants /> */}
-      <Suspense fallback={<SuspenseLoader />}>
-        <WhatCanYouDo />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Internet />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <GoalSection />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Section_Grid />
-      </Suspense>
-{/* 
-      <Suspense fallback={<SuspenseLoader />}>
-        <AllFeatures />
-      </Suspense> */}
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <TargetAudience />
-      </Suspense>
-
-      <FreePricing />
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <ComingSoon />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <FinalSection />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Footer />
-      </Suspense>
+      {load && (
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
+          <LazyLoadedSections />
+        </Suspense>
+      )}
     </div>
   );
-}
-{
-  /* </ScrollArea> */
 }

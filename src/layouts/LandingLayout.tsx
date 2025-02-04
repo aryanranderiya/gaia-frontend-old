@@ -15,7 +15,7 @@ const PageNotFound = lazy(() => import("@/pages/PageNotFound"));
 const LoginSignup = lazy(() => import("@/pages/LoginSignup"));
 // import Pricing from "../pages/Pricing";
 
-export default function Landing() {
+export default function LandingLayout() {
   return (
     <>
       <title>GAIA</title>
