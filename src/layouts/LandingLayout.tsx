@@ -1,9 +1,13 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import LandingPage from "@/pages/Landing";
 
+// import LandingPage from "@/pages/Landing";
+const LandingPage = lazy(() => import("@/pages/Landing"));
+
+// import Navbar from "@/components/LandingPage/misc/Navbar";
 const Navbar = lazy(() => import("@/components/LandingPage/misc/Navbar"));
+
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const TermsOfService = lazy(() => import("@/pages/PrivacyPolicy"));
 const PrivacyPolicy = lazy(() => import("@/pages/TermsOfService"));
@@ -16,12 +20,19 @@ export default function Landing() {
     <>
       <title>GAIA</title>
 
-      <Suspense fallback={<SuspenseLoader />}>
+      <Suspense fallback={<></>}>
         <Navbar />
       </Suspense>
 
       <Routes>
-        <Route index element={<LandingPage />} />
+        <Route
+          index
+          element={
+            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+              <LandingPage />
+            </Suspense>
+          }
+        />
 
         <Route
           path="*"
