@@ -1,11 +1,12 @@
 import ErrorBoundary from "@/components/ErrorBoundary.tsx";
 import { HeroUIProvider } from "@heroui/system";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ReactNode } from "react";
+import { lazy, ReactNode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
+// const ErrorBoundary = lazy(() => import("@/components/ErrorBoundary.tsx"));
 
 export function Provider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();

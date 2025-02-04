@@ -30,20 +30,20 @@ function SearchWeb() {
             <path
               d="M3 12C7.5 12 12 7.5 12 3C12 7.5 16.5 12 21 12C16.5 12 12 16.5 12 21C12 16.5 7.5 12 3 12Z"
               stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
             ></path>
             <path
               d="M2 19.5C2.83333 19.5 4.5 17.8333 4.5 17C4.5 17.8333 6.16667 19.5 7 19.5C6.16667 19.5 4.5 21.1667 4.5 22C4.5 21.1667 2.83333 19.5 2 19.5Z"
               stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
             ></path>
             <path
               d="M16 5C17 5 19 3 19 2C19 3 21 5 22 5C21 5 19 7 19 8C19 7 17 5 16 5Z"
               stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
             ></path>
           </svg>
         </div>
@@ -69,7 +69,7 @@ function SearchWeb() {
                 cy="12"
                 r="10"
                 stroke="currentColor"
-                stroke-width="1.5"
+                strokeWidth="1.5"
               ></circle>
               <ellipse
                 cx="12"
@@ -77,14 +77,14 @@ function SearchWeb() {
                 rx="4"
                 ry="10"
                 stroke="currentColor"
-                stroke-width="1.5"
+                strokeWidth="1.5"
               ></ellipse>
               <path
                 d="M2 12H22"
                 stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></path>
             </svg>
             <span className="flex-1 text-inherit font-normal px-2 pl-1">
@@ -121,9 +121,9 @@ function FetchWebpage() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-arrow-up-right max-h-[80%]"
           >
             <path d="M7 7h10v10"></path>
@@ -154,9 +154,9 @@ function FetchWebpage() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="#00bbff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-arrow-up-right max-h-[80%]"
           >
             <path d="M7 7h10v10"></path>

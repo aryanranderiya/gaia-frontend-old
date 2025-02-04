@@ -84,23 +84,20 @@
 
   <body>
     <div id="root"></div>
+    <!-- Main React File -->
     <script type="module" src="/src/main.tsx"></script>
 
     <!-- For Google OAuth -->
-    <script defer src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script
-      defer
-      src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"
-    ></script>
-    <script defer>
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"></script>
+    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-R6EGV9FG2Q");
     </script>
   </body>

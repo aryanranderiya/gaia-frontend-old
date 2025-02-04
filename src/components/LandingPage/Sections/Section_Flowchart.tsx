@@ -172,13 +172,13 @@ const FlowchartDemo = () => {
                   {String(flowchartCode).replace(/\n$/, "")}
                 </div>
                 <div className="absolute bottom-2 right-2 flex gap-2">
-                  <Button size="sm" onClick={handleZoomIn}>
+                  <Button size="sm" onPress={handleZoomIn}>
                     <ZoomIn size={16} />
                   </Button>
-                  <Button size="sm" onClick={handleZoomOut}>
+                  <Button size="sm" onPress={handleZoomOut}>
                     <ZoomOut size={16} />
                   </Button>
-                  <Button size="sm" onClick={handleDownload}>
+                  <Button size="sm" onPress={handleDownload}>
                     <Download size={16} />
                   </Button>
                 </div>
