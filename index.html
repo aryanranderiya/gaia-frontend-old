@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="preload" as="image" href="/landing/screenshot.png" />
+    <link rel="preload" as="image" href="/landing/screenshot.webp" />
 
     <link
       rel="preload"
@@ -25,16 +25,10 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.webp" as="image" type="image/webp"> -->
-    <!-- <link rel="preload" href="./src/components/LandingPage/images/homepage_image.png" as="image" type="image/png"> -->
-    <!-- <link rel="preload" href="./src/components/Smileys/20.webp" as="image" type="image/webp"> -->
     <style>
       @font-face {
         font-family: "Creato";
-        src: url("/fonts/CreatoDisplay-Bold.woff2") format("woff2"),
-          url("/fonts/CreatoDisplay-Bold.woff") format("woff"),
-          url("/fonts/CreatoDisplay-Bold.ttf") format("truetype"),
-          url("/fonts/CreatoDisplay-Bold.otf") format("opentype");
+        src: url("/fonts/CreatoDisplay-Bold.woff2") format("woff2");
         font-weight: 500;
         font-style: normal;
         font-display: swap;
@@ -42,10 +36,7 @@
 
       @font-face {
         font-family: "Creato";
-        src: url("/fonts/CreatoDisplay-Regular.woff2") format("woff2"),
-          url("/fonts/CreatoDisplay-Regular.woff") format("woff"),
-          url("/fonts/CreatoDisplay-Regular.otf") format("opentype"),
-          url("/fonts/CreatoDisplay-Regular.ttf") format("truetype");
+        src: url("/fonts/CreatoDisplay-Regular.woff2") format("woff2");
         font-weight: 400;
         font-style: normal;
         font-display: swap;
@@ -53,10 +44,7 @@
 
       @font-face {
         font-family: "Creato";
-        src: url("/fonts/CreatoDisplay-ExtraBold.woff2") format("woff2"),
-          url("/fonts/CreatoDisplay-ExtraBold.woff") format("woff"),
-          url("/fonts/CreatoDisplay-ExtraBold.ttf") format("truetype"),
-          url("/fonts/CreatoDisplay-ExtraBold.otf") format("opentype");
+        src: url("/fonts/CreatoDisplay-ExtraBold.woff2") format("woff2");
         font-weight: 700;
         font-style: normal;
         font-display: swap;
@@ -92,27 +80,26 @@
       name="viewport"
     />
     <link rel="stylesheet" href="./src/index.css" />
-    <script async src="https://accounts.google.com/gsi/client" async></script>
-    <!-- <link href="/favicon.ico" rel="icon" /> -->
   </head>
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    defer
-    src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"
-  ></script>
-  <script defer>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-R6EGV9FG2Q");
-  </script>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script defer src="https://accounts.google.com/gsi/client" async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      defer
+      src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"
+    ></script>
+    <script defer>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-R6EGV9FG2Q");
+    </script>
   </body>
 </html>
