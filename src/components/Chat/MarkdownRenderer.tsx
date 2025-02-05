@@ -3,11 +3,12 @@
 import { useLoading } from "@/contexts/LoadingContext";
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
-import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
+import { Download, GlobeIcon, Move, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
 import type React from "react";
 import {
   lazy,
+  memo,
   Suspense,
   useCallback,
   useEffect,
@@ -16,18 +17,16 @@ import {
 } from "react";
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 // import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import axios from "axios";
-import * as cheerio from "cheerio";
+import api from "@/utils/apiaxios";
 import {
   PrismAsyncLight,
   SyntaxHighlighterProps,
 } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
-import { Task01Icon, TaskDone01Icon } from "../icons";
+import { InternetIcon, Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import api from "@/utils/apiaxios";
+import { Tooltip } from "@heroui/tooltip";
 const ReactMarkdown = lazy(() => import("react-markdown"));
 const SyntaxHighlighter =
   PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
@@ -267,14 +266,18 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   );
 };
 
-const CustomAnchor = ({ props }) => {
+export function CustomAnchor({ props }) {
+  const { isLoading } = useLoading();
   const [metadata, setMetadata] = useState({
     title: "",
     description: "",
     favicon: "",
+    website_name: "",
   });
 
-  console.log(props);
+  const prevHref = useRef(null);
+  const [validFavicon, setValidFavicon] = useState(true);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -282,57 +285,79 @@ const CustomAnchor = ({ props }) => {
         const response = await api.post("/fetch-url-metadata", {
           url: props.href,
         });
-        const { title, description, favicon } = response.data;
-        setMetadata({
-          title,
-          description,
-          favicon,
-        });
+        const { title, description, favicon, website_name } = response.data;
+        setMetadata({ title, description, favicon, website_name });
+        setValidFavicon(true);
+        prevHref.current = props.href;
       } catch (error) {
         console.error("Error fetching metadata:", error);
       }
     };
 
-    if (props.href) fetchMetadata();
-  }, [props.href]);
+    if (!isLoading && prevHref.current != props.href) fetchMetadata();
+  }, [tooltipOpen]);
 
   return (
-    <Tooltip>
-      <TooltipTrigger>
-        <a
-          className="text-primary hover:underline font-medium hover:text-primary-400 transition-all"
-          target="_blank"
-          rel="noopener noreferrer"
-          {...props}
-        >
-          {props.children}
-        </a>
-      </TooltipTrigger>
-      <TooltipContent className="bg-black text-white border-none outline-none">
-        <div className="flex flex-col">
-          <div className="flex items-center gap-1">
-            {metadata.favicon && (
-              <img
-                src={metadata.favicon}
-                className="size-[18px] rounded-full"
-              />
-            )}
-            <div className="font-medium truncate w-[300px] text-md">
+    <Tooltip
+      className="bg-zinc-950 text-white border-none outline-none p-3"
+      showArrow
+      onOpenChange={setTooltipOpen}
+      isOpen={tooltipOpen}
+      content={
+        <div className="flex flex-col gap-1">
+          {(metadata.website_name || (metadata.favicon && validFavicon)) && (
+            <div className="flex items-center gap-2">
+              {metadata.favicon && validFavicon ? (
+                <img
+                  src={metadata.favicon}
+                  className="size-[20px] rounded-full"
+                  onError={() => setValidFavicon(false)}
+                />
+              ) : (
+                <GlobeIcon width={17} height={17} color="#9b9b9b" />
+              )}
+
+              {metadata.website_name && (
+                <div className="truncate w-[300px] text-md">
+                  {metadata.website_name}
+                </div>
+              )}
+            </div>
+          )}
+
+          {metadata.title && (
+            <div className="w-[300px] font-medium  text-white text-md truncate">
               {metadata.title}
             </div>
-          </div>
-          <div className=" w-[300px] text-foreground-600 text-sm  mb-2">
-            {metadata.description}
-          </div>
+          )}
 
-          <div className="w-[300px] text-primary text-sm truncate">
+          {metadata.description && (
+            <div className="w-[300px] max-h-[100px] text-foreground-600 text-sm mb-2 overflow-hidden">
+              {metadata.description}
+            </div>
+          )}
+          <a
+            className="w-[300px] text-primary text-xs truncate hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={props.href}
+          >
             {props.href.replace("https://", "")}
-          </div>
+          </a>
         </div>
-      </TooltipContent>
+      }
+    >
+      <a
+        className="!text-[#00bbff] hover:underline font-medium hover:!text-white transition-all"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={props.href}
+      >
+        {props.children}
+      </a>
     </Tooltip>
   );
-};
+}
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,

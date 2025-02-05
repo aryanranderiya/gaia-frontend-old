@@ -3,13 +3,14 @@ import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
 import { Chip } from "@heroui/chip";
 import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, ReactNode, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
 import { InternetIcon } from "../../icons";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
+import { CustomAnchor } from "../MarkdownRenderer";
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
 export default function ChatBubbleBot({
@@ -159,14 +160,13 @@ export default function ChatBubbleBot({
                 >
                   <div className="font-medium flex items-center gap-1 text-primary">
                     {/* {pageFetchURL?.replace(/^https?:\/\//, "")} */}
-                    Fetched
-                    <a
-                      href={pageFetchURL}
-                      className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
-                      target="_blank"
-                    >
-                      {pageFetchURL.replace(/^https?:\/\//, "")}{" "}
-                    </a>
+                    Fetched{" "}
+                    <CustomAnchor
+                      props={{
+                        href: pageFetchURL,
+                        children: pageFetchURL.replace(/^https?:\/\//, ""),
+                      }}
+                    />
                   </div>
                 </Chip>
               )}
