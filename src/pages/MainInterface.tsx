@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import useMediaQuery from "../hooks/MediaQuery";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 // Lazy load the components
 const Sidebar = lazy(() => import("../layouts/Sidebar"));
@@ -88,117 +89,119 @@ export default function MainInterface() {
     <ConversationListProvider>
       <ConvoProvider>
         <LoadingProvider>
-          <div className="main_container dark">
-            {/* <Suspense fallback={<SuspenseLoader fullHeight={true} />}> */}
-            <Toaster richColors />
+          <TooltipProvider>
+            <div className="main_container dark">
+              {/* <Suspense fallback={<SuspenseLoader fullHeight={true} />}> */}
+              <Toaster richColors />
 
-            <Suspense fallback={<SuspenseLoader />}>
-              <NotLoggedIn />
-            </Suspense>
+              <Suspense fallback={<SuspenseLoader />}>
+                <NotLoggedIn />
+              </Suspense>
 
-            <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
-            {/* </Suspense> */}
-            <div
-              ref={contentContainerRef}
-              onClick={hideSidebar}
-              className="main_chat"
-            >
+              <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+              {/* </Suspense> */}
               <div
-                className={`chat_sidebar_toggle_btn bg-black rounded-xl transition-opacity ${
-                  isSidebarVisible ? "opacity-0" : "opacity-100"
-                }`}
+                ref={contentContainerRef}
+                onClick={hideSidebar}
+                className="main_chat"
               >
-                <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+                <div
+                  className={`chat_sidebar_toggle_btn bg-black rounded-xl transition-opacity ${
+                    isSidebarVisible ? "opacity-0" : "opacity-100"
+                  }`}
+                >
+                  <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
+                </div>
+
+                <Routes>
+                  <Route path="chat/:convoIdParam" element={<MainChat />} />
+                  <Route path="chat" element={<MainChat />} />
+
+                  <Route
+                    path="explore"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Explore />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="calendar"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Calendar />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="pins"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Pins />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="notes"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Notes />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="notes/add"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <NotesAdd />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="notes/:id"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <NotesAdd />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="goals"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Goals />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="goals/:goalId"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <GoalPage />
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="search"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Search />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="*"
+                    element={
+                      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                        <Navigate to="/404" />
+                      </Suspense>
+                    }
+                  />
+                </Routes>
               </div>
-
-              <Routes>
-                <Route path="chat/:convoIdParam" element={<MainChat />} />
-                <Route path="chat" element={<MainChat />} />
-
-                <Route
-                  path="explore"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Explore />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="calendar"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Calendar />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="pins"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Pins />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="notes"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Notes />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="notes/add"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <NotesAdd />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="notes/:id"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <NotesAdd />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="goals"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Goals />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="goals/:goalId"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <GoalPage />
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="search"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Search />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="*"
-                  element={
-                    <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-                      <Navigate to="/404" />
-                    </Suspense>
-                  }
-                />
-              </Routes>
             </div>
-          </div>
+          </TooltipProvider>
         </LoadingProvider>
       </ConvoProvider>
     </ConversationListProvider>

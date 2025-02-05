@@ -16,6 +16,8 @@ import {
 } from "react";
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 // import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import axios from "axios";
+import * as cheerio from "cheerio";
 import {
   PrismAsyncLight,
   SyntaxHighlighterProps,
@@ -24,6 +26,8 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import api from "@/utils/apiaxios";
 const ReactMarkdown = lazy(() => import("react-markdown"));
 const SyntaxHighlighter =
   PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
@@ -253,13 +257,80 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         </div>
       ) : (
         <code
-          className={className + " bg-black bg-opacity-40 rounded-sm"}
+          className={`${className} bg-black bg-opacity-40 rounded-sm`}
           {...props}
         >
           {children}
         </code>
       )}
     </>
+  );
+};
+
+const CustomAnchor = ({ props }) => {
+  const [metadata, setMetadata] = useState({
+    title: "",
+    description: "",
+    favicon: "",
+  });
+
+  console.log(props);
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const response = await api.post("/fetch-url-metadata", {
+          url: props.href,
+        });
+        const { title, description, favicon } = response.data;
+        setMetadata({
+          title,
+          description,
+          favicon,
+        });
+      } catch (error) {
+        console.error("Error fetching metadata:", error);
+      }
+    };
+
+    if (props.href) fetchMetadata();
+  }, [props.href]);
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <a
+          className="text-primary hover:underline font-medium hover:text-primary-400 transition-all"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...props}
+        >
+          {props.children}
+        </a>
+      </TooltipTrigger>
+      <TooltipContent className="bg-black text-white border-none outline-none">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1">
+            {metadata.favicon && (
+              <img
+                src={metadata.favicon}
+                className="size-[18px] rounded-full"
+              />
+            )}
+            <div className="font-medium truncate w-[300px] text-md">
+              {metadata.title}
+            </div>
+          </div>
+          <div className=" w-[300px] text-foreground-600 text-sm  mb-2">
+            {metadata.description}
+          </div>
+
+          <div className="w-[300px] text-primary text-sm truncate">
+            {props.href.replace("https://", "")}
+          </div>
+        </div>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
@@ -288,15 +359,8 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             ol: ({ node, ...props }) => (
               <ol className="list-decimal pl-6 mb-4" {...props} />
             ),
-            li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-            a: ({ node, ...props }) => (
-              <a
-                className="text-blue-500 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-                {...props}
-              />
-            ),
+            // li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+            a: ({ node, ...props }) => <CustomAnchor props={props} />,
             blockquote: ({ node, ...props }) => (
               <blockquote
                 className="border-l-4 border-gray-300 pl-4 italic my-4"

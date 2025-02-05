@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { Children, useMemo, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { Children, useMemo, useRef } from "react";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;

@@ -435,7 +435,6 @@ main {
 
 .navbar_content {
   /* background-color: rgba(85, 85, 85, 0.034); */
-  background-color: rgba(0, 0, 0, 0.7);
   height: 45px;
   border-radius: 1000px;
   margin: 10px;
@@ -445,7 +444,7 @@ main {
   align-items: center;
   justify-content: space-between;
   padding: 0 3px;
-  outline: 2px rgba(255, 255, 255, 0.08) solid;
+  /* outline: 2px rgba(255, 255, 255, 0.08) solid; */
 }
 
 .arrow_diagonal_btn {
@@ -892,19 +891,16 @@ code {
   pointer-events: none;
 }
 
-/* width */
 .sidebar div::-webkit-scrollbar {
   width: 7px;
   border-radius: 100px;
 }
 
-/* Track */
 .sidebar div::-webkit-scrollbar-track {
-  background: #00bbff30;
+  background: #00bbff40;
   border-radius: 100px;
 }
 
-/* Handle */
 .sidebar div::-webkit-scrollbar-thumb {
   background: #00bbff;
   border-radius: 100px;
@@ -935,7 +931,7 @@ code {
   }
 }
 
-html ::-webkit-scrollbar {
+/* html ::-webkit-scrollbar {
   width: 8px;
   border-radius: 100px;
   z-index: 1000;
@@ -949,4 +945,4 @@ html ::-webkit-scrollbar-track {
 html ::-webkit-scrollbar-thumb {
   background: #00bbff;
   border-radius: 100px;
-}
+} */

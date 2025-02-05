@@ -12,6 +12,7 @@ export interface Note {
   // title?: string;
   // description?: string;
   content: string;
+  auto_created?: boolean;
   plaintext: string;
 }
 

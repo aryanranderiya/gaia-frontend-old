@@ -9,11 +9,8 @@ import {
 import { useLoading } from "@/contexts/LoadingContext";
 import { useConversation } from "@/hooks/useConversation";
 import { Button } from "@heroui/button";
-import { useCheckbox } from "@heroui/checkbox";
-import { Chip } from "@heroui/chip";
 import { Input, Textarea } from "@heroui/input";
-import { VisuallyHidden, tv } from "@heroui/react";
-import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalSearchIcon } from "../icons";
@@ -65,36 +62,11 @@ const MainSearchbar = ({
     }
   };
 
-  const { isSelected, getBaseProps, getLabelProps, getInputProps } =
-    useCheckbox({
-      defaultSelected: false,
-    });
-
-  const checkbox = tv({
-    slots: {
-      base: "hover:bg-default-200 bg-[#27272A] !pr-0 border-none !text-sm",
-      content: "text-default-500 flex items-center gap-1",
-    },
-    variants: {
-      isSelected: {
-        true: {
-          base: "bg-primary hover:bg-[#00bbff95]",
-          content: "text-primary-foreground pl-1",
-        },
-      },
-    },
-  });
-
-  const styles = checkbox({ isSelected: enableSearch });
-
   const toggleSearch = () => setEnableSearch((prev) => !prev);
 
   const openPageFetchModal = () => {
-    setFetchPageModal(true); // For the dialog
+    setFetchPageModal(true);
   };
-
-  // Extract label props and remove the ref to avoid type conflicts
-  const { ref, ...labelProps } = getLabelProps();
 
   function isValidURL(url: string) {
     try {
@@ -125,42 +97,47 @@ const MainSearchbar = ({
         </div>
 
         <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
-          <div className="flex items-center justify-between mb-1">
-            <div className="w-fit py-1 px-1 rounded-full text-sm">
-              <label {...getBaseProps()}>
-                <VisuallyHidden>
-                  <input {...getInputProps()} />
-                </VisuallyHidden>
-                <Chip
-                  classNames={{
-                    base: styles.base(),
-                    content: styles.content(),
-                  }}
-                  onClick={toggleSearch}
-                  color="primary"
-                  startContent={
-                    isSelected ? (
-                      <Check
-                        className="ml-1 text-black"
-                        width={18}
-                        height={18}
-                      />
-                    ) : null
-                  }
-                  variant="faded"
-                  {...labelProps}
-                >
-                  Web Search
-                  <GlobalSearchIcon
-                    color={isSelected ? "#000" : ""}
-                    height={20}
-                    width={20}
-                  />
-                </Chip>
-              </label>
-            </div>
+          <div className="flex items-center justify-between mb-1 gap-1">
+            <button
+              type="button"
+              className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
+                enableSearch
+                  ? "bg-primary text-white hover:bg-[#00bbffAA]"
+                  : "bg-zinc-800  text-zinc-400 hover:bg-zinc-700"
+              }`}
+              onClick={toggleSearch}
+            >
+              <span className="text-nowrap">Web Search</span>
+              <GlobalSearchIcon
+                color={enableSearch ? "#fff" : "#A1A1AA"}
+                height={18}
+                width={18}
+              />
+            </button>
 
-            <Chip
+            <button
+              type="button"
+              className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
+                pageFetchURL.length > 0 && !fetchPageModal
+                  ? "bg-primary text-white hover:bg-[#00bbffAA]"
+                  : "bg-zinc-800  text-zinc-400 hover:bg-zinc-700"
+              }`}
+              onClick={openPageFetchModal}
+            >
+              <span className="text-nowrap">Fetch Page</span>
+
+              <ArrowUpRight
+                color={
+                  pageFetchURL.length > 0 && !fetchPageModal
+                    ? "#fff"
+                    : "#A1A1AA"
+                }
+                height={18}
+                width={18}
+              />
+            </button>
+
+            {/* <Chip
               onClick={openPageFetchModal}
               classNames={{
                 base: `hover:bg-default-200 ${
@@ -187,7 +164,8 @@ const MainSearchbar = ({
                 height={20}
                 width={20}
               />
-            </Chip>
+            </Chip> */}
+
             {/* </label>
           </div> */}
 
