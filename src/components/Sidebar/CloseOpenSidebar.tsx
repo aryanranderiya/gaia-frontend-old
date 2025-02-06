@@ -16,7 +16,7 @@ function CloseOpenSidebarBtn({ toggleSidebar }: CloseOpenSidebarBtnProps) {
       aria-label="Send message"
       className="p-0"
       size="md"
-      onClick={toggleSidebar}
+      onPress={toggleSidebar}
     >
       {isMobileScreen ? (
         <Menu02Icon height="24" />

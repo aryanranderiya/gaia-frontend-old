@@ -1,9 +1,9 @@
 import { BubbleConversationChatIcon } from "@/components/icons";
-import { Button } from "@heroui/button";
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ChatOptionsDropdown from "./ChatOptionsDropdown";
 import { Star } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface ChatTabProps {
   name: string;
@@ -24,16 +24,18 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
 
   return (
     <Button
-      variant="light"
-      color={currentConvoId === id ? "primary" : "default"}
-      className="w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px]"
+      className={`w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
+        currentConvoId === id ? "text-primary" : "text-white"
+      }`}
       onClick={() => {
         setButtonHovered(false);
         navigate(`/try/chat/${id}`);
       }}
-      radius="sm"
-      startContent={
-        starred ? (
+      onMouseOver={() => setButtonHovered(true)}
+      onMouseOut={() => setButtonHovered(false)}
+    >
+      <div className="flex items-center justify-between gap-2 w-full">
+        {starred ? (
           <Star
             width="19"
             className="min-w-[17px] w-[17px]"
@@ -45,22 +47,17 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
             className="min-w-[17px] w-[17px]"
             color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
           />
-        )
-      }
-      onMouseOver={() => setButtonHovered(true)}
-      onMouseOut={() => setButtonHovered(false)}
-      endContent={
+        )}
+        <span className="truncate w-[200px] text-left">
+          {name.replace('"', "")}
+        </span>
         <ChatOptionsDropdown
           buttonHovered={buttonHovered}
           chatId={id}
           chatName={name}
           starred={starred}
         />
-      }
-    >
-      <span className="truncate w-[200px] text-left">
-        {name.replace('"', "")}
-      </span>
+      </div>
     </Button>
   );
 };

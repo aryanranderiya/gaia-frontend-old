@@ -44,22 +44,20 @@ export default function MainInterface() {
   function toggleSidebar(): void {
     if (sidebarRef.current && contentContainerRef.current) {
       if (isSidebarVisible) {
-        sidebarRef.current.classList.add("hide");
-        contentContainerRef.current.classList.remove("hide");
-
-        setTimeout(() => {
-          if (sidebarRef?.current) {
-            sidebarRef?.current.classList.add("!hidden");
-            sidebarRef?.current.classList.remove("flex");
-          }
-        }, 300);
+        // sidebarRef.current.classList.add("hide");
+        // contentContainerRef.current.classList.remove("hide");
+        // setTimeout(() => {
+        //   if (sidebarRef?.current) {
+        //     sidebarRef?.current.classList.add("!hidden");
+        //     sidebarRef?.current.classList.remove("flex");
+        //   }
+        // }, 300);
         setSidebarVisible(false);
       } else {
-        contentContainerRef.current.classList.add("hide");
-        sidebarRef.current.classList.remove("hide");
-        sidebarRef?.current.classList.remove("!hidden");
-        sidebarRef?.current.classList.add("flex");
-
+        // contentContainerRef.current.classList.add("hide");
+        // sidebarRef.current.classList.remove("hide");
+        // sidebarRef?.current.classList.remove("!hidden");
+        // sidebarRef?.current.classList.add("flex");
         setSidebarVisible(true);
       }
     }
@@ -68,16 +66,15 @@ export default function MainInterface() {
   const hideSidebar = () => {
     if (
       !(
-        sidebarRef.current &&
-        contentContainerRef.current &&
-        isSidebarVisible &&
-        isMobileScreen
+        (sidebarRef.current && contentContainerRef.current && isSidebarVisible)
+        // &&
+        // isMobileScreen
       )
     )
       return;
 
-    sidebarRef.current.classList.add("hide");
-    contentContainerRef.current.classList.remove("hide");
+    // sidebarRef.current.classList.add("hide");
+    // contentContainerRef.current.classList.remove("hide");
     setSidebarVisible(false);
   };
 
@@ -98,12 +95,18 @@ export default function MainInterface() {
                 <NotLoggedIn />
               </Suspense>
 
-              <Sidebar sidebarref={sidebarRef} toggleSidebar={toggleSidebar} />
+              <Suspense fallback={<SuspenseLoader />}>
+                <Sidebar
+                  sidebarref={sidebarRef}
+                  toggleSidebar={toggleSidebar}
+                  isSidebarVisible={isSidebarVisible}
+                />
+              </Suspense>
               {/* </Suspense> */}
               <div
                 ref={contentContainerRef}
                 onClick={hideSidebar}
-                className="main_chat"
+                className="main_chat transition-all"
               >
                 <div
                   className={`chat_sidebar_toggle_btn bg-black rounded-xl transition-opacity ${

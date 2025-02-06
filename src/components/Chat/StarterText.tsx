@@ -127,7 +127,7 @@ const badges = [
 export default function StarterText() {
   return (
     <>
-      <span className="text-4xl font-medium grow flex-1 text-center">
+      <span className="text-5xl font-medium grow flex-1 text-center">
         {/* Hey! <WavingHand01Icon /> How may I assist you today? */}
         What can I do for you today?
       </span>

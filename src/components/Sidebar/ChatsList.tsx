@@ -1,12 +1,12 @@
 import { PlusSignIcon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { Button } from "@heroui/button";
 import { isToday, isYesterday, subDays } from "date-fns";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChatTab } from "./ChatTab";
+import { Button } from "../ui/button";
 
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
@@ -52,11 +52,8 @@ const timeFramePriority = (timeFrame: string): number => {
 };
 
 export default function ChatsList() {
-  const navigate = useNavigate();
-  const { resetMessages } = useConvo();
   const { conversations, fetchConversations } = useConversationList();
   const [isLoading, setIsLoading] = useState(true);
-  const location = useLocation();
 
   useEffect(() => {
     const loadConversations = async () => {
@@ -72,11 +69,6 @@ export default function ChatsList() {
 
     loadConversations();
   }, []);
-
-  const createNewChat = (): void => {
-    navigate(`/try/chat/`);
-    resetMessages();
-  };
 
   const groupedConversations = conversations.reduce((acc, conversation) => {
     const timeFrame = getTimeFrame(conversation.createdAt);
@@ -99,19 +91,6 @@ export default function ChatsList() {
 
   return (
     <div className="pt-0 p-4">
-      <Button
-        className="w-full flex justify-between mt-2 font-medium"
-        onPress={createNewChat}
-        size="md"
-        color="primary"
-        // variant="flat"
-        variant={location.pathname === "/try/chat" ? "flat" : "solid"}
-        // color={location.pathname === "/try/chat" ? "primary" : "default"}
-      >
-        Create new chat
-        <PlusSignIcon width="21" color="foreground" />
-      </Button>
-
       <div className="flex flex-col gap-1 max-h-[80vh] relative">
         {isLoading ? (
           <div className="flex items-center justify-center p-10">
