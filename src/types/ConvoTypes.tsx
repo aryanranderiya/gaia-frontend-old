@@ -21,7 +21,14 @@ export type MessageType = {
   pinned?: boolean;
 
   intent?: string;
-  calendar_options?: { title: string; description: string; date: string };
+  calendar_options?: CalendarOptions;
+};
+
+export type CalendarOptions = {
+  summary: string | undefined;
+  description: string | undefined;
+  start: string | undefined;
+  end: string | undefined;
 };
 
 // Define the structure for a single conversation

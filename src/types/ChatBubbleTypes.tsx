@@ -1,3 +1,5 @@
+import { CalendarOptions } from "./ConvoTypes";
+
 export interface ChatBubbleUserProps {
   message_id: string;
   text?: string;
@@ -32,5 +34,5 @@ export interface ChatBubbleBotProps {
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 
   intent?: string;
-  calendar_options?: { title: string; description: string; date: string };
+  calendar_options?: CalendarOptions;
 }

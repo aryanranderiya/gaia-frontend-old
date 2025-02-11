@@ -1,7 +1,7 @@
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useLoading } from "@/contexts/LoadingContext";
-import { MessageType } from "@/types/ConvoTypes";
+import { CalendarOptions, MessageType } from "@/types/ConvoTypes";
 import { ApiService } from "@/utils/chatUtils";
 import fetchDate from "@/utils/fetchDate";
 import { useEffect, useState } from "react";
@@ -66,15 +66,14 @@ export const useConversation = (convoIdParam: string | null) => {
 
     let finalIntent: {
       intent: string | undefined;
-      calendar_options: {
-        title: string | undefined;
-        description: string | undefined;
-      };
+      calendar_options?: CalendarOptions;
     } = {
       intent: undefined,
       calendar_options: {
-        title: undefined,
+        summary: undefined,
         description: undefined,
+        start: undefined,
+        end: undefined,
       },
     };
 
@@ -107,11 +106,7 @@ export const useConversation = (convoIdParam: string | null) => {
         pageFetchURL,
         date: fetchDate(),
         intent: finalIntent.intent,
-        calendar_options: finalIntent.calendar_options as {
-          title: string;
-          description: string;
-          date: string;
-        },
+        calendar_options: finalIntent.calendar_options as CalendarOptions,
       };
 
       setConvoMessages((oldMessages = []) => {
@@ -144,11 +139,7 @@ export const useConversation = (convoIdParam: string | null) => {
         pageFetchURL,
         message_id: bot_message_id,
         intent: finalIntent.intent,
-        calendar_options: finalIntent.calendar_options as {
-          title: string;
-          description: string;
-          date: string;
-        },
+        calendar_options: finalIntent.calendar_options as CalendarOptions,
       };
 
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;

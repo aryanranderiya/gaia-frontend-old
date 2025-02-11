@@ -35,7 +35,6 @@ export default function ChatBubbleBot({
   intent,
   calendar_options,
 }: ChatBubbleBotProps) {
-  console.log(intent, "intent");
   console.log(calendar_options, "calendar_options");
 
   const [component, setComponent] = useState<JSX.Element>(<></>);
@@ -82,10 +81,10 @@ export default function ChatBubbleBot({
 
   const addToCalendar = async () => {
     const response = await apiauth.post(`/calendar/event`, {
-      summary: "Meeting with Client",
-      description: "Discuss project details",
-      start: "2025-02-10T10:00:00Z",
-      end: "2025-02-10T11:00:00Z",
+      summary: calendar_options?.summary,
+      description: calendar_options?.description,
+      start: calendar_options?.start,
+      end: calendar_options?.end,
     });
 
     console.log(response.data);
@@ -236,8 +235,9 @@ export default function ChatBubbleBot({
           </div>
 
           {intent === "calendar" &&
-            calendar_options?.date &&
-            calendar_options?.title &&
+            calendar_options?.start &&
+            calendar_options?.end &&
+            calendar_options?.summary &&
             calendar_options?.description && (
               <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
                 <div className="">
@@ -249,15 +249,23 @@ export default function ChatBubbleBot({
                   <div className="flex flex-col gap-1">
                     <div>
                       <div className="font-medium">
-                        {calendar_options?.title}
+                        {calendar_options?.summary}
                       </div>
                       <div className="text-sm">
                         {calendar_options?.description}
                       </div>
                     </div>
                     <div className="text-xs text-foreground-500">
-                      {calendar_options?.date
-                        ? String(new Date(calendar_options.date).toDateString())
+                      {calendar_options?.start
+                        ? String(
+                            new Date(calendar_options.start).toDateString()
+                          )
+                        : ""}
+                    </div>
+
+                    <div className="text-xs text-foreground-500">
+                      {calendar_options?.end
+                        ? String(new Date(calendar_options.end).toTimeString())
                         : ""}
                     </div>
                   </div>
