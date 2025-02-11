@@ -13,6 +13,7 @@ import {
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
 import { apiauth } from "@/utils/apiaxios";
+
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
 export default function ChatBubbleBot({
@@ -80,11 +81,14 @@ export default function ChatBubbleBot({
   // }, [image]);
 
   const addToCalendar = async () => {
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     const response = await apiauth.post(`/calendar/event`, {
       summary: calendar_options?.summary,
       description: calendar_options?.description,
       start: calendar_options?.start,
       end: calendar_options?.end,
+      timezone: userTimeZone,
     });
 
     console.log(response.data);

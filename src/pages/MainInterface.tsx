@@ -150,24 +150,6 @@ export default function MainInterface() {
     },
   ];
 
-  // useEffect(() => {
-  //   const addEvent = async () => {
-  //     const startDate = new Date();
-  //     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour later
-
-  //     const response = await apiauth.post("/calendar/event", {
-  //       summary: "test",
-  //       description: "this is a description",
-  //       start: startDate.toISOString(),
-  //       end: endDate.toISOString(),
-  //     });
-
-  //     console.log(response);
-  //   };
-
-  //   addEvent();
-  // }, []);
-
   return (
     <ConversationListProvider>
       <ConvoProvider>
