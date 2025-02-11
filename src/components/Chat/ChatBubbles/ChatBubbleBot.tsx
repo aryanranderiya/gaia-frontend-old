@@ -13,6 +13,7 @@ import {
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
 import { apiauth } from "@/utils/apiaxios";
+import { toast } from "sonner";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
@@ -39,6 +40,7 @@ export default function ChatBubbleBot({
   console.log(calendar_options, "calendar_options");
 
   const [component, setComponent] = useState<JSX.Element>(<></>);
+  const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
     "Uploading Document..."
@@ -73,25 +75,29 @@ export default function ChatBubbleBot({
     }
   }, [filename, loading]);
 
-  // useEffect(() => {
-  //   console.log(!!image && image?.length > 0);
-  //   console.log(image);
-
-  //   if (!!image && image?.length > 0) setImageSrc(image);
-  // }, [image]);
-
   const addToCalendar = async () => {
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    try {
+      setEventAddLoading(true);
 
-    const response = await apiauth.post(`/calendar/event`, {
-      summary: calendar_options?.summary,
-      description: calendar_options?.description,
-      start: calendar_options?.start,
-      end: calendar_options?.end,
-      timezone: userTimeZone,
-    });
+      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    console.log(response.data);
+      const response = await apiauth.post(`/calendar/event`, {
+        summary: calendar_options?.summary,
+        description: calendar_options?.description,
+        start: calendar_options?.start,
+        end: calendar_options?.end,
+        timezone: userTimeZone,
+      });
+
+      toast.success("Event has been added to Calendar!");
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add event to Calendar!");
+    } finally {
+      setEventAddLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -260,6 +266,7 @@ export default function ChatBubbleBot({
                       </div>
                     </div>
                     <div className="text-xs text-foreground-500">
+                      From{" "}
                       {calendar_options?.start
                         ? String(
                             new Date(calendar_options.start).toDateString()
@@ -268,8 +275,9 @@ export default function ChatBubbleBot({
                     </div>
 
                     <div className="text-xs text-foreground-500">
+                      To{" "}
                       {calendar_options?.end
-                        ? String(new Date(calendar_options.end).toTimeString())
+                        ? String(new Date(calendar_options.end).toDateString())
                         : ""}
                     </div>
                   </div>
@@ -279,6 +287,7 @@ export default function ChatBubbleBot({
                   color="primary"
                   className="w-full"
                   onPress={addToCalendar}
+                  isLoading={eventAddLoading}
                 >
                   Add Event
                 </Button>
