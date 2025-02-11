@@ -1,16 +1,18 @@
 import SuspenseLoader from "@/components/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
+import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
-import { lazy, ReactNode, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
-import { InternetIcon } from "../../icons";
+import { Calendar01Icon, InternetIcon } from "../../icons";
+import { CustomAnchor } from "../MarkdownRenderer";
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
-import { CustomAnchor } from "../MarkdownRenderer";
+import { apiauth } from "@/utils/apiaxios";
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
 export default function ChatBubbleBot({
@@ -30,7 +32,12 @@ export default function ChatBubbleBot({
   filename,
   message_id,
   pinned,
+  intent,
+  calendar_options,
 }: ChatBubbleBotProps) {
+  console.log(intent, "intent");
+  console.log(calendar_options, "calendar_options");
+
   const [component, setComponent] = useState<JSX.Element>(<></>);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
@@ -72,6 +79,17 @@ export default function ChatBubbleBot({
 
   //   if (!!image && image?.length > 0) setImageSrc(image);
   // }, [image]);
+
+  const addToCalendar = async () => {
+    const response = await apiauth.post(`/calendar/event`, {
+      summary: "Meeting with Client",
+      description: "Discuss project details",
+      start: "2025-02-10T10:00:00Z",
+      end: "2025-02-10T11:00:00Z",
+    });
+
+    console.log(response.data);
+  };
 
   useEffect(() => {
     if (isImage) {
@@ -216,6 +234,45 @@ export default function ChatBubbleBot({
               )}
             </div>
           </div>
+
+          {intent === "calendar" &&
+            calendar_options?.date &&
+            calendar_options?.title &&
+            calendar_options?.description && (
+              <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
+                <div className="">
+                  Would you like to add this event to your Calendar?
+                </div>
+
+                <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3">
+                  <Calendar01Icon width={30} height={35} />
+                  <div className="flex flex-col gap-1">
+                    <div>
+                      <div className="font-medium">
+                        {calendar_options?.title}
+                      </div>
+                      <div className="text-sm">
+                        {calendar_options?.description}
+                      </div>
+                    </div>
+                    <div className="text-xs text-foreground-500">
+                      {calendar_options?.date
+                        ? String(new Date(calendar_options.date).toDateString())
+                        : ""}
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  color="primary"
+                  className="w-full"
+                  onPress={addToCalendar}
+                >
+                  Add Event
+                </Button>
+              </div>
+            )}
+
           {date && (
             <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
               {parseDate(date)}

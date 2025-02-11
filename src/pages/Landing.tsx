@@ -4,7 +4,7 @@ import SuspenseLoader from "@/components/SuspenseLoader";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 const LazyLoadedSections = lazy(
-  () => import("@/components/LandingPage/Sections/Sections_Lazy")
+  () => import("@/components/LandingPage/Sections/LazyLoadedSections")
 );
 
 export default function LandingPage() {

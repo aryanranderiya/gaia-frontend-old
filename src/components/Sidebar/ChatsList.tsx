@@ -1,39 +1,21 @@
-import { PlusSignIcon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { isToday, isYesterday, subDays } from "date-fns";
 import { Loader } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import { ChatTab } from "./ChatTab";
-import { Button } from "../ui/button";
 
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
-
-  if (isToday(date)) {
-    return "Today";
-  }
-
-  if (isYesterday(date)) {
-    return "Yesterday";
-  }
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
 
   const daysAgo7 = subDays(new Date(), 7);
   const daysAgo30 = subDays(new Date(), 30);
-
-  if (date >= daysAgo7) {
-    return "Previous 7 days";
-  }
-
-  if (date >= daysAgo30) {
-    return "Previous 30 days";
-  }
-
+  if (date >= daysAgo7) return "Previous 7 days";
+  if (date >= daysAgo30) return "Previous 30 days";
   return "All time";
 };
 
-// Assign a priority value to each time frame
 const timeFramePriority = (timeFrame: string): number => {
   switch (timeFrame) {
     case "Today":
@@ -52,24 +34,64 @@ const timeFramePriority = (timeFrame: string): number => {
 };
 
 export default function ChatsList() {
-  const { conversations, fetchConversations } = useConversationList();
-  const [isLoading, setIsLoading] = useState(true);
+  const { conversations, fetchConversations, paginationMeta } =
+    useConversationList();
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+  // We assume the provider auto-fetches the first page.
+  // Once paginationMeta is available, we consider the initial load complete.
   useEffect(() => {
-    const loadConversations = async () => {
-      setIsLoading(true);
-      try {
-        await fetchConversations();
-      } catch (error) {
-        console.error("Failed to fetch conversations", error);
-      } finally {
-        setIsLoading(false);
+    if (paginationMeta) {
+      setLoading(false);
+    }
+  }, [paginationMeta]);
+
+  // Set up an IntersectionObserver to load more pages.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (
+          entry.isIntersecting &&
+          !isFetchingMore &&
+          paginationMeta &&
+          currentPage < paginationMeta.total_pages
+        ) {
+          setIsFetchingMore(true);
+          // Always use a fixed limit (e.g. 10) and always append new results.
+          fetchConversations(currentPage + 1, 20, true)
+            .then(() => {
+              setCurrentPage((prevPage) => prevPage + 1);
+            })
+            .catch((error) => {
+              console.error("Failed to fetch more conversations", error);
+            })
+            .finally(() => {
+              setIsFetchingMore(false);
+            });
+        }
+      },
+      {
+        root: null, // viewport as container
+        threshold: 1.0,
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
       }
     };
+  }, [currentPage, isFetchingMore, paginationMeta, fetchConversations]);
 
-    loadConversations();
-  }, []);
-
+  // Group conversations by time frame.
   const groupedConversations = conversations.reduce((acc, conversation) => {
     const timeFrame = getTimeFrame(conversation.createdAt);
     if (!acc[timeFrame]) {
@@ -79,7 +101,7 @@ export default function ChatsList() {
     return acc;
   }, {} as Record<string, any[]>);
 
-  // Sort the time frames based on the priority values
+  // Sort time frames by defined priority.
   const sortedTimeFrames = Object.entries(groupedConversations).sort(
     ([timeFrameA], [timeFrameB]) =>
       timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB)
@@ -92,19 +114,18 @@ export default function ChatsList() {
   return (
     <div className="pt-0 p-4">
       <div className="flex flex-col gap-1 max-h-[80vh] relative">
-        {isLoading ? (
+        {loading ? (
           <div className="flex items-center justify-center p-10">
-            {/* <Spinner /> */}
             <Loader className="animate-spin text-[#00bbff]" />
           </div>
         ) : (
           <>
-            {/* <div className="bg-zinc-700 rounded-lg min-h-4"> */}
+            {/* Starred Chats Section */}
             <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
               <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
                 Starred Chats
               </div>
-              <div className="flex w-full px-1 flex-col ">
+              <div className="flex w-full px-1 flex-col">
                 {starredConversations.length > 0 ? (
                   starredConversations.map(
                     (conversation: {
@@ -128,6 +149,7 @@ export default function ChatsList() {
               </div>
             </div>
 
+            {/* Grouped Conversations by Time Frame */}
             {sortedTimeFrames.map(([timeFrame, conversationsGroup]) => (
               <div key={timeFrame}>
                 <div className="font-medium px-2 text-xs pt-5 sticky top-0 bg-black z-[1]">
@@ -157,6 +179,14 @@ export default function ChatsList() {
             ))}
           </>
         )}
+
+        {/* Sentinel element for the IntersectionObserver */}
+        <div
+          ref={loadMoreRef}
+          className="p-2 h-[250px] flex justify-center items-center"
+        >
+          {isFetchingMore && <Loader className="animate-spin text-[#00bbff]" />}
+        </div>
       </div>
     </div>
   );

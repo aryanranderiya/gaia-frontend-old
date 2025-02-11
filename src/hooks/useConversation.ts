@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import ObjectID from "bson-objectid";
+import { EventSourceMessage } from "@microsoft/fetch-event-source";
 
 export const useConversation = (convoIdParam: string | null) => {
   const { setIsLoading } = useLoading();
@@ -62,10 +63,42 @@ export const useConversation = (convoIdParam: string | null) => {
     bot_message_id: string
   ) => {
     let botResponseText = "";
+
+    let finalIntent: {
+      intent: string | undefined;
+      calendar_options: {
+        title: string | undefined;
+        description: string | undefined;
+      };
+    } = {
+      intent: undefined,
+      calendar_options: {
+        title: undefined,
+        description: undefined,
+      },
+    };
+
     setLoading(true);
 
-    const onMessage = (response: string) => {
+    const onMessage = (event: EventSourceMessage) => {
+      const dataJson = JSON.parse(event.data);
+
+      const intent = dataJson?.intent;
+      const calendar_options = dataJson?.calendar_options;
+
+      const response = dataJson.response || "\n";
+
       botResponseText += response;
+
+      if (dataJson.intent) {
+        finalIntent = {
+          intent,
+          calendar_options: calendar_options || null,
+        };
+
+        console.log(finalIntent);
+      }
+
       const botResponse: MessageType = {
         type: "bot",
         message_id: bot_message_id,
@@ -73,6 +106,12 @@ export const useConversation = (convoIdParam: string | null) => {
         searchWeb: enableSearch,
         pageFetchURL,
         date: fetchDate(),
+        intent: finalIntent.intent,
+        calendar_options: finalIntent.calendar_options as {
+          title: string;
+          description: string;
+          date: string;
+        },
       };
 
       setConvoMessages((oldMessages = []) => {
@@ -85,8 +124,13 @@ export const useConversation = (convoIdParam: string | null) => {
 
         return [
           ...oldMessages.slice(0, -1),
-          { ...lastMessage, response: botResponseText },
-        ];
+          {
+            ...lastMessage,
+            response: botResponseText,
+            intent: finalIntent.intent,
+            calendar_options: finalIntent.calendar_options,
+          },
+        ] as MessageType[];
       });
     };
 
@@ -99,6 +143,12 @@ export const useConversation = (convoIdParam: string | null) => {
         searchWeb: enableSearch,
         pageFetchURL,
         message_id: bot_message_id,
+        intent: finalIntent.intent,
+        calendar_options: finalIntent.calendar_options as {
+          title: string;
+          description: string;
+          date: string;
+        },
       };
 
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;

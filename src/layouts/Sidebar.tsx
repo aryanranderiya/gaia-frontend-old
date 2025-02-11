@@ -40,7 +40,7 @@ export default function Sidebar({
           isSidebarVisible
             ? "min-w-[280px] max-w-[280px]"
             : "min-w-0 max-w-0 w-0"
-        } transition-all duration-200`}
+        } transition-all duration-100`}
         ref={sidebarref}
       >
         <div className="overflow-y-auto min-w-[280px]">

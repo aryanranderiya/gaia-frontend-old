@@ -32,6 +32,8 @@ export default function ChatRenderer() {
 
   useEffect(() => {
     if (messageId && convoMessages.length > 0) scrollToMessage(messageId);
+
+    console.log(convoMessages);
   }, [messageId, convoMessages]);
 
   const scrollToMessage = (messageId: string) => {
@@ -68,16 +70,6 @@ export default function ChatRenderer() {
       </div>
     );
   }
-
-  // useEffect(() => {
-  //   const title =
-  //     conversations.find(
-  //       (convo) =>
-  //         convo.conversation_id === "19648170-dd3f-11ef-944e-5d64ac3b30d2"
-  //     )?.description || "GAIA";
-
-  //   document.title = `GAIA - ${title}` || "GAIA";
-  // }, []);
 
   return (
     <>
@@ -166,11 +158,13 @@ export default function ChatRenderer() {
                 setImageData={setImageData}
                 filename={message.filename}
                 pinned={message.pinned}
+                intent={message.intent}
+                calendar_options={message.calendar_options}
               />
             </Suspense>
           </div>
         ) : (
-          <Suspense fallback={<div>Loading...</div>} key={index}>
+          <Suspense fallback={<></>} key={index}>
             <ChatBubbleUser
               message_id={message.message_id}
               key={index}

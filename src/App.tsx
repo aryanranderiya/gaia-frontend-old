@@ -1,15 +1,16 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
+import "./index.css";
+import UIProviderLayout from "./layouts/UIProviderLayout";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
-// import LandingLayout from "./layouts/LandingLayout";
 
-function App() {
+export default function App() {
   const location = useLocation();
-  // const [onboardingOpen, setOnboardingOpen] = useState(true);
 
   useEffect(() => {
     const { pathname } = location;
@@ -67,28 +68,29 @@ function App() {
   window.document.documentElement.classList.add("dark");
 
   return (
-    <UserProvider>
-      <Routes>
-        <Route
-          path="/try/*"
-          element={
-            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-              <MainInterface />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/*"
-          element={
-            <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-              <LandingLayout />
-            </Suspense>
-          }
-        />
-        {/* <Route path="/record" element={<Record />} /> */}
-      </Routes>
-    </UserProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <UserProvider>
+        <UIProviderLayout>
+          <Routes>
+            <Route
+              path="/try/*"
+              element={
+                <Suspense fallback={<SuspenseLoader fullHeight />}>
+                  <MainInterface />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/*"
+              element={
+                <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+                  <LandingLayout />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </UIProviderLayout>
+      </UserProvider>
+    </GoogleOAuthProvider>
   );
 }
-
-export default App;

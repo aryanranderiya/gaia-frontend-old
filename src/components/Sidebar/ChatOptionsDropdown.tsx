@@ -62,7 +62,7 @@ export default function ChatOptionsDropdown({
         description: newName,
       });
       setIsOpen(false);
-      fetchConversations();
+      fetchConversations(1, 20, false);
     } catch (error) {
       console.error("Failed to update chat name", error);
     }
@@ -74,7 +74,7 @@ export default function ChatOptionsDropdown({
       resetMessages();
       await apiauth.delete(`/conversations/${chatId}`);
       setIsOpen(false);
-      fetchConversations();
+      fetchConversations(1, 20, false);
     } catch (error) {
       console.error("Failed to delete chat", error);
     }
@@ -108,7 +108,7 @@ export default function ChatOptionsDropdown({
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="edit" textValue="Star" onPress={handleStarToggle}>
+          <DropdownItem key="star" textValue="Star" onPress={handleStarToggle}>
             <div className="flex flex-row gap-2 items-center justify-between">
               <Star width={16} color="white" />
               {starred ? "Remove from" : "Add to"} Starred

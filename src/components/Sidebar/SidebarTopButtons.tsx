@@ -64,8 +64,8 @@ export default function SidebarTopButtons() {
       />
 
       <div className="bg-[#141414] rounded-2xl p-2 gap-1 grid grid-cols-4 items-start grid-rows-2">
-        {buttonData.map(({ route, icon, label }) => (
-          <Tooltip key={route} showArrow={true} content={label}>
+        {buttonData.map(({ route, icon, label }, index) => (
+          <Tooltip key={index} showArrow={true} content={label}>
             <Button
               className="w-full"
               isIconOnly
@@ -74,7 +74,7 @@ export default function SidebarTopButtons() {
               // variant="flat"
               variant={location.pathname === route ? "solid" : "flat"}
               color={location.pathname === route ? "primary" : "default"}
-              onClick={() =>
+              onPress={() =>
                 label == "Search"
                   ? setOpenSearchDialog(true)
                   : route

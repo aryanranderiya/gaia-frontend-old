@@ -30,4 +30,7 @@ export interface ChatBubbleBotProps {
   pinned?: boolean;
   // setImageSrc: React.Dispatch<React.SetStateAction<string>>;
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
+
+  intent?: string;
+  calendar_options?: { title: string; description: string; date: string };
 }

@@ -930,8 +930,8 @@ code {
     transform: translateY(-25%);
   }
 }
-
-/* html ::-webkit-scrollbar {
+/* 
+html ::-webkit-scrollbar {
   width: 8px;
   border-radius: 100px;
   z-index: 1000;

@@ -66,9 +66,10 @@ export default function MainInterface() {
   const hideSidebar = () => {
     if (
       !(
-        (sidebarRef.current && contentContainerRef.current && isSidebarVisible)
-        // &&
-        // isMobileScreen
+        sidebarRef.current &&
+        contentContainerRef.current &&
+        isSidebarVisible &&
+        isMobileScreen
       )
     )
       return;
@@ -88,7 +89,6 @@ export default function MainInterface() {
         <LoadingProvider>
           <TooltipProvider>
             <div className="main_container dark">
-              {/* <Suspense fallback={<SuspenseLoader fullHeight={true} />}> */}
               <Toaster richColors />
 
               <Suspense fallback={<SuspenseLoader />}>

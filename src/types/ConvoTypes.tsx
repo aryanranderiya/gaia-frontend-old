@@ -11,7 +11,6 @@ export type MessageType = {
   imageUrl?: string; // Optional: URL for the image if it's an image message
   imagePrompt?: string;
   searchWeb?: boolean | false;
-  intent?: string;
   pageFetchURL?: string | "";
   improvedImagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
@@ -20,6 +19,9 @@ export type MessageType = {
   // file?: File | null | string; // Optional: A file object associated with the message, if any. Or URL from created object
   filename?: string; // Optional: Name of the file if there's a file included
   pinned?: boolean;
+
+  intent?: string;
+  calendar_options?: { title: string; description: string; date: string };
 };
 
 // Define the structure for a single conversation

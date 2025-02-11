@@ -2,7 +2,10 @@
 
 import { apiauth } from "@/utils/apiaxios";
 import { MessageType } from "@/types/ConvoTypes";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+import {
+  EventSourceMessage,
+  fetchEventSource,
+} from "@microsoft/fetch-event-source";
 
 export const fetchConversationDescription = async (
   searchbarText: string
@@ -56,7 +59,7 @@ export const ApiService = {
     pageFetchURL: string,
     convoMessages: MessageType[],
     conversationId: string,
-    onMessage: (data: string) => void,
+    onMessage: (event: EventSourceMessage) => void,
     onClose: () => void,
     onError: (err: any) => void
   ) => {
@@ -99,9 +102,7 @@ export const ApiService = {
           return;
         }
 
-        const dataJson = JSON.parse(event.data);
-        const response = dataJson.response || "\n";
-        onMessage(response);
+        onMessage(event);
       },
       onclose: onClose,
       onerror: onError,
