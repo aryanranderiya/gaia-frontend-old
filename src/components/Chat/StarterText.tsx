@@ -11,6 +11,7 @@ import {
   Mic01Icon,
   Route02Icon,
   StickyNote01Icon,
+  WavingHand01Icon,
 } from "../icons";
 
 const badges = [
@@ -127,10 +128,17 @@ const badges = [
 export default function StarterText() {
   return (
     <>
-      <span className="text-5xl font-medium grow flex-1 text-center">
-        {/* Hey! <WavingHand01Icon /> How may I assist you today? */}
+      <div className="text-5xl font-medium grow flex-1 text-center my-4 inline-flex flex-wrap items-center gap-2 justify-center">
+        Hey!
+        <img
+          src="https://em-content.zobj.net/source/apple/391/waving-hand_1f44b.png"
+          alt="Waving Hand"
+          width={50}
+          height={50}
+          className="object-contain"
+        />
         What can I do for you today?
-      </span>
+      </div>
 
       {/* <div className="text-foreground-500 text-xs -mt-1 mb-1">
         I can do the following for you:

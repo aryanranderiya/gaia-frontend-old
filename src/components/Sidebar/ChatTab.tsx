@@ -23,34 +23,41 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
   }, [location.pathname]);
 
   return (
-    <Button
-      className={`w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
-        currentConvoId === id ? "text-primary" : "text-white"
-      }`}
-      onClick={() => {
-        setButtonHovered(false);
-        navigate(`/try/chat/${id}`);
-      }}
+    <div
+      className="relative flex"
       onMouseOver={() => setButtonHovered(true)}
       onMouseOut={() => setButtonHovered(false)}
     >
-      <div className="flex items-center justify-between gap-2 w-full">
-        {starred ? (
-          <Star
-            width="19"
-            className="min-w-[17px] w-[17px]"
-            color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
-          />
-        ) : (
-          <BubbleConversationChatIcon
-            width="19"
-            className="min-w-[17px] w-[17px]"
-            color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
-          />
-        )}
-        <span className="truncate w-[200px] text-left">
-          {name.replace('"', "")}
-        </span>
+      <Button
+        className={`w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
+          currentConvoId === id ? "text-primary" : "text-white"
+        }`}
+        onClick={() => {
+          setButtonHovered(false);
+          navigate(`/try/chat/${id}`);
+        }}
+      >
+        <div className="flex items-center gap-2 w-full">
+          {starred ? (
+            <Star
+              width="19"
+              className="min-w-[17px] w-[17px]"
+              color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+            />
+          ) : (
+            <BubbleConversationChatIcon
+              width="19"
+              className="min-w-[17px] w-[17px]"
+              color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+            />
+          )}
+          <span className="truncate w-[200px] text-left">
+            {name.replace('"', "")}
+          </span>
+        </div>
+      </Button>
+
+      <div className="absolute right-0">
         <ChatOptionsDropdown
           buttonHovered={buttonHovered}
           chatId={id}
@@ -58,6 +65,6 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
           starred={starred}
         />
       </div>
-    </Button>
+    </div>
   );
 };

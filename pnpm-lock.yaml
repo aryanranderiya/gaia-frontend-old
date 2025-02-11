@@ -386,6 +386,9 @@ importers:
       react:
         specifier: 18.3.1
         version: 18.3.1
+      react-apple-emojis:
+        specifier: ^2.2.2
+        version: 2.2.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-beautiful-dnd:
         specifier: ^13.1.1
         version: 13.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5652,6 +5655,13 @@ packages:
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
+
+  react-apple-emojis@2.2.2:
+    resolution: {integrity: sha512-kXHudk5ONL4M5/WzAWRojRgKiTA9H5CAItjjhrhrCthbc0+xOKzeXZtOsCnZC4UfYWa9tcg9IXDQLcRm/J6i0A==}
+    peerDependencies:
+      prop-types: '*'
+      react: '>=16.x'
+      react-dom: '>=16.x'
 
   react-beautiful-dnd@13.1.1:
     resolution: {integrity: sha512-0Lvs4tq2VcrEjEgDXHjT98r+63drkKEgqyxdA7qD3mvKwga6a5SscbdLPO2IExotU1jW8L0Ksdl0Cj2AF67nPQ==}
@@ -13320,6 +13330,12 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
     optional: true
+
+  react-apple-emojis@2.2.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-beautiful-dnd@13.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

@@ -75,7 +75,7 @@ export default function App() {
             <Route
               path="/try/*"
               element={
-                <Suspense fallback={<SuspenseLoader fullHeight />}>
+                <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                   <MainInterface />
                 </Suspense>
               }

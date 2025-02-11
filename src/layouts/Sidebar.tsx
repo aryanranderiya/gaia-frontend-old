@@ -1,6 +1,6 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 // import Hr from "@/components/HorizontalRuler";
-import { GlobalIcon } from "@/components/icons";
+import { GlobalIcon, PencilSquareIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
@@ -8,7 +8,6 @@ import UserContainer from "@/components/Sidebar/UserContainer";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
-import { SquarePen } from "lucide-react";
 import { LegacyRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -38,8 +37,8 @@ export default function Sidebar({
       <div
         className={`sidebar flex ${className} ${
           isSidebarVisible
-            ? "min-w-[280px] max-w-[280px]"
-            : "min-w-0 max-w-0 w-0"
+            ? "sm:min-w-[280px] sm:max-w-[280px] sm:translate-x-0 translate-x-[-350px]"
+            : "sm:min-w-0 sm:max-w-0 sm:w-0 translate-x-0"
         } transition-all duration-100`}
         ref={sidebarref}
       >
@@ -51,16 +50,16 @@ export default function Sidebar({
                 placement="bottom"
                 offset={+0}
               >
-                <div className="flex gap-2 items-center p-2">
-                  <GlobalIcon color="white" width="22" />
-                  <span>gaia</span>
-                </div>
+                {/* <div className="flex gap-2 items-center p-2"> */}
+                {/* <GlobalIcon color="white" width="22" /> */}
+                <span className="font-medium text-2xl">gaia</span>
+                {/* </div> */}
               </Tooltip>
 
               {/* */}
               <div className="flex items-center gap-1">
                 <Button onPress={createNewChat} isIconOnly variant="light">
-                  <SquarePen
+                  <PencilSquareIcon
                     width="23"
                     color={
                       location.pathname == "/try/chat" ? "#00bbff" : "#9b9b9b"
