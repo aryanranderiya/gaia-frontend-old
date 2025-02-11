@@ -34,7 +34,6 @@ import { SearchCard } from "./SearchCard";
 import { Chip } from "@heroui/chip";
 
 const pages = [
-
   {
     path: "/try/explore",
     icon: (
