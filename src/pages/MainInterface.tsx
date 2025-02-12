@@ -1,7 +1,6 @@
 import NotLoggedIn from "@/components/NotLoggedInDialog";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import {
@@ -17,7 +16,6 @@ import useMediaQuery from "../hooks/MediaQuery";
 import { ConversationListProvider } from "@/contexts/ConversationList";
 import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
 import { LoadingProvider } from "@/contexts/LoadingContext";
-import { apiauth } from "@/utils/apiaxios";
 
 // Lazy loaded components
 const Sidebar = React.lazy(() => import("../layouts/Sidebar"));
@@ -37,7 +35,6 @@ export default function MainInterface() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarVisible, setSidebarVisible] = useState(true);
-  const isMobileScreen = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
@@ -48,16 +45,6 @@ export default function MainInterface() {
       setSidebarVisible((prev) => !prev);
     }
   }
-
-  // const hideSidebar = () => {
-  //   if (
-  //     sidebarRef.current &&
-  //     contentContainerRef.current &&
-  //     isSidebarVisible &&
-  //     isMobileScreen
-  //   )
-  //     setSidebarVisible(false);
-  // };
 
   const routes = [
     {
@@ -156,8 +143,6 @@ export default function MainInterface() {
         <LoadingProvider>
           <TooltipProvider>
             <div className="main_container dark">
-              <Toaster richColors />
-
               <Suspense fallback={<SuspenseLoader />}>
                 <NotLoggedIn />
               </Suspense>

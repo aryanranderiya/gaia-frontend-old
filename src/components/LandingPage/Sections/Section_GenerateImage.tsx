@@ -65,9 +65,8 @@ export default function ImageGeneration() {
         <SimpleChatBubbleUser hideMobile={true}>
           Generate Image: {selectedOption?.prompt}
         </SimpleChatBubbleUser>
-        <div className="chat_bubble bg-zinc-800 !rounded-2xl !w-full">
+        <div className="p-1 !rounded-2xl !w-full">
           <div className="text-sm font-medium flex flex-col gap-2 min-w-full">
-            <span>Generated Image:</span>
             <img
               src={selectedOption?.src}
               width={400}

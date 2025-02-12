@@ -151,10 +151,8 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
       <div className="text-sm mt-2 relative z-[1] opacity-70">
         {formatEventDate(event)}
       </div>
-      <div
-        style={{ backgroundColor }}
-        className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full"
-      ></div>
+      <div style={{ backgroundColor }}
+      className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full" />
     </div>
   );
 };

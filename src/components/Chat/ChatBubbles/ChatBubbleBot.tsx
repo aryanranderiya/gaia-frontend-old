@@ -6,7 +6,7 @@ import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { parseDate } from "../../../utils/fetchDate";
-import { Calendar01Icon, InternetIcon } from "../../icons";
+import { Calendar01Icon, GoogleCalendar, InternetIcon } from "../../icons";
 import { CustomAnchor } from "../MarkdownRenderer";
 import {
   ChatBubble_Actions,
@@ -255,7 +255,7 @@ export default function ChatBubbleBot({
                 </div>
 
                 <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3">
-                  <Calendar01Icon width={30} height={35} />
+                  <GoogleCalendar width={25} height={35} />
                   <div className="flex flex-col gap-1">
                     <div>
                       <div className="font-medium">

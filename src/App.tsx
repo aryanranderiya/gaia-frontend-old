@@ -5,6 +5,7 @@ import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
+import { Toaster } from "sonner";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
@@ -71,6 +72,8 @@ export default function App() {
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <UserProvider>
         <UIProviderLayout>
+          <Toaster richColors />
+
           <Routes>
             <Route
               path="/try/*"
