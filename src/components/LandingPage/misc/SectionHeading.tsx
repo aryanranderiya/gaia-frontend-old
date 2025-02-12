@@ -1,16 +1,20 @@
+import { ReactNode } from "react";
+
 export function SectionHeading({
   heading,
   subheading,
   icon,
+  className,
   smallHeading = false,
 }: {
   heading: string;
-  subheading: string;
+  subheading: string | ReactNode;
   icon: any;
   smallHeading?: boolean;
+  className?: string;
 }) {
   return (
-    <div className="sm:p-0 p-7 z-[1] relative">
+    <div className={`sm:p-0 p-7 z-[1] relative ${className}`}>
       <div
         className={`${
           smallHeading ? "sm:text-3xl" : "sm:text-4xl"
@@ -20,7 +24,7 @@ export function SectionHeading({
         <span>{heading}</span>
       </div>
       <div
-        className={` text-foreground-500 max-w-screen-md ${
+        className={` text-foreground-600 max-w-screen-md ${
           smallHeading ? "text-md" : "text-lg"
         }`}
       >

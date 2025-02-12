@@ -213,6 +213,11 @@ export default function Calendar() {
         // Fetch events for the primary calendar
         fetchEvents(null, [primaryCalendar.id]);
       }
+
+         const response2 = await apiauth.get("/calendar/all/events");
+         console.log(response2);
+
+
     } catch (error) {
       console.error("Error fetching calendars:", error);
     }

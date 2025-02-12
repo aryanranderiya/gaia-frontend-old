@@ -1,12 +1,12 @@
+import { BrainCircuitIcon } from "lucide-react";
 import { useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "../../Chat/ChatBubbles/SimpleChatBubbles";
-import { GlobalSearchIcon, InternetIcon } from "../../icons";
-import { ArrowUpRight } from "lucide-react";
-import { SectionHeading } from "../misc/SectionHeading";
+import { AiBrowserIcon, GlobalSearchIcon } from "../../icons";
 import { AnimatedSection } from "../misc/AnimatedSection";
+import { SectionHeading } from "../misc/SectionHeading";
 
 function SearchWeb() {
   return (
@@ -191,7 +191,7 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <AnimatedSection className="w-screen mt-72 mb-24 min-h-[60vh] justify-center items-center flex">
+    <AnimatedSection className="w-screen min-h-[100vh] justify-center items-center flex">
       <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
         {/* <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon
@@ -203,11 +203,11 @@ export default function Internet() {
         <div>utilise the power of the web to</div> */}
 
         <SectionHeading
-          heading={"Use the Internet"}
+          heading={"Smarter Answers, Always Up-to-Date"}
           subheading={
-            "GAIA has access to the internet to provide you with smarter, and more personalised responses!"
+            "GAIA doesn’t just rely on preloaded knowledge—it actively searches the web for the latest and most relevant information."
           }
-          icon={<InternetIcon color="#ffffff90" width={45} height={45} />}
+          icon={<BrainCircuitIcon color="#9b9b9b" width={45} height={45} />}
         />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <div
@@ -217,16 +217,20 @@ export default function Internet() {
             onMouseOver={() => setHover1(true)}
             onMouseOut={() => setHover1(false)}
           >
-            <div className="mb-6 sm:p-5 space-y-1">
+            <div className="mb-6 sm:p-2 space-y-2">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
-                Search The Web
+                Web Search
                 <GlobalSearchIcon
-                  color="#ffffff60"
+                  color="#9b9b9b"
                   className="sm:size-[35px] size-[35px]"
                 />
               </div>
               <div className="text-foreground-500">
-                Use the Internet to fetch up-to-date answers
+                {/* Use the Internet to fetch up-to-date answers */}
+                Most AI models have a knowledge cutoff, but GAIA can fetch
+                real-time updates from the internet. Whether it’s breaking news
+                or the latest industry trends you’ll always get the freshest
+                insights.
               </div>
             </div>
             <SearchWeb />
@@ -243,16 +247,19 @@ export default function Internet() {
             onMouseOver={() => setHover2(true)}
             onMouseOut={() => setHover2(false)}
           >
-            <div className="mb-6 p-5 space-y-1">
+            <div className="mb-6 p-2 space-y-2">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
                 Fetch Webpages
-                <ArrowUpRight
-                  color="#ffffff60"
+                <AiBrowserIcon
+                  color="#9b9b9b"
                   className="sm:size-[35px] size-[35px]"
                 />
               </div>
               <div className="text-foreground-500">
-                Chat with content from a webpage
+                Ever Wished Your AI Assistant Could Read an Entire Webpage for
+                You? Now it can! GAIA fetches webpages and understands their
+                content, so you don’t have to waste time scrolling through
+                endless text.
               </div>
             </div>
             <FetchWebpage />

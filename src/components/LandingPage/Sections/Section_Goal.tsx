@@ -60,11 +60,9 @@ export default function GoalSection() {
       <div>
         <div className="max-w-screen-xl w-screen" ref={sectionRef}>
           <SectionHeading
-            heading={"Manage your Goals"}
-            subheading={
-              "Simply enter what goal you want to achieve, and GAIA will help create a step by step actionable plan, along with a timeline and resources to help achieve the goal"
-            }
-            icon={<Target02Icon color="#ffffff90" width={45} height={45} />}
+            heading={"Need help setting goals?"}
+            subheading={`GAIA makes it easy by creating a step-by-step plan just for you. Enter your goal, and GAIA will break it down into clear actions with timelines and helpful resources to keep you on track.`}
+            icon={<Target02Icon color="#9b9b9b" width={45} height={45} />}
           />
         </div>
       </div>
@@ -95,7 +93,14 @@ export default function GoalSection() {
               Step 1
             </Chip>
 
-            <div className="font-medium text-2xl">Enter your Goal</div>
+            <div className="space-y-1">
+              <div className="font-medium text-2xl">Enter your Goal</div>
+              <div className="text-foreground-500">
+                Simply describe what you are trying to achieve. GAIA will
+                generate a detailed roadmap with actionable steps to help
+                achieve your goal!
+              </div>
+            </div>
           </div>
           <img
             src="/landing/blur_goals.webp"
@@ -104,11 +109,11 @@ export default function GoalSection() {
           />
 
           <div className="sm:absolute relative min-h-full w-full left-0 top-0 flex items-center justify-center">
-            <div className="bg-zinc-900 sm:w-[530px] w-full sm:p-7 p-3 rounded-xl space-y-3">
-              <div className="text-lg font-medium">Add Goal</div>
+            <div className="bg-zinc-900 sm:w-[450px] w-full sm:p-5 p-3 rounded-xl space-y-3">
+              {/* <div className="text-lg font-medium">Add Goal</div>
               <div className="text-sm">
                 I will help you create a step-by-step plan to achieve your goal!
-              </div>
+              </div> */}
               <Input
                 variant="faded"
                 label="What goal do you want to achieve?"
@@ -141,7 +146,14 @@ export default function GoalSection() {
               Step 2
             </Chip>
 
-            <div className="font-medium text-2xl">Track your progress</div>
+            <div className="space-y-1">
+              <div className="font-medium text-2xl">Track your progress</div>
+              <div className="text-foreground-500 w-[70%]">
+                Gain access to to-dos, resources and estimated time for each
+                step. Track your progress by marking completed steps on your
+                roadmap.
+              </div>
+            </div>
           </div>
           <img
             src={

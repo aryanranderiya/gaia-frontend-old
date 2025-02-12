@@ -275,7 +275,7 @@ export default function Section_ConvoManagement() {
       subheading={"Never lose track of anything. Ever."}
       icon={
         <BubbleChatIcon
-          color="#ffffff90"
+          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
         />
       }

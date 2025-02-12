@@ -122,10 +122,7 @@ const FlowchartDemo = () => {
       heading={"Create flowcharts"}
       subheading={"Easily turn ideas into clear, interactive visuals instantly"}
       icon={
-        <FlowchartIcon
-          color="#ffffff90"
-          className="sm:size-[30px] size-[30px]"
-        />
+        <FlowchartIcon color="#9b9b9b" className="sm:size-[30px] size-[30px]" />
       }
     >
       <div className="w-100% flex justify-end">

@@ -8,7 +8,7 @@ export default function Section_Notes() {
       subheading="Take Notes & Memories for the assistant to remember important details"
       icon={
         <StickyNote01Icon
-          color="#ffffff90"
+          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
         />
       }

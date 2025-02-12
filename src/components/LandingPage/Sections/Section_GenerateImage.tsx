@@ -43,7 +43,7 @@ export default function ImageGeneration() {
       heading="Generate Images"
       subheading="Create stunning & realistic images for free"
       icon={
-        <AiImageIcon color="#ffffff90" className="sm:size-[30px] size-[30px]" />
+        <AiImageIcon color="#9b9b9b" className="sm:size-[30px] size-[30px]" />
       }
       extraHeading={
         <div className="flex flex-wrap gap-2">

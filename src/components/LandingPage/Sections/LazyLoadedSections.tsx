@@ -1,5 +1,7 @@
 import SuspenseLoader from "@/components/SuspenseLoader";
 import { lazy, Suspense } from "react";
+import Section_Calendar from "./Section_Calendar";
+import Section_Memories from "./Section_Memories";
 
 const Section_Grid = lazy(
   () => import("@/components/LandingPage/Sections/Section_Grid")
@@ -42,6 +44,10 @@ export default function LazyLoadedSections() {
         <WhatCanYouDo />
       </Suspense>
 
+      <Section_Calendar />
+
+      <Section_Memories />
+
       <Suspense fallback={<SuspenseLoader />}>
         <Internet />
       </Suspense>
@@ -57,10 +63,10 @@ export default function LazyLoadedSections() {
       <Suspense fallback={<SuspenseLoader />}>
         <AllFeatures />
       </Suspense> */}
-
+      {/* 
       <Suspense fallback={<SuspenseLoader />}>
         <TargetAudience />
-      </Suspense>
+      </Suspense> */}
 
       <FreePricing />
 

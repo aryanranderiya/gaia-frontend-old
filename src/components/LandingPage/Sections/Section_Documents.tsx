@@ -14,7 +14,7 @@ export default function Section_Document() {
       subheading={"..."}
       icon={
         <FileUploadIcon
-          color="#ffffff90"
+          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
         />
       }
