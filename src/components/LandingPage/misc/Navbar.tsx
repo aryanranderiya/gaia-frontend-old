@@ -147,7 +147,7 @@ export default function Navbar() {
               </Button>
             ) : (
               <>
-                <Button
+                {/* <Button
                   variant="light"
                   color="primary"
                   radius="full"
@@ -156,17 +156,17 @@ export default function Navbar() {
                   onPress={() => navigate("/login")}
                 >
                   Login
-                </Button>
+                </Button> */}
 
                 <Button
                   variant="shadow"
                   color="primary"
                   radius="full"
                   size="md"
-                  className="p-0 font-semibold"
-                  onPress={() => navigate("/signup")}
+                  className="p-0 px-4 font-semibold"
+                  onPress={() => navigate("/get-started")}
                 >
-                  Signup
+                  Get Started
                 </Button>
               </>
             )}

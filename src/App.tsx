@@ -6,6 +6,7 @@ import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
 import { Toaster } from "sonner";
+import LoginSignup from "./pages/LoginSignup";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
@@ -91,6 +92,24 @@ export default function App() {
                 </Suspense>
               }
             />
+            {/* 
+            <Route
+              path="/login"
+              element={
+                <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                <LoginSignup isLogin={true} />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/signup"
+              element={
+                <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                  <LoginSignup isLogin={false} />
+                </Suspense>
+              }
+            /> */}
           </Routes>
         </UIProviderLayout>
       </UserProvider>

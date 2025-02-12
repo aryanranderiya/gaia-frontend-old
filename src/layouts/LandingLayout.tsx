@@ -22,10 +22,10 @@ const routesConfig = [
     index: true,
   },
   {
-    path: "login",
+    path: "get-started",
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-        <LoginSignup isLogin={true} />
+        <LoginSignup />
       </Suspense>
     ),
   },

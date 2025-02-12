@@ -1,23 +1,48 @@
-import { useUser } from "@contexts/UserContext";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+// import { Button  } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
+import { Button as NextUIBtn } from "@heroui/button";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import BubblePitFooter from "@/components/BubblePitFooter";
 
-interface LoginSignupProps {
-  isLogin?: boolean;
+function Calendaradd() {
+  return (
+    <div className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit opacity-55">
+      <div className="">Would you like to add this event to your Calendar?</div>
+
+      <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
+        <GoogleCalendar width={25} height={35} />
+        <div className="flex flex-col gap-1">
+          <div>
+            <div className="font-medium">Meeting with Sarah</div>
+            <div className="text-sm">Scheduled meeting with Sarah</div>
+          </div>
+          <div className="text-xs text-foreground-500">Fri Feb 14 2025</div>
+        </div>
+      </div>
+
+      <NextUIBtn
+        color="primary"
+        className="w-full"
+        // onPress={DummyAddToCalendar}
+        // isLoading={eventAddLoading}
+      >
+        Add Event
+      </NextUIBtn>
+    </div>
+  );
 }
 
-export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
+export default function LoginSignup() {
   const navigate = useNavigate();
-  const { user } = useUser();
-
-  React.useEffect(() => {
-    if (user) navigate("/");
-  }, [user, navigate]);
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleGoogleLogin = useGoogleLogin({
     flow: "auth-code",
+    ux_mode: "popup",
     scope:
       "openid email profile https://www.googleapis.com/auth/calendar.events",
     onSuccess: async (codeResponse) => {
@@ -31,30 +56,46 @@ export default function LoginSignup({ isLogin = false }: LoginSignupProps) {
     onError: (errorResponse) => console.log(errorResponse),
   });
 
-  const handleGoogleFailure = () => {};
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient">
-      <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-3 p-[1.5em]">
+      <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-5">
+        <div className="absolute -rotate-12 left-48 top-40">
+          <Calendaradd />
+        </div>
         <div className="mb-3 text-center space-y-2">
-          <div className="text-4xl font-medium">
-            {isLogin ? "Login" : "Create an Account"}
+          <div className="text-5xl font-medium">
+            {isLogin ? "Login" : "Sign Up"}
           </div>
-          <div className="text-foreground-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, id.
+          <div className="text-foreground-600 text-lg">
+            {isLogin
+              ? "Welcome back! Please login to continue your journey with GAIA."
+              : "Join us today by creating an account. It's quick and easy!"}
           </div>
         </div>
-
-        <GoogleLogin
-          onSuccess={handleGoogleLogin}
-          onError={handleGoogleFailure}
-          theme="filled_black"
-          size="large"
-          shape="circle"
-          // scope="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar.readonly"
-          // useOneTap
-        />
-        {/* {error && <div className="text-danger-500">Error: {error}</div>} */}
+        <Button
+          onClick={() => handleGoogleLogin()}
+          variant="secondary"
+          className="rounded-full text-md gap-2 px-4"
+          type="button"
+          size={"lg"}
+        >
+          <GoogleColouredIcon />
+          {isLogin ? "Sign in" : "Sign up"} with Google
+        </Button>
+        <Button
+          variant="link"
+          className="rounded-full text-md gap-2 px-4 text-primary font-normal"
+          type="button"
+          size={"lg"}
+          onClick={() => setIsLogin((prev) => !prev)}
+        >
+          {isLogin
+            ? "New to GAIA? Create an Account"
+            : "Already a user? Login here"}
+        </Button>
       </div>
+
+      <BubblePitFooter />
     </form>
   );
 }
