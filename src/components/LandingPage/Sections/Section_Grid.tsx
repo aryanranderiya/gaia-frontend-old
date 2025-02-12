@@ -1,6 +1,6 @@
 import SuspenseLoader from "@/components/SuspenseLoader";
 import { Suspense, lazy } from "react";
-import { AnimatedSection } from "../misc/AnimatedSection";
+// import { AnimatedSection } from "../misc/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
   () => import("@/components/LandingPage/Sections/Sections_ConvoManagement")

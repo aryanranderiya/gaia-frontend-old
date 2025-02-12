@@ -1,16 +1,15 @@
 import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 import {
-  BubbleChatIcon,
   BubbleConversationChatIcon,
   Calendar01Icon,
   CalendarAdd01Icon,
-  GoogleCalendar,
+  GoogleCalendar
 } from "@/components/icons";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@heroui/button";
 import { toast } from "sonner";
 import { AnimatedSection } from "../misc/AnimatedSection";
 import { SectionHeading } from "../misc/SectionHeading";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function Test() {
   const DummyAddToCalendar = () => {

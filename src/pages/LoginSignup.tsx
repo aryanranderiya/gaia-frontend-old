@@ -8,9 +8,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BubblePitFooter from "@/components/BubblePitFooter";
 
-function Calendaradd() {
+export function Calendaradd() {
   return (
-    <div className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit opacity-55">
+    <div className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] min-w-[400px] w-fit">
       <div className="">Would you like to add this event to your Calendar?</div>
 
       <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
@@ -57,11 +57,11 @@ export default function LoginSignup() {
   });
 
   return (
-    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient">
-      <div className="md:w-[40vw] w-full flex justify-center items-center flex-col gap-5">
-        <div className="absolute -rotate-12 left-48 top-40">
+    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
+      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative bg-black backdrop-blur-lg bg-opacity-75 rounded-3xl">
+        {/* <div className="absolute -rotate-12 left-48 top-40">
           <Calendaradd />
-        </div>
+        </div> */}
         <div className="mb-3 text-center space-y-2">
           <div className="text-5xl font-medium">
             {isLogin ? "Login" : "Sign Up"}

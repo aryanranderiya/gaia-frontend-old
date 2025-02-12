@@ -1,6 +1,6 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 // import Hr from "@/components/HorizontalRuler";
-import { GlobalIcon, PencilSquareIcon } from "@/components/icons";
+import { PencilSquareIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";

@@ -10,8 +10,7 @@ import {
   GlobalSearchIcon,
   Mic01Icon,
   Route02Icon,
-  StickyNote01Icon,
-  WavingHand01Icon,
+  StickyNote01Icon
 } from "../icons";
 
 const badges = [

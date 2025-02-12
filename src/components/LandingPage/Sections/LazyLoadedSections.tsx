@@ -15,9 +15,9 @@ const WhatCanYouDo = lazy(
   () => import("@/components/LandingPage/Sections/Section_WhatCanYouDo")
 );
 
-const TargetAudience = lazy(
-  () => import("@/components/LandingPage/Sections/Section_TargetAudience")
-);
+// const TargetAudience = lazy(
+//   () => import("@/components/LandingPage/Sections/Section_TargetAudience")
+// );
 
 const ComingSoon = lazy(
   () => import("@/components/LandingPage/Sections/Section_ComingSoon")

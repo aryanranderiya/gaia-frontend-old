@@ -10,7 +10,6 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import useMediaQuery from "../hooks/MediaQuery";
 
 // Providers
 import { ConversationListProvider } from "@/contexts/ConversationList";

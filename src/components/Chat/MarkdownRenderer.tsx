@@ -8,7 +8,6 @@ import mermaid from "mermaid";
 import type React from "react";
 import {
   lazy,
-  memo,
   Suspense,
   useCallback,
   useEffect,
@@ -18,15 +17,15 @@ import {
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 // import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import api from "@/utils/apiaxios";
+import { Tooltip } from "@heroui/tooltip";
 import {
   PrismAsyncLight,
   SyntaxHighlighterProps,
 } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
-import { InternetIcon, Task01Icon, TaskDone01Icon } from "../icons";
+import { Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
-import { Tooltip } from "@heroui/tooltip";
 const ReactMarkdown = lazy(() => import("react-markdown"));
 const SyntaxHighlighter =
   PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
@@ -266,7 +265,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   );
 };
 
-export function CustomAnchor({ props }) {
+export function CustomAnchor({ props }: { props: any }) {
   const { isLoading } = useLoading();
   const [metadata, setMetadata] = useState({
     title: "",

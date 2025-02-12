@@ -1,12 +1,11 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "sonner";
 import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
-import { Toaster } from "sonner";
-import LoginSignup from "./pages/LoginSignup";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));

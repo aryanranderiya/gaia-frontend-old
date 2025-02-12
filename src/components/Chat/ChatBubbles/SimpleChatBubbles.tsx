@@ -3,14 +3,16 @@ import { cn } from "@/lib/utils";
 export function SimpleChatBubbleUser({
   children,
   hideMobile = false,
+  className = "",
 }: {
   children: any;
   hideMobile?: boolean;
+  className?: string;
 }) {
   if (hideMobile) return <></>;
 
   return (
-    <div className="chat_bubble_container user">
+    <div className={`chat_bubble_container user ${className}`}>
       <div className="chat_bubble user !select-none">
         {/* <div className="flex select-text text-wrap max-w-[30vw]"> */}
         {children}
