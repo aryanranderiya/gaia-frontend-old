@@ -57,7 +57,7 @@ export default function MainInterface() {
     {
       path: "explore",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Explore />
         </Suspense>
       ),
@@ -65,7 +65,7 @@ export default function MainInterface() {
     {
       path: "calendar",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Calendar />
         </Suspense>
       ),
@@ -73,7 +73,7 @@ export default function MainInterface() {
     {
       path: "pins",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Pins />
         </Suspense>
       ),
@@ -81,7 +81,7 @@ export default function MainInterface() {
     {
       path: "notes",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Notes />
         </Suspense>
       ),
@@ -89,7 +89,7 @@ export default function MainInterface() {
     {
       path: "notes/add",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <NotesAdd />
         </Suspense>
       ),
@@ -97,7 +97,7 @@ export default function MainInterface() {
     {
       path: "notes/:id",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <NotesAdd />
         </Suspense>
       ),
@@ -105,7 +105,7 @@ export default function MainInterface() {
     {
       path: "goals",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Goals />
         </Suspense>
       ),
@@ -113,7 +113,7 @@ export default function MainInterface() {
     {
       path: "goals/:goalId",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <GoalPage />
         </Suspense>
       ),
@@ -121,7 +121,7 @@ export default function MainInterface() {
     {
       path: "search",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Search />
         </Suspense>
       ),
@@ -129,7 +129,7 @@ export default function MainInterface() {
     {
       path: "*",
       element: (
-        <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
           <Navigate to="/404" />
         </Suspense>
       ),

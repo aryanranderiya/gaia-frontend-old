@@ -1,14 +1,13 @@
 import { useUser } from "@/contexts/UserContext";
+import useMediaQuery from "@/hooks/MediaQuery";
 import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import useMediaQuery from "@/hooks/MediaQuery";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   BubbleConversationChatIcon,
-  CommentAdd01Icon,
   Home01Icon,
-  Menu01Icon,
+  Menu01Icon
 } from "../../icons";
 import {
   Sheet,
@@ -54,11 +53,12 @@ export default function Navbar() {
     <div className="navbar">
       <div className="navbar_content bg-zinc-950 outline outline-zinc-900 w-full max-w-screen-xl">
         <Button
+          as={Link}
+          to={"/"}
           variant="light"
           radius="full"
           size="md"
           className="text-xl font-medium"
-          onPress={() => navigate("/")}
         >
           gaia
         </Button>
@@ -76,7 +76,7 @@ export default function Navbar() {
                 <Menu01Icon color="foreground" />
               </div>
             </SheetTrigger>
-            <SheetContent className="dark text-foreground max-w-[200px] bg-zinc-950">
+            <SheetContent className="dark text-foreground max-w-[250px] bg-zinc-900 border-none">
               <SheetHeader>
                 <SheetTitle>
                   <VisuallyHidden.Root>Menu</VisuallyHidden.Root>
@@ -85,7 +85,7 @@ export default function Navbar() {
                   <Button
                     className="w-full flex justify-between"
                     color="default"
-                    variant="ghost"
+                    // variant="ghost"
                     onPress={() => {
                       navigate("/");
                       setOpen(false);
@@ -97,6 +97,40 @@ export default function Navbar() {
                     Home
                   </Button>
 
+                  {user ? (
+                    <Button
+                      variant="shadow"
+                      color="primary"
+                      radius="full"
+                      size="md"
+                      className="font-medium"
+                      onPress={() => {
+                        navigate("/try/chat");
+                        setOpen(false);
+                      }}
+                      endContent={
+                        <BubbleConversationChatIcon
+                          color="foreground"
+                          width="17"
+                        />
+                      }
+                    >
+                      Chat
+                    </Button>
+                  ) : (
+                    <Button
+                      as={Link}
+                      to={"/get-started"}
+                      variant="shadow"
+                      color="primary"
+                      size="md"
+                      className="p-0 px-4 font-semibold"
+                    >
+                      Get Started
+                    </Button>
+                  )}
+
+                  {/* 
                   <Button
                     className="w-full flex justify-between font-medium"
                     variant="ghost"
@@ -114,7 +148,7 @@ export default function Navbar() {
                     }
                   >
                     Feedback
-                  </Button>
+                  </Button> */}
 
                   {/* <WaitListButton
                     text="Waitlist Signup"
@@ -138,37 +172,26 @@ export default function Navbar() {
                 radius="full"
                 size="md"
                 className="font-medium"
+                as={Link}
+                to={"/try/chat"}
                 endContent={
                   <BubbleConversationChatIcon color="foreground" width="17" />
                 }
-                onPress={() => navigate("/try/chat")}
               >
                 Chat
               </Button>
             ) : (
-              <>
-                {/* <Button
-                  variant="light"
-                  color="primary"
-                  radius="full"
-                  size="md"
-                  className="p-0 font-semibold"
-                  onPress={() => navigate("/login")}
-                >
-                  Login
-                </Button> */}
-
-                <Button
-                  variant="shadow"
-                  color="primary"
-                  radius="full"
-                  size="md"
-                  className="p-0 px-4 font-semibold"
-                  onPress={() => navigate("/get-started")}
-                >
-                  Get Started
-                </Button>
-              </>
+              <Button
+                as={Link}
+                variant="shadow"
+                color="primary"
+                radius="full"
+                size="md"
+                to={"/get-started"}
+                className="p-0 px-4 font-semibold"
+              >
+                Get Started
+              </Button>
             )}
           </div>
         )}

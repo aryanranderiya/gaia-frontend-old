@@ -15,7 +15,7 @@ const routesConfig = [
   {
     path: "/",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <LandingPage />
       </Suspense>
     ),
@@ -24,15 +24,7 @@ const routesConfig = [
   {
     path: "get-started",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
-        <LoginSignup />
-      </Suspense>
-    ),
-  },
-  {
-    path: "signup",
-    element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <LoginSignup />
       </Suspense>
     ),
@@ -40,7 +32,7 @@ const routesConfig = [
   {
     path: "privacy",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
         <PrivacyPolicy />
       </Suspense>
     ),
@@ -48,7 +40,7 @@ const routesConfig = [
   {
     path: "terms",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
         <TermsOfService />
       </Suspense>
     ),
@@ -56,7 +48,7 @@ const routesConfig = [
   {
     path: "pricing",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
         <Pricing />
       </Suspense>
     ),
@@ -64,7 +56,7 @@ const routesConfig = [
   {
     path: "*",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
         <PageNotFound />
       </Suspense>
     ),

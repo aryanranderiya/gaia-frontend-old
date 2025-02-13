@@ -58,7 +58,7 @@ export default function LoginSignup() {
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
-      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative bg-black backdrop-blur-lg bg-opacity-75 rounded-3xl">
+      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-800  bg-transparent   sm:outline outline-zinc-700 backdrop-blur-lg bg-opacity-75 rounded-3xl">
         {/* <div className="absolute -rotate-12 left-48 top-40">
           <Calendaradd />
         </div> */}
@@ -95,7 +95,9 @@ export default function LoginSignup() {
         </Button>
       </div>
 
-      <BubblePitFooter />
+      <div className="sm:block hidden">
+        <BubblePitFooter />
+      </div>
     </form>
   );
 }

@@ -95,7 +95,7 @@ export default function App() {
             <Route
               path="/login"
               element={
-                <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                <Suspense fallback={<SuspenseLoader fullHeight />}>
                 <LoginSignup isLogin={true} />
                 </Suspense>
               }
@@ -104,7 +104,7 @@ export default function App() {
             <Route
               path="/signup"
               element={
-                <Suspense fallback={<SuspenseLoader fullHeight={true} />}>
+                <Suspense fallback={<SuspenseLoader fullHeight />}>
                   <LoginSignup isLogin={false} />
                 </Suspense>
               }
