@@ -16,34 +16,30 @@ export default function HeroSection() {
       <div className="fixed top-0 left-0 w-screen">
         <Spotlight duration={15} />
       </div>
-      <AnimatedSection className="flex flex-col justify-center items-center h-full z-[2] relative">
-        <div
+      <AnimatedSection className="flex flex-col justify-center items-center h-full z-[2] gap-4 relative">
+        <div className="tracking-[1rem] text-transparent bg-gradient-to-r via-white  bg-clip-text to-zinc-400 from-zinc-400">
+          INTRODUCING{"  "}GAIA
+        </div>
+        {/* <div
           className={cn(
             "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800"
           )}
         >
           <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:duration-300 hover:text-neutral-400">
-            {/* <StarsIcon
-              color="transparent"
-              fill="#ffffffAA"
-              className="mr-1"
-              width={20}
-              height={20}
-            /> */}
             Currently in beta
           </AnimatedShinyText>
-        </div>
+        </div> */}
 
         <div className="py-3">
-          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-zinc-100 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-500 max-w-screen-lg sm:-my-2">
+          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-zinc-50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-500 max-w-screen-lg sm:-my-2">
             Your Personal AI Assistant awaits.
           </div>
         </div>
 
         <TypingAnimation
-          text="Lorem ipsum, dolor sit amet consectetur adipisicing elit."
-          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-foreground-600"
-          duration={20}
+          text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, quam veniam. Commodi tempora quo quasi accusantium saepe voluptatibus reiciendis deleniti."
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-foreground-600 max-w-screen-md"
+          duration={5}
         />
 
         <Button
@@ -57,9 +53,6 @@ export default function HeroSection() {
         >
           <div className="flex items-center gap-1">
             Get Started for free
-            {/* <span className="font-normal max-w-0 opacity-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-[opacity] duration-200 ease group-hover:transition-[max-width] group-hover:duration-200 overflow-hidden whitespace-nowrap">
-              &#8212; It's free!
-            </span> */}
             <ArrowUpRight />
           </div>
         </Button>
