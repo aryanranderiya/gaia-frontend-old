@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
-  DiscoverCircleIcon,
+  // DiscoverCircleIcon,
   NotificationIcon,
   PinIcon,
   Route02Icon,
@@ -19,11 +19,11 @@ export default function SidebarTopButtons() {
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
 
   const buttonData = [
-    {
-      route: "/try/explore",
-      icon: <DiscoverCircleIcon width={27} height={27} />,
-      label: "Explore",
-    },
+    // {
+    //   route: "/try/explore",
+    //   icon: <DiscoverCircleIcon width={27} height={27} />,
+    //   label: "Explore",
+    // },
     {
       // route: "/try/search",
       icon: <SearchIcon width={26} height={26} />,
@@ -63,7 +63,7 @@ export default function SidebarTopButtons() {
         openSearchDialog={openSearchDialog}
       />
 
-      <div className="bg-[#141414] rounded-2xl p-2 gap-1 grid grid-cols-4 items-start grid-rows-2">
+      <div className="bg-[#141414] rounded-2xl p-2 gap-1 grid grid-cols-3 items-start grid-rows-2">
         {buttonData.map(({ route, icon, label }, index) => (
           <Tooltip key={index} showArrow={true} content={label}>
             <Button

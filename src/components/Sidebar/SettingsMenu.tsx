@@ -1,3 +1,7 @@
+import { useConversationList } from "@/contexts/ConversationList";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useUser } from "@/contexts/UserContext";
+import { ApiService } from "@/utils/chatUtils";
 import { Button } from "@heroui/button";
 import {
   Dropdown,
@@ -5,13 +9,14 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/dropdown";
-import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
-import { useUser } from "@/contexts/UserContext";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Eraser } from "lucide-react";
-import { ApiService } from "@/utils/chatUtils";
-import { useConversationList } from "@/contexts/ConversationList";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
+
+// Only allow these values in our modal state.
+type ModalAction = "clear_chats" | "logout";
 
 interface MenuItem {
   key: string;
@@ -26,6 +31,24 @@ export default function SettingsMenu() {
   const { fetchConversations } = useConversationList();
   const { setConvoMessages } = useConvo();
 
+  // modalAction is either "clear_chats", "logout", or null (closed)
+  const [modalAction, setModalAction] = useState<ModalAction | null>(null);
+
+  // Confirm logout action.
+  const handleConfirmLogout = () => {
+    logout();
+    setModalAction(null);
+  };
+
+  // Confirm clear chats action.
+  const handleConfirmClearChats = async () => {
+    navigate("/try/chat");
+    await ApiService.deleteAllConversations();
+    await fetchConversations();
+    setConvoMessages([]);
+    setModalAction(null);
+  };
+
   const items: MenuItem[] = [
     {
       key: "clear",
@@ -35,14 +58,8 @@ export default function SettingsMenu() {
           Clear all Chats
         </div>
       ),
-      action: async () => {
-        navigate("/try/chat");
-        await ApiService.deleteAllConversations();
-        await fetchConversations();
-        setConvoMessages([]);
-      },
+      action: () => setModalAction("clear_chats"),
     },
-
     {
       key: "settings",
       label: (
@@ -52,7 +69,6 @@ export default function SettingsMenu() {
         </div>
       ),
     },
-
     {
       key: "logout",
       label: (
@@ -61,31 +77,70 @@ export default function SettingsMenu() {
           Logout
         </div>
       ),
-      action: logout,
+      action: () => setModalAction("logout"),
       color: "danger",
     },
   ];
 
   return (
-    <Dropdown className="dark text-foreground">
-      <DropdownTrigger>
-        <Button isIconOnly variant="light" aria-label="Three Dots Menu">
-          <ThreeDotsMenu />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="Dynamic Actions">
-        {items.map((item) => (
-          <DropdownItem
-            key={item.key}
-            color={item.color === "danger" ? "danger" : "default"}
-            className={item.color === "danger" ? "text-danger" : ""}
-            textValue={item.key}
-            onPress={item.action}
-          >
-            {item.label}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+    <>
+      <Modal
+        isOpen={modalAction !== null}
+        onOpenChange={() => setModalAction(null)}
+      >
+        <ModalContent>
+          <>
+            <ModalHeader className="flex justify-center">
+              {modalAction === "logout"
+                ? "Are you sure you want to logout?"
+                : "Are you sure you want to clear all chats?"}
+            </ModalHeader>
+            <ModalBody className="flex flex-col gap-2 mb-4">
+              <Button
+                radius="full"
+                color="danger"
+                onPress={() => {
+                  if (modalAction === "logout") {
+                    handleConfirmLogout();
+                  } else if (modalAction === "clear_chats") {
+                    handleConfirmClearChats();
+                  }
+                }}
+              >
+                {modalAction === "logout" ? "Logout" : "Clear all Chats"}
+              </Button>
+              <Button
+                variant="bordered"
+                radius="full"
+                onPress={() => setModalAction(null)}
+              >
+                Cancel
+              </Button>
+            </ModalBody>
+          </>
+        </ModalContent>
+      </Modal>
+
+      <Dropdown className="dark text-foreground">
+        <DropdownTrigger>
+          <Button isIconOnly variant="light" aria-label="Three Dots Menu">
+            <ThreeDotsMenu />
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Dynamic Actions">
+          {items.map((item) => (
+            <DropdownItem
+              key={item.key}
+              color={item.color === "danger" ? "danger" : "default"}
+              className={item.color === "danger" ? "text-danger" : ""}
+              textValue={item.key}
+              onPress={item.action}
+            >
+              {item.label}
+            </DropdownItem>
+          ))}
+        </DropdownMenu>
+      </Dropdown>
+    </>
   );
 }

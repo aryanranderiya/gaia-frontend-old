@@ -49,7 +49,7 @@ export default function ChatOptionsDropdown({
         starred: !starred,
       });
       setIsOpen(false);
-      fetchConversations();
+      await fetchConversations();
     } catch (error) {
       console.error("Failed to update chat name", error);
     }
@@ -62,7 +62,7 @@ export default function ChatOptionsDropdown({
         description: newName,
       });
       setIsOpen(false);
-      fetchConversations(1, 20, false);
+      await fetchConversations(1, 20, false);
     } catch (error) {
       console.error("Failed to update chat name", error);
     }
@@ -74,7 +74,7 @@ export default function ChatOptionsDropdown({
       resetMessages();
       await apiauth.delete(`/conversations/${chatId}`);
       setIsOpen(false);
-      fetchConversations(1, 20, false);
+      await fetchConversations(1, 20, false);
     } catch (error) {
       console.error("Failed to delete chat", error);
     }

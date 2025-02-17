@@ -344,30 +344,32 @@ export default function GoalPage() {
                     (node) => node.id === currentlySelectedNodeId
                   );
 
-                  return selectedNode?.data?.resources &&
-                    selectedNode?.data?.resources?.length > 0 ? (
-                    <div className="bg-black bg-opacity-40 p-5 rounded-xl">
-                      <div className="flex text-md font-medium gap-2 items-center pb-2">
-                        <BookIcon1 width={18} />
-                        Resources
+                  return (
+                    selectedNode?.data?.resources &&
+                    selectedNode?.data?.resources?.length > 0 && (
+                      <div className="bg-black bg-opacity-40 p-5 rounded-xl">
+                        <div className="flex text-md font-medium gap-2 items-center pb-2">
+                          <BookIcon1 width={18} />
+                          Resources
+                        </div>
+                        <div className="text-sm">
+                          {selectedNode.data.resources.map(
+                            (resource, index) => (
+                              <a
+                                key={index}
+                                href={`https://www.google.com/search?q=${resource.split(
+                                  "+"
+                                )}`}
+                                target="__blank"
+                                className="hover:text-[#00bbff] underline underline-offset-4"
+                              >
+                                <li>{resource}</li>
+                              </a>
+                            )
+                          )}
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        {selectedNode.data.resources.map((resource, index) => (
-                          <a
-                            key={index}
-                            href={`https://www.google.com/search?q=${resource.split(
-                              "+"
-                            )}`}
-                            target="__blank"
-                            className="hover:text-[#00bbff] underline underline-offset-4"
-                          >
-                            <li>{resource}</li>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <div>No resources available.</div>
+                    )
                   );
                 })()}
               </>

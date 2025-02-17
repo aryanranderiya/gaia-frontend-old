@@ -1,12 +1,12 @@
-import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
+import { GoogleCalendar } from "@/components/icons";
+// GoogleColouredIcon
 import { Button } from "@/components/ui/button";
-// import { Button  } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
 import { Button as NextUIBtn } from "@heroui/button";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BubblePitFooter from "@/components/BubblePitFooter";
+// import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
   return (
@@ -57,11 +57,8 @@ export default function LoginSignup() {
   });
 
   return (
-    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
-      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-800  bg-transparent   sm:outline outline-zinc-700 backdrop-blur-lg bg-opacity-75 rounded-3xl">
-        {/* <div className="absolute -rotate-12 left-48 top-40">
-          <Calendaradd />
-        </div> */}
+    <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none login_page">
+      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative bg-black/30 backdrop-blur-lg bg-opacity-75 rounded-3xl">
         <div className="mb-3 text-center space-y-2">
           <div className="text-5xl font-medium">
             {isLogin ? "Login" : "Sign Up"}
@@ -72,7 +69,26 @@ export default function LoginSignup() {
               : "Join us today by creating an account. It's quick and easy!"}
           </div>
         </div>
-        <Button
+        <GoogleLogin
+          theme="filled_black"
+          size="large"
+          shape="pill"
+          useOneTap
+          onSuccess={async (credentialResponse) => {
+            // console.log(credentialResponse);
+            const tokens = await apiauth.post("/oauth/google", {
+              credential: credentialResponse.credential,
+              clientId: credentialResponse.clientId,
+              select_by: credentialResponse.select_by,
+            });
+            navigate("/try/chat");
+            console.log(tokens);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+        {/* <Button
           onClick={() => handleGoogleLogin()}
           variant="secondary"
           className="rounded-full text-md gap-2 px-4"
@@ -81,7 +97,7 @@ export default function LoginSignup() {
         >
           <GoogleColouredIcon />
           {isLogin ? "Sign in" : "Sign up"} with Google
-        </Button>
+        </Button> */}
         <Button
           variant="link"
           className="rounded-full text-md gap-2 px-4 text-primary font-normal"
@@ -95,9 +111,9 @@ export default function LoginSignup() {
         </Button>
       </div>
 
-      <div className="sm:block hidden">
-        <BubblePitFooter />
-      </div>
+      {/* <div className="sm:block hidden">
+        <BubblePitFooter /> */}
+      {/* </div> */}
     </form>
   );
 }

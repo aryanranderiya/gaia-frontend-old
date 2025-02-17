@@ -38,10 +38,10 @@ export default function AddGoalDialog({
 
   return (
     <Modal
+      backdrop="blur"
+      className="dark text-foreground"
       isOpen={openDialog}
       onOpenChange={setOpenDialog}
-      className="dark text-foreground"
-      backdrop="blur"
     >
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 mb-0 pb-0">
@@ -52,20 +52,20 @@ export default function AddGoalDialog({
             I will help you create a step-by-step plan to achieve your goal !
           </div>
           <Input
-            label="What goal do you want to achieve?"
-            variant="faded"
-            value={goalTitle}
             classNames={{ inputWrapper: "pr-2" }}
             endContent={
               <Button
+                isIconOnly
+                className="font-medium"
                 color="primary"
                 onPress={handleAddGoal}
-                className="font-medium"
-                isIconOnly
               >
                 <Send />
               </Button>
             }
+            label="What goal do you want to achieve?"
+            value={goalTitle}
+            variant="faded"
             onChange={(e: { target: { value: SetStateAction<string> } }) =>
               setGoalTitle(e.target.value)
             }

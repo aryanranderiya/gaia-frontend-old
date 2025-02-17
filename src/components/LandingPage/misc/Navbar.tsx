@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   BubbleConversationChatIcon,
   Home01Icon,
-  Menu01Icon
+  Menu01Icon,
 } from "../../icons";
 import {
   Sheet,
@@ -42,7 +42,7 @@ export default function Navbar() {
           response?.data?.picture
         );
       } catch (err) {
-        if (location.pathname.startsWith("/try")) navigate("/login");
+        if (location.pathname.startsWith("/try")) navigate("/get-started");
       }
     };
 

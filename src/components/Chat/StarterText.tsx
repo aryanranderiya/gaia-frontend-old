@@ -10,7 +10,7 @@ import {
   GlobalSearchIcon,
   Mic01Icon,
   Route02Icon,
-  StickyNote01Icon
+  StickyNote01Icon,
 } from "../icons";
 
 const badges = [
@@ -127,7 +127,7 @@ const badges = [
 export default function StarterText() {
   return (
     <>
-      <div className="text-5xl font-medium grow flex-1 text-center my-4 inline-flex flex-wrap items-center gap-2 justify-center">
+      <div className="text-4xl font-medium grow flex-1 text-center my-4 inline-flex flex-wrap items-center gap-2 justify-center">
         Hey!
         <img
           src="https://em-content.zobj.net/source/apple/391/waving-hand_1f44b.png"

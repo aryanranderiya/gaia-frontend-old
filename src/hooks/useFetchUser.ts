@@ -22,7 +22,7 @@ const useFetchUser = () => {
       );
     } catch (err) {
       console.error(err);
-      navigate("/login");
+      navigate("/get-started");
     }
   };
 

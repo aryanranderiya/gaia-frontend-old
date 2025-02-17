@@ -76,7 +76,7 @@ const StaticSidebar = ({
         </div>
       </div>
 
-      {resources && resources.length > 0 ? (
+      {resources && resources.length > 0 && (
         <div className="bg-black bg-opacity-40 p-5 rounded-xl">
           <div className="flex text-md font-medium gap-2 items-center pb-2">
             <BookIcon1 width={18} />
@@ -95,8 +95,6 @@ const StaticSidebar = ({
             ))}
           </ul>
         </div>
-      ) : (
-        <div>No resources available.</div>
       )}
     </div>
   );

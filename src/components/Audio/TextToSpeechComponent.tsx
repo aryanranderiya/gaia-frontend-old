@@ -36,7 +36,7 @@ export default function TextToSpeech({ text }: { text: string }) {
 
         // Create and play the audio
         const newAudio = new Audio(audioUrl);
-        newAudio.play();
+        await newAudio.play();
         setAudio(newAudio);
 
         setIsPlaying(true);

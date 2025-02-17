@@ -53,11 +53,8 @@ export default function App() {
       case "/privacy":
         title = "GAIA - Privacy Policy";
         break;
-      case "/login":
-        title = "Login to GAIA";
-        break;
-      case "/signup":
-        title = "Signup for GAIA";
+      case "/get-started":
+        title = "GAIA - Get Started";
         break;
       default:
         title = "GAIA";
@@ -91,24 +88,6 @@ export default function App() {
                 </Suspense>
               }
             />
-            {/* 
-            <Route
-              path="/login"
-              element={
-                <Suspense fallback={<SuspenseLoader fullHeight />}>
-                <LoginSignup isLogin={true} />
-                </Suspense>
-              }
-            />
-
-            <Route
-              path="/signup"
-              element={
-                <Suspense fallback={<SuspenseLoader fullHeight />}>
-                  <LoginSignup isLogin={false} />
-                </Suspense>
-              }
-            /> */}
           </Routes>
         </UIProviderLayout>
       </UserProvider>

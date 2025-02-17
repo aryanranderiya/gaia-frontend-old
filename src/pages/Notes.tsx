@@ -85,7 +85,7 @@ export default function Notes() {
               radius="full"
               className="font-semibold gap-1"
             >
-              <StickyNote01Icon width={27} height={27} />
+              <StickyNote01Icon width={27} height={27} color="black" />
               Add Note
             </Button>
           </Link>

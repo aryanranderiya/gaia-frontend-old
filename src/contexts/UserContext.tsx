@@ -49,7 +49,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       if (response.status !== 200) throw new Error("Logout failed");
 
       setUser(null);
-      navigate("/login");
+      navigate("/get-started");
     } catch (error) {
       console.error("Error during logout:", error);
     }
