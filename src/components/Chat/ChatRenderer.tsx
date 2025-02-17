@@ -9,13 +9,15 @@ import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import StarterEmoji from "./StarterEmoji";
+import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
+import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
 
-const ChatBubbleBot = React.lazy(
-  () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
-);
-const ChatBubbleUser = React.lazy(
-  () => import("@/components/Chat/ChatBubbles/ChatBubbleUser")
-);
+// const ChatBubbleBot = React.lazy(
+//   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
+// );
+// const ChatBubbleUser = React.lazy(
+//   () => import("@/components/Chat/ChatBubbles/ChatBubbleUser")
+// );
 
 export default function ChatRenderer() {
   const { convoMessages } = useConvo();
@@ -140,42 +142,38 @@ export default function ChatRenderer() {
                 message.loading ? "animate-spin" : ""
               } relative bottom-9`}
             /> */}
-            <Suspense fallback={<SuspenseLoader />}>
-              <ChatBubbleBot
-                message_id={message.message_id}
-                text={message.response}
-                loading={message.loading}
-                isImage={message.isImage}
-                imagePrompt={message.imagePrompt}
-                improvedImagePrompt={message.improvedImagePrompt}
-                searchWeb={message.searchWeb}
-                imageSrc={message.imageUrl}
-                disclaimer={message.disclaimer}
-                userinputType={message.userinputType}
-                date={message.date}
-                pageFetchURL={message.pageFetchURL}
-                setOpenImage={setOpenImage}
-                setImageData={setImageData}
-                filename={message.filename}
-                pinned={message.pinned}
-                intent={message.intent}
-                calendar_options={message.calendar_options}
-              />
-            </Suspense>
-          </div>
-        ) : (
-          <Suspense fallback={<></>} key={index}>
-            <ChatBubbleUser
+            <ChatBubbleBot
               message_id={message.message_id}
-              key={index}
               text={message.response}
-              subtype={message.subtype || null}
-              filename={message.filename}
+              loading={message.loading}
+              isImage={message.isImage}
+              imagePrompt={message.imagePrompt}
+              improvedImagePrompt={message.improvedImagePrompt}
               searchWeb={message.searchWeb}
+              imageSrc={message.imageUrl}
+              disclaimer={message.disclaimer}
+              userinputType={message.userinputType}
               date={message.date}
               pageFetchURL={message.pageFetchURL}
+              setOpenImage={setOpenImage}
+              setImageData={setImageData}
+              filename={message.filename}
+              pinned={message.pinned}
+              intent={message.intent}
+              calendar_options={message.calendar_options}
             />
-          </Suspense>
+          </div>
+        ) : (
+          <ChatBubbleUser
+            message_id={message.message_id}
+            key={index}
+            text={message.response}
+            subtype={message.subtype || null}
+            filename={message.filename}
+            searchWeb={message.searchWeb}
+            date={message.date}
+            pageFetchURL={message.pageFetchURL}
+          />
         )
       )}
     </>

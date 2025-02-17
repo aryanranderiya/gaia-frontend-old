@@ -1,8 +1,9 @@
-import { ArrowLeft01Icon, StarsIcon, Tick02Icon } from "@/components/icons";
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
+
+import { ArrowLeft01Icon, StarsIcon, Tick02Icon } from "@/components/icons";
 
 function FAQAccordion() {
   const faqItems = [
@@ -74,9 +75,9 @@ function FAQAccordion() {
           {faqItems.map((item, index) => (
             <AccordionItem
               key={index}
-              title={item.question}
-              indicator={<ArrowLeft01Icon width="18" color="white" />}
               aria-label={item.question}
+              indicator={<ArrowLeft01Icon color="white" width="18" />}
+              title={item.question}
             >
               <span className="select-text">{item.content}</span>
             </AccordionItem>
@@ -119,7 +120,7 @@ export function PricingCard({
       >
         {type === "main" && (
           <div className="absolute -top-7 w-full flex justify-center bg-primary !rounded-tr-3xl !rounded-tl-3xl !rounded-bl-none !rounded-br-none text-black text-sm py-1 items-center gap-1 mostpopular_banner">
-            Most popular <StarsIcon width="16" color="black" fill="black" />
+            Most popular <StarsIcon color="black" fill="black" width="16" />
           </div>
         )}
 
@@ -129,13 +130,13 @@ export function PricingCard({
               {title}
               {type === "main" && (
                 <Chip
-                  variant="shadow"
-                  color="primary"
                   className="mostpopular_banner2"
+                  color="primary"
+                  variant="shadow"
                 >
                   <div className="flex items-center gap-1 font-medium">
                     Most popular{" "}
-                    <StarsIcon width="16" color="black" fill="black" />
+                    <StarsIcon color="black" fill="black" width="16" />
                   </div>
                 </Chip>
               )}
@@ -188,7 +189,7 @@ export function PricingCard({
                   key={index}
                   className="text-sm font-normal flex items-center gap-3 !border-none"
                 >
-                  <Tick02Icon width="20" height="20" />
+                  <Tick02Icon height="20" width="20" />
                   {feature}
                 </div>
               ))}
@@ -203,38 +204,36 @@ export function PricingCards({ durationIsMonth = false }) {
   return (
     <div className="pricingcards_layout">
       <PricingCard
-        durationIsMonth={durationIsMonth}
-        title="Basic"
         description="lorem ipsum"
-        price={0}
-        type="secondary"
+        durationIsMonth={durationIsMonth}
         features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
           </div>
         }
+        price={0}
+        title="Basic"
+        type="secondary"
       />
       <PricingCard
-        title="Pro"
         description="lorem ipsum"
-        price={10}
-        features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
         durationIsMonth={durationIsMonth}
-        type="main"
+        features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
             <span className="text-sm">Everything in Free, and:</span>
           </div>
         }
+        price={10}
+        title="Pro"
+        type="main"
       />
 
       <PricingCard
-        durationIsMonth={durationIsMonth}
-        title="Premium"
         description="lorem ipsum"
-        price={20}
+        durationIsMonth={durationIsMonth}
         features={[
           "Feature 1",
           "Feature 2",
@@ -242,13 +241,15 @@ export function PricingCards({ durationIsMonth = false }) {
           "Feature 4",
           "Feature 5",
         ]}
-        type="secondary"
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
             <span className="text-sm">Everything in Pro, and:</span>
           </div>
         }
+        price={20}
+        title="Premium"
+        type="secondary"
       />
     </div>
   );
@@ -259,7 +260,7 @@ export default function Pricing() {
     <div className="flex justify-center h-full w-screen mt-[110px] flex-col">
       <div className="flex-col flex gap-2 items-center">
         <div className="flex items-center flex-col gap-3 mb-2 w-full">
-          <Chip variant="light" color="primary" size="lg">
+          <Chip color="primary" size="lg" variant="light">
             Pricing
           </Chip>
 
@@ -281,7 +282,7 @@ export default function Pricing() {
               title={
                 <div className="flex gap-2 items-center justify-center w-full">
                   Yearly
-                  <Chip size="sm" variant="shadow" color="primary">
+                  <Chip color="primary" size="sm" variant="shadow">
                     <div className="font-medium text-sm">Save 40%</div>
                   </Chip>
                 </div>

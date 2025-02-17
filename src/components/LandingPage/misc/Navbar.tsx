@@ -1,9 +1,8 @@
-import { useUser } from "@/contexts/UserContext";
-import useMediaQuery from "@/hooks/MediaQuery";
 import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import {
   BubbleConversationChatIcon,
   Home01Icon,
@@ -17,6 +16,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../ui/sheet";
+
+import useMediaQuery from "@/hooks/MediaQuery";
+import { useUser } from "@/contexts/UserContext";
 // import WaitListButton from "./WaitlistModal";
 import { apiauth } from "@/utils/apiaxios";
 
@@ -39,7 +41,7 @@ export default function Navbar() {
         setUserData(
           response?.data?.name,
           response?.data?.email,
-          response?.data?.picture
+          response?.data?.picture,
         );
       } catch (err) {
         if (location.pathname.startsWith("/try")) navigate("/get-started");
@@ -54,11 +56,11 @@ export default function Navbar() {
       <div className="navbar_content bg-zinc-950 outline outline-zinc-900 w-full max-w-screen-xl">
         <Button
           as={Link}
-          to={"/"}
-          variant="light"
+          className="text-xl font-medium"
           radius="full"
           size="md"
-          className="text-xl font-medium"
+          to={"/"}
+          variant="light"
         >
           gaia
         </Button>
@@ -70,7 +72,7 @@ export default function Navbar() {
         </div> */}
 
         {isMobileScreen ? (
-          <Sheet onOpenChange={setOpen} open={open}>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
               <div className="rounded-full p-3">
                 <Menu01Icon color="foreground" />
@@ -84,47 +86,47 @@ export default function Navbar() {
                 <SheetDescription className="pt-12 gap-3 flex flex-col">
                   <Button
                     className="w-full flex justify-between"
+                    endContent={
+                      <Home01Icon color="foreground" width="20" height="20" />
+                    }
                     color="default"
                     // variant="ghost"
                     onPress={() => {
                       navigate("/");
                       setOpen(false);
                     }}
-                    endContent={
-                      <Home01Icon color="foreground" width="20" height="20" />
-                    }
                   >
                     Home
                   </Button>
 
                   {user ? (
                     <Button
-                      variant="shadow"
-                      color="primary"
-                      radius="full"
-                      size="md"
                       className="font-medium"
-                      onPress={() => {
-                        navigate("/try/chat");
-                        setOpen(false);
-                      }}
+                      color="primary"
                       endContent={
                         <BubbleConversationChatIcon
                           color="foreground"
                           width="17"
                         />
                       }
+                      radius="full"
+                      size="md"
+                      variant="shadow"
+                      onPress={() => {
+                        navigate("/try/chat");
+                        setOpen(false);
+                      }}
                     >
                       Chat
                     </Button>
                   ) : (
                     <Button
                       as={Link}
-                      to={"/get-started"}
-                      variant="shadow"
+                      className="p-0 px-4 font-semibold"
                       color="primary"
                       size="md"
-                      className="p-0 px-4 font-semibold"
+                      to={"/get-started"}
+                      variant="shadow"
                     >
                       Get Started
                     </Button>
@@ -167,28 +169,28 @@ export default function Navbar() {
           <div className="flex items-center gap-1">
             {user ? (
               <Button
-                variant="shadow"
-                color="primary"
-                radius="full"
-                size="md"
-                className="font-medium"
                 as={Link}
-                to={"/try/chat"}
+                className="font-medium"
+                color="primary"
                 endContent={
                   <BubbleConversationChatIcon color="foreground" width="17" />
                 }
+                radius="full"
+                size="md"
+                to={"/try/chat"}
+                variant="shadow"
               >
                 Chat
               </Button>
             ) : (
               <Button
                 as={Link}
-                variant="shadow"
+                className="p-0 px-4 font-semibold"
                 color="primary"
                 radius="full"
                 size="md"
                 to={"/get-started"}
-                className="p-0 px-4 font-semibold"
+                variant="shadow"
               >
                 Get Started
               </Button>

@@ -1,5 +1,8 @@
 "use client";
 
+import { Loader2, Mic, MicOff } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,8 +14,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Mic, MicOff } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 export default function AudioTranscription() {
   const [transcription, setTranscription] = useState<string>("");
@@ -38,6 +39,7 @@ export default function AudioTranscription() {
         if (!prev || lastLine !== newText) {
           return prev + (prev ? "\n" : "") + newText;
         }
+
         return prev;
       });
     };
@@ -60,6 +62,7 @@ export default function AudioTranscription() {
   const startRecording = async () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       setError("Your browser does not support audio recording.");
+
       return;
     }
 
@@ -84,14 +87,14 @@ export default function AudioTranscription() {
 
       // Create source node
       sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
-        streamRef.current
+        streamRef.current,
       );
 
       // Create processor node
       processorRef.current = audioContextRef.current.createScriptProcessor(
         4096,
         1,
-        1
+        1,
       );
 
       // Handle audio processing
@@ -159,9 +162,9 @@ export default function AudioTranscription() {
         <Dialog>
           <DialogTrigger asChild>
             <Button
+              disabled={isLoading}
               variant={isRecording ? "destructive" : "default"}
               onClick={isRecording ? stopRecording : startRecording}
-              disabled={isLoading}
             >
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -173,8 +176,8 @@ export default function AudioTranscription() {
               {isLoading
                 ? "Initializing..."
                 : isRecording
-                ? "Stop Recording"
-                : "Start Recording"}
+                  ? "Stop Recording"
+                  : "Start Recording"}
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -197,7 +200,7 @@ export default function AudioTranscription() {
         </Dialog>
 
         {error && (
-          <Alert variant="destructive" className="mt-4">
+          <Alert className="mt-4" variant="destructive">
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>

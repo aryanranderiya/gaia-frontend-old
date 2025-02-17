@@ -126,7 +126,7 @@ export default function FileUpload({
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
           fetchConversations
         );
-      }, 1000);
+      }, 3000);
 
       navigate(`/try/chat/${conversationId}`);
 

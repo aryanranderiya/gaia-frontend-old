@@ -1,9 +1,9 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { toast } from "sonner";
-import api from "@/utils/apiaxios";
-import PartySmiley from "@/components/Smileys/20.webp";
-import createConfetti from "@/hooks/CreateConfetti";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { useEffect, useMemo, useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -17,8 +17,10 @@ import {
   Calendar01Icon,
   Cancel01Icon,
 } from "../../icons";
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { useEffect, useMemo, useState } from "react";
+
+import api from "@/utils/apiaxios";
+import PartySmiley from "@/components/Smileys/20.webp";
+import createConfetti from "@/hooks/CreateConfetti";
 
 export default function WaitListButton({
   props,
@@ -36,20 +38,20 @@ export default function WaitListButton({
   return (
     <>
       <Button
-        color="primary"
-        radius="full"
-        variant="shadow"
         className="arrow_diagonal_btn"
-        onPress={() => setOpen(true)}
+        color="primary"
         endContent={
           <ArrowUpRight01Icon
             className="arrow_diagonal"
             color="primary"
-            width={iconsize}
             height={iconsize}
+            width={iconsize}
           />
         }
+        radius="full"
         size="lg"
+        variant="shadow"
+        onPress={() => setOpen(true)}
         {...props}
       >
         <div>
@@ -77,6 +79,7 @@ export function WaitListModal({
   function validateEmail(value: string) {
     if (value === "") return false;
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
+
     return regex.test(value.trim());
   }
   const isInvalidEmail = useMemo(() => {
@@ -95,6 +98,7 @@ export function WaitListModal({
         const response = await api.post("/waitlistSignup", {
           email,
         });
+
         console.log(response.data.message);
 
         clearInputs();
@@ -147,23 +151,23 @@ export function WaitListModal({
             <>
               <div className="w-full flex justify-center">
                 <img
-                  src={PartySmiley}
                   alt="Smiley face party"
-                  width={230}
                   height={230}
+                  src={PartySmiley}
+                  width={230}
                 />
               </div>
               <DialogClose asChild>
                 <div className="flex justify-center w-full">
                   <Button
+                    className="w-fit"
                     color="success"
-                    variant="flat"
-                    onPress={() => setOpen(false)}
+                    radius="lg"
                     startContent={
                       <Cancel01Icon color="foreground" width="20" />
                     }
-                    radius="lg"
-                    className="w-fit"
+                    variant="flat"
+                    onPress={() => setOpen(false)}
                   >
                     Close
                   </Button>
@@ -174,29 +178,29 @@ export function WaitListModal({
             <div className="flex w-full flex-col items-center">
               <Input
                 isRequired
-                type="email"
-                label="Email"
-                variant="faded"
-                placeholder="name@example.com"
-                startContent={<Mail01Icon height="21" />}
-                value={email}
-                onValueChange={(value) => setEmail(value.trim())}
-                isInvalid={submitted && isInvalidEmail}
+                className="dark max-w-sm"
                 color={submitted && isInvalidEmail ? "danger" : "primary"}
                 errorMessage="Please enter a valid email"
+                isInvalid={submitted && isInvalidEmail}
+                label="Email"
+                placeholder="name@example.com"
+                startContent={<Mail01Icon height="21" />}
+                type="email"
+                value={email}
+                variant="faded"
                 onKeyDown={handleKeyDown}
-                className="dark max-w-sm"
+                onValueChange={(value) => setEmail(value.trim())}
               />
 
               <div className="flex w-full justify-center pt-3 gap-3">
                 <DialogClose asChild>
                   <Button
                     color="danger"
-                    variant="light"
+                    radius="lg"
                     startContent={
                       <Cancel01Icon color="foreground" width="20" />
                     }
-                    radius="lg"
+                    variant="light"
                   >
                     Cancel
                   </Button>
@@ -205,10 +209,10 @@ export function WaitListModal({
                 <Button
                   children={"Signup"}
                   color="primary"
-                  onPress={SubmitForm}
                   endContent={<Calendar01Icon color="foreground" width="20" />}
-                  radius="lg"
                   isLoading={loading}
+                  radius="lg"
+                  onPress={SubmitForm}
                 />
               </div>
             </div>

@@ -1,11 +1,12 @@
-import { GoogleCalendar } from "@/components/icons";
 // GoogleColouredIcon
-import { Button } from "@/components/ui/button";
-import { apiauth } from "@/utils/apiaxios";
 import { Button as NextUIBtn } from "@heroui/button";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { apiauth } from "@/utils/apiaxios";
+import { Button } from "@/components/ui/button";
+import { GoogleCalendar } from "@/components/icons";
 // import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
@@ -14,7 +15,7 @@ export function Calendaradd() {
       <div className="">Would you like to add this event to your Calendar?</div>
 
       <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
-        <GoogleCalendar width={25} height={35} />
+        <GoogleCalendar height={35} width={25} />
         <div className="flex flex-col gap-1">
           <div>
             <div className="font-medium">Meeting with Sarah</div>
@@ -50,6 +51,7 @@ export default function LoginSignup() {
       const tokens = await apiauth.post("/oauth/callback", {
         code: codeResponse.code,
       });
+
       navigate("/try/chat");
       console.log(tokens);
     },
@@ -70,10 +72,13 @@ export default function LoginSignup() {
           </div>
         </div>
         <GoogleLogin
-          theme="filled_black"
-          size="large"
-          shape="pill"
           useOneTap
+          shape="pill"
+          size="large"
+          theme="filled_black"
+          onError={() => {
+            console.log("Login Failed");
+          }}
           onSuccess={async (credentialResponse) => {
             // console.log(credentialResponse);
             const tokens = await apiauth.post("/oauth/google", {
@@ -81,11 +86,9 @@ export default function LoginSignup() {
               clientId: credentialResponse.clientId,
               select_by: credentialResponse.select_by,
             });
+
             navigate("/try/chat");
             console.log(tokens);
-          }}
-          onError={() => {
-            console.log("Login Failed");
           }}
         />
         {/* <Button
@@ -99,10 +102,10 @@ export default function LoginSignup() {
           {isLogin ? "Sign in" : "Sign up"} with Google
         </Button> */}
         <Button
-          variant="link"
           className="rounded-full text-md gap-2 px-4 text-primary font-normal"
-          type="button"
           size={"lg"}
+          type="button"
+          variant="link"
           onClick={() => setIsLogin((prev) => !prev)}
         >
           {isLogin

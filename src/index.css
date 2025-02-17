@@ -554,6 +554,8 @@ main {
   --uib-speed: 1.5s;
   position: relative;
   height: var(--uib-size);
+  min-height: var(--uib-size);
+  min-width: var(--uib-size);
   width: var(--uib-size);
 }
 

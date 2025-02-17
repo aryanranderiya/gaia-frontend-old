@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { v1 as uuidv1 } from "uuid";
+import ObjectID from "bson-objectid";
+import { EventSourceMessage } from "@microsoft/fetch-event-source";
+
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useLoading } from "@/contexts/LoadingContext";
 import { CalendarOptions, MessageType } from "@/types/ConvoTypes";
 import { ApiService } from "@/utils/chatUtils";
 import fetchDate from "@/utils/fetchDate";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { v1 as uuidv1 } from "uuid";
-import ObjectID from "bson-objectid";
-import { EventSourceMessage } from "@microsoft/fetch-event-source";
 
 export const useConversation = (convoIdParam: string | null) => {
   const { setIsLoading } = useLoading();
@@ -24,6 +25,7 @@ export const useConversation = (convoIdParam: string | null) => {
   const fetchMessages = async (conversationId: string) => {
     try {
       const messages = await ApiService.fetchMessages(conversationId);
+
       if (messages.length > 1) setConvoMessages(messages);
     } catch (e) {
       console.error("Failed to fetch messages:", e);
@@ -41,7 +43,7 @@ export const useConversation = (convoIdParam: string | null) => {
         ApiService.updateConversationDescription(
           conversationId,
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
-          fetchConversations
+          fetchConversations,
         );
       }, 1000);
 
@@ -50,6 +52,7 @@ export const useConversation = (convoIdParam: string | null) => {
       return conversationId;
     } catch (err) {
       console.error("Failed to create conversation:", err);
+
       return null;
     }
   };
@@ -60,7 +63,7 @@ export const useConversation = (convoIdParam: string | null) => {
     conversationId: string,
     enableSearch: boolean,
     pageFetchURL: string,
-    bot_message_id: string
+    bot_message_id: string,
   ) => {
     let botResponseText = "";
 
@@ -115,6 +118,7 @@ export const useConversation = (convoIdParam: string | null) => {
 
         // If the last message was a user message, append the bot response to it
         const lastMessage = oldMessages[oldMessages.length - 1];
+
         if (lastMessage.type === "user") return [...oldMessages, botResponse];
 
         return [
@@ -167,14 +171,14 @@ export const useConversation = (convoIdParam: string | null) => {
       conversationId,
       onMessage,
       onClose,
-      onError
+      onError,
     );
   };
 
   const updateConversation = async (
     inputText: string,
     enableSearch: boolean = false,
-    pageFetchURL: string
+    pageFetchURL: string,
   ) => {
     const bot_message_id = String(ObjectID());
 
@@ -216,7 +220,7 @@ export const useConversation = (convoIdParam: string | null) => {
       conversationId,
       enableSearch,
       pageFetchURL,
-      bot_message_id
+      bot_message_id,
     );
   };
 

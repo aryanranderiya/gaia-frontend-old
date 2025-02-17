@@ -1,10 +1,11 @@
+import { Suspense, lazy, useEffect, useState } from "react";
+
 import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
 import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
 import SuspenseLoader from "@/components/SuspenseLoader";
-import { Suspense, lazy, useEffect, useState } from "react";
 
 const LazyLoadedSections = lazy(
-  () => import("@/components/LandingPage/Sections/LazyLoadedSections")
+  () => import("@/components/LandingPage/Sections/LazyLoadedSections"),
 );
 
 export default function LandingPage() {
@@ -12,6 +13,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     const img = new Image();
+
     img.src = "/landing/screenshot.png";
     img.decode();
 

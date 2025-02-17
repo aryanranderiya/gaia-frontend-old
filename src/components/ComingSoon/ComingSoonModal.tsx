@@ -57,9 +57,9 @@ export default function ComingSoonModal({
 
   return (
     <Modal
+      className="dark text-foreground"
       isOpen={isOpen}
       onOpenChange={setOpen}
-      className="dark text-foreground"
     >
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
@@ -69,10 +69,10 @@ export default function ComingSoonModal({
 
         <ModalBody>
           <img
-            src={steps[currentStep].image}
             alt={`Coming Soon - ${steps[currentStep].title}`}
             className="rounded-xl w-full object-cover h-[200px]"
             loading="eager"
+            src={steps[currentStep].image}
           />
           <p>{steps[currentStep].content}</p>
         </ModalBody>
@@ -80,9 +80,9 @@ export default function ComingSoonModal({
         <ModalFooter className="flex justify-between items-center">
           <Button
             color="danger"
+            isDisabled={currentStep === 0}
             variant="light"
             onPress={handlePrevious}
-            isDisabled={currentStep === 0}
           >
             Previous
           </Button>
@@ -91,15 +91,15 @@ export default function ComingSoonModal({
             {steps.map((_, index) => (
               <div
                 key={index}
+                aria-hidden="true"
                 className={`w-2 h-2 rounded-full ${
                   index === currentStep ? "bg-primary" : "bg-gray-600"
                 }`}
-                aria-hidden="true"
               />
             ))}
           </div>
 
-          <Button onPress={handleNext} color="primary">
+          <Button color="primary" onPress={handleNext}>
             {currentStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
         </ModalFooter>

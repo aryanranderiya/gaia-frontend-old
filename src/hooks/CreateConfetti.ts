@@ -9,7 +9,8 @@ export default function CreateConfetti(duration: number = 4000): void {
     zIndex: 1,
   };
 
-  const randomInRange = (min: number, max: number): number => Math.random() * (max - min) + min;
+  const randomInRange = (min: number, max: number): number =>
+    Math.random() * (max - min) + min;
 
   const interval = window.setInterval(() => {
     const timeLeft = animationEnd - Date.now();
@@ -19,6 +20,7 @@ export default function CreateConfetti(duration: number = 4000): void {
     }
 
     const particleCount = 50 * (timeLeft / duration);
+
     confetti({
       ...defaults,
       particleCount,

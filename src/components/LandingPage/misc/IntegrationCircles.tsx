@@ -14,29 +14,29 @@ function MiddleIcons() {
   return (
     <>
       <OrbitingCircles
-        className="orbiting_circles_mid border-none bg-transparent"
-        duration={30}
-        delay={30}
-        radius={135}
         bgcircle={false}
+        className="orbiting_circles_mid border-none bg-transparent"
+        delay={30}
+        duration={30}
+        radius={135}
       >
         <GoogleCalendar />
       </OrbitingCircles>
       <OrbitingCircles
-        className="orbiting_circles_mid border-none bg-transparent"
-        duration={30}
-        delay={40}
-        radius={135}
         bgcircle={false}
+        className="orbiting_circles_mid border-none bg-transparent"
+        delay={40}
+        duration={30}
+        radius={135}
       >
         <Gmail />
       </OrbitingCircles>
       <OrbitingCircles
-        className="orbiting_circles_mid border-none bg-transparent"
-        duration={30}
-        delay={50}
-        radius={135}
         bgcircle={false}
+        className="orbiting_circles_mid border-none bg-transparent"
+        delay={50}
+        duration={30}
+        radius={135}
       >
         <GoogleDrive />
       </OrbitingCircles>
@@ -48,21 +48,21 @@ function InnerIcons() {
   return (
     <>
       <OrbitingCircles
-        className="orbiting_circles_inner border-none bg-transparent"
-        radius={70}
-        duration={20}
         reverse
         bgcircle={false}
+        className="orbiting_circles_inner border-none bg-transparent"
+        duration={20}
+        radius={70}
       >
         <Notion />
       </OrbitingCircles>
       <OrbitingCircles
-        className="orbiting_circles_inner border-none bg-transparent"
-        radius={70}
-        duration={20}
-        delay={20}
         reverse
         bgcircle={false}
+        className="orbiting_circles_inner border-none bg-transparent"
+        delay={20}
+        duration={20}
+        radius={70}
       >
         <Github />
       </OrbitingCircles>
@@ -74,31 +74,31 @@ function OuterIcons() {
   return (
     <>
       <OrbitingCircles
-        className="orbiting_circles_outer border-none bg-transparent"
-        radius={200}
-        duration={25}
         reverse
+        className="orbiting_circles_outer border-none bg-transparent"
+        duration={25}
+        radius={200}
       >
-        <SmartPhone01Icon width={"40px"} height="40px" />
+        <SmartPhone01Icon height="40px" width={"40px"} />
       </OrbitingCircles>
 
       <OrbitingCircles
-        className="orbiting_circles_outer border-none bg-transparent"
-        radius={200}
-        duration={25}
-        delay={26}
         reverse
+        className="orbiting_circles_outer border-none bg-transparent"
+        delay={26}
+        duration={25}
+        radius={200}
       >
-        <ComputerIcon width={"40px"} height="40px" />
+        <ComputerIcon height="40px" width={"40px"} />
       </OrbitingCircles>
       <OrbitingCircles
-        className="orbiting_circles_outer border-none bg-transparent"
-        radius={200}
-        duration={25}
-        delay={17}
         reverse
+        className="orbiting_circles_outer border-none bg-transparent"
+        delay={17}
+        duration={25}
+        radius={200}
       >
-        <Watch02Icon width={"40px"} height="40px" />
+        <Watch02Icon height="40px" width={"40px"} />
       </OrbitingCircles>
     </>
   );

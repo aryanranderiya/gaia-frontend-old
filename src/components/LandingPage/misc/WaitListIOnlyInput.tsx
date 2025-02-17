@@ -2,9 +2,11 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import * as React from "react";
 import { toast } from "sonner";
-import api from "@/utils/apiaxios";
+
 import createConfetti from "../../../hooks/CreateConfetti.js";
 import { CheckmarkCircle02Icon } from "../../icons.js";
+
+import api from "@/utils/apiaxios";
 
 export default function WaitlistOnlyInput() {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -16,6 +18,7 @@ export default function WaitlistOnlyInput() {
   function validateEmail(value: string): boolean {
     if (value === "") return false;
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
+
     return regex.test(value.trim());
   }
 
@@ -32,6 +35,7 @@ export default function WaitlistOnlyInput() {
     if (validateEmail(email)) {
       try {
         const response = await api.post("/waitlistSignup", { email });
+
         console.log(response.data.message);
 
         clearInputs();
@@ -76,39 +80,39 @@ export default function WaitlistOnlyInput() {
       {!succesfullySubmitted ? (
         <>
           <Input
-            isRequired
-            type="email"
-            variant="faded"
-            placeholder="name@example.com"
-            description="Signup for the waitlist"
-            value={email}
-            onValueChange={(value) => setEmail(value.trim())}
-            isInvalid={submitted && isInvalidEmail}
-            color={submitted && isInvalidEmail ? "danger" : "primary"}
-            errorMessage="Please enter a valid email"
             isClearable
-            onKeyDown={handleKeyDown}
+            isRequired
             className="w-full flex-shrink-0"
+            color={submitted && isInvalidEmail ? "danger" : "primary"}
+            description="Signup for the waitlist"
+            errorMessage="Please enter a valid email"
+            isInvalid={submitted && isInvalidEmail}
+            placeholder="name@example.com"
+            type="email"
+            value={email}
+            variant="faded"
+            onKeyDown={handleKeyDown}
+            onValueChange={(value) => setEmail(value.trim())}
           />
           <Button
             children={"Signup"}
-            color="primary"
-            onPress={SubmitForm}
-            variant="shadow"
-            size="md"
-            isLoading={loading}
             className="font-medium w-full px-2 flex-shrink min-w-[100px]"
+            color="primary"
+            isLoading={loading}
+            size="md"
+            variant="shadow"
+            onPress={SubmitForm}
           />
         </>
       ) : (
         <Button
-          color="success"
-          variant="shadow"
-          size="md"
-          className="font-medium w-full px-2 flex-shrink min-w-[100px] cursor-default"
-          isIconOnly
-          endContent={<CheckmarkCircle02Icon />}
           disableRipple
+          isIconOnly
+          className="font-medium w-full px-2 flex-shrink min-w-[100px] cursor-default"
+          color="success"
+          endContent={<CheckmarkCircle02Icon />}
+          size="md"
+          variant="shadow"
         >
           Thank you for signing up! &nbsp;
         </Button>
