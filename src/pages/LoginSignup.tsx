@@ -1,9 +1,8 @@
 import { Button as NextUIBtn } from "@heroui/button";
 import { GoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
+import { GoogleCalendar } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
 import { toast } from "sonner";
@@ -36,12 +35,22 @@ export default function LoginSignup({ isLogin = false }) {
   const navigate = useNavigate();
   // const [isLogin, setIsLogin] = useState(false);
 
-  const handleLogin = () => {
-    // Use the environment variable to construct the backend URL
-    const backendUrl =
-      import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
-    window.location.href = `${backendUrl}oauth/google`;
-  };
+  // const handleGoogleLogin = useGoogleLogin({
+  //   flow: "auth-code",
+  //   ux_mode: "popup",
+  //   scope:
+  //     "openid email profile https://www.googleapis.com/auth/calendar.events",
+  //   onSuccess: async (codeResponse) => {
+  //     console.log(codeResponse);
+  //     const tokens = await apiauth.post("/oauth/callback", {
+  //       code: codeResponse.code,
+  //     });
+
+  //     navigate("/try/chat");
+  //     console.log(tokens);
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // });
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none login_page">
@@ -59,7 +68,7 @@ export default function LoginSignup({ isLogin = false }) {
               : "Join us today by creating an account."}
           </div>
         </div>
-        {/* <GoogleLogin
+        <GoogleLogin
           useOneTap
           auto_select
           shape="pill"
@@ -70,7 +79,6 @@ export default function LoginSignup({ isLogin = false }) {
           theme="filled_black"
           onError={() => {
             console.log("Login Failed");
-            toast.error("Login Failed");
           }}
           onSuccess={async (credentialResponse) => {
             // console.log(credentialResponse);
@@ -86,18 +94,7 @@ export default function LoginSignup({ isLogin = false }) {
               toast.error("Login Failed");
             }
           }}
-        /> */}
-
-        <Button
-          onClick={() => handleLogin()}
-          variant="secondary"
-          className="rounded-full text-md gap-2 px-4"
-          type="button"
-          size={"lg"}
-        >
-          <GoogleColouredIcon />
-          {isLogin ? "Sign in" : "Sign up"} with Google
-        </Button>
+        />
 
         <Link to={isLogin ? "/get-started" : "/login"}>
           <Button
