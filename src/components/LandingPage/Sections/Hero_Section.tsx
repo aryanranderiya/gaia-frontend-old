@@ -4,10 +4,8 @@ import { Button } from "@heroui/button";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 import TypingAnimation from "@/components/MagicUI/typing-animation";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AnimatedShinyText } from "../../ui/animated-shiny-text";
 import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function HeroSection() {

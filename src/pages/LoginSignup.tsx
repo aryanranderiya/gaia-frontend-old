@@ -1,12 +1,12 @@
 // GoogleColouredIcon
 import { Button as NextUIBtn } from "@heroui/button";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { apiauth } from "@/utils/apiaxios";
-import { Button } from "@/components/ui/button";
 import { GoogleCalendar } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { apiauth } from "@/utils/apiaxios";
 // import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
@@ -41,22 +41,22 @@ export default function LoginSignup() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleGoogleLogin = useGoogleLogin({
-    flow: "auth-code",
-    ux_mode: "popup",
-    scope:
-      "openid email profile https://www.googleapis.com/auth/calendar.events",
-    onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
-      const tokens = await apiauth.post("/oauth/callback", {
-        code: codeResponse.code,
-      });
+  // const handleGoogleLogin = useGoogleLogin({
+  //   flow: "auth-code",
+  //   ux_mode: "popup",
+  //   scope:
+  //     "openid email profile https://www.googleapis.com/auth/calendar.events",
+  //   onSuccess: async (codeResponse) => {
+  //     console.log(codeResponse);
+  //     const tokens = await apiauth.post("/oauth/callback", {
+  //       code: codeResponse.code,
+  //     });
 
-      navigate("/try/chat");
-      console.log(tokens);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
+  //     navigate("/try/chat");
+  //     console.log(tokens);
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // });
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none login_page">
@@ -77,7 +77,7 @@ export default function LoginSignup() {
           size="large"
           theme="filled_black"
           onError={() => {
-            console.log("Login Failed");
+          console.log("Login Failed");
           }}
           onSuccess={async (credentialResponse) => {
             // console.log(credentialResponse);

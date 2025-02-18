@@ -3,17 +3,13 @@ import StarterText from "@/components/Chat/StarterText";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import React, { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
-import StarterEmoji from "./StarterEmoji";
 import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
-
-// const ChatBubbleBot = React.lazy(
-//   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
+import StarterEmoji from "./StarterEmoji";
 // );
 // const ChatBubbleUser = React.lazy(
 //   () => import("@/components/Chat/ChatBubbles/ChatBubbleUser")
