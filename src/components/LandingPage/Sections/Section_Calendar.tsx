@@ -3,7 +3,7 @@ import {
   BubbleConversationChatIcon,
   Calendar01Icon,
   CalendarAdd01Icon,
-  GoogleCalendar
+  GoogleCalendar,
 } from "@/components/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@heroui/button";
@@ -55,7 +55,7 @@ function Test() {
 
 export default function Section_Calendar() {
   return (
-    <AnimatedSection className="w-screen min-h-[100vh] justify-center items-center flex">
+    <AnimatedSection className="w-screen pt-[20rem] justify-center items-center flex">
       <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
         <SectionHeading
           className="w-full"
@@ -85,7 +85,7 @@ export default function Section_Calendar() {
           icon={<CalendarAdd01Icon color="#9b9b9b" width={45} height={45} />}
         />
 
-        <Tabs defaultValue="chat" className="w-full h-[50vh]">
+        <Tabs defaultValue="chat" className="w-full h-fit">
           <TabsList className="w-full mb-3 rounded-full">
             <TabsTrigger value="chat" className="rounded-full">
               <BubbleConversationChatIcon className="mr-2" />

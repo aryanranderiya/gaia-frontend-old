@@ -1,12 +1,12 @@
-// GoogleColouredIcon
 import { Button as NextUIBtn } from "@heroui/button";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { apiauth } from "@/utils/apiaxios";
+import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { GoogleCalendar } from "@/components/icons";
+import { apiauth } from "@/utils/apiaxios";
+import { toast } from "sonner";
 // import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
@@ -25,74 +25,71 @@ export function Calendaradd() {
         </div>
       </div>
 
-      <NextUIBtn
-        color="primary"
-        className="w-full"
-        // onPress={DummyAddToCalendar}
-        // isLoading={eventAddLoading}
-      >
+      <NextUIBtn color="primary" className="w-full">
         Add Event
       </NextUIBtn>
     </div>
   );
 }
 
-export default function LoginSignup() {
+export default function LoginSignup({ isLogin = false }) {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
 
-  const handleGoogleLogin = useGoogleLogin({
-    flow: "auth-code",
-    ux_mode: "popup",
-    scope:
-      "openid email profile https://www.googleapis.com/auth/calendar.events",
-    onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
-      const tokens = await apiauth.post("/oauth/callback", {
-        code: codeResponse.code,
-      });
-
-      navigate("/try/chat");
-      console.log(tokens);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
+  const handleLogin = () => {
+    // Use the environment variable to construct the backend URL
+    const backendUrl =
+      import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    window.location.href = `${backendUrl}oauth/google`;
+  };
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none login_page">
-      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative bg-black/30 backdrop-blur-lg bg-opacity-75 rounded-3xl">
+      <div
+        className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative bg-black/30 backdrop-blur-lg bg-opacity-75 rounded-3xl"
+        style={{ colorScheme: "dark" }}
+      >
         <div className="mb-3 text-center space-y-2">
           <div className="text-5xl font-medium">
             {isLogin ? "Login" : "Sign Up"}
           </div>
-          <div className="text-foreground-600 text-lg">
+          <div className="text-foreground">
             {isLogin
               ? "Welcome back! Please login to continue your journey with GAIA."
-              : "Join us today by creating an account. It's quick and easy!"}
+              : "Join us today by creating an account."}
           </div>
         </div>
-        <GoogleLogin
+        {/* <GoogleLogin
           useOneTap
+          auto_select
           shape="pill"
           size="large"
+          itp_support
+          // use_fedcm_for_prompt
+          // ux_mode="redirect"
           theme="filled_black"
           onError={() => {
             console.log("Login Failed");
+            toast.error("Login Failed");
           }}
           onSuccess={async (credentialResponse) => {
             // console.log(credentialResponse);
-            const tokens = await apiauth.post("/oauth/google", {
-              credential: credentialResponse.credential,
-              clientId: credentialResponse.clientId,
-              select_by: credentialResponse.select_by,
-            });
-
-            navigate("/try/chat");
-            console.log(tokens);
+            try {
+              await apiauth.post("/oauth/google", {
+                credential: credentialResponse.credential,
+                clientId: credentialResponse.clientId,
+                select_by: credentialResponse.select_by,
+              });
+              navigate("/try/chat");
+              toast.success("Welcome to GAIA!");
+            } catch (error) {
+              toast.error("Login Failed");
+            }
           }}
-        />
-        {/* <Button
-          onClick={() => handleGoogleLogin()}
+        /> */}
+
+        <Button
+          onClick={() => handleLogin()}
           variant="secondary"
           className="rounded-full text-md gap-2 px-4"
           type="button"
@@ -100,18 +97,20 @@ export default function LoginSignup() {
         >
           <GoogleColouredIcon />
           {isLogin ? "Sign in" : "Sign up"} with Google
-        </Button> */}
-        <Button
-          className="rounded-full text-md gap-2 px-4 text-primary font-normal"
-          size={"lg"}
-          type="button"
-          variant="link"
-          onClick={() => setIsLogin((prev) => !prev)}
-        >
-          {isLogin
-            ? "New to GAIA? Create an Account"
-            : "Already a user? Login here"}
         </Button>
+
+        <Link to={isLogin ? "/get-started" : "/login"}>
+          <Button
+            className="rounded-full text-md gap-2 px-4 text-primary font-normal"
+            size={"lg"}
+            type="button"
+            variant="link"
+          >
+            {isLogin
+              ? "New to GAIA? Create an Account"
+              : "Already a user? Login here"}
+          </Button>
+        </Link>
       </div>
 
       {/* <div className="sm:block hidden">

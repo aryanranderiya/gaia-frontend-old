@@ -22,6 +22,22 @@ const routesConfig = [
     index: true,
   },
   {
+    path: "signup",
+    element: (
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+        <LoginSignup />
+      </Suspense>
+    ),
+  },
+  {
+    path: "login",
+    element: (
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+        <LoginSignup isLogin />
+      </Suspense>
+    ),
+  },
+  {
     path: "get-started",
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>

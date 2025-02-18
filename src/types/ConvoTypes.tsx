@@ -14,7 +14,7 @@ export type MessageType = {
   pageFetchURL?: string | "";
   improvedImagePrompt?: string;
   disclaimer?: string; // Optional: Any disclaimer associated with the message (e.g., for AI-generated content)
-  userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")
+  // userinputType?: string; // Optional: Specifies the type of user input, if any (e.g., "text", "file")
   subtype?: "image" | "pdf" | null; // Optional: Specifies the type of file if the message contains a file (e.g., image or PDF)
   // file?: File | null | string; // Optional: A file object associated with the message, if any. Or URL from created object
   filename?: string; // Optional: Name of the file if there's a file included

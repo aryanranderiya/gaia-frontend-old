@@ -191,7 +191,7 @@ export default function Internet() {
   const [hover2, setHover2] = useState(false);
 
   return (
-    <AnimatedSection className="w-screen min-h-[100vh] justify-center items-center flex">
+    <AnimatedSection className="w-screen py-[10rem] justify-center items-center flex">
       <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
         {/* <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon

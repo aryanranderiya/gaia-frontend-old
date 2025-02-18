@@ -24,7 +24,7 @@ export interface ChatBubbleBotProps {
   improvedImagePrompt?: string;
   disclaimer?: string;
   date?: string;
-  userinputType?: string;
+  // userinputType?: string;
   setOpenImage: React.Dispatch<React.SetStateAction<boolean>>;
   setImageData: any;
   pageFetchURL?: string;

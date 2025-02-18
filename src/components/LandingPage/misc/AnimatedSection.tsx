@@ -11,7 +11,7 @@ interface AnimatedSectionProps {
 
 export function AnimatedSection({
   children,
-  staggerDelay = 0.4,
+  staggerDelay = 0.2,
   className = "",
 }: AnimatedSectionProps) {
   const ref = useRef(null);

@@ -4,15 +4,15 @@ import { Button } from "@heroui/button";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 import TypingAnimation from "@/components/MagicUI/typing-animation";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AnimatedShinyText } from "../../ui/animated-shiny-text";
+// import { AnimatedShinyText } from "../../ui/animated-shiny-text";
 import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col w-screen justify-start items-center gap-8 sm:pt-32 pt-16 h-[60vh]">
+    <div className="flex flex-col w-screen justify-start items-center gap-8 sm:pt-32 pt-16 min-h-[60vh] h-fit">
       <div className="fixed top-0 left-0 w-screen">
         <Spotlight duration={15} />
       </div>

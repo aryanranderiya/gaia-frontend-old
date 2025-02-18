@@ -24,23 +24,26 @@ function LocalNotecard({ plaintext }: { plaintext: string }) {
 
 export default function Section_Memories() {
   return (
-    <AnimatedSection className="w-screen min-h-[100vh] justify-center items-center flex">
+    <AnimatedSection className="w-screen py-[20rem] justify-center items-center flex">
       <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
         <SectionHeading
           className="w-full"
           heading={"An Assistant That Remembers"}
           subheading={
             <div>
-              GAIA remembers your preferences, past conversations, and important
-              details, so you don’t have to repeat yourself.
+              GAIA remembers what matters to you. Your preferences, past
+              conversations, and important details are saved, so you don’t have
+              to repeat yourself.
               <br />
-              Get a smarter, more personalized experience every time you chat.
+              <br />
+              You can also store notes for things you want GAIA to remember,
+              making every chat feel more personalized and helpful.
             </div>
           }
           icon={<Brain02Icon color="#9b9b9b" width={45} height={45} />}
         />
 
-        <div className="w-full h-[50vh] px-10 !mt-0">
+        <div className="w-full px-10 !mt-0">
           <Tabs defaultValue="chat1" className="rounded-full">
             <TabsList className="w-full mb-6 rounded-full">
               <TabsTrigger className="rounded-full" value="chat1">

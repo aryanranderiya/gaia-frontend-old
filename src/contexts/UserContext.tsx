@@ -37,21 +37,19 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const logout = async () => {
     try {
       const response = await apiauth.post(
-        "/auth/logout",
+        "/oauth/logout",
         {},
         {
           withCredentials: true,
         }
       );
 
-      console.log(response);
-
       if (response.status !== 200) throw new Error("Logout failed");
-
       setUser(null);
-      navigate("/get-started");
     } catch (error) {
       console.error("Error during logout:", error);
+    } finally {
+      navigate("/get-started");
     }
   };
 

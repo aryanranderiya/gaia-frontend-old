@@ -3,14 +3,13 @@ import StarterText from "@/components/Chat/StarterText";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
-import React, { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import SuspenseLoader from "../SuspenseLoader";
 import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
-import StarterEmoji from "./StarterEmoji";
 import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
+import StarterEmoji from "./StarterEmoji";
 
 // const ChatBubbleBot = React.lazy(
 //   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
@@ -152,7 +151,7 @@ export default function ChatRenderer() {
               searchWeb={message.searchWeb}
               imageSrc={message.imageUrl}
               disclaimer={message.disclaimer}
-              userinputType={message.userinputType}
+              // userinputType={message.userinputType}
               date={message.date}
               pageFetchURL={message.pageFetchURL}
               setOpenImage={setOpenImage}

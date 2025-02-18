@@ -96,6 +96,8 @@ export const ApiService = {
           })),
       }),
       onmessage(event) {
+        console.log(event.data);
+
         if (event.data === "[DONE]") {
           onClose();
           controller.abort();

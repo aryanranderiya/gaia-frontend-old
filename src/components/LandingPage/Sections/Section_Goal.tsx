@@ -55,7 +55,7 @@ export default function GoalSection() {
 
   return (
     <AnimatedSection
-      className={`flex flex-col items-center min-h-screen relative transition-all p-4 sm:mt-0 my-24 `}
+      className={`flex flex-col items-center min-h-fit relative transition-all p-4 sm:mt-0 my-[20rem] `}
     >
       <div>
         <div className="max-w-screen-xl w-screen" ref={sectionRef}>

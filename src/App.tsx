@@ -53,7 +53,11 @@ export default function App() {
       case "/privacy":
         title = "GAIA - Privacy Policy";
         break;
+      case "/login":
+        title = "GAIA - Login";
+        break;
       case "/get-started":
+      case "/signup":
         title = "GAIA - Get Started";
         break;
       default:

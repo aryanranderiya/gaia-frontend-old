@@ -5,7 +5,15 @@ import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "sonner";
 import { parseDate } from "../../../utils/fetchDate";
 import { GoogleCalendar, InternetIcon } from "../../icons";
@@ -26,7 +34,7 @@ export default function ChatBubbleBot({
   date,
   imagePrompt,
   improvedImagePrompt,
-  userinputType,
+  // userinputType,
   setOpenImage,
   setImageData,
   searchWeb = false,
@@ -37,15 +45,13 @@ export default function ChatBubbleBot({
   intent,
   calendar_options,
 }: ChatBubbleBotProps) {
-  console.log(calendar_options, "calendar_options");
-
-  const [component, setComponent] = useState<JSX.Element>(<></>);
   const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
     "Uploading Document..."
   );
 
+  // Update file scanning text while the document is processing
   useEffect(() => {
     if (loading && !!filename) {
       const updateFileScanningText = async () => {
@@ -75,10 +81,10 @@ export default function ChatBubbleBot({
     }
   }, [filename, loading]);
 
-  const addToCalendar = async () => {
+  // Memoized callback to add event to the calendar
+  const addToCalendar = useCallback(async () => {
     try {
       setEventAddLoading(true);
-
       const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       const response = await apiauth.post(`/calendar/event`, {
@@ -90,7 +96,6 @@ export default function ChatBubbleBot({
       });
 
       toast.success("Event has been added to Calendar!");
-
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -98,31 +103,28 @@ export default function ChatBubbleBot({
     } finally {
       setEventAddLoading(false);
     }
-  };
+  }, [calendar_options]);
 
-  useEffect(() => {
+  // Memoize the rendered component to avoid recalculations unless dependencies change
+  const renderedComponent = useMemo(() => {
     if (isImage) {
-      setComponent(
+      return (
         <>
-          <div className="chat_bubble bg-zinc-800 ">
-            <div className="text-sm font-medium w-full flex justify-start items-flex-start flex-col gap-2 flex-wrap max-w-[350px] my-1">
+          <div className="chat_bubble bg-zinc-800">
+            <div className="text-sm font-medium w-full flex flex-col gap-2 flex-wrap max-w-[350px] my-1">
               <span>{text}</span>
               <Skeleton
                 isLoaded={!loading && !imageLoaded && !!imageSrc}
-                className="rounded-3xl my-2 max-w-[250px] min-w-[250px] 
-                max-h-[250px] min-h-[250px] 
-                aspect-square"
+                className="rounded-3xl my-2 max-w-[250px] min-w-[250px] max-h-[250px] min-h-[250px] aspect-square"
               >
                 <img
                   src={imageSrc as string}
-                  width={"250px"}
-                  height={"250px"}
+                  width="250px"
+                  height="250px"
                   className="rounded-3xl my-2 !cursor-pointer"
                   onClick={() => {
                     if (imageSrc) {
                       setOpenImage(true);
-                      // setImageSrc(imageSrc);
-                      // setImagePrompt(imagePrompt);
                       setImageData({
                         prompt: imagePrompt,
                         src: imageSrc,
@@ -134,10 +136,9 @@ export default function ChatBubbleBot({
                   onError={() => setImageLoaded(true)}
                 />
               </Skeleton>
-
               {imagePrompt && (
                 <div className="flex gap-1 justify-start flex-wrap max-w-[250px]">
-                  {imagePrompt?.split(",").map((keyword, index) => (
+                  {imagePrompt.split(",").map((keyword, index) => (
                     <Chip
                       key={index}
                       color="default"
@@ -160,16 +161,13 @@ export default function ChatBubbleBot({
         </>
       );
     } else {
-      setComponent(
+      return (
         <>
           <div className="chat_bubble bg-zinc-800">
             <div className="flex flex-col gap-3">
               {searchWeb && (
                 <Chip
                   startContent={<InternetIcon height={20} color="#00bbff" />}
-                  // endContent={
-                  //   <StarsIcon height={20} color="transparent" fill="white" />
-                  // }
                   variant="flat"
                   color="primary"
                 >
@@ -186,7 +184,6 @@ export default function ChatBubbleBot({
                   color="primary"
                 >
                   <div className="font-medium flex items-center gap-1 text-primary">
-                    {/* {pageFetchURL?.replace(/^https?:\/\//, "")} */}
                     Fetched{" "}
                     <CustomAnchor
                       props={{
@@ -218,7 +215,6 @@ export default function ChatBubbleBot({
                 </Chip>
               )}
 
-              {/* TODO: Update this suspense to be a skeleton */}
               {!!text && (
                 <Suspense fallback={<SuspenseLoader />}>
                   <MarkdownRenderer content={text.toString()} />
@@ -250,9 +246,7 @@ export default function ChatBubbleBot({
             calendar_options?.summary &&
             calendar_options?.description && (
               <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
-                <div className="">
-                  Would you like to add this event to your Calendar?
-                </div>
+                <div>Would you like to add this event to your Calendar?</div>
 
                 <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3">
                   <GoogleCalendar width={25} height={35} />
@@ -273,7 +267,6 @@ export default function ChatBubbleBot({
                           )
                         : ""}
                     </div>
-
                     <div className="text-xs text-foreground-500">
                       To{" "}
                       {calendar_options?.end
@@ -305,29 +298,40 @@ export default function ChatBubbleBot({
   }, [
     isImage,
     text,
-    imageSrc,
-    date,
-    userinputType,
-    disclaimer,
     loading,
+    imageLoaded,
+    imageSrc,
+    setOpenImage,
+    setImageData,
+    imagePrompt,
+    improvedImagePrompt,
+    date,
+    searchWeb,
+    pageFetchURL,
+    filename,
     fileScanningText,
+    disclaimer,
+    intent,
+    calendar_options,
+    eventAddLoading,
   ]);
 
+  // Memoized mouse event handlers to prevent unnecessary re-renders
   const actionsRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseOver = () => {
+  const handleMouseOver = useCallback(() => {
     if (actionsRef.current) {
       actionsRef.current.style.opacity = "1";
       actionsRef.current.style.visibility = "visible";
     }
-  };
+  }, []);
 
-  const handleMouseOut = () => {
+  const handleMouseOut = useCallback(() => {
     if (actionsRef.current) {
       actionsRef.current.style.opacity = "0";
       actionsRef.current.style.visibility = "hidden";
     }
-  };
+  }, []);
 
   return (
     (!!text || loading || isImage) && (
@@ -337,9 +341,7 @@ export default function ChatBubbleBot({
         id={message_id}
       >
         <div className="chatbubblebot_parent">
-          {/* <Avatar src={smiley} className="smiley_avatar" />{" "} */}
-
-          <div className="chat_bubble_container ">{component}</div>
+          <div className="chat_bubble_container">{renderedComponent}</div>
         </div>
 
         {!loading && (

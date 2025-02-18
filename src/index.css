@@ -945,6 +945,14 @@ html ::-webkit-scrollbar-thumb {
   border-radius: 100px;
 } */
 
-.login_page body {
-  background-color: black !important;
+@media (prefers-color-scheme: light) {
+  .haAclf {
+    background-color: black !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .haAclf {
+    background-color: black !important;
+  }
 }

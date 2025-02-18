@@ -311,6 +311,9 @@ importers:
       axios:
         specifier: ^1.7.9
         version: 1.7.9
+      axios-auth-refresh:
+        specifier: ^3.3.6
+        version: 3.3.6(axios@1.7.9)
       axios-cache-interceptor:
         specifier: ^1.6.2
         version: 1.6.2(axios@1.7.9)
@@ -3548,6 +3551,11 @@ packages:
   axe-core@4.10.2:
     resolution: {integrity: sha512-RE3mdQ7P3FRSe7eqCWoeQ/Z9QXrtniSjp1wUjt5nRC3WIpz5rSCve6o3fsZ2aCpJtrZjSZgjwXAoTO5k4tEI0w==}
     engines: {node: '>=4'}
+
+  axios-auth-refresh@3.3.6:
+    resolution: {integrity: sha512-2CeBUce/SxIfFxow5/n8vApJ97yYF6qoV4gh1UrswT7aEOnlOdBLxxyhOI4IaxGs6BY0l8YujU2jlc4aCmK17Q==}
+    peerDependencies:
+      axios: '>= 0.18 < 0.19.0 || >= 0.19.1'
 
   axios-cache-interceptor@1.6.2:
     resolution: {integrity: sha512-YLbAODIHZZIcD4b3WYFVQOa5W2TY/WnJ6sBHqAg6Z+hx+RVj8/OcjQyRopO6awn7/kOkGL5X9TP16AucnlJ/lw==}
@@ -10675,6 +10683,10 @@ snapshots:
       possible-typed-array-names: 1.1.0
 
   axe-core@4.10.2: {}
+
+  axios-auth-refresh@3.3.6(axios@1.7.9):
+    dependencies:
+      axios: 1.7.9
 
   axios-cache-interceptor@1.6.2(axios@1.7.9):
     dependencies:
