@@ -13,11 +13,11 @@ import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Eraser } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
+import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../../icons";
 import SettingsModal from "./SettingsModal";
 
 // Only allow these values in our modal state.
-type ModalAction = "clear_chats" | "logout";
+export type ModalAction = "clear_chats" | "logout";
 
 interface MenuItem {
   key: string;

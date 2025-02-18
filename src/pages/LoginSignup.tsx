@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
 import { Button as NextUIBtn } from "@heroui/button";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BubblePitFooter from "@/components/BubblePitFooter";
+import { Link, useNavigate } from "react-router-dom";
+// import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
   return (
@@ -36,9 +35,12 @@ export function Calendaradd() {
   );
 }
 
-export default function LoginSignup() {
+export default function LoginSignup({
+  isLogin = false,
+}: {
+  isLogin?: boolean;
+}) {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
 
   const handleGoogleLogin = useGoogleLogin({
     flow: "auth-code",
@@ -58,7 +60,7 @@ export default function LoginSignup() {
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
-      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-800  bg-transparent   sm:outline outline-zinc-700 backdrop-blur-lg bg-opacity-75 rounded-3xl">
+      <div className="w-fit p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-900  bg-transparent   sm:outline outline-zinc-700 backdrop-blur-lg bg-opacity-75 rounded-3xl">
         {/* <div className="absolute -rotate-12 left-48 top-40">
           <Calendaradd />
         </div> */}
@@ -82,19 +84,20 @@ export default function LoginSignup() {
           <GoogleColouredIcon />
           {isLogin ? "Sign in" : "Sign up"} with Google
         </Button>
-        <Button
-          variant="link"
-          className="rounded-full text-md gap-2 px-4 text-primary font-normal"
-          type="button"
-          size={"lg"}
-          onClick={() => setIsLogin((prev) => !prev)}
-        >
-          {isLogin
-            ? "New to GAIA? Create an Account"
-            : "Already a user? Login here"}
-        </Button>
+        <Link to={isLogin ? "/get-started" : "/login"}>
+          <Button
+            variant="link"
+            className="rounded-full text-md gap-2 px-4 text-primary font-normal"
+            type="button"
+            size={"lg"}
+          >
+            {isLogin
+              ? "New to GAIA? Create an Account"
+              : "Already a user? Login here"}
+          </Button>
+        </Link>
       </div>
-{/* 
+      {/* 
       <div className="sm:block hidden">
         <BubblePitFooter />
       </div> */}

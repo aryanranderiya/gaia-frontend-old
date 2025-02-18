@@ -10,9 +10,9 @@ const Section_Document = lazy(
   () => import("@/components/LandingPage/Sections/Section_Documents")
 );
 
-const Section_Notes = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Notes")
-);
+// const Section_Notes = lazy(
+//   () => import("@/components/LandingPage/Sections/Section_Notes")
+// );
 
 const FlowchartDemo = lazy(
   () => import("@/components/LandingPage/Sections/Section_Flowchart")

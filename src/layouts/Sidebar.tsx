@@ -1,15 +1,11 @@
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 // import Hr from "@/components/HorizontalRuler";
-import { PencilSquareIcon } from "@/components/icons";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
 import { LegacyRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Sidebar({
   sidebarref,
