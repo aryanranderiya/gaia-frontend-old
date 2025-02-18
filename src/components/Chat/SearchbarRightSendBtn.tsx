@@ -31,6 +31,7 @@ export default function SearchbarRightSendBtn({
           aria-label="Send message"
           color="primary"
           type="submit"
+          isLoading={loading}
           className={`${loading && "cursor-wait"}`}
         >
           <SentIcon color="black" fill="#ffffff40" />

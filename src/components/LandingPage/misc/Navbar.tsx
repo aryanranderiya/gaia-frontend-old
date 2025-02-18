@@ -41,8 +41,15 @@ export default function Navbar() {
         setUserData(
           response?.data?.name,
           response?.data?.email,
-          response?.data?.picture,
+          response?.data?.picture
         );
+
+        if (
+          location.pathname == "/login" ||
+          location.pathname == "/signup" ||
+          location.pathname == "/get-started"
+        )
+          navigate("/try/chat");
       } catch (err) {
         if (location.pathname.startsWith("/try")) navigate("/get-started");
       }

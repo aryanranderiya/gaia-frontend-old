@@ -73,7 +73,7 @@ export default function App() {
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <UserProvider>
         <UIProviderLayout>
-          <Toaster richColors />
+          <Toaster richColors theme="dark" />
 
           <Routes>
             <Route
