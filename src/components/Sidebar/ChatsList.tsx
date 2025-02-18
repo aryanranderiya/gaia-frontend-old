@@ -3,6 +3,10 @@ import { isToday, isYesterday, subDays } from "date-fns";
 import { Loader } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { ChatTab } from "./ChatTab";
+import { useNavigate } from "react-router-dom";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { Button } from "@heroui/button";
+import { ChatBubbleAddIcon } from "../icons";
 
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
@@ -111,6 +115,14 @@ export default function ChatsList() {
     (conversation) => conversation.starred
   );
 
+  const navigate = useNavigate();
+  const { resetMessages } = useConvo();
+
+  const createNewChat = (): void => {
+    navigate(`/try/chat/`);
+    resetMessages();
+  };
+
   return (
     <div className="pt-0 p-4">
       <div className="flex flex-col gap-1 max-h-[80vh] relative">
@@ -120,11 +132,25 @@ export default function ChatsList() {
           </div>
         ) : (
           <>
+            <div className="mt-3 w-full">
+              <Button
+                size="sm"
+                onPress={createNewChat}
+                variant="flat"
+                color="primary"
+                className="w-full text-primary text-sm justify-start"
+              >
+                <ChatBubbleAddIcon color="#00bbff" width={18} />
+                Start new chat
+              </Button>
+            </div>
+
             {/* Starred Chats Section */}
-            <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-4 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
+            <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
               <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
                 Starred Chats
               </div>
+
               <div className="flex w-full px-1 flex-col">
                 {starredConversations.length > 0 ? (
                   starredConversations.map(

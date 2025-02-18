@@ -14,6 +14,7 @@ import { Eraser } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../icons";
+import SettingsModal from "./SettingsModal";
 
 // Only allow these values in our modal state.
 type ModalAction = "clear_chats" | "logout";
@@ -30,6 +31,7 @@ export default function SettingsMenu() {
   const navigate = useNavigate();
   const { fetchConversations } = useConversationList();
   const { setConvoMessages } = useConvo();
+  const [openSettings, setOpenSettings] = useState(false);
 
   // modalAction is either "clear_chats", "logout", or null (closed)
   const [modalAction, setModalAction] = useState<ModalAction | null>(null);
@@ -55,7 +57,7 @@ export default function SettingsMenu() {
       label: (
         <div className="flex items-center gap-4">
           <Eraser width={20} />
-          Clear all Chats
+          Delete all Chats
         </div>
       ),
       action: () => setModalAction("clear_chats"),
@@ -68,12 +70,13 @@ export default function SettingsMenu() {
           Settings
         </div>
       ),
+      action: () => setOpenSettings(true),
     },
     {
       key: "logout",
       label: (
         <div className="flex items-center gap-4">
-          <Logout02Icon width={20} color="#f31260" />
+          <Logout02Icon width={20} color={undefined} />
           Logout
         </div>
       ),
@@ -84,6 +87,12 @@ export default function SettingsMenu() {
 
   return (
     <>
+      <SettingsModal
+        openSettings={openSettings}
+        setOpenSettings={setOpenSettings}
+        setModalAction={setModalAction}
+      />
+
       <Modal
         isOpen={modalAction !== null}
         onOpenChange={() => setModalAction(null)}
@@ -93,7 +102,7 @@ export default function SettingsMenu() {
             <ModalHeader className="flex justify-center">
               {modalAction === "logout"
                 ? "Are you sure you want to logout?"
-                : "Are you sure you want to clear all chats?"}
+                : "Are you sure you want to delete all chats?"}
             </ModalHeader>
             <ModalBody className="flex flex-col gap-2 mb-4">
               <Button
@@ -107,7 +116,7 @@ export default function SettingsMenu() {
                   }
                 }}
               >
-                {modalAction === "logout" ? "Logout" : "Clear all Chats"}
+                {modalAction === "logout" ? "Logout" : "Delete all chats"}
               </Button>
               <Button
                 variant="bordered"

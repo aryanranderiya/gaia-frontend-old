@@ -69,8 +69,7 @@ export default function SidebarTopButtons() {
             <Button
               className="w-full"
               isIconOnly
-              size="lg"
-              radius="lg"
+              // size="lg"
               // variant="flat"
               variant={location.pathname === route ? "solid" : "flat"}
               color={location.pathname === route ? "primary" : "default"}

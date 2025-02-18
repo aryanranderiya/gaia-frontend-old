@@ -21,7 +21,7 @@ interface BirthdayProperties {
   type: "birthday";
 }
 
-interface GoogleCalendarEvent {
+export interface GoogleCalendarEvent {
   kind: string;
   etag: string;
   id: string;
@@ -46,17 +46,17 @@ interface GoogleCalendarEvent {
   eventType?: "default" | "birthday" | "outOfOffice";
 }
 
-interface CalendarCardProps {
-  event: GoogleCalendarEvent;
-  onClick: () => void;
-  calendars: GoogleCalendar[];
-}
-
-interface GoogleCalendar {
+export interface GoogleCalendar {
   id: string;
   summary: string;
   backgroundColor: string;
   primary: boolean;
+}
+
+interface CalendarCardProps {
+  event: GoogleCalendarEvent;
+  onClick: () => void;
+  calendars: GoogleCalendar[];
 }
 
 function groupEventsByDate(
@@ -78,12 +78,10 @@ function groupEventsByDate(
 
 function formatDateDay(event: GoogleCalendarEvent): [string, string] {
   const startDate = new Date(event.start.date || event.start.dateTime || "");
-
   const day = startDate.getDate().toString();
   const dayOfWeek = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
   }).format(startDate);
-
   return [day, dayOfWeek];
 }
 
@@ -91,7 +89,6 @@ function formatEventDate(event: GoogleCalendarEvent): string | null {
   if (event.start.dateTime && event.end?.dateTime) {
     const startDateTime = new Date(event.start.dateTime);
     const endDateTime = new Date(event.end.dateTime);
-
     return `${new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
       minute: "2-digit",
@@ -102,7 +99,6 @@ function formatEventDate(event: GoogleCalendarEvent): string | null {
       hour12: true,
     }).format(endDateTime)}`;
   }
-
   return null;
 }
 
@@ -151,8 +147,10 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
       <div className="text-sm mt-2 relative z-[1] opacity-70">
         {formatEventDate(event)}
       </div>
-      <div style={{ backgroundColor }}
-      className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full" />
+      <div
+        style={{ backgroundColor }}
+        className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full"
+      />
     </div>
   );
 };
@@ -167,7 +165,7 @@ export default function Calendar() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const eventIdsRef = useRef<Set<string>>(new Set()); // Use `ref` for stable reference
+  const eventIdsRef = useRef<Set<string>>(new Set());
   const [calendars, setCalendars] = useState<GoogleCalendar[]>([]);
   const [selectedCalendars, setSelectedCalendars] = useState<string[]>([]);
 
@@ -197,25 +195,43 @@ export default function Calendar() {
     };
   }, [loading, nextPageToken]);
 
+  // NEW: Fetch the user’s saved calendar preferences
+  const fetchCalendarPreferences = async (allCalendars: GoogleCalendar[]) => {
+    try {
+      const response = await apiauth.get("/user/calendar/preferences");
+      const savedSelection: string[] = response.data.selected_calendars || [];
+
+      if (savedSelection.length > 0) {
+        setSelectedCalendars(savedSelection);
+        // Fetch events for the saved calendar selection
+        fetchEvents(null, savedSelection);
+      } else {
+        // If no preferences are saved, default to all calendars
+        const allCalendarIds = allCalendars.map((cal) => cal.id);
+        setSelectedCalendars(allCalendarIds);
+        fetchEvents(null, allCalendarIds);
+      }
+    } catch (error) {
+      console.error("Error fetching calendar preferences:", error);
+      // In case of error, default to all calendars
+      const allCalendarIds = allCalendars.map((cal) => cal.id);
+      setSelectedCalendars(allCalendarIds);
+      fetchEvents(null, allCalendarIds);
+    }
+  };
+
   const fetchCalendars = async () => {
     try {
       const response = await apiauth.get("/calendar/list");
-      setCalendars(response.data.items);
+      const calendarItems = response.data.items;
+      setCalendars(calendarItems);
 
-      // Find the primary calendar
-      const primaryCalendar = response.data.items.find(
-        (cal: { primary: boolean }) => cal.primary === true
-      );
-      if (primaryCalendar) {
-        setSelectedCalendars([primaryCalendar.id]);
-        // Fetch events for the primary calendar
-        fetchEvents(null, [primaryCalendar.id]);
-      }
+      // Fetch and set the user’s saved calendar preferences
+      await fetchCalendarPreferences(calendarItems);
 
-         const response2 = await apiauth.get("/calendar/all/events");
-         console.log(response2);
-
-
+      // (Optional) You can still fetch all events endpoint if needed:
+      const response2 = await apiauth.get("/calendar/all/events");
+      console.log(response2);
     } catch (error) {
       console.error("Error fetching calendars:", error);
     }
@@ -253,8 +269,6 @@ export default function Calendar() {
       // Merge new events with existing events, sort, and update state
       setCalendarEvents((prev) => {
         const mergedEvents = [...prev, ...newEvents];
-        console.log(mergedEvents);
-
         return mergedEvents.sort((a, b) => {
           const dateA = new Date(a.start.dateTime || a.start.date || "");
           const dateB = new Date(b.start.dateTime || b.start.date || "");
@@ -273,6 +287,18 @@ export default function Calendar() {
     setIsDialogOpen(true);
   };
 
+  // NEW: Update user’s calendar preferences in the database
+  const updateCalendarPreferences = async (newSelection: string[]) => {
+    try {
+      await apiauth.post("/user/calendar/preferences", {
+        selected_calendars: newSelection,
+      });
+    } catch (error) {
+      console.error("Error updating calendar preferences:", error);
+    }
+  };
+
+  // Modified to update preferences when toggling a calendar
   const handleCalendarSelect = (calendarId: string) => {
     if (loading) return; // Prevent actions when still loading
 
@@ -280,6 +306,9 @@ export default function Calendar() {
       const newSelection = prev.includes(calendarId)
         ? prev.filter((id) => id !== calendarId)
         : [...prev, calendarId];
+
+      // Save the new selection to the database
+      updateCalendarPreferences(newSelection);
 
       // If a calendar is deselected, remove its events
       if (!newSelection.includes(calendarId)) {
@@ -297,12 +326,12 @@ export default function Calendar() {
         // If a new calendar is selected, fetch its events
         fetchEvents(null, [calendarId]);
       }
-
       return newSelection;
     });
   };
 
   useEffect(() => {
+    // When selected calendars change, fetch events for them
     if (selectedCalendars.length > 0) {
       fetchEvents();
     }
@@ -317,8 +346,7 @@ export default function Calendar() {
             Manage your calendar events
           </div>
           <div className="flex flex-wrap gap-4 justify-center pb-4">
-            {!!calendars &&
-              calendars?.length > 0 &&
+            {calendars?.length > 0 &&
               calendars.map((calendar, index) => (
                 <div
                   style={{
@@ -347,7 +375,6 @@ export default function Calendar() {
             {Object.entries(groupEventsByDate(calendarEvents)).map(
               ([date, events]) => {
                 const [day, dayOfWeek] = date.split(" ");
-
                 return (
                   <div key={date} className="w-full flex gap-7">
                     <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
@@ -380,19 +407,7 @@ export default function Calendar() {
 
           <div ref={observerRef} className="h-1"></div>
         </ScrollArea>
-        {/* 
-        <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
-          <Button
-            variant="shadow"
-            color="primary"
-            size="lg"
-            radius="full"
-            className="font-semibold gap-2"
-          >
-            <CalendarAdd01Icon width={23} height={23} />
-            Create a new event
-          </Button>
-        </div> */}
+
         <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
       {selectedEvent && (

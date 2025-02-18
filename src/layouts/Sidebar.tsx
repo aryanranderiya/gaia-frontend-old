@@ -22,15 +22,7 @@ export default function Sidebar({
   className?: string;
   isSidebarVisible: boolean;
 }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { resetMessages } = useConvo();
   const [open, setOpen] = useState<boolean>(false);
-
-  const createNewChat = (): void => {
-    navigate(`/try/chat/`);
-    resetMessages();
-  };
 
   return (
     <>
@@ -58,14 +50,14 @@ export default function Sidebar({
 
               {/* */}
               <div className="flex items-center gap-1">
-                <Button onPress={createNewChat} isIconOnly variant="light">
+                {/* <Button onPress={createNewChat} isIconOnly variant="light">
                   <PencilSquareIcon
                     width="23"
                     color={
                       location.pathname == "/try/chat" ? "#00bbff" : "#9b9b9b"
                     }
                   />
-                </Button>
+                </Button> */}
 
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>

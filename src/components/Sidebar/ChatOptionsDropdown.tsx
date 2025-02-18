@@ -1,4 +1,4 @@
-import { PencilEdit02Icon } from "@/components/icons";
+import { PencilRenameIcon } from "@/components/icons";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { apiauth } from "@/utils/apiaxios";
@@ -111,7 +111,7 @@ export default function ChatOptionsDropdown({
           <DropdownItem key="star" textValue="Star" onPress={handleStarToggle}>
             <div className="flex flex-row gap-2 items-center justify-between">
               <Star width={16} color="white" />
-              {starred ? "Remove from" : "Add to"} Starred
+              {starred ? "Remove" : "Add"} star
             </div>
           </DropdownItem>
           <DropdownItem
@@ -120,8 +120,8 @@ export default function ChatOptionsDropdown({
             onPress={() => openModal("edit")}
           >
             <div className="flex flex-row gap-2 items-center justify-between">
-              <PencilEdit02Icon width={16} color="white" />
-              Rename Chat
+              <PencilRenameIcon width={16} color="white" />
+              Rename chat
             </div>
           </DropdownItem>
           <DropdownItem
@@ -135,7 +135,7 @@ export default function ChatOptionsDropdown({
           >
             <div className="flex flex-row gap-2 items-center justify-between">
               <Trash width={16} color={dangerStateHovered ? "white" : "red"} />
-              Delete Chat
+              Delete chat
             </div>
           </DropdownItem>
         </DropdownMenu>
