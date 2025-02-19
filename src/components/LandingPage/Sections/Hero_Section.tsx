@@ -12,14 +12,15 @@ import { AnimatedSection } from "../misc/AnimatedSection";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col w-screen justify-start items-center gap-8 sm:pt-32 pt-16 min-h-[60vh] h-fit">
+    <div className="flex flex-col w-screen justify-center items-center gap-8 sm:pt-32 pt-16 min-h-[80vh] h-fit">
       <div className="fixed top-0 left-0 w-screen">
         <Spotlight duration={15} />
       </div>
       <AnimatedSection className="flex flex-col justify-center items-center h-full z-[2] gap-4 relative">
-        <div className="tracking-[1rem] text-transparent bg-gradient-to-r via-white  bg-clip-text to-zinc-400 from-zinc-400">
-          INTRODUCING{"  "}GAIA
-        </div>
+        {/* <div className="tracking-[1rem] text-transparent bg-gradient-to-r via-white  bg-clip-text to-zinc-400 from-zinc-400">
+          {/* INTRODUCING{"  "}GAIA 
+        </div> 
+          */}
         {/* <div
           className={cn(
             "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800"
@@ -29,19 +30,18 @@ export default function HeroSection() {
             Currently in beta
           </AnimatedShinyText>
         </div> */}
-
         <div className="py-3">
-          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-zinc-50 bg-clip-text text-center font-medium leading-none text-transparent to-zinc-500 max-w-screen-lg sm:-my-2">
+          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-white bg-clip-text text-center font-medium leading-none text-transparent to-zinc-400 max-w-screen-lg sm:-my-2">
             Your Personal AI Assistant awaits.
           </div>
         </div>
-
         <TypingAnimation
-          text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, quam veniam. Commodi tempora quo quasi accusantium saepe voluptatibus reiciendis deleniti."
-          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-foreground-600 max-w-screen-md"
+          text={
+            "GAIA is your one stop solution personal assistant that helps with everything from calendar management to goal tracking"
+          }
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm"
           duration={5}
         />
-
         <Button
           color="primary"
           radius="full"
@@ -52,7 +52,7 @@ export default function HeroSection() {
           className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
         >
           <div className="flex items-center gap-1">
-            Get Started for free
+            Get Started for Free
             <ArrowUpRight />
           </div>
         </Button>

@@ -5,7 +5,7 @@ import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
 import SuspenseLoader from "@/components/SuspenseLoader";
 
 const LazyLoadedSections = lazy(
-  () => import("@/components/LandingPage/Sections/LazyLoadedSections"),
+  () => import("@/components/LandingPage/Sections/LazyLoadedSections")
 );
 
 export default function LandingPage() {

@@ -2,7 +2,7 @@ import { PricingCard } from "@/pages/Pricing";
 
 export default function FreePricing() {
   return (
-    <div className="w-screen min-h-screen flex items-center justify-center relative flex-col gap-2">
+    <div className="w-screen min-h-fit flex items-center justify-center relative flex-col gap-2">
       <div className="mb-6">
         <div className="font-medium text-5xl text-center">GAIA is FREE!</div>
         <div className="font-normal text-md text-center text-foreground-500 px-5">

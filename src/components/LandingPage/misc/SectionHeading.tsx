@@ -24,7 +24,7 @@ export function SectionHeading({
         <span>{heading}</span>
       </div>
       <div
-        className={` text-foreground-600 max-w-screen-md ${
+        className={` text-foreground-700 max-w-screen-md ${
           smallHeading ? "text-md" : "text-lg"
         }`}
       >

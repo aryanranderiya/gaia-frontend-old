@@ -18,7 +18,7 @@ export default function ImagePreview() {
   return (
     <AnimatedSection>
       <div className="flex items-center justify-center h-fit w-screen mt-14 sm:mb-0 mb-[20vh]">
-        <GridPattern
+        {/* <GridPattern
           width={20}
           height={20}
           x={-1}
@@ -26,7 +26,7 @@ export default function ImagePreview() {
           className={cn(
             "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] sm:max-h-[120vh] max-h-[70vh] top-[50vh]"
           )}
-        />
+        /> */}
 
         <div className="relative sm:scale-100 scale-[175%]">
           {/* {!isImageLoaded && (

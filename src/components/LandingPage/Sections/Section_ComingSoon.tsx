@@ -1,9 +1,12 @@
 import {
   BubbleChatLockIcon,
   CalendarIcon,
+  ComputerPhoneSyncIcon,
   GoogleDriveIcon,
   LanguageSkillIcon,
   Mail01Icon,
+  MoneyBag02Icon,
+  VoiceIcon,
 } from "../../icons";
 
 const list = [
@@ -12,22 +15,31 @@ const list = [
   //   description: "Tailored to your preferences",
   //   icon: <AccountSetting02Icon width={35} height={35} />,
   // },
+  // {
+  //   title: "Multi-Lingual",
+  //   description: "Support for multiple languages",
+  //   icon: <LanguageSkillIcon width={35} height={35} />,
+  // },
   {
-    title: "Multi-Lingual",
-    description: "Support for multiple languages",
-    icon: <LanguageSkillIcon width={35} height={35} />,
+    title: "Cross-Platform",
+    description: "Available on multiple devices",
+    icon: <ComputerPhoneSyncIcon width={35} height={35} />,
   },
-  // {
-  //   title: "Cross-Platform",
-  //   description: "Available on multiple devices",
-  //   icon: <ComputerPhoneSyncIcon width={35} height={35} />,
-  // },
-  // {
-  //   title: "Voice Activated",
-  //   description: "Activated using your voice",
-  //   icon: <VoiceIcon width={35} height={35} />,
-  // },
-
+  {
+    title: "Voice Activated",
+    description: "Activated using your voice",
+    icon: <VoiceIcon width={35} height={35} />,
+  },
+  {
+    title: "Expense Tracking",
+    description: "Seamlessly track your expenses through messaging",
+    icon: <MoneyBag02Icon width={35} height={35} />,
+  },
+  {
+    title: "Email Management",
+    description: "Manage your Emails",
+    icon: <Mail01Icon width={35} height={35} />,
+  },
   // {
   //   title: "Save Messages",
   //   description: "Pin & save messages for later",
@@ -67,6 +79,7 @@ const list = [
   },
   {
     description: "and many more features coming soon...",
+    className: "col-span-3 text-center",
   },
 ];
 
@@ -74,13 +87,17 @@ export function Feature({
   icon,
   title,
   description,
+  className = "",
 }: {
   icon?: React.ReactNode;
   title?: string;
   description?: string;
+  className?: string;
 }) {
   return (
-    <div className="w-full flex flex-col gap-2 bg-zinc-950 px-5 py-3 rounded-xl hover:-translate-y-2 hover:bg-opacity-70 transition-all min-h-full">
+    <div
+      className={`w-full flex flex-col gap-2 bg-zinc-950 px-5 py-3 rounded-xl hover:bg-zinc-800 transition-all min-h-full ${className}`}
+    >
       {icon}
       <span className="font-medium text-xl">{title}</span>
       <span className="text-foreground text-opacity-45 text-md">
@@ -92,7 +109,7 @@ export function Feature({
 
 export default function Section_ComingSoon() {
   return (
-    <div className="flex justify-center items-center min-h-[90vh] h-fit z-[1] relative">
+    <div className="flex justify-center items-center min-h-fit h-fit z-[1] relative">
       <div className="flex justify-center items-center sm:p-5 p-2 flex-col">
         <span className="font-medium text-3xl">Coming Soon!</span>
         <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
@@ -102,6 +119,7 @@ export default function Section_ComingSoon() {
               icon={item.icon}
               title={item.title}
               description={item.description}
+              className={item.className}
             />
           ))}
         </div>

@@ -24,7 +24,7 @@ function LocalNotecard({ plaintext }: { plaintext: string }) {
 
 export default function Section_Memories() {
   return (
-    <AnimatedSection className="w-screen py-[20rem] justify-center items-center flex">
+    <AnimatedSection className="w-screen justify-center items-center flex relative z-[1]">
       <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
         <SectionHeading
           className="w-full"
@@ -44,7 +44,7 @@ export default function Section_Memories() {
         />
 
         <div className="w-full px-10 !mt-0">
-          <Tabs defaultValue="chat1" className="rounded-full">
+          <Tabs defaultValue="chat1" className="h-[280px]">
             <TabsList className="w-full mb-6 rounded-full">
               <TabsTrigger className="rounded-full" value="chat1">
                 Chat 1

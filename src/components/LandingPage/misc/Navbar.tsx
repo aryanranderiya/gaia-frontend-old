@@ -127,16 +127,30 @@ export default function Navbar() {
                       Chat
                     </Button>
                   ) : (
-                    <Button
-                      as={Link}
-                      className="p-0 px-4 font-semibold"
-                      color="primary"
-                      size="md"
-                      to={"/get-started"}
-                      variant="shadow"
-                    >
-                      Get Started
-                    </Button>
+                    <>
+                      <Button
+                        as={Link}
+                        className="p-0 px-4 font-semibold"
+                        variant="shadow"
+                        color="primary"
+                        size="md"
+                        to={"/login"}
+                        // variant="light"
+                      >
+                        Login
+                      </Button>
+
+                      <Button
+                        as={Link}
+                        className="p-0 px-4 font-semibold"
+                        color="primary"
+                        size="md"
+                        to={"/get-started"}
+                        variant="shadow"
+                      >
+                        Get Started
+                      </Button>
+                    </>
                   )}
 
                   {/* 
@@ -190,17 +204,31 @@ export default function Navbar() {
                 Chat
               </Button>
             ) : (
-              <Button
-                as={Link}
-                className="p-0 px-4 font-semibold"
-                color="primary"
-                radius="full"
-                size="md"
-                to={"/get-started"}
-                variant="shadow"
-              >
-                Get Started
-              </Button>
+              <>
+                <Button
+                  as={Link}
+                  className="p-0 px-4 font-semibold"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  to={"/login"}
+                  variant="light"
+                >
+                  Login
+                </Button>
+
+                <Button
+                  as={Link}
+                  className="p-0 px-4 font-semibold"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  to={"/get-started"}
+                  variant="shadow"
+                >
+                  Get Started
+                </Button>
+              </>
             )}
           </div>
         )}

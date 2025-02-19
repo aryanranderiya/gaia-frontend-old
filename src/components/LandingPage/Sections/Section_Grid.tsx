@@ -24,12 +24,14 @@ const ImageGeneration = lazy(
 
 export default function Section_Grid() {
   return (
-    <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 py-[20rem] flex-col p-5">
-      <div className="font-medium text-5xl relative z-[1] text-center">
-        Ditch all other chatbots!
-      </div>
-      <div className="text-foreground-600 mb-4 relative z-[1]">
-        GAIA has everything you need.
+    <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 flex-col p-5 gap-10">
+      <div className="space-y-2">
+        <div className="font-medium text-5xl relative z-[1] text-center">
+          Ditch all other chatbots!
+        </div>
+        <div className="text-foreground-600 mb-4 relative z-[1] text-center text-lg">
+          GAIA has everything you need.
+        </div>
       </div>
 
       <div className="w-screen max-w-screen-xl relative z-[0]">
@@ -51,9 +53,11 @@ export default function Section_Grid() {
             <FlowchartDemo />
           </Suspense>
 
-          <Suspense fallback={<SuspenseLoader />}>
-            <Section_Document />
-          </Suspense>
+          <div className="col-span-2">
+            <Suspense fallback={<SuspenseLoader />}>
+              <Section_Document />
+            </Suspense>
+          </div>
 
           <Suspense fallback={<SuspenseLoader />}>
             <Section_ConvoManagement />
