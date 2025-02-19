@@ -192,7 +192,11 @@ export default function Internet() {
 
   return (
     <AnimatedSection className="w-screen justify-center items-center flex">
-      <div className="max-w-screen-xl w-full flex flex-col sm:space-y-10 space-y-5 ">
+      <div className="max-w-screen-xl w-screen flex flex-col sm:space-y-10 space-y-5 ">
+        {/* 
+      <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
+        
+        */}
         {/* <div className="sm:text-5xl text-4xl font-bold flex items-center gap-4 ">
           <InternetIcon
             color="#ffffff80"

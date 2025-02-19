@@ -8,7 +8,7 @@ export default function FinalSection() {
         <div className="sm:text-6xl text-4xl font-medium">
           Get Started for Free
         </div>
-        <div className="text-lg text-foreground-500 text-center">
+        <div className="text-lg text-foreground-700 text-center">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
           facilis.
         </div>

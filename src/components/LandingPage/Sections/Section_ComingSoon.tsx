@@ -77,10 +77,10 @@ const list = [
       </div>
     ),
   },
-  {
-    description: "and many more features coming soon...",
-    className: "col-span-3 text-center",
-  },
+  // {
+  //   description: "and many more features coming soon...",
+  //   className: "col-span-3 text-center",
+  // },
 ];
 
 export function Feature({
@@ -112,7 +112,7 @@ export default function Section_ComingSoon() {
     <div className="flex justify-center items-center min-h-fit h-fit z-[1] relative">
       <div className="flex justify-center items-center sm:p-5 p-2 flex-col">
         <span className="font-medium text-3xl">Coming Soon!</span>
-        <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 md:w-[55vw] h-fit items-center justify-center">
+        <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 max-w-screen-xl h-fit items-center justify-center">
           {list.map((item, index) => (
             <Feature
               key={index}

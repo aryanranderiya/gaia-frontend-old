@@ -84,7 +84,7 @@ export function DummySearchCommand() {
   };
 
   return (
-    <div className="rounded-md overflow-hidden">
+    <div className="rounded-md overflow-hidden ">
       <Command>
         <CommandInput
           placeholder="Search for messages..."
@@ -205,21 +205,6 @@ export function SidebarComponent() {
         { name: "How does recursion work?", active: false, starred: false },
       ],
     },
-    {
-      title: "Last 30 Days",
-      conversations: [
-        {
-          name: "How do neural networks learn?",
-          active: false,
-          starred: false,
-        },
-        {
-          name: "Generate a daily workout plan",
-          active: false,
-          starred: false,
-        },
-      ],
-    },
   ];
 
   return (
@@ -228,8 +213,8 @@ export function SidebarComponent() {
         <div
           key={index}
           className={`${
-            section.starred ? "bg-zinc-900" : ""
-          } min-h-fit pt-3 pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full`}
+            section.starred ? "bg-zinc-800" : ""
+          } min-h-fit pt-3 pb-1 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full`}
         >
           <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
             {section.title}
@@ -280,7 +265,7 @@ export default function Section_ConvoManagement() {
         />
       }
     >
-      <Tabs defaultValue="starred" className="w-full">
+      <Tabs defaultValue="starred" className="w-full h-[430px] overflow-hidden">
         <TabsList className="flex gap-4">
           <TabsTrigger value="starred" className="flex items-center gap-2">
             <Star width={20} height={20} /> Starred
@@ -302,7 +287,7 @@ export default function Section_ConvoManagement() {
           </div>
         </TabsContent>
         <TabsContent value="pins">
-          <div className="space-y-5 pt-5">
+          <div className="space-y-5 pt-5 p-1">
             {dummyMessages.map((message, index) => (
               <PinCard
                 key={index}

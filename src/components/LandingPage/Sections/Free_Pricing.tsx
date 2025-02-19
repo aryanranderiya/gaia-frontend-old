@@ -5,11 +5,8 @@ export default function FreePricing() {
     <div className="w-screen min-h-fit flex items-center justify-center relative flex-col gap-2">
       <div className="mb-6">
         <div className="font-medium text-5xl text-center">GAIA is FREE!</div>
-        <div className="font-normal text-md text-center text-foreground-500 px-5">
+        <div className="font-normal text-lg text-center text-foreground-700 px-5">
           Unlock limitless AI-powered possibilities without spending anything.
-          <br />
-          <br />
-          Try it now!
         </div>
       </div>
 

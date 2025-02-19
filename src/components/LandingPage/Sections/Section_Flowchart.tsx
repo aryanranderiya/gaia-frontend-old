@@ -15,7 +15,7 @@ mermaid.initialize({});
 const FlowchartDemo = () => {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("code");
-  const [scale, setScale] = useState(1.5);
+  const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -26,28 +26,33 @@ const FlowchartDemo = () => {
   }, [activeTab]);
 
   const flowchartCode = `flowchart TD
-    style A fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style B fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style C fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style D fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style E fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style F fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style G fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style H fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style I fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style J fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    style K fill:#00bbff, stroke:#00bbff90, stroke-width:3px
-    A["Client Request"] --> B["Load Balancer"]
-    B --> C["Web Server"]
-    C --> D["Application Server"]
-    D --> E{"Authentication"}
-    E -->|"Yes"| F["Database"]
-    E -->|"No"| G["Error Page"]
-    F -->|"Data Retrieved"| H["Application Logic"]
-    H --> I["Processed Data"]
-    I --> J["Web Server"]
-    J --> K["Client Response"]
-    G --> K`;
+  A[Define Product Vision] -->B{Market Research}
+  B -->C[Identify Target Audience]
+  C -->D[Create Product Roadmap]
+  D -->E[Product Design and Development]
+  E -->F[Product Testing and Refinement]
+  F -->G[Finalize Product Details]
+  G -->H[Launch Planning]
+  H -->I[Schedule Launch Date]
+  I -->J[Marketing and Promotion]
+  J -->K[Product Launch]
+  K -->L[Evaluate Launch Success]
+  L -->M[Gather Feedback and Improve]
+  M -->N[Repeat and Refine]
+  style A fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style B fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style C fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style D fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style E fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style F fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style G fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style H fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style I fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style J fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style K fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style L fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style M fill:#00bbff, stroke:#00bbff, stroke-width:3px
+  style N fill:#00bbff, stroke:#00bbff, stroke-width:3px`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(flowchartCode).replace(/\n$/, ""));
@@ -102,7 +107,7 @@ const FlowchartDemo = () => {
   };
 
   const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault(); // This will now work because we're using a non-passive event listener
+    e.preventDefault();
     const delta = e.deltaY * -0.01;
     setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3));
   }, []);
@@ -128,16 +133,14 @@ const FlowchartDemo = () => {
       <div className="w-100% flex justify-end">
         <div className="w-[95%]">
           <SimpleChatBubbleUser>
-            Explain how a full-stack web application works using a simple
-            flowchart
+            How can I plan a product launch for my SaaS?
           </SimpleChatBubbleUser>
         </div>
       </div>
 
       <SimpleChatBubbleBot className={"!rounded-2xl"}>
         <div className="mb-3">
-          Here's a simple flowchart explaining how a full-stack web application
-          works:
+          Here is a flowchart to help you plan a product launch:
         </div>
         <div className="relative flex flex-col gap-0 bg-zinc-950 !rounded-[15px] overflow-hidden">
           <Tabs
@@ -157,7 +160,9 @@ const FlowchartDemo = () => {
                   ref={mermaidRef}
                   className="mermaid absolute select-none "
                   style={{
-                    transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+                    transform: `scale(${scale}) translate(${25}px, ${
+                      position.y
+                    }px)`,
                     transformOrigin: "0 0",
                     cursor: isDragging ? "grabbing" : "grab",
                   }}

@@ -51,6 +51,16 @@ export default function ImagePreview() {
               imageSrc="/landing/screenshot.png"
             />
           </ShineBorder>
+
+          <div className=" absolute -left-28 top-0 h-full flex items-start">
+            <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl top-24 relative outline outline-2 outline-zinc-700"></div>
+          </div>
+
+          <div className=" absolute -right-28 top-0 h-full flex items-end">
+            <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl bottom-24 relative outline outline-2 outline-zinc-700 flex items-center justify-center">
+              <div className="pingspinner !min-h-[100px] !min-w-[100px]"></div>
+            </div>
+          </div>
         </div>
       </div>
     </AnimatedSection>

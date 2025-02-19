@@ -40,16 +40,20 @@ const FinalSection = lazy(
 export default function LazyLoadedSections() {
   return (
     <div className="space-y-[15rem] mt-[18rem]">
-      <Section_Calendar />
-
-      <Section_Memories />
-
       <Suspense fallback={<SuspenseLoader />}>
-        <Internet />
+        <GoalSection />
       </Suspense>
 
       <Suspense fallback={<SuspenseLoader />}>
-        <GoalSection />
+        <Section_Calendar />
+      </Suspense>
+
+      <Suspense fallback={<SuspenseLoader />}>
+        <Section_Memories />
+      </Suspense>
+
+      <Suspense fallback={<SuspenseLoader />}>
+        <Internet />
       </Suspense>
 
       <Suspense fallback={<SuspenseLoader />}>
