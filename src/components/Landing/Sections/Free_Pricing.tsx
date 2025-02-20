@@ -10,13 +10,13 @@ export default function FreePricing() {
         </div>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center h-full w-full">
+      {/* <div className="absolute inset-0 flex items-center justify-center h-full w-full">
         <img
           alt="Sphere background"
           className="h-full sm:max-w-[50vw] object-contain sm:top-[40vh] top-[10vh] relative filter z-[-1]"
           src="landing/sphere.png"
         />
-      </div>
+      </div> */}
       <div className="max-w-screen-lg w-full relative flex justify-center">
         <div className="w-[300px]">
           <PricingCard

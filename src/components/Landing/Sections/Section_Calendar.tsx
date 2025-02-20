@@ -12,9 +12,13 @@ import {
   GoogleCalendar,
 } from "@/components/Misc/icons";
 import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export function CalendarBotMessage({ dummyAddToCalendar }) {
+export function CalendarBotMessage({
+  dummyAddToCalendar,
+}: {
+  dummyAddToCalendar: () => void;
+}) {
   return (
     <div>
       <div className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit">
@@ -46,7 +50,11 @@ export function CalendarBotMessage({ dummyAddToCalendar }) {
   );
 }
 
-function CalendarAddChat({ addedToCalendar, setAddedToCalendar }) {
+function CalendarAddChat({
+  setAddedToCalendar,
+}: {
+  setAddedToCalendar: Dispatch<SetStateAction<boolean>>;
+}) {
   const dummyAddToCalendar = () => {
     setAddedToCalendar((prev: boolean) => {
       if (!prev) return true;
@@ -125,10 +133,7 @@ export default function Section_Calendar() {
           </TabsList>
           <TabsContent value="chat">
             <div className="w-full h-fit !mt-0 bg-gradient-to-bl px-10 rounded-3xl z-[1]">
-              <CalendarAddChat
-                setAddedToCalendar={setAddedToCalendar}
-                addedToCalendar={addedToCalendar}
-              />
+              <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
             </div>
           </TabsContent>
           <TabsContent className="space-y-2 px-10" value="calendar">

@@ -6,9 +6,9 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
-} from "./Chat/ChatBubbles/SimpleChatBubbles";
+} from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 
-import { Calendaradd } from "@/pages/LoginSignup";
+// import { Calendaradd } from "@/pages/LoginSignup";
 
 //
 // 1. Define an interface that includes position, size, color and the custom component.
@@ -72,7 +72,7 @@ const BubblePitFooter: React.FC = () => {
     <SimpleChatBubbleUser key="user" className="text-nowrap">
       Hey GAIA!
     </SimpleChatBubbleUser>,
-    <Calendaradd />,
+    // <Calendaradd />,
     // Add more custom bubbles here…
   ];
 
@@ -92,7 +92,7 @@ const BubblePitFooter: React.FC = () => {
           size: 20 + Math.random() * 20,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
           component,
-        }),
+        })
       );
 
       setBubbles(newBubbles);
@@ -136,7 +136,7 @@ const BubblePitFooter: React.FC = () => {
         }
 
         return { ...bubble, x: newX, y: newY };
-      }),
+      })
     );
   };
 

@@ -42,7 +42,8 @@ export default function HeroSection() {
           className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm"
           duration={5}
           text={
-            "GAIA is your all-in-one personal assistant for seamless calendar management, goal tracking, and more."
+            // "GAIA is your all-in-one personal assistant for seamless calendar management, goal tracking, and more."
+            "GAIA is your all-in-one personal assistant to help organise your life."
             // "GAIA is your one stop solution personal assistant that helps with everything from calendar management to goal tracking"
           }
         />

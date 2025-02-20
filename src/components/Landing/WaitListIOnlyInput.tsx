@@ -1,11 +1,11 @@
-import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
 import * as React from "react";
 import { toast } from "sonner";
 
-import createConfetti from "../../hooks/createConfetti.js";
 import { CheckmarkCircle02Icon } from "../Misc/icons.js";
 
+import CreateConfetti from "@/hooks/createConfetti.js";
 import api from "@/utils/apiaxios";
 
 export default function WaitlistOnlyInput() {
@@ -39,7 +39,7 @@ export default function WaitlistOnlyInput() {
         console.log(response.data.message);
 
         clearInputs();
-        createConfetti();
+        CreateConfetti();
         setSuccessfulySubmitted(true);
       } catch (error) {
         console.log(error);

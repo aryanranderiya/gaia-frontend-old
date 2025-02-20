@@ -7,6 +7,7 @@ import { AnimatedSection } from "../AnimatedSection";
 import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { GeneratedImageChatBubble } from "./Section_GenerateImage";
+import DummySearchbar from "../DummySearchbar";
 
 export default function Hero_Image() {
   // const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -38,7 +39,7 @@ export default function Hero_Image() {
           <ShineBorder
             borderRadius={10}
             borderWidth={3}
-            className="size-full w-fit !min-w-fit rounded-xl bg-zinc-800 p-0 animate-pulse-shadow"
+            className="size-full w-fit !min-w-fit rounded-xl bg-zinc-800 p-0 animate-pulse-shadow relative"
             color={["#00bbff", "#27272a"]}
             duration={7}
           >
@@ -46,8 +47,11 @@ export default function Hero_Image() {
               mode="simple"
               url="heygaia.io"
               className="w-full h-fit"
-              imageSrc="/landing/screenshot.png"
+              imageSrc="/landing/hero_image_nosearchbar.png"
             />
+          <div className="absolute text-white flex w-full bottom-4 justify-center left-0 items-center">
+              <DummySearchbar />
+            </div>
           </ShineBorder>
 
           {/* <div className="max-w-screen-xl w-screen bg-gradient-to-b from-[#00bbff30] animate-pulse-shadow to-black bg-zinc-950 outline outline-zinc-700 min-h-[90vh] rounded-2xl z-20 flex justify-center p-10">
@@ -71,8 +75,8 @@ export default function Hero_Image() {
             </div>
           </div> */}
 
-          <div className=" absolute -left-28 top-0 h-full flex items-start animate-bounce3">
-            <div className="bg-zinc-800 w-[250px] h-fit px-2 pb-2 rounded-3xl top-24 relative outline outline-2 outline-zinc-700">
+          <div className=" absolute -left-28 top-0 h-full flex items-start animate-bounce3 ">
+            <div className="bg-zinc-800 w-[250px] h-fit px-2 pb-2 rounded-3xl top-24 relative outline outline-2 outline-zinc-700 -rotate-2">
               <GeneratedImageChatBubble
                 selectedOption={{
                   title: "Golden Retriever",

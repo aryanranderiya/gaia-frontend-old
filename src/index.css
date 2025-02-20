@@ -97,7 +97,7 @@
 html,
 body {
   background-color: #080808;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* body { */

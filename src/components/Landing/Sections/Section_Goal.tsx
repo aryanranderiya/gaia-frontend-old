@@ -130,7 +130,7 @@ function GoalStep({
 }: GoalStepProps): JSX.Element {
   return (
     <div
-      className={`flex flex-col items-center gap-1 p-5 rounded-3xl cursor-pointer transition-all ${
+      className={`flex flex-col items-center gap-1 p-5 rounded-3xl cursor-pointer transition-all hover:opacity-100 ${
         isSelected ? "opacity-100" : "opacity-60"
       }`}
       onClick={onClick}

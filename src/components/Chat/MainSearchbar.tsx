@@ -101,7 +101,7 @@ const MainSearchbar = ({
         </div>
 
         <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
-          <div className="flex items-center justify-between mb-1 gap-1">
+          <div className="flex items-center justify-between mb-[6px] gap-1">
             <button
               className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
                 enableSearch

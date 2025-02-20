@@ -2,9 +2,10 @@ import { lazy, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+import LandingPage from "@/pages/Landing";
 
 // Lazy-loaded components
-const LandingPage = lazy(() => import("@/pages/Landing"));
+// const LandingPage = lazy(() => import("@/pages/Landing"));
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const TermsOfService = lazy(() => import("@/pages/PrivacyPolicy"));
@@ -16,9 +17,9 @@ const routesConfig = [
   {
     path: "/",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
-        <LandingPage />
-      </Suspense>
+      <LandingPage />
+      // <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+      // {/* </Suspense> */}
     ),
     index: true,
   },

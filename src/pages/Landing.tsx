@@ -13,7 +13,9 @@ export default function LandingPage() {
   useEffect(() => {
     const img = new Image();
 
-    img.src = "/landing/screenshot.png";
+    // img.src = "/landing/screenshot.png";
+    img.src = "/landing/hero_image_nosearchbar.png";
+
     img.decode();
 
     setTimeout(() => {
