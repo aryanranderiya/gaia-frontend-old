@@ -7,7 +7,7 @@ import {
   BubbleChatIcon,
   BubbleConversationChatIcon,
   StickyNote01Icon,
-} from "../icons";
+} from "../Misc/icons";
 
 import { parseDate2 } from "@/utils/fetchDate";
 

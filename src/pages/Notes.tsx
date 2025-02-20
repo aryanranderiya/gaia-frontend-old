@@ -3,7 +3,7 @@ import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { StickyNote01Icon } from "@/components/icons";
+import { StickyNote01Icon } from "@/components/Misc/icons";
 import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";

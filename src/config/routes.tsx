@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 
-import SuspenseLoader from "@/components/SuspenseLoader";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const MainInterface = lazy(() => import("@/pages/MainInterface"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout"));

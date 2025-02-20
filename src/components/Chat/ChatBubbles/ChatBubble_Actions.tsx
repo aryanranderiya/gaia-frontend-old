@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import TextToSpeech from "../../Audio/TextToSpeechComponent";
-import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../icons";
+import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../Misc/icons";
 
 import { ApiService } from "@/utils/chatUtils";
 import { apiauth } from "@/utils/apiaxios";
@@ -55,7 +55,7 @@ export function ChatBubble_Actions({
       // Pin/unpin the message
       await apiauth.put(
         `/conversations/${convoIdParam}/messages/${message_id}/pin`,
-        { pinned: !pinned },
+        { pinned: !pinned }
       );
 
       console.log("Updated pin route");

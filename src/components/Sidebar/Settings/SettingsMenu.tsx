@@ -10,7 +10,7 @@ import { Eraser } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../../icons";
+import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../../Misc/icons";
 
 import SettingsModal from "./SettingsModal";
 

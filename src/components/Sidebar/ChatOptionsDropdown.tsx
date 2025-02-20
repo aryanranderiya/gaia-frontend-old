@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { apiauth } from "@/utils/apiaxios";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useConversationList } from "@/contexts/ConversationList";
-import { PencilRenameIcon } from "@/components/icons";
+import { PencilRenameIcon } from "@/components/Misc/icons";
 
 export default function ChatOptionsDropdown({
   buttonHovered,
@@ -38,7 +38,7 @@ export default function ChatOptionsDropdown({
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
-    null,
+    null
   );
   const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();

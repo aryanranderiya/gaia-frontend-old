@@ -3,7 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import SuspenseLoader from "./components/SuspenseLoader";
+import SuspenseLoader from "./components/Misc/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";

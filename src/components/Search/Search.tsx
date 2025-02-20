@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { parseDate } from "@/utils/fetchDate";
 import { apiauth } from "@/utils/apiaxios";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { InternetIcon } from "@/components/icons";
+import { InternetIcon } from "@/components/Misc/icons";
 
 // Define types for fetched messages
 interface Message {
@@ -118,7 +118,7 @@ export default function Search() {
                                 >
                                   {result.message.pageFetchURL.replace(
                                     /^https?:\/\//,
-                                    "",
+                                    ""
                                   )}
                                 </a>
                               </div>

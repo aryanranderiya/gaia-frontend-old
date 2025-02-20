@@ -7,9 +7,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import NotLoggedIn from "@/components/NotLoggedInDialog";
+import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import SuspenseLoader from "@/components/SuspenseLoader";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 // Providers

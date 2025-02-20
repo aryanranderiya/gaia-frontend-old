@@ -1,7 +1,7 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 
-import { Logout02Icon, Mail01Icon, UserIcon } from "../../icons";
+import { Logout02Icon, Mail01Icon, UserIcon } from "../../Misc/icons";
 
 import { ModalAction } from "./SettingsMenu";
 

@@ -2,7 +2,7 @@ import { Button as NextUIBtn } from "@heroui/button";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
 
-import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
+import { GoogleCalendar, GoogleColouredIcon } from "@/components/Misc/icons";
 import { Button } from "@/components/ui/button";
 // import { Button  } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";

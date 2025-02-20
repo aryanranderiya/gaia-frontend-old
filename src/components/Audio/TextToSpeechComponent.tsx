@@ -3,7 +3,7 @@ import { Button } from "@heroui/button";
 import * as React from "react";
 import { Loader } from "lucide-react";
 
-import { VolumeHighIcon, VolumeOffIcon } from "../icons";
+import { VolumeHighIcon, VolumeOffIcon } from "../Misc/icons";
 
 import api from "@/utils/apiaxios";
 
@@ -29,7 +29,7 @@ export default function TextToSpeech({ text }: { text: string }) {
         const response = await api.post(
           "/synthesize",
           { text },
-          { responseType: "arraybuffer" },
+          { responseType: "arraybuffer" }
         );
 
         // Convert audio data to a Blob

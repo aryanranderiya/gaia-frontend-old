@@ -25,8 +25,8 @@ import {
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 
-import { Task01Icon, TaskDone01Icon } from "../icons";
-import SuspenseLoader from "../SuspenseLoader";
+import { Task01Icon, TaskDone01Icon } from "../Misc/icons";
+import SuspenseLoader from "../Misc/SuspenseLoader";
 
 import api from "@/utils/apiaxios";
 import { useLoading } from "@/contexts/LoadingContext";
@@ -79,7 +79,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         y: e.clientY - position.y,
       });
     },
-    [position],
+    [position]
   );
 
   const handleMouseMove = useCallback(
@@ -91,7 +91,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         });
       }
     },
-    [isDragging, startPosition],
+    [isDragging, startPosition]
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -100,7 +100,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!,
+      mermaidRef.current.querySelector("svg")!
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",

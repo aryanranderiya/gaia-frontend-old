@@ -3,7 +3,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import { Pdf02Icon } from "../icons";
+import { Pdf02Icon } from "../Misc/icons";
 
 // Define interfaces for component props
 interface PdfContainerProps {
@@ -48,7 +48,7 @@ export function PdfComponent({
 }: PdfComponentProps) {
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url,
+    import.meta.url
   ).toString();
 
   return (

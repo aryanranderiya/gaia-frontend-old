@@ -12,7 +12,7 @@ import {
   FileUploadIcon,
   ImageUploadIcon,
   PlusSignIcon,
-} from "../icons";
+} from "../Misc/icons";
 
 import GenerateImage from "./GenerateImage";
 

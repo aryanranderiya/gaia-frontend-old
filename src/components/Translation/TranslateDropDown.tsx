@@ -9,7 +9,7 @@ import {
 import * as React from "react";
 import { FC } from "react";
 
-import { LanguageSkillIcon } from "../icons";
+import { LanguageSkillIcon } from "../Misc/icons";
 
 import { languages } from "./Languages";
 
@@ -112,7 +112,7 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
             variant="faded"
           >
             {(
-              item: Language, // Explicitly type the item
+              item: Language // Explicitly type the item
             ) => (
               <AutocompleteItem
                 key={item.value}

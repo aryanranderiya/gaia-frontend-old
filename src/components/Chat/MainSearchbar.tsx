@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { GlobalSearchIcon } from "../icons";
+import { GlobalSearchIcon } from "../Misc/icons";
 
 import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
 import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
@@ -54,7 +54,7 @@ const MainSearchbar = ({
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event,
+    event
   ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();

@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { Mic02Icon } from "../icons";
+import { Mic02Icon } from "../Misc/icons";
 
 import {
   Dialog,
@@ -98,13 +98,13 @@ export default function AnimatedAudioTranscription({
       });
 
       sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
-        streamRef.current,
+        streamRef.current
       );
 
       processorRef.current = audioContextRef.current.createScriptProcessor(
         4096,
         1,
-        1,
+        1
       );
 
       processorRef.current.onaudioprocess = (e) => {

@@ -12,7 +12,7 @@ import {
   Mic01Icon,
   Route02Icon,
   StickyNote01Icon,
-} from "../icons";
+} from "../Misc/icons";
 
 const badges = [
   {

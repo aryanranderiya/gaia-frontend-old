@@ -1,7 +1,7 @@
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
 
-import { SentIcon } from "../icons";
+import { SentIcon } from "../Misc/icons";
 import AnimatedAudioTranscription from "../Audio/AnimatedAudioTranscription";
 // import MicrophoneBtn from "../Audio/MicrophoneBtn";
 

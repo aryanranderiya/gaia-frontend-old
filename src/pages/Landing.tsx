@@ -1,11 +1,11 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 
-import ImagePreview from "@/components/LandingPage/Sections/Hero_Image";
-import HeroSection from "@/components/LandingPage/Sections/Hero_Section";
-import SuspenseLoader from "@/components/SuspenseLoader";
+import ImagePreview from "@/components/Landing/Sections/Hero_Image";
+import HeroSection from "@/components/Landing/Sections/Hero_Section";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const LazyLoadedSections = lazy(
-  () => import("@/components/LandingPage/Sections/LazyLoadedSections"),
+  () => import("@/components/Landing/Sections/LazyLoadedSections")
 );
 
 export default function LandingPage() {

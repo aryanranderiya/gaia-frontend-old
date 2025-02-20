@@ -18,7 +18,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { GoalData } from "@/pages/GoalPage";
-import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
+import { CalendarSimpleIcon, Target04Icon } from "@/components/Misc/icons";
 import { apiauth } from "@/utils/apiaxios";
 
 export function GoalCard({
@@ -120,10 +120,10 @@ export function GoalCard({
             !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
               ? "warning"
               : goal.progress === 100
-                ? "success"
-                : goal.progress > 0
-                  ? "primary"
-                  : "warning"
+              ? "success"
+              : goal.progress > 0
+              ? "primary"
+              : "warning"
           }
           size="sm"
           variant="flat"
@@ -131,10 +131,10 @@ export function GoalCard({
           {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
             ? "Not Started"
             : goal.progress === 100
-              ? "Completed"
-              : goal.progress > 0
-                ? "In Progress"
-                : "Not Started"}
+            ? "Completed"
+            : goal.progress > 0
+            ? "In Progress"
+            : "Not Started"}
         </Chip>
 
         <div className="my-3 flex items-center gap-2 justify-between">

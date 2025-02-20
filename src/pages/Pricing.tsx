@@ -3,7 +3,11 @@ import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
 
-import { ArrowLeft01Icon, StarsIcon, Tick02Icon } from "@/components/icons";
+import {
+  ArrowLeft01Icon,
+  StarsIcon,
+  Tick02Icon,
+} from "@/components/Misc/icons";
 
 function FAQAccordion() {
   const faqItems = [

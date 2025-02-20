@@ -13,7 +13,7 @@ import {
 // import recordingAnimation from "../lotties/recording.json";
 import { Button } from "@heroui/button";
 
-import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
+import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../Misc/icons";
 
 // Define props type for the MicrophoneBtn component
 interface MicrophoneBtnProps {

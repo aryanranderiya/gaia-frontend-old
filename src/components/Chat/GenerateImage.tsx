@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ObjectID from "bson-objectid";
 
-import { BrushIcon } from "../icons";
+import { BrushIcon } from "../Misc/icons";
 import fetchDate from "../../utils/fetchDate";
 
 import api from "@/utils/apiaxios";
@@ -60,7 +60,7 @@ export default function GenerateImage({
     conversationId: string,
     newMessages: MessageType[],
     description?: string,
-    replaceLastMessage: boolean = false,
+    replaceLastMessage: boolean = false
   ) => {
     try {
       setConvoMessages((prev) => {
@@ -74,7 +74,7 @@ export default function GenerateImage({
       ApiService.updateConversationDescription(
         conversationId,
         description || "New Chat",
-        fetchConversations,
+        fetchConversations
       );
     } catch (error) {
       console.error("Failed to update conversation:", error);
@@ -83,7 +83,7 @@ export default function GenerateImage({
   };
 
   const createNewConversation = async (
-    initialMessages: MessageType[],
+    initialMessages: MessageType[]
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
@@ -92,7 +92,7 @@ export default function GenerateImage({
       await updateConversationState(
         convoID,
         initialMessages,
-        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`,
+        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
       );
       navigate(`/try/chat/${convoID}`);
 
@@ -110,7 +110,7 @@ export default function GenerateImage({
         { message: prompt },
         {
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
 
       return [response.data.url, response.data.improved_prompt];
@@ -180,7 +180,7 @@ export default function GenerateImage({
         conversationId,
         [userMessage, finalBotMessage],
         undefined,
-        true,
+        true
       );
 
       setImagePrompt("");

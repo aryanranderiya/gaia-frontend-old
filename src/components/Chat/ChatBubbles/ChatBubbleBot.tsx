@@ -14,7 +14,7 @@ import {
 import { toast } from "sonner";
 
 import { parseDate } from "../../../utils/fetchDate";
-import { GoogleCalendar, InternetIcon } from "../../icons";
+import { GoogleCalendar, InternetIcon } from "../../Misc/icons";
 import { CustomAnchor } from "../MarkdownRenderer";
 
 import {
@@ -24,7 +24,7 @@ import {
 
 import { apiauth } from "@/utils/apiaxios";
 import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
-import SuspenseLoader from "@/components/SuspenseLoader";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
@@ -51,7 +51,7 @@ export default function ChatBubbleBot({
   const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
-    "Uploading Document...",
+    "Uploading Document..."
   );
 
   // Update file scanning text while the document is processing
@@ -266,7 +266,7 @@ export default function ChatBubbleBot({
                       From{" "}
                       {calendar_options?.start
                         ? String(
-                            new Date(calendar_options.start).toDateString(),
+                            new Date(calendar_options.start).toDateString()
                           )
                         : ""}
                     </div>

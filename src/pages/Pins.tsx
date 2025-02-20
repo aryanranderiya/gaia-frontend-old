@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { parseDate } from "@/utils/fetchDate";
 import { apiauth } from "@/utils/apiaxios";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { InternetIcon, PinIcon } from "@/components/icons";
+import { InternetIcon, PinIcon } from "@/components/Misc/icons";
 
 interface PinCardProps {
   message: {
@@ -120,7 +120,7 @@ export default function Pins() {
 
   const filterPins = (query: string) => {
     const filtered = fetchedResults.filter((result) =>
-      result.message.response.toLowerCase().includes(query.toLowerCase()),
+      result.message.response.toLowerCase().includes(query.toLowerCase())
     );
 
     setFilteredResults(filtered);

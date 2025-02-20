@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 
-import SuspenseLoader from "@/components/SuspenseLoader";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 // Lazy-loaded components
 const LandingPage = lazy(() => import("@/pages/Landing"));
-const Navbar = lazy(() => import("@/components/LandingPage/misc/Navbar"));
+const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const TermsOfService = lazy(() => import("@/pages/PrivacyPolicy"));
 const PrivacyPolicy = lazy(() => import("@/pages/TermsOfService"));

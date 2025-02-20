@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 
 import ChatOptionsDropdown from "./ChatOptionsDropdown";
 
-import { BubbleConversationChatIcon } from "@/components/icons";
+import { BubbleConversationChatIcon } from "@/components/Misc/icons";
 
 interface ChatTabProps {
   name: string;

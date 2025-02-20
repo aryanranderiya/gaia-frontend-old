@@ -6,7 +6,7 @@ import { parseDate } from "../../../utils/fetchDate";
 import { ChatBubbleUserProps } from "@/types/ChatBubbleTypes";
 
 // import { PdfContainer } from "../../Documents/PdfComponent";
-import { StarsIcon } from "@/components/icons";
+import { StarsIcon } from "@/components/Misc/icons";
 
 export default function ChatBubbleUser({
   text,

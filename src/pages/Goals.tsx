@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { apiauth } from "@/utils/apiaxios";
 import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { GoalCard } from "@/components/Goals/GoalCard";
-import { Target04Icon } from "@/components/icons";
+import { Target04Icon } from "@/components/Misc/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Goals() {

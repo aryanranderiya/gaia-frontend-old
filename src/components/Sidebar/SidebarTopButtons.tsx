@@ -11,7 +11,7 @@ import {
   PinIcon,
   Route02Icon,
   StickyNote01Icon,
-} from "../icons";
+} from "../Misc/icons";
 import SearchCommand from "../Search/SearchCommand";
 
 export default function SidebarTopButtons() {

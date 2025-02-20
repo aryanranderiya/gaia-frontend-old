@@ -1,7 +1,7 @@
 import { Button } from "@heroui/button";
 import { useNavigate } from "react-router-dom";
 
-import { LinkBackwardIcon } from "@/components/icons";
+import { LinkBackwardIcon } from "@/components/Misc/icons";
 
 export default function PageNotFound() {
   const navigate = useNavigate();

@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 import { lazy, Suspense } from "react";
 
-import SuspenseLoader from "../SuspenseLoader";
+import SuspenseLoader from "../Misc/SuspenseLoader";
 
 const BubbleMenu = lazy(() =>
-  import("@tiptap/react").then((module) => ({ default: module.BubbleMenu })),
+  import("@tiptap/react").then((module) => ({ default: module.BubbleMenu }))
 );
 
 const BubbleMenuComponent = ({ editor }: { editor: any }) => {

@@ -1,8 +1,8 @@
 import { Button } from "@heroui/button";
 
-import { Menu02Icon, SidebarLeftIcon } from "../icons";
+import { Menu02Icon, SidebarLeftIcon } from "../Misc/icons";
 
-import useMediaQuery from "@/hooks/MediaQuery";
+import useMediaQuery from "@/hooks/mediaQuery";
 
 export interface CloseOpenSidebarBtnProps {
   toggleSidebar: () => void;

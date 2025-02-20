@@ -8,7 +8,7 @@ import {
   Timer02Icon,
   WorkflowSquare03Icon,
   Calendar01Icon,
-} from "@/components/icons";
+} from "@/components/Misc/icons";
 
 export function OptionsTab({
   key,
