@@ -34,7 +34,7 @@ export default function HeroSection() {
           </AnimatedShinyText>
         </div>
 
- 1       <div className="py-3">
+        <div className="py-3">
           <div className="sm:text-8xl text-5xl bg-gradient-to-b from-white bg-clip-text text-center font-medium leading-none text-transparent to-zinc-400 max-w-screen-lg sm:-my-2">
             Your Personal AI Assistant awaits.
           </div>

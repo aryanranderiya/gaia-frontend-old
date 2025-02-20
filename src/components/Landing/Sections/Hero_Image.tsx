@@ -49,7 +49,7 @@ export default function Hero_Image() {
               className="w-full h-fit"
               imageSrc="/landing/hero_image_nosearchbar.png"
             />
-          <div className="absolute text-white flex w-full bottom-4 justify-center left-0 items-center">
+            <div className="absolute text-white flex w-full bottom-4 justify-center left-0 items-center">
               <DummySearchbar />
             </div>
           </ShineBorder>
@@ -90,6 +90,7 @@ export default function Hero_Image() {
           <div className=" absolute -right-28 top-0 h-full flex items-end">
             <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl bottom-24 relative outline outline-2 outline-zinc-700 flex items-center justify-center">
               <div className="pingspinner !min-h-[100px] !min-w-[100px]" />
+              update this
             </div>
           </div>
         </div>
