@@ -1,15 +1,20 @@
+/* eslint-disable prettier/prettier */
 import {
   BubbleChatLockIcon,
   CalendarIcon,
   ComputerPhoneSyncIcon,
   GoogleDriveIcon,
-  LanguageSkillIcon,
   Mail01Icon,
   MoneyBag02Icon,
   VoiceIcon,
 } from "../../icons";
 
-const list = [
+const list: {
+  icon?: React.ReactNode;
+  title?: string;
+  description?: string;
+  className?: string;
+}[] = [
   // {
   //   title: "Personalised",
   //   description: "Tailored to your preferences",

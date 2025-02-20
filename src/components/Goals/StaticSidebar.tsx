@@ -1,16 +1,16 @@
 import { Checkbox } from "@heroui/checkbox";
 import { Chip } from "@heroui/chip";
 import { Clock } from "lucide-react";
-import { BookIcon1 } from "../icons";
 import React from "react";
+import { BookIcon1 } from "../icons";
 
 const StaticSidebar = ({
-  hover1,
+  // hover1,
   isVisible,
   isComplete,
   setIsComplete,
 }: {
-  hover1: boolean;
+  // hover1: boolean;
   isVisible: boolean;
   isComplete: boolean;
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;

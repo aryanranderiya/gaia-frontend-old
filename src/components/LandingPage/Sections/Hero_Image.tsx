@@ -3,8 +3,6 @@
 // import { useState } from "react";
 import { Safari } from "../../ui/safari";
 // import { Spinner } from "@heroui/spinner";
-import { GridPattern } from "../../ui/grid-pattern";
-import { cn } from "@/lib/utils";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { AnimatedSection } from "../misc/AnimatedSection";
 

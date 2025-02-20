@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // import { Button } from "@heroui/button";
 // import { Chip } from "@heroui/chip";
 // import { Input } from "@heroui/input";
@@ -8,14 +9,13 @@
 // import { SectionHeading } from "../misc/SectionHeading";
 // import { AnimatedSection } from "../misc/AnimatedSection";
 
+import { AnimatedSection } from "../misc/AnimatedSection";
+
 import {
   CheckmarkSquare03Icon,
-  FlowchartIcon,
   FlowchartIcon1,
   Target02Icon,
 } from "@/components/icons";
-import { AnimatedSection } from "../misc/AnimatedSection";
-import { SectionHeading } from "../misc/SectionHeading";
 
 // export default function GoalSection() {
 //   const [hover1, setHover1] = useState(false);
@@ -227,38 +227,45 @@ export default function GoalSection() {
       <AnimatedSection className="flex min-w-full justify-evenly items-center w-screen max-w-screen-xl py-10">
         <div className="flex flex-col items-center gap-1">
           <div className="bg-zinc-800 outline-zinc-700 outline outline-2 w-[50px] h-[50px] rounded-xl flex items-center justify-center relative m-5">
-            <Target02Icon color="white" width={30} height={30} />
+            <Target02Icon color="white" height={30} width={30} />
             <div className="bg-primary rounded-full min-w-5 min-h-5 text-sm font-bold text-black flex items-center justify-center absolute -bottom-1 -right-1">
               1
             </div>
           </div>
 
-          <div className="text-xl font-bold">Title</div>
-          <div>Lorem ipsum dolor sit amet.</div>
+          <div className="text-xl font-bold">Enter your goal</div>
+          <div className="w-[50%] text-center text-foreground-500">
+            Define your objective clearly so we can create a personalized plan
+            for you.
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-1">
           <div className="bg-zinc-800 outline-zinc-700 outline outline-2 w-[50px] h-[50px] rounded-xl flex items-center justify-center relative m-5">
-            <FlowchartIcon1 color="white" width={30} height={30} />
+            <FlowchartIcon1 color="white" height={30} width={30} />
             <div className="bg-primary rounded-full min-w-5 min-h-5 text-sm font-bold text-black flex items-center justify-center absolute -bottom-1 -right-1">
               2
             </div>
           </div>
-
-          <div className="text-xl font-bold">Title</div>
-          <div>Lorem ipsum dolor sit amet.</div>
+          <div className="text-xl font-bold">Create a Flowchart</div>
+          <div className="w-[50%] text-center text-foreground-500">
+            GAIA provides a step-by-step plan with resources to help you achieve
+            your goal!
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-1">
           <div className="bg-zinc-800 outline-zinc-700 outline outline-2 w-[50px] h-[50px] rounded-xl flex items-center justify-center relative m-5">
-            <CheckmarkSquare03Icon color="white" width={30} height={30} />
+            <CheckmarkSquare03Icon color="white" height={30} width={30} />
             <div className="bg-primary rounded-full min-w-5 min-h-5 text-sm font-bold text-black flex items-center justify-center absolute -bottom-1 -right-1">
               3
             </div>
           </div>
-
-          <div className="text-xl font-bold">Title</div>
-          <div>Lorem ipsum dolor sit amet.</div>
+          <div className="text-xl font-bold">Keep Track</div>
+          <div className="w-[50%] text-center text-foreground-500">
+            Monitor your milestones and celebrate every step toward achieving
+            your goal.
+          </div>
         </div>
       </AnimatedSection>
     </AnimatedSection>
