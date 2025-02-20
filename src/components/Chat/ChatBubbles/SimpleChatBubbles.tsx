@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
 export function SimpleChatBubbleUser({
   children,
@@ -25,12 +26,14 @@ export function SimpleChatBubbleUser({
 export function SimpleChatBubbleBot({
   className,
   children,
+  parentClassName,
 }: {
-  children: any;
+  children: ReactNode;
   className?: string;
+  parentClassName?: string;
 }) {
   return (
-    <div className={"relative flex items-end gap-3"}>
+    <div className={`relative flex items-end gap-3 ${parentClassName}`}>
       {/* <div className="pingspinner relative" /> */}
       <div className={cn("chat_bubble bg-zinc-800 !select-none", className)}>
         {children}

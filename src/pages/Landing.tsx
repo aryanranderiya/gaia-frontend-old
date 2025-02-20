@@ -1,8 +1,7 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 
 import ImagePreview from "@/components/Landing/Sections/Hero_Image";
 import HeroSection from "@/components/Landing/Sections/Hero_Section";
-import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const LazyLoadedSections = lazy(
   () => import("@/components/Landing/Sections/LazyLoadedSections")
@@ -37,11 +36,7 @@ export default function LandingPage() {
       <HeroSection />
       <ImagePreview />
 
-      {load && (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <LazyLoadedSections />
-        </Suspense>
-      )}
+      {load && <LazyLoadedSections />}
     </div>
     // {/* </ScrollArea> */}
   );

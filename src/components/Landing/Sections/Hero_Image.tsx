@@ -1,14 +1,14 @@
 // import StarterEmoji from "../Chat/StarterEmoji";
 // import StarterText from "../Chat/StarterText";
 // import { useState } from "react";
-import { Safari } from "../../ui/safari";
 
 // import { Spinner } from "@heroui/spinner";
 import { AnimatedSection } from "../AnimatedSection";
-
+import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
+import { GeneratedImageChatBubble } from "./Section_GenerateImage";
 
-export default function ImagePreview() {
+export default function Hero_Image() {
   // const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   // const handleImageLoad = () => {
@@ -35,7 +35,6 @@ export default function ImagePreview() {
             </div>
           )} */}
 
-          {/* shadow-[0px_0px_200px_#00bbff70] animate-pulse-shadow */}
           <ShineBorder
             borderRadius={10}
             borderWidth={3}
@@ -47,13 +46,41 @@ export default function ImagePreview() {
               mode="simple"
               url="heygaia.io"
               className="w-full h-fit"
-              // handleImageLoad={handleImageLoad}
               imageSrc="/landing/screenshot.png"
             />
           </ShineBorder>
 
+          {/* <div className="max-w-screen-xl w-screen bg-gradient-to-b from-[#00bbff30] animate-pulse-shadow to-black bg-zinc-950 outline outline-zinc-700 min-h-[90vh] rounded-2xl z-20 flex justify-center p-10">
+            <div className="flex flex-col max-w-screen-md w-full gap-2">
+              <SimpleChatBubbleUser>
+                I have a meeting this weekend could you add it to my calendar?
+              </SimpleChatBubbleUser>
+              <CalendarBotMessage dummyAddToCalendar={() => {}} />
+              <SimpleChatBubbleUser>
+                Generate Image: Golden Retriever
+              </SimpleChatBubbleUser>
+              <SimpleChatBubbleBot parentClassName="!max-w-[300px]">
+                <GeneratedImageChatBubble
+                  selectedOption={{
+                    title: "Golden Retriever",
+                    prompt: "cute, golden retriever",
+                    src: "/generated/golden_retriever.webp",
+                  }}
+                />
+              </SimpleChatBubbleBot>
+            </div>
+          </div> */}
+
           <div className=" absolute -left-28 top-0 h-full flex items-start">
-            <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl top-24 relative outline outline-2 outline-zinc-700" />
+            <div className="bg-zinc-800 w-[250px] h-fit px-2 pb-2 rounded-3xl top-24 relative outline outline-2 outline-zinc-700">
+              <GeneratedImageChatBubble
+                selectedOption={{
+                  title: "Golden Retriever",
+                  prompt: "cute, golden retriever",
+                  src: "/generated/golden_retriever.webp",
+                }}
+              />
+            </div>
           </div>
 
           <div className=" absolute -right-28 top-0 h-full flex items-end">
