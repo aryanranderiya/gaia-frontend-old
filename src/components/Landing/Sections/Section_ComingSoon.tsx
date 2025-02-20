@@ -57,7 +57,7 @@ const list: {
   // },
   {
     title: "End-to-End Encryption",
-    description: "Support for End to End Encryption for increased privacy",
+    description: "Support for end-to-end encryption for increased privacy",
     icon: <BubbleChatLockIcon height={35} width={35} />,
   },
 
@@ -115,8 +115,9 @@ export function Feature({
 export default function Section_ComingSoon() {
   return (
     <div className="flex justify-center items-center min-h-fit h-fit z-[1] relative">
-      <div className="flex justify-center items-center sm:p-5 p-2 flex-col">
+      <div className="flex justify-center items-center sm:p-5 p-2 flex-col gap-1">
         <span className="font-medium text-3xl">Coming Soon!</span>
+        <span>What are we working on next?</span>
         <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 max-w-screen-xl h-fit items-center justify-center">
           {list.map((item, index) => (
             <Feature

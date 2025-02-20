@@ -1,17 +1,16 @@
 import { Button } from "@heroui/button";
-
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { AnimatedSection } from "../AnimatedSection";
 // import GradualSpacing from "../MagicUI/gradual-spacing";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 // import { cn } from "@/lib/utils";
-import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
-
-// import { AnimatedShinyText } from "../../ui/animated-shiny-text";
-import { AnimatedSection } from "../AnimatedSection";
-
-import { Spotlight } from "@/components/ui/spotlight-new";
 import TypingAnimation from "@/components/MagicUI/typing-animation";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
+import { Spotlight } from "@/components/ui/spotlight-new";
+import { cn } from "@/lib/utils";
+// import { AnimatedShinyText } from "../../ui/animated-shiny-text";
 
 export default function HeroSection() {
   return (
@@ -24,7 +23,8 @@ export default function HeroSection() {
           {/* INTRODUCING{"  "}GAIA 
         </div> 
           */}
-        {/* <div
+
+        <div
           className={cn(
             "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800"
           )}
@@ -32,19 +32,29 @@ export default function HeroSection() {
           <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:duration-300 hover:text-neutral-400">
             Currently in beta
           </AnimatedShinyText>
-        </div> */}
-        <div className="py-3">
+        </div>
+
+ 1       <div className="py-3">
           <div className="sm:text-8xl text-5xl bg-gradient-to-b from-white bg-clip-text text-center font-medium leading-none text-transparent to-zinc-400 max-w-screen-lg sm:-my-2">
             Your Personal AI Assistant awaits.
           </div>
         </div>
+
+        {/* <div
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl
+        text-white max-w-screen-sm text-center"
+        >
+          GAIA is your all-in-one personal assistant for seamless calendar
+          management, goal tracking, and more.
+        </div> */}
+
         <TypingAnimation
-          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm"
-          duration={5}
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm text-center"
+          duration={8}
           text={
             // "GAIA is your all-in-one personal assistant for seamless calendar management, goal tracking, and more."
-            "GAIA is your all-in-one personal assistant to help organise your life."
             // "GAIA is your one stop solution personal assistant that helps with everything from calendar management to goal tracking"
+            "GAIA is your all-in-one personal assistant to help organise your life."
           }
         />
         <Button
