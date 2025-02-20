@@ -3,6 +3,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { SearchIcon } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import {
   CalendarIcon,
   // DiscoverCircleIcon,
@@ -26,32 +27,32 @@ export default function SidebarTopButtons() {
     // },
     {
       // route: "/try/search",
-      icon: <SearchIcon width={26} height={26} />,
+      icon: <SearchIcon height={26} width={26} />,
       label: "Search",
     },
     {
       route: "/try/explore",
-      icon: <NotificationIcon width={27} height={27} />,
+      icon: <NotificationIcon height={27} width={27} />,
       label: "Notifications",
     },
     {
       route: "/try/pins",
-      icon: <PinIcon width={27} height={27} />,
+      icon: <PinIcon height={27} width={27} />,
       label: "Pins",
     },
     {
       route: "/try/calendar",
-      icon: <CalendarIcon width={27} height={27} />,
+      icon: <CalendarIcon height={27} width={27} />,
       label: "Calendar",
     },
     {
       route: "/try/notes",
-      icon: <StickyNote01Icon width={27} height={27} />,
+      icon: <StickyNote01Icon height={27} width={27} />,
       label: "Notes",
     },
     {
       route: "/try/goals",
-      icon: <Route02Icon width={27} height={27} />,
+      icon: <Route02Icon height={27} width={27} />,
       label: "Goals",
     },
   ];
@@ -59,20 +60,20 @@ export default function SidebarTopButtons() {
   return (
     <>
       <SearchCommand
-        setOpenSearchDialog={setOpenSearchDialog}
         openSearchDialog={openSearchDialog}
+        setOpenSearchDialog={setOpenSearchDialog}
       />
 
       <div className="bg-[#141414] rounded-2xl p-2 gap-1 grid grid-cols-3 items-start grid-rows-2">
         {buttonData.map(({ route, icon, label }, index) => (
-          <Tooltip key={index} showArrow={true} content={label}>
+          <Tooltip key={index} content={label} showArrow={true}>
             <Button
               className="w-full"
               isIconOnly
               // size="lg"
               // variant="flat"
-              variant={location.pathname === route ? "solid" : "flat"}
               color={location.pathname === route ? "primary" : "default"}
+              variant={location.pathname === route ? "solid" : "flat"}
               onPress={() =>
                 label == "Search"
                   ? setOpenSearchDialog(true)

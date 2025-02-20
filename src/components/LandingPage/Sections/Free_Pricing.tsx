@@ -12,26 +12,26 @@ export default function FreePricing() {
 
       <div className="absolute inset-0 flex items-center justify-center h-full w-full">
         <img
-          src="landing/sphere.png"
           alt="Sphere background"
           className="h-full sm:max-w-[50vw] object-contain sm:top-[40vh] top-[10vh] relative filter z-[-1]"
+          src="landing/sphere.png"
         />
       </div>
       <div className="max-w-screen-lg w-full relative flex justify-center">
         <div className="w-[300px]">
           <PricingCard
-            durationIsMonth={true}
-            title="Free"
-            description=""
-            price={0}
-            type="secondary"
-            features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
             className="rounded-2xl !bg-zinc-900 !bg-opacity-[100%] !backdrop-blur-none"
+            description=""
+            durationIsMonth={true}
+            features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
             featurestitle={
               <div className="flex flex-col mb-1 !border-none">
                 <span>What's Included?</span>
               </div>
             }
+            price={0}
+            title="Free"
+            type="secondary"
           />
         </div>
       </div>

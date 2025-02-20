@@ -1,5 +1,7 @@
-import StarterEmoji from "@/components/Chat/StarterEmoji";
 import { Tabs, Tab } from "@heroui/tabs";
+import React from "react";
+
+import StarterEmoji from "@/components/Chat/StarterEmoji";
 import {
   GoogleDriveIcon,
   Target02Icon,
@@ -7,7 +9,6 @@ import {
   WorkflowSquare03Icon,
   Calendar01Icon,
 } from "@/components/icons";
-import React from "react";
 
 export function OptionsTab({
   key,

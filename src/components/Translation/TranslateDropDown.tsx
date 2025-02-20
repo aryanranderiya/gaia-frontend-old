@@ -8,7 +8,9 @@ import {
 } from "@heroui/dropdown";
 import * as React from "react";
 import { FC } from "react";
+
 import { LanguageSkillIcon } from "../icons";
+
 import { languages } from "./Languages";
 
 interface Language {
@@ -80,22 +82,24 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
       <DropdownTrigger>{trigger}</DropdownTrigger>
       <DropdownMenu aria-label="Translate" className="p-0">
         <DropdownItem
-          isReadOnly
-          closeOnSelect={false}
-          className="dark m-0 p-"
           key={0}
+          isReadOnly
+          className="dark m-0 p-"
+          closeOnSelect={false}
         >
           <Autocomplete
+            className="text-foreground"
+            color="primary"
+            defaultSelectedKey="en"
             description="Select a language to translate from"
             label="Search a Language"
-            defaultSelectedKey="en"
-            color="primary"
-            variant="faded"
-            size="lg"
+            listboxProps={{
+              emptyContent: "No Language Found",
+              selectionMode: "single",
+            }}
             defaultItems={languages}
             // onSelectionChange={setLanguage}
             // selectedKey={targetLang}
-            startContent={<LanguageSkillIcon className="text-foreground" />}
             popoverProps={{
               offset: 10,
               classNames: {
@@ -103,14 +107,12 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
                 content: "dark text-foreground",
               },
             }}
-            listboxProps={{
-              emptyContent: "No Language Found",
-              selectionMode: "single",
-            }}
-            className="text-foreground"
+            size="lg"
+            startContent={<LanguageSkillIcon className="text-foreground" />}
+            variant="faded"
           >
             {(
-              item: Language // Explicitly type the item
+              item: Language, // Explicitly type the item
             ) => (
               <AutocompleteItem
                 key={item.value}

@@ -1,13 +1,3 @@
-import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
-import { MenuBar } from "@/components/Notes/NotesMenuBar";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { apiauth } from "@/utils/apiaxios";
 import { Spinner } from "@heroui/spinner";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -22,6 +12,17 @@ import { ArrowLeft, CircleX, Trash2, TriangleAlert } from "lucide-react";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+
+import { apiauth } from "@/utils/apiaxios";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { MenuBar } from "@/components/Notes/NotesMenuBar";
+import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
 
 interface Note {
   id: string;
@@ -62,6 +63,7 @@ export default function NotesAdd() {
           if (node.type.name === "heading") {
             return "Enter a title for your note";
           }
+
           return "Write something for GAIA to remember...";
         },
       }),
@@ -74,11 +76,11 @@ export default function NotesAdd() {
         toast.custom(() => (
           <div className="bg-[#ffecd8] list-none py-2 px-4 rounded-md flex flex-row items-center gap-3 text-[#dc7609] font-medium w-full justify-evenly text-nowrap">
             <TriangleAlert
-              fill="#dc7609"
-              color="#ffecd8"
-              width={30}
-              height={30}
               className="min-w-[30px]"
+              color="#ffecd8"
+              fill="#dc7609"
+              height={30}
+              width={30}
             />
             <span>
               You are reaching the maximum character limit of a note. (10k
@@ -90,11 +92,11 @@ export default function NotesAdd() {
         toast.custom(() => (
           <div className="bg-[#ffe1e1] list-none py-2 px-4 rounded-md flex flex-row items-center gap-3 text-[#e60000] font-medium w-full justify-evenly text-nowrap">
             <CircleX
-              fill="#e60000"
-              color="#ffe1e1"
-              width={30}
-              height={30}
               className="min-w-[30px]"
+              color="#ffe1e1"
+              fill="#e60000"
+              height={30}
+              width={30}
             />
             <span>
               You have reached the maximum character limit of a note. (10k
@@ -123,6 +125,7 @@ export default function NotesAdd() {
       try {
         const response = await apiauth.get(`/notes/${id}`);
         const fetchedNote = response.data as Note; // Type cast the response
+
         setNote(fetchedNote);
         setOldNote(fetchedNote);
         setHasUnsavedChanges(false);
@@ -147,6 +150,7 @@ export default function NotesAdd() {
       setIsSaving(true);
       const method = id ? "PUT" : "POST";
       const url = id ? `/notes/${id}` : `/notes`;
+
       await apiauth[method.toLowerCase() as "put" | "post"](url, {
         content: note.content,
         plaintext: convert(note.content),
@@ -199,8 +203,8 @@ export default function NotesAdd() {
       <div className="flex w-full justify-between items-center dark">
         <Link to={"/try/notes"}>
           <Button
-            variant={"link"}
             className="text-white w-fit gap-2 px-0 font-normal"
+            variant={"link"}
           >
             <ArrowLeft />
             All Notes
@@ -211,7 +215,7 @@ export default function NotesAdd() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="icon" variant="ghost">
-                <DotsVerticalIcon width={20} height={20} />
+                <DotsVerticalIcon height={20} width={20} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -234,7 +238,7 @@ export default function NotesAdd() {
             <>
               <BubbleMenuComponent editor={editor} />
               <MenuBar editor={editor} />
-              <EditorContent editor={editor} className="min-h-screen" />
+              <EditorContent className="min-h-screen" editor={editor} />
             </>
           )}
         </div>
@@ -251,9 +255,9 @@ export default function NotesAdd() {
           You have unsaved changes!
         </p>
         <Button
-          onClick={saveNote}
-          size={"lg"}
           disabled={!hasUnsavedChanges || isSaving}
+          size={"lg"}
+          onClick={saveNote}
         >
           {isSaving ? "Saving..." : "Save Changes"}
         </Button>

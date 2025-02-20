@@ -41,7 +41,7 @@ export default function Navbar() {
         setUserData(
           response?.data?.name,
           response?.data?.email,
-          response?.data?.picture
+          response?.data?.picture,
         );
 
         if (
@@ -131,9 +131,9 @@ export default function Navbar() {
                       <Button
                         as={Link}
                         className="p-0 px-4 font-semibold"
-                        variant="shadow"
                         color="primary"
                         size="md"
+                        variant="shadow"
                         to={"/login"}
                         // variant="light"
                       >

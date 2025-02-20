@@ -1,6 +1,3 @@
-import { apiauth } from "@/utils/apiaxios";
-import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
-import { GoalData } from "@/pages/GoalPage";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import {
@@ -20,6 +17,10 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { GoalData } from "@/pages/GoalPage";
+import { CalendarSimpleIcon, Target04Icon } from "@/components/icons";
+import { apiauth } from "@/utils/apiaxios";
+
 export function GoalCard({
   goal,
   fetchGoals,
@@ -33,6 +34,7 @@ export function GoalCard({
   async function deleteGoal(goalId: string) {
     try {
       const response = await apiauth.delete(`/goals/${goalId}`);
+
       console.log("Goal deleted successfully:", response.data);
       fetchGoals();
     } catch (error) {
@@ -48,9 +50,9 @@ export function GoalCard({
   return (
     <>
       <Modal
+        className="dark text-foreground"
         isOpen={openDeleteDialog}
         onOpenChange={setOpenDeleteDialog}
-        className="dark text-foreground"
       >
         <ModalContent>
           <ModalHeader className="inline-block">
@@ -82,7 +84,7 @@ export function GoalCard({
       </Modal>
       <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full group">
         <div className="font-medium text-xl flex items-center gap-1 w-full relative ">
-          <Target04Icon width={20} height={20} />
+          <Target04Icon height={20} width={20} />
           <span className="truncate w-[85%]">
             {goal?.roadmap?.title || goal.title}
           </span>
@@ -94,7 +96,7 @@ export function GoalCard({
               }}
             >
               <DropdownTrigger>
-                <Button variant="flat" isIconOnly>
+                <Button isIconOnly variant="flat">
                   <DotsVerticalIcon />
                 </Button>
               </DropdownTrigger>
@@ -113,33 +115,33 @@ export function GoalCard({
         </div>
 
         <Chip
-          size="sm"
-          variant="flat"
+          className="mt-2"
           color={
             !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
               ? "warning"
               : goal.progress === 100
-              ? "success"
-              : goal.progress > 0
-              ? "primary"
-              : "warning"
+                ? "success"
+                : goal.progress > 0
+                  ? "primary"
+                  : "warning"
           }
-          className="mt-2"
+          size="sm"
+          variant="flat"
         >
           {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
             ? "Not Started"
             : goal.progress === 100
-            ? "Completed"
-            : goal.progress > 0
-            ? "In Progress"
-            : "Not Started"}
+              ? "Completed"
+              : goal.progress > 0
+                ? "In Progress"
+                : "Not Started"}
         </Chip>
 
         <div className="my-3 flex items-center gap-2 justify-between">
           <div className="bg-black h-3 rounded-full relative w-[100%]">
             <div
-              style={{ width: `${goal?.progress || 0}%` }}
               className={`absolute left-0 bg-[#00bbff] top-0 h-3 rounded-full`}
+              style={{ width: `${goal?.progress || 0}%` }}
             />
           </div>
           <span className="text-xs">{goal?.progress || 0}%</span>
@@ -154,8 +156,8 @@ export function GoalCard({
             }).format(new Date(goal?.created_at))}
           </div>
           <Button
-            size="sm"
             color="primary"
+            size="sm"
             variant="flat"
             onPress={() => navigate(`./${goal.id}`)}
           >

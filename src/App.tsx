@@ -2,6 +2,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
+
 import SuspenseLoader from "./components/SuspenseLoader";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
@@ -19,13 +20,16 @@ export default function App() {
 
     if (/^\/try\/chat\/[^/]+$/.test(pathname)) {
       const titleElement = document.querySelector("title");
+
       if (titleElement && titleElement?.id != "chat_title") {
         titleElement.remove();
       }
+
       return;
     }
 
     let titleElement = document.querySelector("title");
+
     if (!titleElement) {
       titleElement = document.createElement("title");
       document.head.appendChild(titleElement);
@@ -77,20 +81,20 @@ export default function App() {
 
           <Routes>
             <Route
-              path="/try/*"
               element={
                 <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                   <MainInterface />
                 </Suspense>
               }
+              path="/try/*"
             />
             <Route
-              path="/*"
               element={
                 <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                   <LandingLayout />
                 </Suspense>
               }
+              path="/*"
             />
           </Routes>
         </UIProviderLayout>

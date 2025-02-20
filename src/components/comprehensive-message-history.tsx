@@ -1,5 +1,16 @@
 "'use client'";
 
+import { format } from "date-fns";
+import {
+  Bot,
+  Calendar as CalendarIcon,
+  ChevronLeft,
+  Paperclip,
+  Search,
+  User,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -18,16 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { format } from "date-fns";
-import {
-  Bot,
-  Calendar as CalendarIcon,
-  ChevronLeft,
-  Paperclip,
-  Search,
-  User,
-} from "lucide-react";
-import { useEffect, useState } from "react";
 
 interface Message {
   id: number;
@@ -143,20 +144,20 @@ export default function ComprehensiveMessageHistory() {
 
   const handleSearch = () => {
     let filtered = allMessages.filter((message) =>
-      message.content.toLowerCase().includes(searchQuery.toLowerCase())
+      message.content.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
     if (selectedDate) {
       filtered = filtered.filter(
         (message) =>
           message.timestamp.split("'")[0] ===
-          format(selectedDate, "'yyyy-MM-dd'")
+          format(selectedDate, "'yyyy-MM-dd'"),
       );
     }
 
     if (selectedSender !== "'all'") {
       filtered = filtered.filter(
-        (message) => message.sender === selectedSender
+        (message) => message.sender === selectedSender,
       );
     }
 
@@ -187,9 +188,9 @@ export default function ComprehensiveMessageHistory() {
               <div className="relative flex-grow">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                 <Input
-                  type="search"
-                  placeholder="Search your message history..."
                   className="pl-8"
+                  placeholder="Search your message history..."
+                  type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === "'Enter'" && handleSearch()}
@@ -198,8 +199,8 @@ export default function ComprehensiveMessageHistory() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
                     className="w-[240px] justify-start text-left font-normal"
+                    variant="outline"
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {selectedDate ? (
@@ -209,12 +210,12 @@ export default function ComprehensiveMessageHistory() {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent align="start" className="w-auto p-0">
                   <Calendar
+                    initialFocus
                     mode="single"
                     selected={selectedDate}
                     onSelect={setSelectedDate}
-                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
@@ -235,15 +236,15 @@ export default function ComprehensiveMessageHistory() {
               </Select>
               <div className="flex items-center space-x-2">
                 <Checkbox
-                  id="hasAttachment"
                   checked={hasAttachment}
+                  id="hasAttachment"
                   onCheckedChange={(checked) =>
                     setHasAttachment(checked as boolean)
                   }
                 />
                 <label
-                  htmlFor="hasAttachment"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor="hasAttachment"
                 >
                   Has Attachment
                 </label>
@@ -313,9 +314,9 @@ export default function ComprehensiveMessageHistory() {
         ) : (
           <div className="flex-grow flex flex-col">
             <Button
+              className="self-start mb-4"
               variant="ghost"
               onClick={handleBackToSearch}
-              className="self-start mb-4"
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
               Back to Search

@@ -1,9 +1,12 @@
-import { BubbleConversationChatIcon } from "@/components/icons";
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ChatOptionsDropdown from "./ChatOptionsDropdown";
 import { Star } from "lucide-react";
+
 import { Button } from "../ui/button";
+
+import ChatOptionsDropdown from "./ChatOptionsDropdown";
+
+import { BubbleConversationChatIcon } from "@/components/icons";
 
 interface ChatTabProps {
   name: string;
@@ -19,14 +22,15 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
 
   useEffect(() => {
     const pathParts = location.pathname.split("/");
+
     setCurrentConvoId(pathParts[pathParts.length - 1]);
   }, [location.pathname]);
 
   return (
     <div
       className="relative flex"
-      onMouseOver={() => setButtonHovered(true)}
       onMouseOut={() => setButtonHovered(false)}
+      onMouseOver={() => setButtonHovered(true)}
     >
       <Button
         className={`w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
@@ -40,15 +44,15 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
         <div className="flex items-center gap-2 w-full">
           {starred ? (
             <Star
-              width="19"
               className="min-w-[17px] w-[17px]"
               color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+              width="19"
             />
           ) : (
             <BubbleConversationChatIcon
-              width="19"
               className="min-w-[17px] w-[17px]"
               color={currentConvoId === id ? "#00bbff" : "#9b9b9b"}
+              width="19"
             />
           )}
           <span className="truncate w-[200px] text-left">

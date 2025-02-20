@@ -8,10 +8,12 @@ import {
   ModalBody,
   ModalFooter,
 } from "@heroui/modal";
+
 // import Lottie from "react-lottie";
 // import recordingAnimation from "../lotties/recording.json";
-import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 import { Button } from "@heroui/button";
+
+import { Cancel01Icon, Tick02Icon, Mic02Icon } from "../icons";
 
 // Define props type for the MicrophoneBtn component
 interface MicrophoneBtnProps {
@@ -35,6 +37,7 @@ MicrophoneBtnProps) {
     ) {
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
+
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
@@ -47,6 +50,7 @@ MicrophoneBtnProps) {
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const result = event.results[i];
           const transcript = result[0].transcript;
+
           if (result.isFinal) {
             finalTranscript += transcript + " ";
           } else {
@@ -100,10 +104,10 @@ MicrophoneBtnProps) {
     <>
       <Button
         isIconOnly
-        radius="full"
         aria-label="Microphone"
-        variant="light"
         isDisabled={loading}
+        radius="full"
+        variant="light"
         onPress={() => {
           setOpen(true);
           startRecording();
@@ -112,12 +116,12 @@ MicrophoneBtnProps) {
         <Mic02Icon />
       </Button>
       <Modal
-        isOpen={open}
-        onOpenChange={setOpen}
+        hideCloseButton
         backdrop="opaque"
         classNames={{ base: "w-full max-w-md p-4 dark text-white" }}
+        isOpen={open}
         onClose={handleClose}
-        hideCloseButton
+        onOpenChange={setOpen}
       >
         <ModalContent>
           <ModalHeader className="flex flex-col items-center">
@@ -147,18 +151,18 @@ MicrophoneBtnProps) {
           </ModalBody>
           <ModalFooter className="flex w-full justify-center space-x-4">
             <Button
-              color="danger"
-              onPress={handleClose}
               isIconOnly
+              color="danger"
               variant="flat"
+              onPress={handleClose}
             >
               <Cancel01Icon color="red" />
             </Button>
             <Button
-              color="success"
-              onPress={handleSubmit}
               isIconOnly
+              color="success"
               variant="flat"
+              onPress={handleSubmit}
             >
               <Tick02Icon color="green" />
             </Button>

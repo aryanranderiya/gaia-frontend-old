@@ -2,9 +2,11 @@
 // import StarterText from "../Chat/StarterText";
 // import { useState } from "react";
 import { Safari } from "../../ui/safari";
+
 // import { Spinner } from "@heroui/spinner";
-import { ShineBorder } from "@/components/ui/shine-border";
 import { AnimatedSection } from "../misc/AnimatedSection";
+
+import { ShineBorder } from "@/components/ui/shine-border";
 
 export default function ImagePreview() {
   // const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -35,15 +37,15 @@ export default function ImagePreview() {
 
           {/* shadow-[0px_0px_200px_#00bbff70] animate-pulse-shadow */}
           <ShineBorder
+            borderRadius={10}
+            borderWidth={3}
             className="size-full w-fit !min-w-fit rounded-xl bg-zinc-800 p-0 animate-pulse-shadow"
             color={["#00bbff", "#27272a"]}
-            borderWidth={3}
             duration={7}
-            borderRadius={10}
           >
             <Safari
-              url="heygaia.io"
               mode="simple"
+              url="heygaia.io"
               className="w-full h-fit"
               // handleImageLoad={handleImageLoad}
               imageSrc="/landing/screenshot.png"
@@ -51,12 +53,12 @@ export default function ImagePreview() {
           </ShineBorder>
 
           <div className=" absolute -left-28 top-0 h-full flex items-start">
-            <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl top-24 relative outline outline-2 outline-zinc-700"></div>
+            <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl top-24 relative outline outline-2 outline-zinc-700" />
           </div>
 
           <div className=" absolute -right-28 top-0 h-full flex items-end">
             <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl bottom-24 relative outline outline-2 outline-zinc-700 flex items-center justify-center">
-              <div className="pingspinner !min-h-[100px] !min-w-[100px]"></div>
+              <div className="pingspinner !min-h-[100px] !min-w-[100px]" />
             </div>
           </div>
         </div>

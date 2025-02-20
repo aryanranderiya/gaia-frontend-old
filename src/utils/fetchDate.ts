@@ -41,5 +41,6 @@ export function parseDate2(isoDateString: string): string {
   const optionsMonth: Intl.DateTimeFormatOptions = { month: "short" };
   const month = date.toLocaleString(navigator.language, optionsMonth);
   const day = date.getDate();
+
   return `${day}${nth(day)} ${month}`.trim();
 }

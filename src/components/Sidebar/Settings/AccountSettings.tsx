@@ -1,6 +1,8 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
+
 import { Logout02Icon, Mail01Icon, UserIcon } from "../../icons";
+
 import { ModalAction } from "./SettingsMenu";
 
 export default function AccountSection({
@@ -36,9 +38,9 @@ export default function AccountSection({
 
         <div className="flex items-center gap-3 bg-black/40 p-3 rounded-2xl">
           <Avatar
-            src="https://github.com/aryanranderiya.png"
-            size="lg"
             className="aspect-square"
+            size="lg"
+            src="https://github.com/aryanranderiya.png"
           />
 
           <Button size="sm" variant="flat">
@@ -53,10 +55,10 @@ export default function AccountSection({
           Logout
         </div>
         <Button
+          className="w-1/5"
+          color="danger"
           radius="sm"
           variant="flat"
-          color="danger"
-          className="w-1/5"
           onPress={() => setModalAction("logout")}
         >
           Logout

@@ -26,57 +26,57 @@ export const Spotlight = ({
 }: SpotlightProps = {}) => {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-      }}
       animate={{
         opacity: 1,
+      }}
+      className="pointer-events-none absolute inset-0 h-full w-full"
+      initial={{
+        opacity: 0,
       }}
       transition={{
         duration: 1.5,
       }}
-      className="pointer-events-none absolute inset-0 h-full w-full"
     >
       <motion.div
         animate={{
           x: [0, xOffset, 0],
         }}
+        className="absolute top-0 left-0 w-screen h-screen z-40 pointer-events-none"
         transition={{
           duration,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut",
         }}
-        className="absolute top-0 left-0 w-screen h-screen z-40 pointer-events-none"
       >
         <div
+          className={`absolute top-0 left-0`}
           style={{
             transform: `translateY(${translateY}px) rotate(-45deg)`,
             background: gradientFirst,
             width: `${width}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 left-0`}
         />
 
         <div
+          className={`absolute top-0 left-0 origin-top-left`}
           style={{
             transform: "rotate(-45deg) translate(5%, -50%)",
             background: gradientSecond,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 left-0 origin-top-left`}
         />
 
         <div
+          className={`absolute top-0 left-0 origin-top-left`}
           style={{
             transform: "rotate(-45deg) translate(-180%, -70%)",
             background: gradientThird,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 left-0 origin-top-left`}
         />
       </motion.div>
 
@@ -84,42 +84,42 @@ export const Spotlight = ({
         animate={{
           x: [0, -xOffset, 0],
         }}
+        className="absolute top-0 right-0 w-screen h-screen z-40 pointer-events-none"
         transition={{
           duration,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut",
         }}
-        className="absolute top-0 right-0 w-screen h-screen z-40 pointer-events-none"
       >
         <div
+          className={`absolute top-0 right-0`}
           style={{
             transform: `translateY(${translateY}px) rotate(45deg)`,
             background: gradientFirst,
             width: `${width}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 right-0`}
         />
 
         <div
+          className={`absolute top-0 right-0 origin-top-right`}
           style={{
             transform: "rotate(45deg) translate(-5%, -50%)",
             background: gradientSecond,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 right-0 origin-top-right`}
         />
 
         <div
+          className={`absolute top-0 right-0 origin-top-right`}
           style={{
             transform: "rotate(45deg) translate(180%, -70%)",
             background: gradientThird,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
-          className={`absolute top-0 right-0 origin-top-right`}
         />
       </motion.div>
     </motion.div>

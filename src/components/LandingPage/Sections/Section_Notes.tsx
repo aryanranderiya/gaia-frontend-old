@@ -4,15 +4,15 @@ import LandingPage1Layout from "@/layouts/LandingPage1";
 export default function Section_Notes() {
   return (
     <LandingPage1Layout
+      className="col-span-2"
       heading="Your AI Assistant that remembers"
-      subheading="Take Notes & Memories for the assistant to remember important details"
       icon={
         <StickyNote01Icon
-          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
+          color="#9b9b9b"
         />
       }
-      className="col-span-2"
+      subheading="Take Notes & Memories for the assistant to remember important details"
     >
       hey there
     </LandingPage1Layout>

@@ -1,10 +1,11 @@
+import { Button as NextUIBtn } from "@heroui/button";
+import { useGoogleLogin } from "@react-oauth/google";
+import { Link, useNavigate } from "react-router-dom";
+
 import { GoogleCalendar, GoogleColouredIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 // import { Button  } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
-import { Button as NextUIBtn } from "@heroui/button";
-import { useGoogleLogin } from "@react-oauth/google";
-import { Link, useNavigate } from "react-router-dom";
 // import BubblePitFooter from "@/components/BubblePitFooter";
 
 export function Calendaradd() {
@@ -13,7 +14,7 @@ export function Calendaradd() {
       <div className="">Would you like to add this event to your Calendar?</div>
 
       <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
-        <GoogleCalendar width={25} height={35} />
+        <GoogleCalendar height={35} width={25} />
         <div className="flex flex-col gap-1">
           <div>
             <div className="font-medium">Meeting with Sarah</div>
@@ -52,6 +53,7 @@ export default function LoginSignup({
       const tokens = await apiauth.post("/oauth/callback", {
         code: codeResponse.code,
       });
+
       navigate("/try/chat");
       console.log(tokens);
     },
@@ -75,21 +77,21 @@ export default function LoginSignup({
           </div>
         </div>
         <Button
-          onClick={() => handleGoogleLogin()}
-          variant="secondary"
           className="rounded-full text-md gap-2 px-4"
-          type="button"
           size={"lg"}
+          type="button"
+          variant="secondary"
+          onClick={() => handleGoogleLogin()}
         >
           <GoogleColouredIcon />
           {isLogin ? "Sign in" : "Sign up"} with Google
         </Button>
         <Link to={isLogin ? "/get-started" : "/login"}>
           <Button
-            variant="link"
             className="rounded-full text-md gap-2 px-4 text-primary font-normal"
-            type="button"
             size={"lg"}
+            type="button"
+            variant="link"
           >
             {isLogin
               ? "New to GAIA? Create an Account"

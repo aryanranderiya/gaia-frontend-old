@@ -28,22 +28,22 @@ const list: {
   {
     title: "Cross-Platform",
     description: "Available on multiple devices",
-    icon: <ComputerPhoneSyncIcon width={35} height={35} />,
+    icon: <ComputerPhoneSyncIcon height={35} width={35} />,
   },
   {
     title: "Voice Activated",
     description: "Activated using your voice",
-    icon: <VoiceIcon width={35} height={35} />,
+    icon: <VoiceIcon height={35} width={35} />,
   },
   {
     title: "Expense Tracking",
     description: "Seamlessly track your expenses through messaging",
-    icon: <MoneyBag02Icon width={35} height={35} />,
+    icon: <MoneyBag02Icon height={35} width={35} />,
   },
   {
     title: "Email Management",
     description: "Manage your Emails",
-    icon: <Mail01Icon width={35} height={35} />,
+    icon: <Mail01Icon height={35} width={35} />,
   },
   // {
   //   title: "Save Messages",
@@ -58,7 +58,7 @@ const list: {
   {
     title: "End-to-End Encryption",
     description: "Support for End to End Encryption for increased privacy",
-    icon: <BubbleChatLockIcon width={35} height={35} />,
+    icon: <BubbleChatLockIcon height={35} width={35} />,
   },
 
   // {
@@ -76,9 +76,9 @@ const list: {
     description: "Integrate into existing workspaces",
     icon: (
       <div className="flex gap-2">
-        <GoogleDriveIcon width={35} height={35} />
-        <CalendarIcon width={35} height={35} />
-        <Mail01Icon width={35} height={35} />
+        <GoogleDriveIcon height={35} width={35} />
+        <CalendarIcon height={35} width={35} />
+        <Mail01Icon height={35} width={35} />
       </div>
     ),
   },
@@ -121,10 +121,10 @@ export default function Section_ComingSoon() {
           {list.map((item, index) => (
             <Feature
               key={index}
+              className={item.className}
+              description={item.description}
               icon={item.icon}
               title={item.title}
-              description={item.description}
-              className={item.className}
             />
           ))}
         </div>

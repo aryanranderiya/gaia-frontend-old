@@ -1,5 +1,6 @@
 import { Button } from "@heroui/button";
 import { useNavigate } from "react-router-dom";
+
 import { LinkBackwardIcon } from "@/components/icons";
 
 export default function PageNotFound() {
@@ -10,13 +11,13 @@ export default function PageNotFound() {
       <span className="text-6xl font-bold">404</span>
       <span className="text-4xl">Page Not Found</span>
       <Button
-        onClick={() => navigate(-1)}
-        startContent={
-          <LinkBackwardIcon fill="foreground" color="transparent" />
-        }
-        size="md"
-        color="primary"
         className="font-medium text-lg mt-3"
+        color="primary"
+        size="md"
+        startContent={
+          <LinkBackwardIcon color="transparent" fill="foreground" />
+        }
+        onClick={() => navigate(-1)}
       >
         Go Back
       </Button>

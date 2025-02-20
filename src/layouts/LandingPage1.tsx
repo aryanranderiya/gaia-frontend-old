@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
+
+import { cn } from "@/lib/utils";
 
 interface Layout1Props {
   children: ReactNode;
@@ -24,7 +25,7 @@ export default function LandingPage1Layout({
     <div
       className={cn(
         "sm:h-full sm:min-h-fit flex flex-col justify-start items-center sm:gap-7 w-full p-4 bg-zinc-900 rounded-3xl outline outline-zinc-800 hover:outline-primary transition-all",
-        className
+        className,
       )}
     >
       <div className="flex items-start flex-col justify-start gap-5 w-full">

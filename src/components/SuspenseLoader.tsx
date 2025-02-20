@@ -12,7 +12,7 @@ export default function SuspenseLoader({
         fullWidth ? "w-screen" : "w-full"
       } flex items-center justify-center p-3`}
     >
-      <Loader className="animate-spin text-primary" width={30} height={30} />
+      <Loader className="animate-spin text-primary" height={30} width={30} />
       {/* <Spinner size="lg" color="primary" /> */}
     </div>
   );

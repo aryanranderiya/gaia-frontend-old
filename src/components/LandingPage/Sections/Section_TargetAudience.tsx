@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import {
   BriefcaseBusiness,
   Code,
@@ -6,6 +5,8 @@ import {
   Handshake,
 } from "lucide-react";
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+
+import { cn } from "@/lib/utils";
 
 interface TargetCardProps {
   title: string;
@@ -32,13 +33,13 @@ const TargetCard = ({
   setCurrent,
 }: TargetCardProps) => (
   <div
-    onClick={() => setCurrent({ title, description, icon, img })}
     className={cn(
       current?.title === title && current?.description === description
         ? "text-white "
         : "text-foreground-400 hover:text-foreground-600",
-      "cursor-pointer transition-all"
+      "cursor-pointer transition-all",
     )}
+    onClick={() => setCurrent({ title, description, icon, img })}
   >
     <div className="font-medium sm:text-2xl text-xl flex items-center gap-2">
       {icon}
@@ -96,19 +97,19 @@ export default function TargetAudience() {
           {targetData.map((item, index) => (
             <TargetCard
               key={index}
-              title={item.title}
+              current={current}
               description={item.description}
               icon={item.icon}
               img={item.img}
-              current={current}
               setCurrent={setCurrent}
+              title={item.title}
             />
           ))}
         </div>
         <img
-          src={current.img}
           alt="GAIA Screenshot"
           className="relative sm:top-[10vh] sm:mb-0 mb-3 rounded-2xl outline-zinc-700 outline-[4px] outline overflow-hidden min-w-[95%] max-w-[95%] "
+          src={current.img}
         />
       </div>
     </div>

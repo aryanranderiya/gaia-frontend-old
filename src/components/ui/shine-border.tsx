@@ -33,17 +33,18 @@ export function ShineBorder({
 }: ShineBorderProps) {
   return (
     <div
+      className={cn(
+        "relative min-h-[60px] w-fit min-w-[300px] place-items-center rounded-[--border-radius] bg-white text-black dark:bg-black dark:text-white",
+        className,
+      )}
       style={
         {
           "--border-radius": `${borderRadius}px`,
         } as React.CSSProperties
       }
-      className={cn(
-        "relative min-h-[60px] w-fit min-w-[300px] place-items-center rounded-[--border-radius] bg-white text-black dark:bg-black dark:text-white",
-        className
-      )}
     >
       <div
+        className={`before:bg-shine-size pointer-events-none before:absolute before:inset-0 before:size-full before:rounded-[--border-radius] before:p-[--border-width] before:will-change-[background-position] before:content-[""] before:![-webkit-mask-composite:xor] before:![mask-composite:exclude] before:[background-image:--background-radial-gradient] before:[background-size:300%_300%] before:[mask:--mask-linear-gradient] motion-safe:before:animate-shine`}
         style={
           {
             "--border-width": `${borderWidth}px`,
@@ -55,8 +56,7 @@ export function ShineBorder({
             },transparent,transparent)`,
           } as React.CSSProperties
         }
-        className={`before:bg-shine-size pointer-events-none before:absolute before:inset-0 before:size-full before:rounded-[--border-radius] before:p-[--border-width] before:will-change-[background-position] before:content-[""] before:![-webkit-mask-composite:xor] before:![mask-composite:exclude] before:[background-image:--background-radial-gradient] before:[background-size:300%_300%] before:[mask:--mask-linear-gradient] motion-safe:before:animate-shine`}
-      ></div>
+      />
       {children}
     </div>
   );

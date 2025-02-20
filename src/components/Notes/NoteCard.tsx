@@ -1,8 +1,9 @@
 // import { NoteDialog } from "@/components/Notes/NoteCardDialog";
-import { Note } from "@/pages/Notes";
 import { Chip } from "@heroui/chip";
 // import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { Note } from "@/pages/Notes";
 
 export default function NoteCard({
   note,
@@ -20,7 +21,7 @@ export default function NoteCard({
         // onClick={() => setOpenDialog(true)} // Open dialog on click
       >
         {note.auto_created && (
-          <Chip size="sm" variant="flat" color="primary" className="mb-1">
+          <Chip className="mb-1" color="primary" size="sm" variant="flat">
             Auto Created by GAIA
           </Chip>
         )}

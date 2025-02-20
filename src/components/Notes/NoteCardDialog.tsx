@@ -28,11 +28,11 @@ export function NoteDialog({
 }) {
   return (
     <Modal
-      isOpen={openDialog}
-      onOpenChange={setOpenDialog}
+      backdrop="blur"
       className="dark text-foreground"
       isDismissable={false}
-      backdrop="blur"
+      isOpen={openDialog}
+      onOpenChange={setOpenDialog}
     >
       <ModalContent>
         {/* <ModalHeader className="flex flex-col gap-1">{note.title}</ModalHeader> */}

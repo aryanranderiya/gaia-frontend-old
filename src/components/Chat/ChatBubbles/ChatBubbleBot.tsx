@@ -1,6 +1,3 @@
-import SuspenseLoader from "@/components/SuspenseLoader";
-import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
-import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Skeleton } from "@heroui/skeleton";
@@ -15,13 +12,19 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
+
 import { parseDate } from "../../../utils/fetchDate";
 import { GoogleCalendar, InternetIcon } from "../../icons";
 import { CustomAnchor } from "../MarkdownRenderer";
+
 import {
   ChatBubble_Actions,
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
+
+import { apiauth } from "@/utils/apiaxios";
+import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
+import SuspenseLoader from "@/components/SuspenseLoader";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
@@ -48,7 +51,7 @@ export default function ChatBubbleBot({
   const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
-    "Uploading Document..."
+    "Uploading Document...",
   );
 
   // Update file scanning text while the document is processing
@@ -114,14 +117,14 @@ export default function ChatBubbleBot({
             <div className="text-sm font-medium w-full flex flex-col gap-2 flex-wrap max-w-[350px] my-1">
               <span>{text}</span>
               <Skeleton
-                isLoaded={!loading && !imageLoaded && !!imageSrc}
                 className="rounded-3xl my-2 max-w-[250px] min-w-[250px] max-h-[250px] min-h-[250px] aspect-square"
+                isLoaded={!loading && !imageLoaded && !!imageSrc}
               >
                 <img
+                  className="rounded-3xl my-2 !cursor-pointer"
+                  height="250px"
                   src={imageSrc as string}
                   width="250px"
-                  height="250px"
-                  className="rounded-3xl my-2 !cursor-pointer"
                   onClick={() => {
                     if (imageSrc) {
                       setOpenImage(true);
@@ -132,8 +135,8 @@ export default function ChatBubbleBot({
                       });
                     }
                   }}
-                  onLoad={() => setImageLoaded(true)}
                   onError={() => setImageLoaded(true)}
+                  onLoad={() => setImageLoaded(true)}
                 />
               </Skeleton>
               {imagePrompt && (
@@ -141,10 +144,10 @@ export default function ChatBubbleBot({
                   {imagePrompt.split(",").map((keyword, index) => (
                     <Chip
                       key={index}
-                      color="default"
-                      size="sm"
-                      radius="md"
                       className="text-wrap min-h-fit py-1"
+                      color="default"
+                      radius="md"
+                      size="sm"
                     >
                       {keyword.trim()}
                     </Chip>
@@ -167,9 +170,9 @@ export default function ChatBubbleBot({
             <div className="flex flex-col gap-3">
               {searchWeb && (
                 <Chip
-                  startContent={<InternetIcon height={20} color="#00bbff" />}
-                  variant="flat"
                   color="primary"
+                  startContent={<InternetIcon color="#00bbff" height={20} />}
+                  variant="flat"
                 >
                   <div className="font-medium flex items-center gap-1 text-primary">
                     Live Search Results from the Web
@@ -179,9 +182,9 @@ export default function ChatBubbleBot({
 
               {!!pageFetchURL && (
                 <Chip
-                  startContent={<ArrowUpRight height={20} color="#00bbff" />}
-                  variant="flat"
                   color="primary"
+                  startContent={<ArrowUpRight color="#00bbff" height={20} />}
+                  variant="flat"
                 >
                   <div className="font-medium flex items-center gap-1 text-primary">
                     Fetched{" "}
@@ -196,19 +199,19 @@ export default function ChatBubbleBot({
               )}
 
               {!!filename && (
-                <Chip variant="flat" color="primary" size="lg">
+                <Chip color="primary" size="lg" variant="flat">
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <Loader2
                         className="animate-spin text-white"
-                        width={17}
                         height={17}
+                        width={17}
                       />
                       {fileScanningText}
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <Check width={17} height={17} className="text-white" />
+                      <Check className="text-white" height={17} width={17} />
                       Document Uploaded!
                     </div>
                   )}
@@ -223,16 +226,16 @@ export default function ChatBubbleBot({
 
               {!!disclaimer && (
                 <Chip
-                  size="sm"
-                  color="warning"
-                  variant="flat"
                   className="text-xs font-medium text-warning-500"
+                  color="warning"
+                  size="sm"
                   startContent={
                     <AlertTriangleIcon
-                      height="17"
                       className="text-warning-500"
+                      height="17"
                     />
                   }
+                  variant="flat"
                 >
                   {disclaimer}
                 </Chip>
@@ -249,7 +252,7 @@ export default function ChatBubbleBot({
                 <div>Would you like to add this event to your Calendar?</div>
 
                 <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3">
-                  <GoogleCalendar width={25} height={35} />
+                  <GoogleCalendar height={35} width={25} />
                   <div className="flex flex-col gap-1">
                     <div>
                       <div className="font-medium">
@@ -263,7 +266,7 @@ export default function ChatBubbleBot({
                       From{" "}
                       {calendar_options?.start
                         ? String(
-                            new Date(calendar_options.start).toDateString()
+                            new Date(calendar_options.start).toDateString(),
                           )
                         : ""}
                     </div>
@@ -277,10 +280,10 @@ export default function ChatBubbleBot({
                 </div>
 
                 <Button
-                  color="primary"
                   className="w-full"
-                  onPress={addToCalendar}
+                  color="primary"
                   isLoading={eventAddLoading}
+                  onPress={addToCalendar}
                 >
                   Add Event
                 </Button>
@@ -336,9 +339,9 @@ export default function ChatBubbleBot({
   return (
     (!!text || loading || isImage) && (
       <div
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
         id={message_id}
+        onMouseOut={handleMouseOut}
+        onMouseOver={handleMouseOver}
       >
         <div className="chatbubblebot_parent">
           <div className="chat_bubble_container">{renderedComponent}</div>
@@ -346,21 +349,21 @@ export default function ChatBubbleBot({
 
         {!loading && (
           <div
-            className="transition-all"
             ref={actionsRef}
+            className="transition-all"
             style={{ opacity: 0, visibility: "hidden" }}
           >
             {isImage ? (
               <ChatBubble_Actions_Image
-                src={imageSrc as string}
                 imagePrompt={imagePrompt}
+                src={imageSrc as string}
               />
             ) : (
               <ChatBubble_Actions
-                message_id={message_id}
                 loading={loading}
-                text={text}
+                message_id={message_id}
                 pinned={pinned}
+                text={text}
               />
             )}
           </div>

@@ -30,10 +30,12 @@ export const NotLoggedDialogOpenProvider: React.FC<
 
 export const useNotLoggedDialogOpen = (): NotLoggedDialogOpenContextType => {
   const context = useContext(NotLoggedDialogOpenContext);
+
   if (!context) {
     throw new Error(
-      "useNotLoggedDialogOpen must be used within a NotLoggedDialogOpenProvider"
+      "useNotLoggedDialogOpen must be used within a NotLoggedDialogOpenProvider",
     );
   }
+
   return context;
 };

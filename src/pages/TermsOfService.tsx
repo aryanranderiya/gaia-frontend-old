@@ -1,4 +1,3 @@
-
 const TermsOfService = () => {
   return (
     <div className="terms-of-service p-6">
@@ -148,8 +147,8 @@ const TermsOfService = () => {
         <br />
         Email:{" "}
         <a
-          href="mailto:aryan.k.randeriya@gmail.com"
           className="text-blue-500 underline"
+          href="mailto:aryan.k.randeriya@gmail.com"
         >
           aryan.k.randeriya@gmail.com
         </a>

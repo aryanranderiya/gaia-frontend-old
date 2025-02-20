@@ -1,9 +1,10 @@
-import ChatRenderer from "@/components/Chat/ChatRenderer";
-import MainSearchbar from "@/components/Chat/MainSearchbar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import debounce from "lodash.debounce";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+
+import ChatRenderer from "@/components/Chat/ChatRenderer";
+import MainSearchbar from "@/components/Chat/MainSearchbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const MainChat = React.memo(function MainChat() {
   const convoRef = useRef<HTMLDivElement>(null);
@@ -38,15 +39,15 @@ const MainChat = React.memo(function MainChat() {
   return (
     <>
       <ScrollArea onScrollCapture={handleScroll}>
-        <div className="conversation_history" ref={convoRef}>
+        <div ref={convoRef} className="conversation_history">
           <ChatRenderer />
         </div>
       </ScrollArea>
       <MainSearchbar
-        scrollToBottom={scrollToBottom}
+        inputRef={inputRef}
         isAtBottom={isAtBottom}
         isOverflowing={false}
-        inputRef={inputRef}
+        scrollToBottom={scrollToBottom}
       />
     </>
   );

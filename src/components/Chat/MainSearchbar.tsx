@@ -1,3 +1,16 @@
+import { Button } from "@heroui/button";
+import { Input, Textarea } from "@heroui/input";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { GlobalSearchIcon } from "../icons";
+
+import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
+import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
+
+import { useConversation } from "@/hooks/useConversation";
+import { useLoading } from "@/contexts/LoadingContext";
 import {
   Dialog,
   DialogContent,
@@ -6,16 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useLoading } from "@/contexts/LoadingContext";
-import { useConversation } from "@/hooks/useConversation";
-import { Button } from "@heroui/button";
-import { Input, Textarea } from "@heroui/input";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { GlobalSearchIcon } from "../icons";
-import SearchbarLeftDropdown from "./SearchbarLeftDropdown";
-import SearchbarRightSendBtn from "./SearchbarRightSendBtn";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;
@@ -51,7 +54,7 @@ const MainSearchbar = ({
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
@@ -71,6 +74,7 @@ const MainSearchbar = ({
   function isValidURL(url: string) {
     try {
       new URL(url);
+
       return true;
     } catch {
       return false;
@@ -87,10 +91,10 @@ const MainSearchbar = ({
         >
           <Button
             isIconOnly
-            onPress={scrollToBottom}
+            className="pointer-events-auto"
             radius="full"
             size="sm"
-            className="pointer-events-auto"
+            onPress={scrollToBottom}
           >
             <ArrowDown width={18} />
           </Button>
@@ -99,12 +103,12 @@ const MainSearchbar = ({
         <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
           <div className="flex items-center justify-between mb-1 gap-1">
             <button
-              type="button"
               className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
                 enableSearch
                   ? "bg-primary text-white hover:bg-[#00bbffAA]"
                   : "bg-zinc-800  text-zinc-400 hover:bg-zinc-700"
               }`}
+              type="button"
               onClick={toggleSearch}
             >
               <span className="text-nowrap">Web Search</span>
@@ -116,12 +120,12 @@ const MainSearchbar = ({
             </button>
 
             <button
-              type="button"
               className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
                 pageFetchURL.length > 0 && !fetchPageModal
                   ? "bg-primary text-white hover:bg-[#00bbffAA]"
                   : "bg-zinc-800  text-zinc-400 hover:bg-zinc-700"
               }`}
+              type="button"
               onClick={openPageFetchModal}
             >
               <span className="text-nowrap">Fetch Page</span>
@@ -175,34 +179,34 @@ const MainSearchbar = ({
           </div>
           <form onSubmit={handleFormSubmit}>
             <Textarea
-              disabled={loading && isLoading}
-              radius="full"
-              size="lg"
-              placeholder="Ask gaia..."
-              onValueChange={setSearchbarText}
-              onKeyDown={handleKeyDown}
-              value={searchbarText}
               ref={inputRef}
               autoFocus
-              isInvalid={searchbarText.length > 10000}
-              onHeightChange={(height: number) => setHeight(height)}
-              minRows={1}
-              maxRows={13}
-              endContent={
-                <SearchbarRightSendBtn
-                  loading={loading}
-                  searchbarText={searchbarText}
-                  setSearchbarText={setSearchbarText}
-                  handleFormSubmit={handleFormSubmit}
-                />
-              }
               classNames={{
                 inputWrapper: "p-[6px] data-[hover=true]:bg-zinc-900",
                 innerWrapper: `${
                   currentHeight > 24 ? "items-end" : "items-center"
                 }`,
               }}
+              disabled={loading && isLoading}
+              endContent={
+                <SearchbarRightSendBtn
+                  handleFormSubmit={handleFormSubmit}
+                  loading={loading}
+                  searchbarText={searchbarText}
+                  setSearchbarText={setSearchbarText}
+                />
+              }
+              isInvalid={searchbarText.length > 10000}
+              maxRows={13}
+              minRows={1}
+              placeholder="Ask gaia..."
+              radius="full"
+              size="lg"
               startContent={<SearchbarLeftDropdown loading={loading} />}
+              value={searchbarText}
+              onHeightChange={(height: number) => setHeight(height)}
+              onKeyDown={handleKeyDown}
+              onValueChange={setSearchbarText}
             />
           </form>
         </div>
@@ -217,14 +221,14 @@ const MainSearchbar = ({
           </DialogHeader>
 
           <Input
-            label="Enter URL"
-            onValueChange={setPageFetchURL}
-            value={pageFetchURL}
-            isInvalid={!isValidURL(pageFetchURL) && pageFetchURL.length > 0}
             errorMessage="Please enter a valid URL! (starting with https://)"
+            isInvalid={!isValidURL(pageFetchURL) && pageFetchURL.length > 0}
+            label="Enter URL"
+            value={pageFetchURL}
             onKeyPress={(e) => {
               if (e.key === "Enter") setFetchPageModal(false);
             }}
+            onValueChange={setPageFetchURL}
           />
           <DialogFooter>
             <Button

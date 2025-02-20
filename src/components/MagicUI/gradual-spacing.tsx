@@ -28,12 +28,12 @@ export default function GradualSpacing({
         {text.split("").map((char, i) => (
           <motion.h1
             key={i}
-            initial="hidden"
             animate="visible"
-            exit="hidden"
-            variants={framerProps}
-            transition={{ duration, delay: i * delayMultiple }}
             className={cn("drop-shadow-sm ", className)}
+            exit="hidden"
+            initial="hidden"
+            transition={{ duration, delay: i * delayMultiple }}
+            variants={framerProps}
           >
             {char === " " ? <span>&nbsp;</span> : char}
           </motion.h1>

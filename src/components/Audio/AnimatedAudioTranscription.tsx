@@ -1,5 +1,14 @@
 "use client";
 
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
+import { Tooltip } from "@heroui/tooltip";
+import { AnimatePresence } from "framer-motion";
+import { Send, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import { Mic02Icon } from "../icons";
+
 import {
   Dialog,
   DialogContent,
@@ -7,13 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@heroui/button";
-import { Textarea } from "@heroui/input";
-import { Tooltip } from "@heroui/tooltip";
-import { AnimatePresence } from "framer-motion";
-import { Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Mic02Icon } from "../icons";
 // import MicrophoneBtn from "./MicrophoneBtn";
 
 export default function AnimatedAudioTranscription({
@@ -75,6 +77,7 @@ export default function AnimatedAudioTranscription({
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       setError("Your browser does not support audio recording.");
+
       return;
     }
 
@@ -95,13 +98,13 @@ export default function AnimatedAudioTranscription({
       });
 
       sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
-        streamRef.current
+        streamRef.current,
       );
 
       processorRef.current = audioContextRef.current.createScriptProcessor(
         4096,
         1,
-        1
+        1,
       );
 
       processorRef.current.onaudioprocess = (e) => {
@@ -172,12 +175,12 @@ export default function AnimatedAudioTranscription({
           <Button
             // disabled={loading}
             isIconOnly
-            radius="full"
             aria-label="Send message"
+            className="mr-1"
             color="default"
+            radius="full"
             type="button"
             variant="faded"
-            className="mr-1"
             onPress={() => setIsOpen(true)}
             // className={`${loading && "cursor-wait"}`}
           >
@@ -215,9 +218,9 @@ export default function AnimatedAudioTranscription({
                   {" "}
                   <Mic02Icon
                     className="text-xl"
-                    width={50}
-                    height={50}
                     color="white"
+                    height={50}
+                    width={50}
                   />
                 </div>
               </div>
@@ -225,26 +228,26 @@ export default function AnimatedAudioTranscription({
           </div>
           {transcription && (
             <Textarea
-              label="Your message transcription"
-              onValueChange={setTranscription}
-              value={transcription}
               className="dark"
+              label="Your message transcription"
               maxRows={7}
+              value={transcription}
               variant="faded"
+              onValueChange={setTranscription}
             >
               {transcription}
             </Textarea>
           )}
           {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="flex justify-center gap-5 mt-3">
-            <Button onClick={handleCancel} variant="flat" color="danger">
+            <Button color="danger" variant="flat" onClick={handleCancel}>
               <X className="mr-2 h-4 w-4" />
               Cancel
             </Button>
             <Button
-              onClick={handleSend}
-              disabled={!transcription}
               color="primary"
+              disabled={!transcription}
+              onClick={handleSend}
             >
               <Send className="mr-2 h-4 w-4" />
               Submit

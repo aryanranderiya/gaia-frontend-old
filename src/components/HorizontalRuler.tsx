@@ -10,12 +10,12 @@ export const ColoredLine = ({
   className,
 }: ColoredLineProps) => (
   <hr
+    className={className}
     style={{
       height: 2,
       borderColor: color,
       width: width,
     }}
-    className={className}
   />
 );
 

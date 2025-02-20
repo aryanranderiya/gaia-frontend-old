@@ -3,6 +3,7 @@ import { Tab, Tabs } from "@heroui/tabs";
 import { Download, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
 import { Key, useCallback, useEffect, useRef, useState } from "react";
+
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
@@ -71,7 +72,7 @@ const FlowchartDemo = () => {
         y: e.clientY - position.y,
       });
     },
-    [position]
+    [position],
   );
 
   const handleMouseMove = useCallback(
@@ -83,7 +84,7 @@ const FlowchartDemo = () => {
         });
       }
     },
-    [isDragging, startPosition]
+    [isDragging, startPosition],
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -92,13 +93,14 @@ const FlowchartDemo = () => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!
+      mermaidRef.current.querySelector("svg")!,
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",
     });
     const svgUrl = URL.createObjectURL(svgBlob);
     const downloadLink = document.createElement("a");
+
     downloadLink.href = svgUrl;
     downloadLink.download = "mermaid-diagram.svg";
     document.body.appendChild(downloadLink);
@@ -109,13 +111,16 @@ const FlowchartDemo = () => {
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaY * -0.01;
+
     setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3));
   }, []);
 
   useEffect(() => {
     const element = mermaidRef.current;
+
     if (element) {
       element.addEventListener("wheel", handleWheel, { passive: false });
+
       return () => {
         element.removeEventListener("wheel", handleWheel);
       };
@@ -125,10 +130,10 @@ const FlowchartDemo = () => {
   return (
     <LandingPage1Layout
       heading={"Create flowcharts"}
-      subheading={"Easily turn ideas into clear, interactive visuals instantly"}
       icon={
-        <FlowchartIcon color="#9b9b9b" className="sm:size-[30px] size-[30px]" />
+        <FlowchartIcon className="sm:size-[30px] size-[30px]" color="#9b9b9b" />
       }
+      subheading={"Easily turn ideas into clear, interactive visuals instantly"}
     >
       <div className="w-100% flex justify-end">
         <div className="w-[95%]">
@@ -144,17 +149,17 @@ const FlowchartDemo = () => {
         </div>
         <div className="relative flex flex-col gap-0 bg-zinc-950 !rounded-[15px] overflow-hidden">
           <Tabs
+            className="px-3"
             selectedKey={activeTab}
+            variant="underlined"
             onSelectionChange={(key: Key) => {
               setActiveTab(key as string);
               setTimeout(() => {
                 mermaid.contentLoaded();
               }, 10);
             }}
-            variant="underlined"
-            className="px-3"
           >
-            <Tab key="preview" title="Flowchart" className="p-0">
+            <Tab key="preview" className="p-0" title="Flowchart">
               <div className="p-4 bg-zinc-950 relative overflow-hidden h-[320px] ">
                 <div
                   ref={mermaidRef}
@@ -167,9 +172,9 @@ const FlowchartDemo = () => {
                     cursor: isDragging ? "grabbing" : "grab",
                   }}
                   onMouseDown={handleMouseDown}
+                  onMouseLeave={handleMouseUp}
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseUp}
                 >
                   {String(flowchartCode).replace(/\n$/, "")}
                 </div>
@@ -188,19 +193,19 @@ const FlowchartDemo = () => {
             </Tab>
           </Tabs>
           <Button
-            onPress={handleCopy}
+            className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
             size="sm"
             variant="light"
-            className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
+            onPress={handleCopy}
           >
             {copied ? (
               <div className="flex flex-row gap-1 items-center">
-                <TaskDone01Icon width={21} color="foreground" />
+                <TaskDone01Icon color="foreground" width={21} />
                 <p>Copied!</p>
               </div>
             ) : (
               <div className="flex flex-row gap-1 items-center">
-                <Task01Icon width={21} color="foreground" />
+                <Task01Icon color="foreground" width={21} />
                 <p>Copy Code</p>
               </div>
             )}

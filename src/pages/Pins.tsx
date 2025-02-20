@@ -1,13 +1,14 @@
-import { InternetIcon, PinIcon } from "@/components/icons";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { apiauth } from "@/utils/apiaxios";
-import { parseDate } from "@/utils/fetchDate";
 import { Chip } from "@heroui/chip";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
 import { ArrowUpRight, DeleteIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { parseDate } from "@/utils/fetchDate";
+import { apiauth } from "@/utils/apiaxios";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { InternetIcon, PinIcon } from "@/components/icons";
 
 interface PinCardProps {
   message: {
@@ -28,9 +29,9 @@ export const PinCard: React.FC<PinCardProps> = ({
   return (
     <Link
       key={message.message_id}
-      to={`/try/chat/${conversation_id}`}
-      state={{ messageId: message.message_id }}
       className="bg-black p-3 rounded-xl h-full overflow-hidden max-h-[190px] min-h-[150px] flex flex-col gap-2 outline outline-zinc-800 outline-2 hover:bg-zinc-800 transition-colors relative"
+      state={{ messageId: message.message_id }}
+      to={`/try/chat/${conversation_id}`}
     >
       <Chip
         className="min-h-7"
@@ -40,16 +41,16 @@ export const PinCard: React.FC<PinCardProps> = ({
       </Chip>
 
       <div className="absolute right-1 top-1">
-        <PinIcon width={30} height={30} fill="#00bbff" color="#00bbff" />
+        <PinIcon color="#00bbff" fill="#00bbff" height={30} width={30} />
       </div>
 
       <div>
         {message.searchWeb && (
           <Chip
-            size="sm"
-            startContent={<InternetIcon height={20} color="#00bbff" />}
-            variant="flat"
             color="primary"
+            size="sm"
+            startContent={<InternetIcon color="#00bbff" height={20} />}
+            variant="flat"
           >
             <div className="font-medium flex items-center gap-1 text-primary">
               Live Search Results from the Web
@@ -59,16 +60,17 @@ export const PinCard: React.FC<PinCardProps> = ({
 
         {message.pageFetchURL && (
           <Chip
-            size="sm"
-            startContent={<ArrowUpRight height={20} color="#00bbff" />}
-            variant="flat"
             color="primary"
+            size="sm"
+            startContent={<ArrowUpRight color="#00bbff" height={20} />}
+            variant="flat"
           >
             <div className="font-medium flex items-center gap-1 text-primary">
               Fetched
               <a
-                href={message.pageFetchURL}
                 className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
+                href={message.pageFetchURL}
+                rel="noreferrer"
                 target="_blank"
               >
                 {message.pageFetchURL.replace(/^https?:\/\//, "")}
@@ -101,6 +103,7 @@ export default function Pins() {
     try {
       const response = await apiauth.get("/messages/pinned");
       const results = response.data.results;
+
       setFetchedResults(results);
       setFilteredResults(results);
       console.log(results);
@@ -117,8 +120,9 @@ export default function Pins() {
 
   const filterPins = (query: string) => {
     const filtered = fetchedResults.filter((result) =>
-      result.message.response.toLowerCase().includes(query.toLowerCase())
+      result.message.response.toLowerCase().includes(query.toLowerCase()),
     );
+
     setFilteredResults(filtered);
   };
 
@@ -146,8 +150,8 @@ export default function Pins() {
                     {filteredResults.map((result) => (
                       <PinCard
                         key={result.message.message_id}
-                        message={result.message}
                         conversation_id={result.conversation_id}
+                        message={result.message}
                       />
                     ))}
                   </div>
@@ -170,25 +174,26 @@ export default function Pins() {
                     filterPins("");
                   }}
                 >
-                  Clear Query <DeleteIcon width={17} height={17} />
+                  Clear Query <DeleteIcon height={17} width={17} />
                 </div>
               </div>
             )}
 
             <Input
-              placeholder="Enter a message to filter pins"
-              value={searchQuery}
-              size="lg"
-              variant="faded"
               autoFocus
+              className="w-full"
+              classNames={{ inputWrapper: "pr-1" }}
+              placeholder="Enter a message to filter pins"
               radius="full"
+              size="lg"
+              value={searchQuery}
+              variant="faded"
               onChange={(e) => {
                 const query = e.target.value;
+
                 setSearchQuery(query);
                 filterPins(query);
               }}
-              className="w-full"
-              classNames={{ inputWrapper: "pr-1" }}
             />
           </div>
         </div>

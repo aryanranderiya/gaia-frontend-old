@@ -1,7 +1,9 @@
-import { Brain02Icon } from "@/components/icons";
+import { Chip } from "@heroui/chip";
+
 import { AnimatedSection } from "../misc/AnimatedSection";
 import { SectionHeading } from "../misc/SectionHeading";
-import { Chip } from "@heroui/chip";
+
+import { Brain02Icon } from "@/components/icons";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
@@ -11,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 function LocalNotecard({ plaintext }: { plaintext: string }) {
   return (
     <div className="bg-zinc-950 hover:bg-zinc-800 hover:-translate-y-1 transition-all w-full max-h-fit rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative outline outline-2 outline-zinc-700">
-      <Chip size="sm" variant="flat" color="primary" className="mb-1">
+      <Chip className="mb-1" color="primary" size="sm" variant="flat">
         Auto Created by GAIA
       </Chip>
 
@@ -29,6 +31,7 @@ export default function Section_Memories() {
         <SectionHeading
           className="w-full"
           heading={"An Assistant That Remembers"}
+          icon={<Brain02Icon color="#9b9b9b" height={45} width={45} />}
           subheading={
             <div>
               GAIA remembers what matters to you. Your preferences, past
@@ -40,11 +43,10 @@ export default function Section_Memories() {
               making every chat feel more personalized and helpful.
             </div>
           }
-          icon={<Brain02Icon color="#9b9b9b" width={45} height={45} />}
         />
 
         <div className="w-full px-10 !mt-0">
-          <Tabs defaultValue="chat1" className="h-[280px]">
+          <Tabs className="h-[280px]" defaultValue="chat1">
             <TabsList className="w-full mb-6 rounded-full">
               <TabsTrigger className="rounded-full" value="chat1">
                 Chat 1
@@ -53,15 +55,15 @@ export default function Section_Memories() {
                 Chat 2
               </TabsTrigger>
               <TabsTrigger
-                value="notes"
                 className="flex items-center gap-2 rounded-full"
+                value="notes"
               >
                 <Brain02Icon color="#9b9b9b" />
                 GAIA Memories
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="chat2" className="space-y-4">
+            <TabsContent className="space-y-4" value="chat2">
               <SimpleChatBubbleUser>I am from England, UK</SimpleChatBubbleUser>
 
               <SimpleChatBubbleBot>
@@ -70,7 +72,7 @@ export default function Section_Memories() {
               </SimpleChatBubbleBot>
             </TabsContent>
 
-            <TabsContent value="chat1" className="space-y-4">
+            <TabsContent className="space-y-4" value="chat1">
               <SimpleChatBubbleUser>
                 Hey GAIA! My name is Jake!
               </SimpleChatBubbleUser>

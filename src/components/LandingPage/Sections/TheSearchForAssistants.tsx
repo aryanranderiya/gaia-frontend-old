@@ -1,3 +1,3 @@
 export default function TheSearchForAssistants() {
-  return <div className="relative"></div>;
+  return <div className="relative" />;
 }

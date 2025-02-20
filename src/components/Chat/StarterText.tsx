@@ -2,6 +2,7 @@
 // import { WavingHand01Icon } from "../icons";
 // import img from "/public/gaia.logo.png";
 import { ArrowUpRight } from "lucide-react";
+
 import {
   BlushBrush02Icon,
   Calendar01Icon,
@@ -20,8 +21,8 @@ const badges = [
     textClass: "text-purple-500",
     icon: (
       <FlowchartIcon
-        width={17}
         className="text-purple-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Generate Flowcharts",
@@ -32,8 +33,8 @@ const badges = [
     textClass: "text-emerald-500",
     icon: (
       <BlushBrush02Icon
-        width={17}
         className="text-emerald-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Generate Image",
@@ -44,8 +45,8 @@ const badges = [
     textClass: "text-orange-500",
     icon: (
       <Mic01Icon
-        width={17}
         className="text-orange-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Voice Conversation",
@@ -56,8 +57,8 @@ const badges = [
     textClass: "text-blue-500",
     icon: (
       <GlobalSearchIcon
-        width={17}
         className="text-blue-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Internet Search",
@@ -68,8 +69,8 @@ const badges = [
     textClass: "text-lime-500",
     icon: (
       <ArrowUpRight
-        width={17}
         className="text-lime-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Fetch Webpage",
@@ -80,8 +81,8 @@ const badges = [
     textClass: "text-red-500",
     icon: (
       <Calendar01Icon
-        width={17}
         className="text-red-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Manage Calendar",
@@ -92,8 +93,8 @@ const badges = [
     textClass: "text-cyan-500",
     icon: (
       <StickyNote01Icon
-        width={17}
         className="text-cyan-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Store Memories",
@@ -104,8 +105,8 @@ const badges = [
     textClass: "text-pink-500",
     icon: (
       <Route02Icon
-        width={17}
         className="text-pink-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Manage Goals",
@@ -116,8 +117,8 @@ const badges = [
     textClass: "text-yellow-500",
     icon: (
       <DocumentAttachmentIcon
-        width={17}
         className="text-yellow-500 group-hover:text-white transition-colors"
+        width={17}
       />
     ),
     text: "Chat with Documents",
@@ -130,11 +131,11 @@ export default function StarterText() {
       <div className="text-4xl font-medium grow flex-1 text-center my-4 inline-flex flex-wrap items-center gap-2 justify-center">
         Hey!
         <img
-          src="https://em-content.zobj.net/source/apple/391/waving-hand_1f44b.png"
           alt="Waving Hand"
-          width={50}
-          height={50}
           className="object-contain"
+          height={50}
+          src="https://em-content.zobj.net/source/apple/391/waving-hand_1f44b.png"
+          width={50}
         />
         What can I do for you today?
       </div>

@@ -1,6 +1,7 @@
-import { apiauth } from "@/utils/apiaxios";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { apiauth } from "@/utils/apiaxios";
 
 // Define the shape of the user object
 interface User {
@@ -29,7 +30,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const setUserData = (
     name: string,
     email: string,
-    profile_picture: string
+    profile_picture: string,
   ) => {
     setUser({ name, email, profile_picture });
   };
@@ -41,7 +42,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         {},
         {
           withCredentials: true,
-        }
+        },
       );
 
       if (response.status !== 200) throw new Error("Logout failed");
@@ -63,8 +64,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 // Custom hook to use the UserContext
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
+
   if (!context) {
     throw new Error("useUser must be used within a UserProvider");
   }
+
   return context;
 };

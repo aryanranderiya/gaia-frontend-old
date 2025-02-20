@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import MadeBy from "@/components/LandingPage/misc/MadeBy";
 
 export default function Footer() {
@@ -15,17 +16,17 @@ export default function Footer() {
           <div className="flex flex-col w-fit h-full text-foreground-500">
             <div className="text-xl font-medium text-white">Resources</div>
             <div>
-              <Link to="/blog" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/blog">
                 Blog
               </Link>
             </div>
             <div>
-              <Link to="/contact" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/contact">
                 Contact
               </Link>
             </div>
             <div>
-              <Link to="/faq" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/faq">
                 FAQ
               </Link>
             </div>
@@ -34,12 +35,12 @@ export default function Footer() {
           <div className="flex flex-col w-fit h-full text-foreground-500">
             <div className="text-xl font-medium text-white">Legal</div>
             <div>
-              <Link to="/terms" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/terms">
                 Terms
               </Link>
             </div>
             <div>
-              <Link to="/privacy" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/privacy">
                 Privacy
               </Link>
             </div>
@@ -48,17 +49,17 @@ export default function Footer() {
           <div className="flex flex-col w-fit h-full text-foreground-500">
             <div className="text-xl font-medium text-white">Pages</div>
             <div>
-              <Link to="/page1" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/page1">
                 Page 1
               </Link>
             </div>
             <div>
-              <Link to="/page2" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/page2">
                 Page 2
               </Link>
             </div>
             <div>
-              <Link to="/page3" className="hover:underline hover:text-white">
+              <Link className="hover:underline hover:text-white" to="/page3">
                 Page 3
               </Link>
             </div>

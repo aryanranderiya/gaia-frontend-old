@@ -1,5 +1,3 @@
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { MessageType } from "@/types/ConvoTypes";
 import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
 import {
@@ -12,12 +10,16 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import api from "@/utils/apiaxios";
+import ObjectID from "bson-objectid";
+
 import { BrushIcon } from "../icons";
 import fetchDate from "../../utils/fetchDate";
+
+import api from "@/utils/apiaxios";
 import { ApiService } from "@/utils/chatUtils";
 import { useConversationList } from "@/contexts/ConversationList";
-import ObjectID from "bson-objectid";
+import { MessageType } from "@/types/ConvoTypes";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -58,19 +60,21 @@ export default function GenerateImage({
     conversationId: string,
     newMessages: MessageType[],
     description?: string,
-    replaceLastMessage: boolean = false
+    replaceLastMessage: boolean = false,
   ) => {
     try {
       setConvoMessages((prev) => {
         const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
+
         ApiService.updateConversation(conversationId, newMessages);
+
         return [...baseMessages, ...newMessages];
       });
 
       ApiService.updateConversationDescription(
         conversationId,
         description || "New Chat",
-        fetchConversations
+        fetchConversations,
       );
     } catch (error) {
       console.error("Failed to update conversation:", error);
@@ -79,17 +83,19 @@ export default function GenerateImage({
   };
 
   const createNewConversation = async (
-    initialMessages: MessageType[]
+    initialMessages: MessageType[],
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
+
       await ApiService.createConversation(convoID);
       await updateConversationState(
         convoID,
         initialMessages,
-        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
+        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`,
       );
       navigate(`/try/chat/${convoID}`);
+
       return convoID;
     } catch (error) {
       console.error("Failed to create conversation:", error);
@@ -104,8 +110,9 @@ export default function GenerateImage({
         { message: prompt },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
+
       return [response.data.url, response.data.improved_prompt];
     } catch (error) {
       console.error("Image generation failed:", error);
@@ -173,7 +180,7 @@ export default function GenerateImage({
         conversationId,
         [userMessage, finalBotMessage],
         undefined,
-        true
+        true,
       );
 
       setImagePrompt("");
@@ -195,11 +202,11 @@ export default function GenerateImage({
 
   return (
     <Modal
-      isOpen={openImageDialog}
-      onOpenChange={setOpenImageDialog}
+      hideCloseButton
       backdrop="opaque"
       classNames={{ base: "w-full p-4 dark text-white" }}
-      hideCloseButton
+      isOpen={openImageDialog}
+      onOpenChange={setOpenImageDialog}
     >
       <ModalContent>
         <ModalHeader className="flex flex-col items-center">
@@ -207,18 +214,18 @@ export default function GenerateImage({
         </ModalHeader>
         <ModalBody className="flex justify-center items-center lottie_container">
           <Textarea
+            isRequired
+            color="primary"
+            isDisabled={loading}
             label="Describe the image you want to generate"
             labelPlacement="outside"
-            placeholder="e.g - Futuristic city skyline"
-            startContent={<BrushIcon />}
             maxRows={5}
-            isDisabled={loading}
             minRows={2}
-            isRequired
-            variant="faded"
+            placeholder="e.g - Futuristic city skyline"
             size="lg"
-            color="primary"
+            startContent={<BrushIcon />}
             value={imagePrompt}
+            variant="faded"
             onValueChange={handleInputChange}
             // errorMessage="This is a required input field."
             // isInvalid={!isValid}
@@ -228,20 +235,20 @@ export default function GenerateImage({
         <ModalFooter className="flex w-full justify-center">
           <Button
             color="danger"
-            onPress={() => setOpenImageDialog(false)}
             radius="full"
-            variant="light"
             size="md"
+            variant="light"
+            onPress={() => setOpenImageDialog(false)}
           >
             Cancel
           </Button>
           <Button
             color="primary"
+            disabled={!isValid}
+            isLoading={loading}
+            radius="full"
             size="md"
             onPress={handleSubmit}
-            radius="full"
-            isLoading={loading}
-            disabled={!isValid}
           >
             {loading ? "Generating" : "Generate"}
           </Button>

@@ -1,15 +1,17 @@
-import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
+import { Button } from "@heroui/button";
+import { toast } from "sonner";
+
+import { AnimatedSection } from "../misc/AnimatedSection";
+import { SectionHeading } from "../misc/SectionHeading";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   BubbleConversationChatIcon,
   Calendar01Icon,
   CalendarAdd01Icon,
   GoogleCalendar,
 } from "@/components/icons";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@heroui/button";
-import { toast } from "sonner";
-import { AnimatedSection } from "../misc/AnimatedSection";
-import { SectionHeading } from "../misc/SectionHeading";
+import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 
 function Test() {
   const DummyAddToCalendar = () => {
@@ -29,7 +31,7 @@ function Test() {
           </div>
 
           <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
-            <GoogleCalendar width={25} height={35} />
+            <GoogleCalendar height={35} width={25} />
             <div className="flex flex-col gap-1">
               <div>
                 <div className="font-medium">Meeting with Sarah</div>
@@ -40,8 +42,8 @@ function Test() {
           </div>
 
           <Button
-            color="primary"
             className="w-full"
+            color="primary"
             onPress={DummyAddToCalendar}
             // isLoading={eventAddLoading}
           >
@@ -60,6 +62,7 @@ export default function Section_Calendar() {
         <SectionHeading
           className="w-full"
           heading={"Manage your Calendar"}
+          icon={<CalendarAdd01Icon color="#9b9b9b" height={45} width={45} />}
           subheading={
             <div>
               <div>
@@ -69,10 +72,10 @@ export default function Section_Calendar() {
                 and stay organized with a simple message!
               </div>
               <Button
-                className="w-fit cursor-default mt-4 text-foreground-600"
-                variant="flat"
-                radius="full"
                 disableRipple
+                className="w-fit cursor-default mt-4 text-foreground-600"
+                radius="full"
+                variant="flat"
                 startContent={<GoogleCalendar width={23} />}
                 // variant="faded"
                 // size="lg"
@@ -82,16 +85,15 @@ export default function Section_Calendar() {
               </Button>
             </div>
           }
-          icon={<CalendarAdd01Icon color="#9b9b9b" width={45} height={45} />}
         />
 
-        <Tabs defaultValue="chat" className="w-full h-[340px] overflow-hidden">
+        <Tabs className="w-full h-[340px] overflow-hidden" defaultValue="chat">
           <TabsList className="w-full mb-3 rounded-full">
-            <TabsTrigger value="chat" className="rounded-full">
+            <TabsTrigger className="rounded-full" value="chat">
               <BubbleConversationChatIcon className="mr-2" />
               New Chat
             </TabsTrigger>
-            <TabsTrigger value="calendar" className="rounded-full">
+            <TabsTrigger className="rounded-full" value="calendar">
               <Calendar01Icon className="mr-2" />
               Calendar
             </TabsTrigger>
@@ -101,7 +103,7 @@ export default function Section_Calendar() {
               <Test />
             </div>
           </TabsContent>
-          <TabsContent value="calendar" className="space-y-2 px-10">
+          <TabsContent className="space-y-2 px-10" value="calendar">
             <div className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden">
               <div className="flex items-center gap-2 relative z-[1]">
                 <span className="text-xl">🔔</span>

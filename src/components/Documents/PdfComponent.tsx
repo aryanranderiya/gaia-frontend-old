@@ -1,5 +1,6 @@
 import { Spinner } from "@heroui/spinner";
 import { Document, Page, pdfjs } from "react-pdf";
+
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { Pdf02Icon } from "../icons";
@@ -28,7 +29,7 @@ export function PdfContainer({ file }: PdfContainerProps) {
       )}
 
       <div className="h-[50px] flex w-full items-center gap-2 px-2">
-        <Pdf02Icon color="zinc-600" width="25" height="25" />
+        <Pdf02Icon color="zinc-600" height="25" width="25" />
         <div className="flex flex-col">
           <span className="font-[500] text-small w-[270px] text-ellipsis whitespace-nowrap overflow-hidden">
             {file?.name}
@@ -47,15 +48,15 @@ export function PdfComponent({
 }: PdfComponentProps) {
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url
+    import.meta.url,
   ).toString();
 
   return (
     <Document file={file}>
       <Page
+        loading={<Spinner color="primary" />}
         pageNumber={pageNumber}
         width={width}
-        loading={<Spinner color="primary" />}
       />
     </Document>
   );

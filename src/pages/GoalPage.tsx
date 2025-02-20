@@ -1,7 +1,6 @@
 import { BookIcon1 } from "@/components/icons";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { apiauth } from "@/utils/apiaxios";
+
 import { Checkbox } from "@heroui/checkbox";
 import { Chip } from "@heroui/chip";
 import {
@@ -19,6 +18,9 @@ import dagre from "dagre";
 import { Clock } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { apiauth } from "@/utils/apiaxios";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface GoalData {
   id: string;
@@ -72,7 +74,7 @@ const CustomNode = React.memo(
   }) => {
     return (
       <>
-        <Handle type="target" position={Position.Top} />
+        <Handle position={Position.Top} type="target" />
 
         <div
           className={`${
@@ -92,11 +94,12 @@ const CustomNode = React.memo(
           {data.label}
         </div>
 
-        <Handle type="source" position={Position.Bottom} />
+        <Handle position={Position.Bottom} type="source" />
       </>
     );
-  }
+  },
 );
+
 export default function GoalPage() {
   const [goalData, setGoalData] = useState<GoalData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -119,7 +122,7 @@ export default function GoalPage() {
         />
       ),
     }),
-    [currentlySelectedNodeId]
+    [currentlySelectedNodeId],
   );
 
   const fetchGoalData = async () => {
@@ -135,6 +138,7 @@ export default function GoalPage() {
         setLoading(false);
 
         const graph = new dagre.graphlib.Graph();
+
         graph.setGraph({ rankdir: "TD" });
         graph.setDefaultEdgeLabel(() => ({}));
 
@@ -150,6 +154,7 @@ export default function GoalPage() {
 
         const updatedNodes = goal.roadmap.nodes?.map((node: NodeType) => {
           const { x, y } = graph.node(node.id);
+
           return {
             id: node.id,
             position: { x, y },
@@ -184,6 +189,7 @@ export default function GoalPage() {
     ws.onmessage = (event) => {
       const jsonData = event.data.replace(/^data: /, "");
       const parsedData = JSON.parse(jsonData) || jsonData;
+
       console.log("Parsed WebSocket response:", parsedData);
     };
 
@@ -200,9 +206,10 @@ export default function GoalPage() {
   }, [goalId]);
 
   const handleInit = (
-    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>
+    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>,
   ) => {
     const viewport = reactFlowInstance.getViewport();
+
     reactFlowInstance.setViewport({
       ...viewport,
       x: viewport.x + 75,
@@ -217,7 +224,7 @@ export default function GoalPage() {
 
     // Find the currently selected node
     const selectedNode = nodes.find(
-      (node) => node.id === currentlySelectedNodeId
+      (node) => node.id === currentlySelectedNodeId,
     );
 
     if (!selectedNode) return;
@@ -235,15 +242,15 @@ export default function GoalPage() {
                 isComplete: updatedIsComplete,
               },
             }
-          : node
-      )
+          : node,
+      ),
     );
 
     // Update the server state
     try {
       await apiauth.patch(
         `/goals/${selectedNode.data.goalId}/roadmap/nodes/${selectedNode.id}`,
-        { is_complete: updatedIsComplete }
+        { is_complete: updatedIsComplete },
       );
     } catch (error) {
       console.error("Error updating node status:", error);
@@ -259,11 +266,12 @@ export default function GoalPage() {
                   isComplete: !updatedIsComplete,
                 },
               }
-            : node
-        )
+            : node,
+        ),
       );
     }
   };
+
   return (
     <ReactFlowProvider>
       <div className="flex flex-row justify-between h-full relative">
@@ -289,21 +297,21 @@ export default function GoalPage() {
               {currentlySelectedNodeId &&
                 (() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId
+                    (node) => node.id === currentlySelectedNodeId,
                   );
                   const estimatedTime = selectedNode?.data?.estimatedTime;
 
                   return estimatedTime ? (
                     <Chip
-                      size="lg"
                       color="primary"
-                      variant="flat"
+                      size="lg"
                       startContent={
                         <div className="flex items-center gap-1 text-md">
                           <Clock width={18} />
                           Estimated Time:
                         </div>
                       }
+                      variant="flat"
                     >
                       <span className="text-white text-md pl-1">
                         {estimatedTime}
@@ -314,24 +322,24 @@ export default function GoalPage() {
 
               {currentlySelectedNodeId && (
                 <Chip
-                  variant="flat"
                   color="success"
                   size="lg"
                   startContent={
                     <Checkbox
-                      color="success"
-                      // lineThrough
-                      radius="full"
                       isSelected={
                         nodes.find(
                           (node) => node.id === currentlySelectedNodeId
                         )?.data?.isComplete ?? false
                       }
                       onValueChange={handleCheckboxClick}
+                      color="success"
+                      // lineThrough
+                      radius="full"
                     >
                       Mark as Complete
                     </Checkbox>
                   }
+                  variant="flat"
                 />
               )}
             </div>
@@ -341,7 +349,7 @@ export default function GoalPage() {
               <>
                 {(() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId
+                    (node) => node.id === currentlySelectedNodeId,
                   );
 
                   return (
@@ -357,15 +365,15 @@ export default function GoalPage() {
                             (resource, index) => (
                               <a
                                 key={index}
+                                className="hover:text-[#00bbff] underline underline-offset-4"
                                 href={`https://www.google.com/search?q=${resource.split(
-                                  "+"
+                                  "+",
                                 )}`}
                                 target="__blank"
-                                className="hover:text-[#00bbff] underline underline-offset-4"
                               >
                                 <li>{resource}</li>
                               </a>
-                            )
+                            ),
                           )}
                         </div>
                       </div>
@@ -401,6 +409,7 @@ export default function GoalPage() {
                 <div className="px-32">
                   <MultiStepLoader
                     duration={4500}
+                    loading={true}
                     loadingStates={[
                       { text: "Setting your goal... Let's get started!" },
                       { text: "Exploring your objectives... Almost there!" },
@@ -415,7 +424,6 @@ export default function GoalPage() {
                       { text: "Estimating time... Getting a clearer picture!" },
                       { text: "Putting the final touches on your plan..." },
                     ]}
-                    loading={true}
                     loop={false}
                   />
                 </div>
@@ -423,19 +431,19 @@ export default function GoalPage() {
             ) : (
               <div className="w-full h-full relative">
                 <ReactFlow
-                  className="relative"
-                  nodes={nodes}
-                  edges={edges}
-                  onInit={handleInit}
-                  nodesConnectable={false}
-                  nodesDraggable={false}
-                  connectionLineType={ConnectionLineType.SmoothStep}
                   fitView
+                  className="relative"
+                  connectionLineType={ConnectionLineType.SmoothStep}
+                  edges={edges}
                   elementsSelectable={true}
                   fitViewOptions={{ minZoom: 1.2 }}
                   minZoom={0.2}
                   nodeTypes={nodeTypes}
+                  nodes={nodes}
+                  nodesConnectable={false}
+                  nodesDraggable={false}
                   style={{ background: "transparent" }}
+                  onInit={handleInit}
                 >
                   {/* <ZoomSlider className="fixed bottom-[25px] !right-[150px]  !left-auto h-fit !top-auto z-30 dark" /> */}
                 </ReactFlow>

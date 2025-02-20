@@ -43,19 +43,19 @@ export default function WordPullUp({
   return (
     <motion.h1
       ref={ref}
-      variants={wrapperFramerProps}
-      initial="hidden"
       animate={controls}
       className={cn(
         "font-display text-center text-4xl font-bold leading-[5rem] tracking-[-0.02em] drop-shadow-lg",
-        className
+        className,
       )}
+      initial="hidden"
+      variants={wrapperFramerProps}
     >
       {words.split(" ").map((word, i) => (
         <motion.span
           key={i}
-          variants={framerProps}
           style={{ display: "inline-block", paddingRight: "8px" }}
+          variants={framerProps}
         >
           {word === "" ? <span>&nbsp;</span> : word}
         </motion.span>

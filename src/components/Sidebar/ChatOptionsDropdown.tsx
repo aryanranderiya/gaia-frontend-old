@@ -1,7 +1,3 @@
-import { PencilRenameIcon } from "@/components/icons";
-import { useConversationList } from "@/contexts/ConversationList";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@heroui/button";
 import {
   Dropdown,
@@ -22,6 +18,11 @@ import { Star, Trash } from "lucide-react";
 import { SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { apiauth } from "@/utils/apiaxios";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useConversationList } from "@/contexts/ConversationList";
+import { PencilRenameIcon } from "@/components/icons";
+
 export default function ChatOptionsDropdown({
   buttonHovered,
   chatId,
@@ -37,7 +38,7 @@ export default function ChatOptionsDropdown({
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
-    null
+    null,
   );
   const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();
@@ -90,27 +91,27 @@ export default function ChatOptionsDropdown({
       <Dropdown className="dark text-foreground w-fit min-w-fit" size="sm">
         <DropdownTrigger>
           <Button
-            variant="light"
             isIconOnly
             className="ml-auto"
-            size="sm"
             radius="full"
+            size="sm"
+            variant="light"
           >
             <DotsVerticalIcon
-              width={20}
               className={
                 "transition-all " +
                 (buttonHovered
                   ? "opacity-100"
                   : "opacity-0 min-w-[20px] w-[20px]")
               }
+              width={20}
             />
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
           <DropdownItem key="star" textValue="Star" onPress={handleStarToggle}>
             <div className="flex flex-row gap-2 items-center justify-between">
-              <Star width={16} color="white" />
+              <Star color="white" width={16} />
               {starred ? "Remove" : "Add"} star
             </div>
           </DropdownItem>
@@ -120,21 +121,21 @@ export default function ChatOptionsDropdown({
             onPress={() => openModal("edit")}
           >
             <div className="flex flex-row gap-2 items-center justify-between">
-              <PencilRenameIcon width={16} color="white" />
+              <PencilRenameIcon color="white" width={16} />
               Rename chat
             </div>
           </DropdownItem>
           <DropdownItem
             key="delete"
-            textValue="Delete"
             className="text-danger"
             color="danger"
-            onMouseOver={() => setDangerStateHovered(true)}
+            textValue="Delete"
             onMouseOut={() => setDangerStateHovered(false)}
+            onMouseOver={() => setDangerStateHovered(true)}
             onPress={() => openModal("delete")}
           >
             <div className="flex flex-row gap-2 items-center justify-between">
-              <Trash width={16} color={dangerStateHovered ? "white" : "red"} />
+              <Trash color={dangerStateHovered ? "white" : "red"} width={16} />
               Delete chat
             </div>
           </DropdownItem>
@@ -142,9 +143,9 @@ export default function ChatOptionsDropdown({
       </Dropdown>
 
       <Modal
+        className="dark text-foreground"
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        className="dark text-foreground"
       >
         <ModalContent>
           {modalAction === "edit" ? (
@@ -152,21 +153,21 @@ export default function ChatOptionsDropdown({
               <ModalHeader className="pb-0">Rename Conversation</ModalHeader>
               <ModalBody>
                 <Input
-                  type="text"
-                  value={newName}
-                  onChange={(e: {
-                    target: { value: SetStateAction<string> };
-                  }) => setNewName(e.target.value)}
-                  placeholder="Enter new chat name"
-                  variant="faded"
-                  labelPlacement="outside"
-                  size="lg"
                   label={
                     <div className="space-x-1 text-xs">
                       <span>Previous Name</span>
                       <b>{chatName}</b>
                     </div>
                   }
+                  labelPlacement="outside"
+                  placeholder="Enter new chat name"
+                  size="lg"
+                  type="text"
+                  value={newName}
+                  variant="faded"
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setNewName(e.target.value)}
                   onKeyDown={(e: { key: string }) => {
                     if (e.key == "Enter") handleEdit();
                   }}

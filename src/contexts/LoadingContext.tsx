@@ -8,7 +8,7 @@ interface LoadingContextProps {
 }
 
 const LoadingContext = createContext<LoadingContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({
@@ -25,8 +25,10 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({
 
 export const useLoading = (): LoadingContextProps => {
   const context = useContext(LoadingContext);
+
   if (!context) {
     throw new Error("useLoading must be used within a LoadingProvider");
   }
+
   return context;
 };

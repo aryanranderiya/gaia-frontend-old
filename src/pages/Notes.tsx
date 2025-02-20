@@ -1,11 +1,12 @@
-import { StickyNote01Icon } from "@/components/icons";
-import NoteCard from "@/components/Notes/NoteCard";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { apiauth } from "@/utils/apiaxios";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { StickyNote01Icon } from "@/components/icons";
+import NoteCard from "@/components/Notes/NoteCard";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiauth } from "@/utils/apiaxios";
 
 export interface Note {
   id: string;
@@ -25,6 +26,7 @@ export default function Notes() {
     setLoading(true);
     try {
       const response = await apiauth.get("/notes");
+
       setNotes(response?.data || []);
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -79,13 +81,13 @@ export default function Notes() {
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Link to={"./add"}>
             <Button
-              variant="shadow"
-              color="primary"
-              size="lg"
-              radius="full"
               className="font-semibold gap-1"
+              color="primary"
+              radius="full"
+              size="lg"
+              variant="shadow"
             >
-              <StickyNote01Icon width={27} height={27} color="black" />
+              <StickyNote01Icon color="black" height={27} width={27} />
               Add Note
             </Button>
           </Link>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import React from "react";
+
 import { BubbleConfig } from "./BubblePitFooter";
 
 export const ChatBubble: React.FC<BubbleConfig> = ({
@@ -12,11 +13,11 @@ export const ChatBubble: React.FC<BubbleConfig> = ({
 }) => {
   return (
     <motion.div
-      className="absolute cursor-grab active:cursor-grabbing"
-      style={{ x, y, width: size, height: size }}
       drag
+      className="absolute cursor-grab active:cursor-grabbing"
       dragElastic={0.2}
       dragMomentum={false}
+      style={{ x, y, width: size, height: size }}
       whileHover={{ scale: 1.2, rotate: 1.5 }}
       whileTap={{ scale: 0.9 }}
     >

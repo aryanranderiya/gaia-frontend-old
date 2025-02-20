@@ -2,6 +2,7 @@ import { Checkbox } from "@heroui/checkbox";
 import { Chip } from "@heroui/chip";
 import { Clock } from "lucide-react";
 import React from "react";
+
 import { BookIcon1 } from "../icons";
 
 const StaticSidebar = ({
@@ -43,29 +44,28 @@ const StaticSidebar = ({
         <div className="space-y-4">
           {estimatedTime && (
             <Chip
-              size="lg"
               color="primary"
-              variant="flat"
+              size="lg"
               startContent={
                 <div className="flex items-center gap-1 text-md">
                   <Clock width={18} />
                   Estimated Time:
                 </div>
               }
+              variant="flat"
             >
               <span className="text-white text-md pl-1">{estimatedTime}</span>
             </Chip>
           )}
 
           <Chip
-            variant="flat"
             color="success"
             size="lg"
             startContent={
               <Checkbox
                 color="success"
-                radius="full"
                 isSelected={isComplete}
+                radius="full"
                 onValueChange={setIsComplete}
                 // isSelected={isComplete}
                 // onValueChange={handleCheckboxClick} // No need for a function, as it's static
@@ -73,6 +73,7 @@ const StaticSidebar = ({
                 Mark as Complete
               </Checkbox>
             }
+            variant="flat"
           />
         </div>
       </div>
@@ -86,10 +87,10 @@ const StaticSidebar = ({
           <ul className="text-sm">
             {resources.map((resource, index) => (
               <a
+                className="hover:text-[#00bbff] underline underline-offset-4 cursor-pointer"
                 key={index}
                 // href={`https://www.google.com/search?q=${resource.split("+")}`}
                 target="__blank"
-                className="hover:text-[#00bbff] underline underline-offset-4 cursor-pointer"
               >
                 <li>{resource}</li>
               </a>

@@ -1,15 +1,18 @@
 // ChatRenderer.tsx
-import StarterText from "@/components/Chat/StarterText";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useConversationList } from "@/contexts/ConversationList";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+
 import { ScrollArea } from "../ui/scroll-area";
+
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
 import StarterEmoji from "./StarterEmoji";
+
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useConversationList } from "@/contexts/ConversationList";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import StarterText from "@/components/Chat/StarterText";
 
 // const ChatBubbleBot = React.lazy(
 //   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
@@ -41,6 +44,7 @@ export default function ChatRenderer() {
     if (!messageId) return;
 
     const messageElement = document.getElementById(messageId);
+
     if (!messageElement) return;
 
     messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -83,13 +87,13 @@ export default function ChatRenderer() {
         }` || "GAIA"}
       </title>
 
-      <Dialog onOpenChange={setOpenImage} open={openImage}>
+      <Dialog open={openImage} onOpenChange={setOpenImage}>
         <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit py-3 px-5">
           <img
+            className="rounded-3xl my-2 size-[65vh] min-w-[65vh] min-h-[65vh] aspect-square"
+            height={"auto"}
             src={imageData?.src}
             width={"auto"}
-            height={"auto"}
-            className="rounded-3xl my-2 size-[65vh] min-w-[65vh] min-h-[65vh] aspect-square"
           />
 
           <div className="flex max-w-[65vh] min-w-[65vh] justify-evenly flex-col gap-1">
@@ -117,17 +121,17 @@ export default function ChatRenderer() {
           </div>
 
           <ChatBubble_Actions_Image
-            src={imageData?.src}
-            imagePrompt={imageData?.prompt}
             fullWidth
+            imagePrompt={imageData?.prompt}
             setOpenImage={setOpenImage}
+            src={imageData?.src}
           />
         </DialogContent>
       </Dialog>
 
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
-          <div className="relative flex items-end gap-3" key={index}>
+          <div key={index} className="relative flex items-end gap-3">
             <div
               className={`pingspinner relative ${
                 message.loading ? "bottom-3" : "bottom-9"
@@ -142,38 +146,38 @@ export default function ChatRenderer() {
               } relative bottom-9`}
             /> */}
             <ChatBubbleBot
-              message_id={message.message_id}
-              text={message.response}
-              loading={message.loading}
-              isImage={message.isImage}
+              calendar_options={message.calendar_options}
+              filename={message.filename}
               imagePrompt={message.imagePrompt}
-              improvedImagePrompt={message.improvedImagePrompt}
-              searchWeb={message.searchWeb}
               imageSrc={message.imageUrl}
+              improvedImagePrompt={message.improvedImagePrompt}
+              intent={message.intent}
+              isImage={message.isImage}
+              loading={message.loading}
+              message_id={message.message_id}
+              pageFetchURL={message.pageFetchURL}
+              pinned={message.pinned}
+              searchWeb={message.searchWeb}
+              setImageData={setImageData}
+              setOpenImage={setOpenImage}
+              text={message.response}
               disclaimer={message.disclaimer}
               // userinputType={message.userinputType}
               date={message.date}
-              pageFetchURL={message.pageFetchURL}
-              setOpenImage={setOpenImage}
-              setImageData={setImageData}
-              filename={message.filename}
-              pinned={message.pinned}
-              intent={message.intent}
-              calendar_options={message.calendar_options}
             />
           </div>
         ) : (
           <ChatBubbleUser
-            message_id={message.message_id}
             key={index}
-            text={message.response}
-            subtype={message.subtype || null}
-            filename={message.filename}
-            searchWeb={message.searchWeb}
             date={message.date}
+            filename={message.filename}
+            message_id={message.message_id}
             pageFetchURL={message.pageFetchURL}
+            searchWeb={message.searchWeb}
+            subtype={message.subtype || null}
+            text={message.response}
           />
-        )
+        ),
       )}
     </>
   );

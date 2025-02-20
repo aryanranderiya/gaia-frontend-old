@@ -1,9 +1,11 @@
-import api from "@/utils/apiaxios";
 import { Button } from "@heroui/button";
 // import { Spinner } from "@heroui/spinner";
 import * as React from "react";
-import { VolumeHighIcon, VolumeOffIcon } from "../icons";
 import { Loader } from "lucide-react";
+
+import { VolumeHighIcon, VolumeOffIcon } from "../icons";
+
+import api from "@/utils/apiaxios";
 
 export default function TextToSpeech({ text }: { text: string }) {
   const [loading, setLoading] = React.useState(false);
@@ -27,7 +29,7 @@ export default function TextToSpeech({ text }: { text: string }) {
         const response = await api.post(
           "/synthesize",
           { text },
-          { responseType: "arraybuffer" }
+          { responseType: "arraybuffer" },
         );
 
         // Convert audio data to a Blob
@@ -36,6 +38,7 @@ export default function TextToSpeech({ text }: { text: string }) {
 
         // Create and play the audio
         const newAudio = new Audio(audioUrl);
+
         await newAudio.play();
         setAudio(newAudio);
 
@@ -61,13 +64,13 @@ export default function TextToSpeech({ text }: { text: string }) {
 
   return (
     <Button
-      onPress={handleTextToSpeech}
-      size="sm"
-      className="w-fit p-0 h-fit rounded-md"
-      style={{ minWidth: "22px" }}
       isIconOnly
-      variant="light"
+      className="w-fit p-0 h-fit rounded-md"
       disabled={loading || isPlaying}
+      size="sm"
+      style={{ minWidth: "22px" }}
+      variant="light"
+      onPress={handleTextToSpeech}
     >
       {loading ? (
         <Loader className="text-[#9b9b9b] animate-spin text-[24px]" />

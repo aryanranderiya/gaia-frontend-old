@@ -1,9 +1,11 @@
-import { apiauth } from "@/utils/apiaxios";
 import { Checkbox } from "@heroui/checkbox";
 import { Spinner } from "@heroui/spinner";
 import { useEffect, useRef, useState } from "react";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { ScrollArea } from "../ui/scroll-area";
+
+import { apiauth } from "@/utils/apiaxios";
 
 interface GoogleCalendarDateTime {
   date?: string;
@@ -60,7 +62,7 @@ interface CalendarCardProps {
 }
 
 function groupEventsByDate(
-  events: GoogleCalendarEvent[]
+  events: GoogleCalendarEvent[],
 ): Record<string, GoogleCalendarEvent[]> {
   const grouped: Record<string, GoogleCalendarEvent[]> = {};
 
@@ -82,6 +84,7 @@ function formatDateDay(event: GoogleCalendarEvent): [string, string] {
   const dayOfWeek = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
   }).format(startDate);
+
   return [day, dayOfWeek];
 }
 
@@ -89,6 +92,7 @@ function formatEventDate(event: GoogleCalendarEvent): string | null {
   if (event.start.dateTime && event.end?.dateTime) {
     const startDateTime = new Date(event.start.dateTime);
     const endDateTime = new Date(event.end.dateTime);
+
     return `${new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
       minute: "2-digit",
@@ -99,6 +103,7 @@ function formatEventDate(event: GoogleCalendarEvent): string | null {
       hour12: true,
     }).format(endDateTime)}`;
   }
+
   return null;
 }
 
@@ -112,6 +117,7 @@ function getEventIcon(event: GoogleCalendarEvent): string {
       if (event.transparency === "transparent") {
         return "🔔";
       }
+
       return "📅";
   }
 }
@@ -126,6 +132,7 @@ function getEventColor(event: GoogleCalendarEvent): string {
       if (event.transparency === "transparent") {
         return "bg-purple-500 hover:bg-purple-600";
       }
+
       return "bg-blue-500 hover:bg-blue-600";
   }
 }
@@ -148,8 +155,8 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
         {formatEventDate(event)}
       </div>
       <div
-        style={{ backgroundColor }}
         className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full"
+        style={{ backgroundColor }}
       />
     </div>
   );
@@ -158,7 +165,7 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
 export default function Calendar() {
   const [loading, setLoading] = useState<boolean>(false);
   const [calendarEvents, setCalendarEvents] = useState<GoogleCalendarEvent[]>(
-    []
+    [],
   );
   const [selectedEvent, setSelectedEvent] =
     useState<GoogleCalendarEvent | null>(null);
@@ -181,7 +188,7 @@ export default function Calendar() {
           fetchEvents(nextPageToken); // Fetch next page
         }
       },
-      { rootMargin: "0px" }
+      { rootMargin: "0px" },
     );
 
     if (observerRef.current) {
@@ -208,6 +215,7 @@ export default function Calendar() {
       } else {
         // If no preferences are saved, default to all calendars
         const allCalendarIds = allCalendars.map((cal) => cal.id);
+
         setSelectedCalendars(allCalendarIds);
         fetchEvents(null, allCalendarIds);
       }
@@ -215,6 +223,7 @@ export default function Calendar() {
       console.error("Error fetching calendar preferences:", error);
       // In case of error, default to all calendars
       const allCalendarIds = allCalendars.map((cal) => cal.id);
+
       setSelectedCalendars(allCalendarIds);
       fetchEvents(null, allCalendarIds);
     }
@@ -224,6 +233,7 @@ export default function Calendar() {
     try {
       const response = await apiauth.get("/calendar/list");
       const calendarItems = response.data.items;
+
       setCalendars(calendarItems);
 
       // Fetch and set the user’s saved calendar preferences
@@ -231,6 +241,7 @@ export default function Calendar() {
 
       // (Optional) You can still fetch all events endpoint if needed:
       const response2 = await apiauth.get("/calendar/all/events");
+
       console.log(response2);
     } catch (error) {
       console.error("Error fetching calendars:", error);
@@ -239,13 +250,14 @@ export default function Calendar() {
 
   const fetchEvents = async (
     pageToken: string | null = null,
-    calendarIds: string[] | null = null
+    calendarIds: string[] | null = null,
   ) => {
     if (calendarEvents.length <= 0) setLoading(true);
 
     try {
       const allEvents: GoogleCalendarEvent[] = [];
       const calendarsToFetch = calendarIds || selectedCalendars;
+
       for (const calendarId of calendarsToFetch) {
         const response = await apiauth.get<{
           events: GoogleCalendarEvent[];
@@ -262,16 +274,19 @@ export default function Calendar() {
 
       // Filter out duplicates and add new events
       const newEvents = allEvents.filter(
-        (event) => !eventIdsRef.current.has(event.id)
+        (event) => !eventIdsRef.current.has(event.id),
       );
+
       newEvents.forEach((event) => eventIdsRef.current.add(event.id));
 
       // Merge new events with existing events, sort, and update state
       setCalendarEvents((prev) => {
         const mergedEvents = [...prev, ...newEvents];
+
         return mergedEvents.sort((a, b) => {
           const dateA = new Date(a.start.dateTime || a.start.date || "");
           const dateB = new Date(b.start.dateTime || b.start.date || "");
+
           return dateA.getTime() - dateB.getTime();
         });
       });
@@ -313,19 +328,21 @@ export default function Calendar() {
       // If a calendar is deselected, remove its events
       if (!newSelection.includes(calendarId)) {
         setCalendarEvents((prevEvents) =>
-          prevEvents.filter((event) => event.organizer.email !== calendarId)
+          prevEvents.filter((event) => event.organizer.email !== calendarId),
         );
         eventIdsRef.current = new Set(
           Array.from(eventIdsRef.current).filter((id) =>
             calendarEvents.find(
-              (event) => event.id === id && event.organizer.email !== calendarId
-            )
-          )
+              (event) =>
+                event.id === id && event.organizer.email !== calendarId,
+            ),
+          ),
         );
       } else {
         // If a new calendar is selected, fetch its events
         fetchEvents(null, [calendarId]);
       }
+
       return newSelection;
     });
   };
@@ -349,17 +366,17 @@ export default function Calendar() {
             {calendars?.length > 0 &&
               calendars.map((calendar, index) => (
                 <div
+                  key={index}
+                  className="py-2 px-4 rounded-lg"
                   style={{
                     backgroundColor: `${calendar.backgroundColor}50`,
                   }}
-                  key={index}
-                  className="py-2 px-4 rounded-lg"
                 >
                   <Checkbox
                     key={calendar.id}
+                    color="default"
                     isSelected={selectedCalendars.includes(calendar.id)}
                     onValueChange={() => handleCalendarSelect(calendar.id)}
-                    color="default"
                   >
                     <div className="font-medium text-white">
                       {calendar.summary}
@@ -375,6 +392,7 @@ export default function Calendar() {
             {Object.entries(groupEventsByDate(calendarEvents)).map(
               ([date, events]) => {
                 const [day, dayOfWeek] = date.split(" ");
+
                 return (
                   <div key={date} className="w-full flex gap-7">
                     <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
@@ -387,15 +405,15 @@ export default function Calendar() {
                       {events.map((event) => (
                         <CalendarCard
                           key={event.id}
+                          calendars={calendars}
                           event={event}
                           onClick={() => handleEventClick(event)}
-                          calendars={calendars}
                         />
                       ))}
                     </div>
                   </div>
                 );
-              }
+              },
             )}
           </div>
 
@@ -405,7 +423,7 @@ export default function Calendar() {
             </div>
           )}
 
-          <div ref={observerRef} className="h-1"></div>
+          <div ref={observerRef} className="h-1" />
         </ScrollArea>
 
         <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />

@@ -1,3 +1,6 @@
+import { Tooltip } from "@heroui/tooltip";
+import { useEffect, useState } from "react";
+
 import smiley1 from "../Smileys/1.webp";
 import smiley2 from "../Smileys/2.webp";
 import smiley3 from "../Smileys/3.webp";
@@ -16,8 +19,6 @@ import smiley15 from "../Smileys/15.webp";
 import smiley16 from "../Smileys/16.webp";
 import smiley23 from "../Smileys/23.webp";
 import smiley24 from "../Smileys/24.webp";
-import { Tooltip } from "@heroui/tooltip";
-import { useEffect, useState } from "react";
 
 export default function StarterEmoji() {
   const smileys = [
@@ -46,24 +47,26 @@ export default function StarterEmoji() {
 
   const changeSmiley = () => {
     const randomIndex = Math.floor(Math.random() * smileys.length);
+
     setCurrentSmiley(randomIndex);
   };
 
   useEffect(() => {
     const timer = setTimeout(changeSmiley, 1500);
+
     return () => clearTimeout(timer);
   }, [currentSmiley]);
 
   return (
     <Tooltip
+      color="primary"
       content="My name is gaia, I am your personal AI assistant!"
       placement="top"
-      color="primary"
     >
       <img
-        src={smileys[currentSmiley]}
         alt="Smiley"
         className="starter_emoji"
+        src={smileys[currentSmiley]}
         onClick={changeSmiley}
       />
     </Tooltip>

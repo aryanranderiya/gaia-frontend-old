@@ -1,22 +1,28 @@
-import { useConversationList } from "@/contexts/ConversationList";
 import { isToday, isYesterday, subDays } from "date-fns";
 import { Loader } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { ChatTab } from "./ChatTab";
 import { useNavigate } from "react-router-dom";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { Button } from "@heroui/button";
+
 import { ChatBubbleAddIcon } from "../icons";
+
+import { ChatTab } from "./ChatTab";
+
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useConversationList } from "@/contexts/ConversationList";
 
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
+
   if (isToday(date)) return "Today";
   if (isYesterday(date)) return "Yesterday";
 
   const daysAgo7 = subDays(new Date(), 7);
   const daysAgo30 = subDays(new Date(), 30);
+
   if (date >= daysAgo7) return "Previous 7 days";
   if (date >= daysAgo30) return "Previous 30 days";
+
   return "All time";
 };
 
@@ -58,6 +64,7 @@ export default function ChatsList() {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
+
         if (
           entry.isIntersecting &&
           !isFetchingMore &&
@@ -81,7 +88,7 @@ export default function ChatsList() {
       {
         root: null, // viewport as container
         threshold: 1.0,
-      }
+      },
     );
 
     if (loadMoreRef.current) {
@@ -96,23 +103,28 @@ export default function ChatsList() {
   }, [currentPage, isFetchingMore, paginationMeta, fetchConversations]);
 
   // Group conversations by time frame.
-  const groupedConversations = conversations.reduce((acc, conversation) => {
-    const timeFrame = getTimeFrame(conversation.createdAt);
-    if (!acc[timeFrame]) {
-      acc[timeFrame] = [];
-    }
-    acc[timeFrame].push(conversation);
-    return acc;
-  }, {} as Record<string, any[]>);
+  const groupedConversations = conversations.reduce(
+    (acc, conversation) => {
+      const timeFrame = getTimeFrame(conversation.createdAt);
+
+      if (!acc[timeFrame]) {
+        acc[timeFrame] = [];
+      }
+      acc[timeFrame].push(conversation);
+
+      return acc;
+    },
+    {} as Record<string, any[]>,
+  );
 
   // Sort time frames by defined priority.
   const sortedTimeFrames = Object.entries(groupedConversations).sort(
     ([timeFrameA], [timeFrameB]) =>
-      timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB)
+      timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB),
   );
 
   const starredConversations = conversations.filter(
-    (conversation) => conversation.starred
+    (conversation) => conversation.starred,
   );
 
   const navigate = useNavigate();
@@ -134,11 +146,11 @@ export default function ChatsList() {
           <>
             <div className="mt-3 w-full">
               <Button
-                size="sm"
-                onPress={createNewChat}
-                variant="flat"
-                color="primary"
                 className="w-full text-primary text-sm justify-start"
+                color="primary"
+                size="sm"
+                variant="flat"
+                onPress={createNewChat}
               >
                 <ChatBubbleAddIcon color="#00bbff" width={18} />
                 Start new chat
@@ -165,7 +177,7 @@ export default function ChatsList() {
                         name={conversation.description || "New Chat"}
                         starred={conversation.starred || false}
                       />
-                    )
+                    ),
                   )
                 ) : (
                   <div className="text-xs text-center text-foreground-500 pt-2 pb-3">
@@ -185,7 +197,7 @@ export default function ChatsList() {
                   .sort(
                     (a: { createdAt: string }, b: { createdAt: string }) =>
                       new Date(b.createdAt).getTime() -
-                      new Date(a.createdAt).getTime()
+                      new Date(a.createdAt).getTime(),
                   )
                   .map(
                     (conversation: {
@@ -199,7 +211,7 @@ export default function ChatsList() {
                         name={conversation.description || "New Chat"}
                         starred={conversation.starred}
                       />
-                    )
+                    ),
                   )}
               </div>
             ))}

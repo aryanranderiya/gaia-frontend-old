@@ -1,5 +1,6 @@
-import { MessageType } from "@/types/ConvoTypes";
 import React, { createContext, useContext, useState } from "react";
+
+import { MessageType } from "@/types/ConvoTypes";
 
 interface ConvoContextType {
   convoMessages: MessageType[];
@@ -29,8 +30,10 @@ export const ConvoProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useConvo = () => {
   const context = useContext(ConvoContext);
+
   if (!context) {
     throw new Error("useConvo must be used within a ConvoProvider");
   }
+
   return context;
 };

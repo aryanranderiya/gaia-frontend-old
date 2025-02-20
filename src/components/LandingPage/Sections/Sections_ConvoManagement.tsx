@@ -1,3 +1,5 @@
+import { SearchIcon, Star } from "lucide-react";
+
 import {
   BubbleChatIcon,
   BubbleConversationChatIcon,
@@ -6,7 +8,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LandingPage1Layout from "@/layouts/LandingPage1";
 import { PinCard } from "@/pages/Pins";
-import { SearchIcon, Star } from "lucide-react";
 
 const dummyMessages = [
   {
@@ -35,6 +36,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { useState } from "react";
@@ -96,35 +98,35 @@ export function DummySearchCommand() {
           <div className="flex gap-1 p-2 bg-zinc-900 text-sm text-foreground-500 items-center font-medium">
             <Chip
               className="cursor-pointer"
+              color={chipsVisibility.messages ? "primary" : "default"}
+              endContent={
+                chipsVisibility.messages ? (
+                  <Tick02Icon color="#000" />
+                ) : undefined
+              }
               startContent={
                 <BubbleChatIcon
                   color={chipsVisibility.messages ? "#000000" : "#9b9b9b"}
                 />
               }
               variant={chipsVisibility.messages ? "solid" : "faded"}
-              color={chipsVisibility.messages ? "primary" : "default"}
               onClick={() => handleChipClick("messages")}
-              endContent={
-                chipsVisibility.messages ? (
-                  <Tick02Icon color="#000" />
-                ) : undefined
-              }
             >
               Messages
             </Chip>
             <Chip
               className="cursor-pointer"
+              color={chipsVisibility.notes ? "primary" : "default"}
+              endContent={
+                chipsVisibility.notes ? <Tick02Icon color="#000" /> : undefined
+              }
               startContent={
                 <StickyNote01Icon
                   color={chipsVisibility.notes ? "#000000" : "#9b9b9b"}
                 />
               }
               variant={chipsVisibility.notes ? "solid" : "faded"}
-              color={chipsVisibility.notes ? "primary" : "default"}
               onClick={() => handleChipClick("notes")}
-              endContent={
-                chipsVisibility.notes ? <Tick02Icon color="#000" /> : undefined
-              }
             >
               Notes
             </Chip>
@@ -223,24 +225,24 @@ export function SidebarComponent() {
             {section.conversations.map((chat, chatIndex) => (
               <Button
                 key={chatIndex}
-                variant="light"
-                color={chat?.active ? "primary" : "default"}
                 className="w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px]"
+                color={chat?.active ? "primary" : "default"}
                 radius="sm"
                 startContent={
                   chat.starred ? (
                     <Star
-                      width="19"
                       className="min-w-[17px] w-[17px]"
                       color={chat?.active ? "#00bbff" : "#9b9b9b"}
+                      width="19"
                     />
                   ) : (
                     <BubbleConversationChatIcon
-                      width="19"
                       className="min-w-[17px] w-[17px]"
+                      width="19"
                     />
                   )
                 }
+                variant="light"
               >
                 <span className="truncate w-[200px] text-left">
                   {chat.name}
@@ -257,24 +259,24 @@ export default function Section_ConvoManagement() {
   return (
     <LandingPage1Layout
       heading={"Advanced Conversation Management"}
-      subheading={"Never lose track of anything. Ever."}
       icon={
         <BubbleChatIcon
-          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
+          color="#9b9b9b"
         />
       }
+      subheading={"Never lose track of anything. Ever."}
     >
-      <Tabs defaultValue="starred" className="w-full h-[430px] overflow-hidden">
+      <Tabs className="w-full h-[430px] overflow-hidden" defaultValue="starred">
         <TabsList className="flex gap-4">
-          <TabsTrigger value="starred" className="flex items-center gap-2">
-            <Star width={20} height={20} /> Starred
+          <TabsTrigger className="flex items-center gap-2" value="starred">
+            <Star height={20} width={20} /> Starred
           </TabsTrigger>
-          <TabsTrigger value="search" className="flex items-center gap-2">
-            <SearchIcon width={20} height={20} /> Search
+          <TabsTrigger className="flex items-center gap-2" value="search">
+            <SearchIcon height={20} width={20} /> Search
           </TabsTrigger>
-          <TabsTrigger value="pins" className="flex items-center gap-2">
-            <PinIcon width={20} height={20} /> Pins
+          <TabsTrigger className="flex items-center gap-2" value="pins">
+            <PinIcon height={20} width={20} /> Pins
           </TabsTrigger>
         </TabsList>
 
@@ -291,8 +293,8 @@ export default function Section_ConvoManagement() {
             {dummyMessages.map((message, index) => (
               <PinCard
                 key={index}
-                message={message}
                 conversation_id={message.message_id}
+                message={message}
               />
             ))}
           </div>

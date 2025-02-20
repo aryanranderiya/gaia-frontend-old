@@ -1,4 +1,7 @@
 import { DashIcon } from "@radix-ui/react-icons";
+import { List, ListOrdered, Redo2, Undo2 } from "lucide-react";
+import React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -7,8 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { List, ListOrdered, Redo2, Undo2 } from "lucide-react";
-import React from "react";
 
 export const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) {
@@ -19,32 +20,33 @@ export const MenuBar = ({ editor }: { editor: any }) => {
     const currentTextType = editor.isActive("paragraph")
       ? "Paragraph"
       : editor.isActive("heading", { level: 1 })
-      ? "Heading 1"
-      : editor.isActive("heading", { level: 2 })
-      ? "Heading 2"
-      : editor.isActive("heading", { level: 3 })
-      ? "Heading 3"
-      : editor.isActive("heading", { level: 4 })
-      ? "Heading 4"
-      : editor.isActive("heading", { level: 5 })
-      ? "Heading 5"
-      : editor.isActive("heading", { level: 6 })
-      ? "Heading 6"
-      : "Paragraph";
+        ? "Heading 1"
+        : editor.isActive("heading", { level: 2 })
+          ? "Heading 2"
+          : editor.isActive("heading", { level: 3 })
+            ? "Heading 3"
+            : editor.isActive("heading", { level: 4 })
+              ? "Heading 4"
+              : editor.isActive("heading", { level: 5 })
+                ? "Heading 5"
+                : editor.isActive("heading", { level: 6 })
+                  ? "Heading 6"
+                  : "Paragraph";
 
     const handleSelect = (value: string) => {
       if (value === "paragraph") {
         editor.chain().focus().setParagraph().run();
       } else if (value.startsWith("heading-")) {
         const level = Number.parseInt(value.split("-")[1]);
+
         editor.chain().focus().toggleHeading({ level }).run();
       }
     };
 
     return (
       <Select
-        onValueChange={handleSelect}
         defaultValue={currentTextType.toLowerCase().replace(" ", "-")}
+        onValueChange={handleSelect}
       >
         <SelectTrigger className="outline-none border-none focus:!border-none w-fit space-x-3 hover:bg-black/30 focus:bg-black/30">
           <SelectValue placeholder="Select Text Type" />
@@ -61,8 +63,8 @@ export const MenuBar = ({ editor }: { editor: any }) => {
           ].map((type) => (
             <SelectItem
               key={type}
-              value={type.toLowerCase().replace(" ", "-")}
               className="hover:!bg-zinc-600 focus:!bg-zinc-600 hover:!text-white focus:!text-white"
+              value={type.toLowerCase().replace(" ", "-")}
             >
               {type === "Paragraph" ? (
                 <p>{type}</p>
@@ -79,71 +81,71 @@ export const MenuBar = ({ editor }: { editor: any }) => {
   return (
     <div className="w-full p-2 bg-black/40 rounded-xl gap-1 mb-5 flex flex-row items-center">
       <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => editor.chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? "bg-white/30" : ""}
+        size="icon"
+        variant="ghost"
+        onClick={() => editor.chain().focus().toggleBold().run()}
       >
         B
       </Button>
       <Button
-        size="icon"
-        variant="ghost"
-        onClick={() => editor.chain().focus().toggleItalic().run()}
         className={`${
           editor.isActive("italic") ? "bg-white/30" : ""
         } !font-serif italic`}
+        size="icon"
+        variant="ghost"
+        onClick={() => editor.chain().focus().toggleItalic().run()}
       >
         I
       </Button>
       <Button
-        size="icon"
-        variant="ghost"
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
         className={`${
           editor.isActive("underline") ? "bg-white/30" : ""
         } !font-serif underline`}
+        size="icon"
+        variant="ghost"
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
         U
       </Button>
       <TextTypeSelector />
       <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive("bulletList") ? "bg-white/30" : ""}
+        size="icon"
+        variant="ghost"
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
         <List />
       </Button>
       <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive("orderedList") ? "bg-white/30" : ""}
+        size="icon"
+        variant="ghost"
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered />
       </Button>
       <Button
-        variant="ghost"
         size="icon"
+        variant="ghost"
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
         <DashIcon />
       </Button>
       <div className="flex items-center ml-auto mr-5">
         <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
+          size="icon"
+          variant="ghost"
+          onClick={() => editor.chain().focus().undo().run()}
         >
           <Undo2 color={editor.can().undo() ? "white" : "grey"} />
         </Button>
         <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
+          size="icon"
+          variant="ghost"
+          onClick={() => editor.chain().focus().redo().run()}
         >
           <Redo2 color={editor.can().redo() ? "white" : "grey"} />
         </Button>

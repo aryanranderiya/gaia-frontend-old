@@ -1,9 +1,3 @@
-import { useConversationList } from "@/contexts/ConversationList";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { MessageType } from "@/types/ConvoTypes";
-import { apiauth } from "@/utils/apiaxios";
-import { ApiService } from "@/utils/chatUtils";
-import fetchDate from "@/utils/fetchDate";
 import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
 import imageCompression from "browser-image-compression";
@@ -12,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { v1 as uuidv1 } from "uuid";
+import ObjectID from "bson-objectid";
+
 import {
   Dialog,
   DialogContent,
@@ -19,7 +15,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import ObjectID from "bson-objectid";
+
+import fetchDate from "@/utils/fetchDate";
+import { ApiService } from "@/utils/chatUtils";
+import { apiauth } from "@/utils/apiaxios";
+import { MessageType } from "@/types/ConvoTypes";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useConversationList } from "@/contexts/ConversationList";
 
 interface FileUploadProps {
   isImage: boolean;
@@ -54,10 +56,11 @@ export default function FileUpload({
   };
 
   const handleFileSelect = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     // setFileLoading(true);
     const selectedFile = event.target.files?.[0];
+
     if (!selectedFile) return;
 
     setOpen(true);
@@ -69,6 +72,7 @@ export default function FileUpload({
           maxWidthOrHeight: 1920,
           useWebWorker: true,
         });
+
         setFile(compressedFile);
       } catch (error) {
         console.error("Image compression failed:", error);
@@ -117,6 +121,7 @@ export default function FileUpload({
 
   const createNewConversation = async (currentMessages: MessageType[]) => {
     const conversationId = uuidv1();
+
     try {
       await ApiService.createConversation(conversationId);
 
@@ -124,7 +129,7 @@ export default function FileUpload({
         ApiService.updateConversationDescription(
           conversationId,
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
-          fetchConversations
+          fetchConversations,
         );
       }, 3000);
 
@@ -133,6 +138,7 @@ export default function FileUpload({
       return conversationId;
     } catch (err) {
       console.error("Failed to create conversation:", err);
+
       return conversationId;
     }
   };
@@ -165,6 +171,7 @@ export default function FileUpload({
   const uploadFile = async (conversationId: string = ""): Promise<string> => {
     if (!file) throw new Error("No file selected");
     const formData = new FormData();
+
     formData.append("message", textContent);
     formData.append("file", file);
     formData.append("conversation_id", conversationId);
@@ -173,7 +180,7 @@ export default function FileUpload({
       const response = await apiauth.post(
         isImage ? "/image" : "/document/query",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { headers: { "Content-Type": "multipart/form-data" } },
       );
 
       console.log(response);
@@ -270,11 +277,11 @@ export default function FileUpload({
   return (
     <>
       <input
-        type="file"
-        id="fileInput"
-        accept={isImage ? "image/png,image/jpeg" : "application/pdf"}
-        style={{ display: "none" }}
         ref={fileInputRef}
+        accept={isImage ? "image/png,image/jpeg" : "application/pdf"}
+        id="fileInput"
+        style={{ display: "none" }}
+        type="file"
         onChange={handleFileSelect}
       />
 
@@ -314,23 +321,23 @@ export default function FileUpload({
             )}
 
             <Textarea
+              isRequired
               className="dark mt-4"
+              color="primary"
+              isInvalid={!isValid}
               label={`What do you want to do with this ${
                 isImage ? "image" : "file"
               }?`}
+              labelPlacement="outside"
+              maxRows={3}
+              minRows={2}
               placeholder={`e.g., ${
                 isImage ? "What is in this image?" : "Summarize this document"
               }`}
-              startContent={null}
-              maxRows={3}
-              minRows={2}
-              labelPlacement="outside"
-              isRequired
-              variant="faded"
-              color="primary"
-              value={textContent}
-              isInvalid={!isValid}
               size="lg"
+              startContent={null}
+              value={textContent}
+              variant="faded"
               onKeyDown={(event) => {
                 if (event.key === "Enter" && textContent.trim() !== "") {
                   event.preventDefault();
@@ -347,9 +354,9 @@ export default function FileUpload({
 
             <Button
               color="primary"
-              onClick={handleSubmit}
-              isLoading={loading}
               disabled={!isValid || loading}
+              isLoading={loading}
+              onClick={handleSubmit}
             >
               {loading ? "Uploading" : "Submit"}
             </Button>

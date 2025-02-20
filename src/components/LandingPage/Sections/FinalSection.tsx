@@ -14,11 +14,11 @@ export default function FinalSection() {
         </div>
         <Button
           as={Link}
-          to={"/get-started"}
-          size="lg"
+          className="font-medium text-lg mt-3"
           color="primary"
           radius="full"
-          className="font-medium text-lg mt-3"
+          size="lg"
+          to={"/get-started"}
         >
           Sign Up
         </Button>

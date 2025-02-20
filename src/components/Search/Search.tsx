@@ -1,7 +1,3 @@
-import { InternetIcon } from "@/components/icons";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { apiauth } from "@/utils/apiaxios";
-import { parseDate } from "@/utils/fetchDate";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Input } from "@heroui/input";
@@ -9,6 +5,11 @@ import { Spinner } from "@heroui/spinner";
 import { ArrowUpRight, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { parseDate } from "@/utils/fetchDate";
+import { apiauth } from "@/utils/apiaxios";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { InternetIcon } from "@/components/icons";
 
 // Define types for fetched messages
 interface Message {
@@ -67,9 +68,9 @@ export default function Search() {
                     {fetchedResults.map((result) => (
                       <Link
                         key={result.message.message_id}
-                        to={`/try/chat/${result.conversation_id}`}
-                        state={{ messageId: result.message.message_id }}
                         className="bg-black p-3 rounded-xl h-full overflow-hidden max-h-[190px] min-h-[190px] flex flex-col gap-2 outline outline-zinc-800 outline-2 hover:bg-zinc-800 transition-colors"
+                        state={{ messageId: result.message.message_id }}
+                        to={`/try/chat/${result.conversation_id}`}
                       >
                         <Chip
                           className="min-h-7"
@@ -85,12 +86,12 @@ export default function Search() {
                         <div>
                           {result.message?.searchWeb && (
                             <Chip
+                              color="primary"
                               size="sm"
                               startContent={
-                                <InternetIcon height={20} color="#00bbff" />
+                                <InternetIcon color="#00bbff" height={20} />
                               }
                               variant="flat"
-                              color="primary"
                             >
                               <div className="font-medium flex items-center gap-1 text-primary">
                                 Live Search Results from the Web
@@ -100,23 +101,24 @@ export default function Search() {
 
                           {!!result.message?.pageFetchURL && (
                             <Chip
+                              color="primary"
                               size="sm"
                               startContent={
-                                <ArrowUpRight height={20} color="#00bbff" />
+                                <ArrowUpRight color="#00bbff" height={20} />
                               }
                               variant="flat"
-                              color="primary"
                             >
                               <div className="font-medium flex items-center gap-1 text-primary">
                                 Fetched
                                 <a
-                                  href={result.message.pageFetchURL}
                                   className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
+                                  href={result.message.pageFetchURL}
+                                  rel="noreferrer"
                                   target="_blank"
                                 >
                                   {result.message.pageFetchURL.replace(
                                     /^https?:\/\//,
-                                    ""
+                                    "",
                                   )}
                                 </a>
                               </div>
@@ -144,28 +146,28 @@ export default function Search() {
         <div className="absolute left-0 bottom-5 flex justify-center items-center w-full z-10">
           <div className="flex items-center gap-3 max-w-screen-sm w-full">
             <Input
-              placeholder="Enter a message to search:   "
-              value={searchQuery}
-              size="lg"
               autoFocus
-              variant="faded"
-              radius="full"
-              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full"
               classNames={{ inputWrapper: "pr-1" }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch();
-              }}
               endContent={
                 <Button
-                  onClick={handleSearch}
                   isIconOnly
-                  radius="full"
                   color="primary"
+                  radius="full"
+                  onClick={handleSearch}
                 >
                   <SearchIcon />
                 </Button>
               }
+              placeholder="Enter a message to search:   "
+              radius="full"
+              size="lg"
+              value={searchQuery}
+              variant="faded"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
             />
           </div>
         </div>

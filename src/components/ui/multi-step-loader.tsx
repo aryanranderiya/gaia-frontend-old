@@ -1,8 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { CircleCheck } from "lucide-react";
 import { useState, useEffect } from "react";
+
+import { cn } from "@/lib/utils";
 
 type LoadingState = {
   text: string;
@@ -24,9 +25,9 @@ const LoaderCore = ({
         return (
           <motion.div
             key={index}
+            animate={{ opacity: opacity, y: -(value * 40) }}
             className={cn("text-left flex gap-2 mb-4")}
             initial={{ opacity: 0, y: -(value * 40) }}
-            animate={{ opacity: opacity, y: -(value * 40) }}
             transition={{ duration: 0.5 }}
           >
             <div>
@@ -35,7 +36,7 @@ const LoaderCore = ({
                 <CircleCheck
                   className={cn(
                     "text-gray-600",
-                    value === index && "text-green-500 opacity-100"
+                    value === index && "text-green-500 opacity-100",
                   )}
                 />
               )}
@@ -43,7 +44,7 @@ const LoaderCore = ({
             <span
               className={cn(
                 "text-gray-600",
-                value === index && "text-green-500 opacity-100"
+                value === index && "text-green-500 opacity-100",
               )}
             >
               {loadingState.text}
@@ -71,6 +72,7 @@ export const MultiStepLoader = ({
   useEffect(() => {
     if (!loading) {
       setCurrentState(0);
+
       return;
     }
     const timeout = setTimeout(() => {
@@ -79,29 +81,30 @@ export const MultiStepLoader = ({
           ? prevState === loadingStates.length - 1
             ? 0
             : prevState + 1
-          : Math.min(prevState + 1, loadingStates.length - 1)
+          : Math.min(prevState + 1, loadingStates.length - 1),
       );
     }, duration);
 
     return () => clearTimeout(timeout);
   }, [currentState, loading, loop, loadingStates.length, duration]);
+
   return (
     <AnimatePresence mode="wait">
       {loading && (
         <motion.div
-          initial={{
-            opacity: 0,
-          }}
           animate={{
             opacity: 1,
           }}
+          className="flex items-center justify-center"
           exit={{
             opacity: 0,
           }}
-          className="flex items-center justify-center"
+          initial={{
+            opacity: 0,
+          }}
         >
           <div className="h-[300px] relative">
-            <LoaderCore value={currentState} loadingStates={loadingStates} />
+            <LoaderCore loadingStates={loadingStates} value={currentState} />
           </div>
 
           {/* <div className="bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-white dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_30%,white)]" /> */}

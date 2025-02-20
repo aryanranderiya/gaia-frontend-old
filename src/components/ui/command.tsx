@@ -14,11 +14,12 @@ const Command = React.forwardRef<
     ref={ref}
     className={cn(
       "flex h-full w-full flex-col overflow-hidden bg-zinc-950 text-zinc-50",
-      className
+      className,
     )}
     {...props}
   />
 ));
+
 Command.displayName = CommandPrimitive.displayName;
 
 interface CommandDialogProps extends DialogProps {}
@@ -48,7 +49,7 @@ const CommandInput = React.forwardRef<
       ref={ref}
       className={cn(
         "flex h-11 w-full bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-zinc-400",
-        className
+        className,
       )}
       {...props}
     />
@@ -91,7 +92,7 @@ const CommandGroup = React.forwardRef<
     ref={ref}
     className={cn(
       "overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium  text-zinc-50 [&_[cmdk-group-heading]]:text-zinc-400",
-      className
+      className,
     )}
     {...props}
   />
@@ -109,6 +110,7 @@ const CommandSeparator = React.forwardRef<
     {...props}
   />
 ));
+
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
 const CommandItem = React.forwardRef<
@@ -119,7 +121,7 @@ const CommandItem = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center  px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none  data-[disabled=true]:opacity-50 data-[selected='true']:bg-zinc-800 data-[selected=true]:text-zinc-50",
-      className
+      className,
     )}
     {...props}
   />
@@ -138,6 +140,7 @@ const CommandShortcut = ({
     />
   );
 };
+
 CommandShortcut.displayName = "CommandShortcut";
 
 export {

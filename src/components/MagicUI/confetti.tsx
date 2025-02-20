@@ -1,4 +1,10 @@
 import type { ReactNode } from "react";
+import type {
+  GlobalOptions as ConfettiGlobalOptions,
+  CreateTypes as ConfettiInstance,
+  Options as ConfettiOptions,
+} from "canvas-confetti";
+
 import React, {
   createContext,
   forwardRef,
@@ -9,12 +15,6 @@ import React, {
   useRef,
 } from "react";
 import confetti from "canvas-confetti";
-import type {
-  GlobalOptions as ConfettiGlobalOptions,
-  CreateTypes as ConfettiInstance,
-  Options as ConfettiOptions,
-} from "canvas-confetti";
-
 import { Button } from "@heroui/button";
 
 type Api = {
@@ -61,20 +61,20 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
         }
       }
     },
-    [globalOptions]
+    [globalOptions],
   );
 
   // `fire` is a function that calls the instance() with `opts` merged with `options`
   const fire = useCallback(
     (opts = {}) => instanceRef.current?.({ ...options, ...opts }),
-    [options]
+    [options],
   );
 
   const api = useMemo(
     () => ({
       fire,
     }),
-    [fire]
+    [fire],
   );
 
   useImperativeHandle(ref, () => api, [api]);
@@ -98,6 +98,7 @@ function ConfettiButton({ options, children, ...props }: any) {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
+
     confetti({
       ...options,
       origin: {

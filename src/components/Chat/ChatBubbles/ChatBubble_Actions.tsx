@@ -1,13 +1,15 @@
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { apiauth } from "@/utils/apiaxios";
-import { ApiService } from "@/utils/chatUtils";
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
 import { XIcon } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+
 import TextToSpeech from "../../Audio/TextToSpeechComponent";
 import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../icons";
+
+import { ApiService } from "@/utils/chatUtils";
+import { apiauth } from "@/utils/apiaxios";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
@@ -36,7 +38,7 @@ export function ChatBubble_Actions({
       },
       duration: 3000,
       description: `${text.substring(0, 35)}...`,
-      icon: <Task01Icon height="23" color="black" />,
+      icon: <Task01Icon color="black" height="23" />,
     });
   };
 
@@ -53,12 +55,13 @@ export function ChatBubble_Actions({
       // Pin/unpin the message
       await apiauth.put(
         `/conversations/${convoIdParam}/messages/${message_id}/pin`,
-        { pinned: !pinned }
+        { pinned: !pinned },
       );
 
       console.log("Updated pin route");
       // Fetch messages again to reflect the pin state
       const updatedMessages = await ApiService.fetchMessages(convoIdParam);
+
       setConvoMessages(updatedMessages);
     } catch (error) {
       console.error("Failed to update chat name", error);
@@ -70,30 +73,30 @@ export function ChatBubble_Actions({
       {!loading && (
         <div className="flex w-fit gap-2 items-center">
           <Button
-            variant="light"
-            className="w-fit p-0 h-fit rounded-md"
             isIconOnly
+            className="w-fit p-0 h-fit rounded-md"
             style={{ minWidth: "22px" }}
+            variant="light"
             onClick={copyToClipboard}
           >
-            <Task01Icon height="22" width="22" className="cursor-pointer" />
+            <Task01Icon className="cursor-pointer" height="22" width="22" />
           </Button>
 
           <Button
-            className="w-fit p-0 h-fit rounded-md"
             isIconOnly
+            className="w-fit p-0 h-fit rounded-md"
             variant="light"
+            onClick={handlePinToggle}
             color={pinned ? "primary" : "default"}
             // variant={pinned ? "solid" : "light"}
             style={{ minWidth: "22px" }}
-            onClick={handlePinToggle}
           >
             <PinIcon
+              className={`cursor-pointer`}
+              color={pinned ? "#00bbff" : "#9b9b9b"}
+              fill={pinned ? "#00bbff" : "transparent"}
               height="22"
               width="22"
-              fill={pinned ? "#00bbff" : "transparent"}
-              color={pinned ? "#00bbff" : "#9b9b9b"}
-              className={`cursor-pointer`}
             />
           </Button>
           {/*
@@ -154,6 +157,7 @@ export function ChatBubble_Actions_Image({
 
       // Create download link
       const downloadLink = document.createElement("a");
+
       downloadLink.href = blobUrl;
       downloadLink.download = fileName;
 
@@ -172,30 +176,31 @@ export function ChatBubble_Actions_Image({
       });
     }
   };
+
   return (
     <div className="flex py-2 w-fit gap-2 items-center">
       <Tooltip
+        className={`${fullWidth ? "hidden" : ""}`}
+        color="primary"
         content="Download Image"
         placement="right"
         size="md"
-        color="primary"
-        className={`${fullWidth ? "hidden" : ""}`}
       >
         <Button
-          variant={fullWidth ? "solid" : "light"}
-          color="primary"
           className={`w-fit ${
             fullWidth
               ? "px-3 py-2 "
               : "p-0 bg-transparent data-[hover=true]:bg-transparent"
           } h-fit rounded-lg `}
+          color="primary"
           isIconOnly={!fullWidth}
           style={{ minWidth: "22px" }}
+          variant={fullWidth ? "solid" : "light"}
           onPress={downloadFromSrc}
         >
           <DownloadSquare01Icon
-            height="22"
             className={`cursor-pointer ${fullWidth ? "text-black" : ""}`}
+            height="22"
           />
           <span className="text-black font-medium">
             {fullWidth ? "Download Image" : ""}

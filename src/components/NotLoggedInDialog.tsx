@@ -1,3 +1,5 @@
+import { Button } from "@heroui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -5,7 +7,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@heroui/button";
 
 export default function NotLoggedIn() {
   return (
@@ -22,7 +23,7 @@ export default function NotLoggedIn() {
           </DialogDescription>
         </DialogHeader>
 
-        <Button size="md" variant="flat" color="primary" onClick={() => {}}>
+        <Button color="primary" size="md" variant="flat" onClick={() => {}}>
           Login
         </Button>
       </DialogContent>

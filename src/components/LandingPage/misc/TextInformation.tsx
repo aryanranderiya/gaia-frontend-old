@@ -1,5 +1,6 @@
 import { Button } from "@heroui/button";
 import { Link } from "react-router-dom";
+
 import { ColoredLine } from "../../HorizontalRuler";
 import WordPullUp from "../../MagicUI/word-pull-up";
 
@@ -13,10 +14,10 @@ export default function TextInformation({
   button = (
     <Button
       className="w-fit font-medium text-lg"
-      radius="md"
       color="primary"
-      size="lg"
       endContent={btnicon}
+      radius="md"
+      size="lg"
       onClick={(e) => e.preventDefault()}
     >
       <Link to={btnhref}>{btntext}</Link>

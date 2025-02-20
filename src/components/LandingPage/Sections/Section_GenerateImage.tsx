@@ -1,10 +1,12 @@
 "use client";
 
-import LandingPage1Layout from "@/layouts/LandingPage1";
 import { Chip } from "@heroui/chip";
 import { useEffect, useState } from "react";
+
 import { SimpleChatBubbleUser } from "../../Chat/ChatBubbles/SimpleChatBubbles";
 import { AiImageIcon } from "../../icons";
+
+import LandingPage1Layout from "@/layouts/LandingPage1";
 
 const imageOptions = [
   {
@@ -31,35 +33,39 @@ export default function ImageGeneration() {
 
   useEffect(() => {
     imageOptions.forEach((option, index) => {
-      setTimeout(() => {
-        const img = new Image();
-        img.src = option.src;
-      }, 1000 * (index + 1));
+      setTimeout(
+        () => {
+          const img = new Image();
+
+          img.src = option.src;
+        },
+        1000 * (index + 1),
+      );
     });
   }, []);
 
   return (
     <LandingPage1Layout
-      heading="Generate Images"
-      subheading="Create stunning & realistic images for free"
-      icon={
-        <AiImageIcon color="#9b9b9b" className="sm:size-[30px] size-[30px]" />
-      }
       extraHeading={
         <div className="flex flex-wrap gap-2">
           {imageOptions.map((option, index) => (
             <Chip
               key={index}
-              onClick={() => setSelectedOption(option)}
-              variant={selectedOption?.src === option.src ? "solid" : "flat"}
-              color="primary"
               className="cursor-pointer"
+              color="primary"
+              variant={selectedOption?.src === option.src ? "solid" : "flat"}
+              onClick={() => setSelectedOption(option)}
             >
               {option.title}
             </Chip>
           ))}
         </div>
       }
+      heading="Generate Images"
+      icon={
+        <AiImageIcon className="sm:size-[30px] size-[30px]" color="#9b9b9b" />
+      }
+      subheading="Create stunning & realistic images for free"
     >
       <div className="w-full rounded-3xl">
         <SimpleChatBubbleUser hideMobile={true}>
@@ -68,15 +74,15 @@ export default function ImageGeneration() {
         <div className="p-1 !rounded-2xl !w-full">
           <div className="text-sm font-medium flex flex-col gap-2 min-w-full">
             <img
-              src={selectedOption?.src}
-              width={400}
-              height={400}
               alt={selectedOption?.prompt || "Generated image"}
               className="rounded-3xl my-2 w-full"
+              height={400}
+              src={selectedOption?.src}
+              width={400}
             />
             <div className="flex gap-1 flex-wrap">
               {selectedOption.prompt.split(",").map((keyword, index) => (
-                <Chip key={index} color="default" size="sm" radius="md">
+                <Chip key={index} color="default" radius="md" size="sm">
                   {keyword.trim()}
                 </Chip>
               ))}

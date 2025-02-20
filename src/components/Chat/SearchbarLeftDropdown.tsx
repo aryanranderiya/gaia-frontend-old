@@ -5,13 +5,15 @@ import {
   DropdownTrigger,
 } from "@heroui/dropdown";
 import { useEffect, useRef, useState } from "react";
+
 import FileUpload from "../Documents/FileUpload";
 import {
   AiImageIcon,
   FileUploadIcon,
   ImageUploadIcon,
-  PlusSignIcon
+  PlusSignIcon,
 } from "../icons";
+
 import GenerateImage from "./GenerateImage";
 
 export default function SearchbarLeftDropdown({
@@ -46,19 +48,19 @@ export default function SearchbarLeftDropdown({
   return (
     <>
       <Dropdown
+        showArrow
+        backdrop="opaque"
         className={`dark text-foreground w-full ${
           loading ? "cursor-wait" : "cursor-pointer"
         }`}
-        placement="top"
-        offset={0}
-        closeOnSelect={true}
-        showArrow
         classNames={{
           base: "dark",
         }}
-        backdrop="opaque"
-        isDismissable={true}
+        closeOnSelect={true}
         isDisabled={loading}
+        isDismissable={true}
+        offset={0}
+        placement="top"
         shouldCloseOnInteractOutside={() => true}
       >
         <DropdownTrigger>
@@ -120,11 +122,11 @@ export default function SearchbarLeftDropdown({
         </DropdownMenu>
       </Dropdown>
 
-      <FileUpload isImage={isImage} fileInputRef={fileInputRef} />
+      <FileUpload fileInputRef={fileInputRef} isImage={isImage} />
 
       <GenerateImage
-        setOpenImageDialog={setOpenImageDialog}
         openImageDialog={openImageDialog}
+        setOpenImageDialog={setOpenImageDialog}
       />
 
       {/* <Button isIconOnly radius="full" variant="ghost">

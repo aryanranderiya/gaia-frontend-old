@@ -1,7 +1,3 @@
-import { useConversationList } from "@/contexts/ConversationList";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { useUser } from "@/contexts/UserContext";
-import { ApiService } from "@/utils/chatUtils";
 import { Button } from "@heroui/button";
 import {
   Dropdown,
@@ -13,8 +9,15 @@ import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Eraser } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../../icons";
+
 import SettingsModal from "./SettingsModal";
+
+import { ApiService } from "@/utils/chatUtils";
+import { useUser } from "@/contexts/UserContext";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useConversationList } from "@/contexts/ConversationList";
 
 // Only allow these values in our modal state.
 export type ModalAction = "clear_chats" | "logout";
@@ -66,7 +69,7 @@ export default function SettingsMenu() {
       key: "settings",
       label: (
         <div className="flex items-center gap-4">
-          <Settings01Icon width={20} color="text-foreground" />
+          <Settings01Icon color="text-foreground" width={20} />
           Settings
         </div>
       ),
@@ -76,7 +79,7 @@ export default function SettingsMenu() {
       key: "logout",
       label: (
         <div className="flex items-center gap-4">
-          <Logout02Icon width={20} color={undefined} />
+          <Logout02Icon color={undefined} width={20} />
           Logout
         </div>
       ),
@@ -89,8 +92,8 @@ export default function SettingsMenu() {
     <>
       <SettingsModal
         openSettings={openSettings}
-        setOpenSettings={setOpenSettings}
         setModalAction={setModalAction}
+        setOpenSettings={setOpenSettings}
       />
 
       <Modal
@@ -106,8 +109,8 @@ export default function SettingsMenu() {
             </ModalHeader>
             <ModalBody className="flex flex-col gap-2 mb-4">
               <Button
-                radius="full"
                 color="danger"
+                radius="full"
                 onPress={() => {
                   if (modalAction === "logout") {
                     handleConfirmLogout();
@@ -119,8 +122,8 @@ export default function SettingsMenu() {
                 {modalAction === "logout" ? "Logout" : "Delete all chats"}
               </Button>
               <Button
-                variant="bordered"
                 radius="full"
+                variant="bordered"
                 onPress={() => setModalAction(null)}
               >
                 Cancel
@@ -132,7 +135,7 @@ export default function SettingsMenu() {
 
       <Dropdown className="dark text-foreground">
         <DropdownTrigger>
-          <Button isIconOnly variant="light" aria-label="Three Dots Menu">
+          <Button isIconOnly aria-label="Three Dots Menu" variant="light">
             <ThreeDotsMenu />
           </Button>
         </DropdownTrigger>
@@ -140,8 +143,8 @@ export default function SettingsMenu() {
           {items.map((item) => (
             <DropdownItem
               key={item.key}
-              color={item.color === "danger" ? "danger" : "default"}
               className={item.color === "danger" ? "text-danger" : ""}
+              color={item.color === "danger" ? "danger" : "default"}
               textValue={item.key}
               onPress={item.action}
             >

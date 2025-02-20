@@ -1,11 +1,12 @@
+import { Tooltip } from "@heroui/tooltip";
+import { LegacyRef, useState } from "react";
+
 import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 // import Hr from "@/components/HorizontalRuler";
 import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
-import { Tooltip } from "@heroui/tooltip";
-import { LegacyRef, useState } from "react";
 
 export default function Sidebar({
   sidebarref,
@@ -23,20 +24,20 @@ export default function Sidebar({
   return (
     <>
       <div
+        ref={sidebarref}
         className={`sidebar flex ${className} ${
           isSidebarVisible
             ? "sm:min-w-[280px] sm:max-w-[280px] sm:translate-x-0 translate-x-[-350px]"
             : "sm:min-w-0 sm:max-w-0 sm:w-0 translate-x-0"
         } transition-all duration-100`}
-        ref={sidebarref}
       >
         <div className="overflow-y-auto min-w-[280px]">
           <div className="p-4 pb-0 ">
             <div className="flex items-center justify-between mb-1">
               <Tooltip
                 content="general artificial intelligence assistant"
-                placement="bottom"
                 offset={+0}
+                placement="bottom"
               >
                 {/* <div className="flex gap-2 items-center p-2"> */}
                 {/* <GlobalIcon color="white" width="22" /> */}

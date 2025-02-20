@@ -1,18 +1,20 @@
-import SuspenseLoader from "@/components/SuspenseLoader";
 import { lazy, Suspense } from "react";
+
 import Section_Calendar from "./Section_Calendar";
 import Section_Memories from "./Section_Memories";
 
+import SuspenseLoader from "@/components/SuspenseLoader";
+
 const Section_Grid = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Grid")
+  () => import("@/components/LandingPage/Sections/Section_Grid"),
 );
 
 const FreePricing = lazy(
-  () => import("@/components/LandingPage/Sections/Free_Pricing")
+  () => import("@/components/LandingPage/Sections/Free_Pricing"),
 );
 
 const WhatCanYouDo = lazy(
-  () => import("@/components/LandingPage/Sections/Section_WhatCanYouDo")
+  () => import("@/components/LandingPage/Sections/Section_WhatCanYouDo"),
 );
 
 // const TargetAudience = lazy(
@@ -20,21 +22,21 @@ const WhatCanYouDo = lazy(
 // );
 
 const ComingSoon = lazy(
-  () => import("@/components/LandingPage/Sections/Section_ComingSoon")
+  () => import("@/components/LandingPage/Sections/Section_ComingSoon"),
 );
 
 const Footer = lazy(() => import("@/components/LandingPage/misc/Footer"));
 
 const GoalSection = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Goal")
+  () => import("@/components/LandingPage/Sections/Section_Goal"),
 );
 
 const Internet = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Internet")
+  () => import("@/components/LandingPage/Sections/Section_Internet"),
 );
 
 const FinalSection = lazy(
-  () => import("@components/LandingPage/Sections/FinalSection")
+  () => import("@components/LandingPage/Sections/FinalSection"),
 );
 
 export default function LazyLoadedSections() {

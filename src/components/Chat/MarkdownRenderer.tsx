@@ -1,11 +1,11 @@
 "use client";
 
-import { useLoading } from "@/contexts/LoadingContext";
-import { Button } from "@heroui/button";
+import type React from "react";
+
 import { Tab, Tabs } from "@heroui/tabs";
 import { Download, GlobeIcon, Move, ZoomIn, ZoomOut } from "lucide-react";
 import mermaid from "mermaid";
-import type React from "react";
+import { Button } from "@heroui/button";
 import {
   lazy,
   Suspense,
@@ -14,9 +14,9 @@ import {
   useRef,
   useState,
 } from "react";
+
 // import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 // import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import api from "@/utils/apiaxios";
 import { Tooltip } from "@heroui/tooltip";
 import {
   PrismAsyncLight,
@@ -24,8 +24,12 @@ import {
 } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
+
 import { Task01Icon, TaskDone01Icon } from "../icons";
 import SuspenseLoader from "../SuspenseLoader";
+
+import api from "@/utils/apiaxios";
+import { useLoading } from "@/contexts/LoadingContext";
 const ReactMarkdown = lazy(() => import("react-markdown"));
 const SyntaxHighlighter =
   PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
@@ -75,7 +79,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         y: e.clientY - position.y,
       });
     },
-    [position]
+    [position],
   );
 
   const handleMouseMove = useCallback(
@@ -87,7 +91,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         });
       }
     },
-    [isDragging, startPosition]
+    [isDragging, startPosition],
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -96,13 +100,14 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!
+      mermaidRef.current.querySelector("svg")!,
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",
     });
     const svgUrl = URL.createObjectURL(svgBlob);
     const downloadLink = document.createElement("a");
+
     downloadLink.href = svgUrl;
     downloadLink.download = "mermaid-diagram.svg";
     document.body.appendChild(downloadLink);
@@ -113,13 +118,16 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault(); // This will now work because we're using a non-passive event listener
     const delta = e.deltaY * -0.01;
+
     setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3));
   }, []);
 
   useEffect(() => {
     const element = mermaidRef.current;
+
     if (element) {
       element.addEventListener("wheel", handleWheel, { passive: false });
+
       return () => {
         element.removeEventListener("wheel", handleWheel);
       };
@@ -130,18 +138,18 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     return (
       <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
         <Tabs
+          className="px-3"
+          disabledKeys={isLoading ? ["editor"] : []}
           selectedKey={activeTab}
+          variant="underlined"
           onSelectionChange={(key) => {
             setActiveTab(key as string);
             setTimeout(() => {
               mermaid.contentLoaded();
             }, 10);
           }}
-          disabledKeys={isLoading ? ["editor"] : []}
-          variant="underlined"
-          className="px-3"
         >
-          <Tab key="preview" title="Flowchart" className="p-0">
+          <Tab key="preview" className="p-0" title="Flowchart">
             <div className="p-4 bg-white relative overflow-hidden h-[400px]">
               <div
                 ref={mermaidRef}
@@ -186,30 +194,30 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
           <Tab key="code" title="Code">
             <SyntaxHighlighter
               {...(props as any)}
-              style={vscDarkPlus}
-              language="mermaid"
+              showLineNumbers
               PreTag="div"
               className="m-0 p-0 !bg-black !text-[10px]"
-              showLineNumbers
+              language="mermaid"
+              style={vscDarkPlus}
             >
               {String(children).replace(/\n$/, "")}
             </SyntaxHighlighter>
           </Tab>
         </Tabs>
         <Button
-          onPress={handleCopy}
+          className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
           size="sm"
           variant="light"
-          className="absolute top-2 right-2 text-foreground hover:text-gray-300 text-xs"
+          onPress={handleCopy}
         >
           {copied ? (
             <div className="flex flex-row gap-1 items-center">
-              <TaskDone01Icon width={21} color="foreground" />
+              <TaskDone01Icon color="foreground" width={21} />
               <p>Copied!</p>
             </div>
           ) : (
             <div className="flex flex-row gap-1 items-center">
-              <Task01Icon width={21} color="foreground" />
+              <Task01Icon color="foreground" width={21} />
               <p>Copy Code</p>
             </div>
           )}
@@ -225,30 +233,30 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
           <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
             <span className="text-sm font-mono monospace">{match[1]}</span>
             <Button
-              onPress={handleCopy}
+              className="text-foreground hover:text-gray-300 text-xs"
               size="sm"
               variant="light"
-              className="text-foreground hover:text-gray-300 text-xs"
+              onPress={handleCopy}
             >
               {copied ? (
                 <div className="flex flex-row gap-1 items-center">
-                  <TaskDone01Icon width={21} color="foreground" />
+                  <TaskDone01Icon color="foreground" width={21} />
                   <p>Copied!</p>
                 </div>
               ) : (
                 <div className="flex flex-row gap-1 items-center">
-                  <Task01Icon width={21} color="foreground" />
+                  <Task01Icon color="foreground" width={21} />
                   <p>Copy Code</p>
                 </div>
               )}
             </Button>
           </div>
           <SyntaxHighlighter
-            style={vscDarkPlus}
-            language={match[1]}
+            showLineNumbers
             PreTag="div"
             className="m-0 !bg-black !text-[10px] max-w-[35vw] overflow-x-visible"
-            showLineNumbers
+            language={match[1]}
+            style={vscDarkPlus}
           >
             {String(children).replace(/\n$/, "")}
           </SyntaxHighlighter>
@@ -285,6 +293,7 @@ export function CustomAnchor({ props }: { props: any }) {
           url: props.href,
         });
         const { title, description, favicon, website_name } = response.data;
+
         setMetadata({ title, description, favicon, website_name });
         setValidFavicon(true);
         prevHref.current = props.href;
@@ -298,22 +307,20 @@ export function CustomAnchor({ props }: { props: any }) {
 
   return (
     <Tooltip
-      className="bg-zinc-950 text-white border-none outline-none p-3"
       showArrow
-      onOpenChange={setTooltipOpen}
-      isOpen={tooltipOpen}
+      className="bg-zinc-950 text-white border-none outline-none p-3"
       content={
         <div className="flex flex-col gap-1">
           {(metadata.website_name || (metadata.favicon && validFavicon)) && (
             <div className="flex items-center gap-2">
               {metadata.favicon && validFavicon ? (
                 <img
-                  src={metadata.favicon}
                   className="size-[20px] rounded-full"
+                  src={metadata.favicon}
                   onError={() => setValidFavicon(false)}
                 />
               ) : (
-                <GlobeIcon width={17} height={17} color="#9b9b9b" />
+                <GlobeIcon color="#9b9b9b" height={17} width={17} />
               )}
 
               {metadata.website_name && (
@@ -337,20 +344,22 @@ export function CustomAnchor({ props }: { props: any }) {
           )}
           <a
             className="w-[300px] text-primary text-xs truncate hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
             href={props.href}
+            rel="noopener noreferrer"
+            target="_blank"
           >
             {props.href.replace("https://", "")}
           </a>
         </div>
       }
+      isOpen={tooltipOpen}
+      onOpenChange={setTooltipOpen}
     >
       <a
         className="!text-[#00bbff] hover:underline font-medium hover:!text-white transition-all"
-        target="_blank"
-        rel="noopener noreferrer"
         href={props.href}
+        rel="noopener noreferrer"
+        target="_blank"
       >
         {props.children}
       </a>
@@ -365,7 +374,6 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     <div className="prose dark:prose-invert max-w-none">
       <Suspense fallback={<SuspenseLoader />}>
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
           components={{
             code: CodeBlock,
             h1: ({ node, ...props }) => (
@@ -414,6 +422,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             ),
             td: ({ node, ...props }) => <td className="px-4 py-2" {...props} />,
           }}
+          remarkPlugins={[remarkGfm]}
         >
           {content}
         </ReactMarkdown>

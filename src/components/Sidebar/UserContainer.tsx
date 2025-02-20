@@ -1,11 +1,14 @@
+import { User } from "@heroui/user";
+
+import SettingsMenu from "./Settings/SettingsMenu";
+
 import { useUser } from "@/contexts/UserContext";
 import useFetchUser from "@/hooks/useFetchUser";
-import { User } from "@heroui/user";
-import SettingsMenu from "./Settings/SettingsMenu";
 // import { Spinner } from "@heroui/spinner";
 
 const UserContainer: React.FC = () => {
   const { user } = useUser();
+
   useFetchUser();
 
   return (
@@ -18,21 +21,21 @@ const UserContainer: React.FC = () => {
 
       <div className="user_container_inner">
         <User
-          name={`${user?.name}`}
-          className="text-nowrap"
           avatarProps={{
             src: user?.profile_picture,
             showFallback: true,
             isBordered: true,
             fallback: (
               <img
-                src="https://links.aryanranderiya.com/l/default_user"
                 className="min-h-[35px] min-w-[35px]"
+                src="https://links.aryanranderiya.com/l/default_user"
               />
             ),
             size: "sm",
             className: "min-w-[30px]",
           }}
+          className="text-nowrap"
+          name={`${user?.name}`}
         />
 
         <SettingsMenu />

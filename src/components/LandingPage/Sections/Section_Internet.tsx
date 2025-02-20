@@ -1,5 +1,6 @@
 import { BrainCircuitIcon } from "lucide-react";
 import { useState } from "react";
+
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
@@ -19,32 +20,32 @@ function SearchWeb() {
             </div>
           </span>
           <svg
-            xmlns="http://www.w3.org/2000/svg"
+            className="max-h-[80%] mr-1"
+            color="transparent"
+            fill="white"
+            height="22"
             viewBox="0 0 24 24"
             width="24"
-            height="22"
-            fill="white"
-            color="transparent"
-            className="max-h-[80%] mr-1"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               d="M3 12C7.5 12 12 7.5 12 3C12 7.5 16.5 12 21 12C16.5 12 12 16.5 12 21C12 16.5 7.5 12 3 12Z"
               stroke="currentColor"
-              strokeWidth="1.5"
               strokeLinejoin="round"
-            ></path>
+              strokeWidth="1.5"
+            />
             <path
               d="M2 19.5C2.83333 19.5 4.5 17.8333 4.5 17C4.5 17.8333 6.16667 19.5 7 19.5C6.16667 19.5 4.5 21.1667 4.5 22C4.5 21.1667 2.83333 19.5 2 19.5Z"
               stroke="currentColor"
-              strokeWidth="1.5"
               strokeLinejoin="round"
-            ></path>
+              strokeWidth="1.5"
+            />
             <path
               d="M16 5C17 5 19 3 19 2C19 3 21 5 22 5C21 5 19 7 19 8C19 7 17 5 16 5Z"
               stroke="currentColor"
-              strokeWidth="1.5"
               strokeLinejoin="round"
-            ></path>
+              strokeWidth="1.5"
+            />
           </svg>
         </div>
         <div className="flex text-wrap max-w-[25vw]">
@@ -56,13 +57,13 @@ function SearchWeb() {
         <div className="flex flex-col gap-3">
           <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-primary/20 text-primary-600">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="20"
+              className="max-h-[80%]"
               color="#00bbff"
               fill="none"
-              className="max-h-[80%]"
+              height="20"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <circle
                 cx="12"
@@ -70,7 +71,7 @@ function SearchWeb() {
                 r="10"
                 stroke="currentColor"
                 strokeWidth="1.5"
-              ></circle>
+              />
               <ellipse
                 cx="12"
                 cy="12"
@@ -78,14 +79,14 @@ function SearchWeb() {
                 ry="10"
                 stroke="currentColor"
                 strokeWidth="1.5"
-              ></ellipse>
+              />
               <path
                 d="M2 12H22"
                 stroke="currentColor"
-                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-              ></path>
+                strokeWidth="1.5"
+              />
             </svg>
             <span className="flex-1 text-inherit font-normal px-2 pl-1">
               <div className="font-medium flex items-center gap-1 text-primary">
@@ -115,26 +116,27 @@ function FetchWebpage() {
       <SimpleChatBubbleUser>
         <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-default/40 text-default-700 mb-2">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="20"
-            viewBox="0 0 24 24"
+            className="lucide lucide-arrow-up-right max-h-[80%]"
             fill="none"
+            height="20"
             stroke="white"
-            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-arrow-up-right max-h-[80%]"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M7 7h10v10"></path>
-            <path d="M7 17 17 7"></path>
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
           </svg>
           <span className="flex-1 text-inherit font-normal px-2 pl-1">
             <div className="flex items-center gap-1 text-white ">
               Fetching
               <a
-                href="https://www.heroui.com/docs/components/modal"
                 className="!text-white font-medium hover:!text-black transition-colors"
+                href="https://www.heroui.com/docs/components/modal"
+                rel="noreferrer"
                 target="_blank"
               >
                 heroui.com/docs...
@@ -148,26 +150,27 @@ function FetchWebpage() {
       <SimpleChatBubbleBot>
         <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-primary/20 text-primary-600">
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="20"
-            viewBox="0 0 24 24"
+            className="lucide lucide-arrow-up-right max-h-[80%]"
             fill="none"
+            height="20"
             stroke="#00bbff"
-            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-arrow-up-right max-h-[80%]"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M7 7h10v10"></path>
-            <path d="M7 17 17 7"></path>
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
           </svg>
           <span className="flex-1 text-inherit font-normal px-2 pl-1">
             <div className="font-medium flex items-center gap-1 text-primary">
               Fetched
               <a
-                href="https://www.heroui.com/docs/components/modal"
                 className="!text-[#00bbff] font-medium hover:!text-white transition-colors"
+                href="https://www.heroui.com/docs/components/modal"
+                rel="noreferrer"
                 target="_blank"
               >
                 heroui.com/docs...
@@ -179,7 +182,7 @@ function FetchWebpage() {
           The webpage appears to be the documentation for HeroUI (previously
           NextUI), a React UI library. Here is an example of how to create a
           basic modal using HeroUI...
-          <div></div>
+          <div />
         </div>
       </SimpleChatBubbleBot>
     </AnimatedSection>
@@ -208,25 +211,25 @@ export default function Internet() {
 
         <SectionHeading
           heading={"Smarter Answers, Always Up-to-Date"}
+          icon={<BrainCircuitIcon color="#9b9b9b" height={45} width={45} />}
           subheading={
             "GAIA doesn’t just rely on preloaded knowledge—it actively searches the web for the latest and most relevant information."
           }
-          icon={<BrainCircuitIcon color="#9b9b9b" width={45} height={45} />}
         />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <div
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover2 ? "opacity-40" : "opacity-100"
             }`}
-            onMouseOver={() => setHover1(true)}
             onMouseOut={() => setHover1(false)}
+            onMouseOver={() => setHover1(true)}
           >
             <div className="mb-6 sm:p-2 space-y-2">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
                 Web Search
                 <GlobalSearchIcon
-                  color="#9b9b9b"
                   className="sm:size-[35px] size-[35px]"
+                  color="#9b9b9b"
                 />
               </div>
               <div className="text-foreground-500">
@@ -248,15 +251,15 @@ export default function Internet() {
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover1 ? "opacity-40" : "opacity-100"
             }`}
-            onMouseOver={() => setHover2(true)}
             onMouseOut={() => setHover2(false)}
+            onMouseOver={() => setHover2(true)}
           >
             <div className="mb-6 p-2 space-y-2">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
                 Fetch Webpages
                 <AiBrowserIcon
-                  color="#9b9b9b"
                   className="sm:size-[35px] size-[35px]"
+                  color="#9b9b9b"
                 />
               </div>
               <div className="text-foreground-500">

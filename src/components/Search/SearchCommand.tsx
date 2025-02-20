@@ -1,14 +1,5 @@
 "use client";
 
-import {
-  CommandDialog,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
-import { apiauth } from "@/utils/apiaxios";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { Lightbulb } from "lucide-react";
 import {
@@ -19,6 +10,8 @@ import {
   type SetStateAction,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Chip } from "@heroui/chip";
+
 import {
   BubbleChatIcon,
   Calendar01Icon,
@@ -30,8 +23,18 @@ import {
   StickyNote01Icon,
   Tick02Icon,
 } from "../icons";
+
 import { SearchCard } from "./SearchCard";
-import { Chip } from "@heroui/chip";
+
+import { apiauth } from "@/utils/apiaxios";
+import {
+  CommandDialog,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
 
 const pages = [
   {
@@ -65,7 +68,7 @@ const pages = [
   },
   {
     path: "/try/goals",
-    icon: <Route02Icon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />,
+    icon: <Route02Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />,
     name: "Go to Goals",
   },
 ];
@@ -75,7 +78,7 @@ const commands = [
     name: "New Chat",
     action: () => console.log("Create new note"),
     icon: (
-      <PencilEdit02Icon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />
+      <PencilEdit02Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
   },
 ];
@@ -113,6 +116,7 @@ export default function SearchCommand({
     };
 
     document.addEventListener("keydown", down);
+
     return () => document.removeEventListener("keydown", down);
   }, []);
 
@@ -134,12 +138,14 @@ export default function SearchCommand({
         messages: [],
         notes: [],
       });
+
       return;
     }
     try {
       const response = await apiauth.get("/search", {
         params: { query: searchQuery },
       });
+
       setResults({
         conversations: response.data.conversations,
         messages: response.data.messages,
@@ -160,13 +166,13 @@ export default function SearchCommand({
       handleSearch();
       setFilteredPages(
         pages.filter((page) =>
-          page.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          page.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
       );
       setFilteredCommands(
         commands.filter((command) =>
-          command.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          command.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
       );
     }, 200);
 
@@ -192,61 +198,61 @@ export default function SearchCommand({
               // size="sm"
               className="cursor-pointer"
               classNames={{ content: "font-medium" }}
+              color={chipsVisibility.messages ? "primary" : "default"}
+              endContent={
+                chipsVisibility.messages ? (
+                  <Tick02Icon color="#000" />
+                ) : undefined
+              }
               startContent={
                 <BubbleChatIcon
                   color={chipsVisibility.messages ? "#000000" : "#9b9b9b"}
                 />
               }
               variant={chipsVisibility.messages ? "solid" : "faded"}
-              color={chipsVisibility.messages ? "primary" : "default"}
               onClick={() => handleChipClick("messages")}
-              endContent={
-                chipsVisibility.messages ? (
-                  <Tick02Icon color="#000" />
-                ) : undefined
-              }
             >
               Messages
             </Chip>
           )}
           {results.conversations.length > 0 && (
             <Chip
-              size="sm"
               className="cursor-pointer"
               classNames={{ content: "font-medium" }}
+              color={chipsVisibility.conversations ? "primary" : "default"}
+              endContent={
+                chipsVisibility.conversations ? (
+                  <Tick02Icon color="#000" />
+                ) : undefined
+              }
+              size="sm"
               startContent={
                 <BubbleConversationChatIcon
                   color={chipsVisibility.conversations ? "#000000" : "#9b9b9b"}
                 />
               }
               variant={chipsVisibility.conversations ? "solid" : "faded"}
-              color={chipsVisibility.conversations ? "primary" : "default"}
               onClick={() => handleChipClick("conversations")}
-              endContent={
-                chipsVisibility.conversations ? (
-                  <Tick02Icon color="#000" />
-                ) : undefined
-              }
             >
               Conversations
             </Chip>
           )}
           {results.notes.length > 0 && (
             <Chip
-              size="sm"
               className="cursor-pointer"
               classNames={{ content: "font-medium" }}
+              color={chipsVisibility.notes ? "primary" : "default"}
+              endContent={
+                chipsVisibility.notes ? <Tick02Icon color="#000" /> : undefined
+              }
+              size="sm"
               startContent={
                 <StickyNote01Icon
                   color={chipsVisibility.notes ? "#000000" : "#9b9b9b"}
                 />
               }
               variant={chipsVisibility.notes ? "solid" : "faded"}
-              color={chipsVisibility.notes ? "primary" : "default"}
               onClick={() => handleChipClick("notes")}
-              endContent={
-                chipsVisibility.notes ? <Tick02Icon color="#000" /> : undefined
-              }
             >
               Notes
             </Chip>
@@ -259,11 +265,11 @@ export default function SearchCommand({
           {filteredCommands.map((command) => (
             <CommandItem
               key={command.name}
+              className="cursor-pointer group !my-3"
               onSelect={() => {
                 setOpenSearchDialog(false);
                 command.action();
               }}
-              className="cursor-pointer group !my-3"
             >
               <div className="flex gap-2 items-center w-full">
                 {command.icon}

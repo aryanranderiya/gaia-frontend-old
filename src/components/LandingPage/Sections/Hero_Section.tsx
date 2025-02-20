@@ -1,14 +1,17 @@
 import { Button } from "@heroui/button";
+
 // import GradualSpacing from "../MagicUI/gradual-spacing";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
-import TypingAnimation from "@/components/MagicUI/typing-animation";
-import { Spotlight } from "@/components/ui/spotlight-new";
 // import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+
 // import { AnimatedShinyText } from "../../ui/animated-shiny-text";
 import { AnimatedSection } from "../misc/AnimatedSection";
+
+import { Spotlight } from "@/components/ui/spotlight-new";
+import TypingAnimation from "@/components/MagicUI/typing-animation";
 
 export default function HeroSection() {
   return (
@@ -36,20 +39,20 @@ export default function HeroSection() {
           </div>
         </div>
         <TypingAnimation
+          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm"
+          duration={5}
           text={
             "GAIA is your one stop solution personal assistant that helps with everything from calendar management to goal tracking"
           }
-          className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm"
-          duration={5}
         />
         <Button
+          as={Link}
+          className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
           color="primary"
           radius="full"
-          variant="shadow"
           size="lg"
-          as={Link}
           to={"/get-started"}
-          className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
+          variant="shadow"
         >
           <div className="flex items-center gap-1">
             Get Started for Free

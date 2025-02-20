@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
+
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "./Chat/ChatBubbles/SimpleChatBubbles";
+
 import { Calendaradd } from "@/pages/LoginSignup";
 
 //
@@ -31,7 +33,10 @@ export const ChatBubble: React.FC<BubbleConfig> = ({
 }) => {
   return (
     <motion.div
+      drag
       className="absolute cursor-grab active:cursor-grabbing"
+      dragElastic={0.2}
+      dragMomentum={false}
       style={{
         x,
         y,
@@ -41,9 +46,6 @@ export const ChatBubble: React.FC<BubbleConfig> = ({
         // (Optional) Use the color for a border or background if you wish:
         // border: `2px solid ${color}`,
       }}
-      drag
-      dragElastic={0.2}
-      dragMomentum={false}
       whileHover={{ scale: 1.1, rotate: 1.5 }}
       whileTap={{ scale: 0.9 }}
     >
@@ -90,7 +92,7 @@ const BubblePitFooter: React.FC = () => {
           size: 20 + Math.random() * 20,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
           component,
-        })
+        }),
       );
 
       setBubbles(newBubbles);
@@ -120,6 +122,7 @@ const BubblePitFooter: React.FC = () => {
           const force = (maxDistance - distance) / maxDistance;
           const moveX = (dx / distance) * force * 10;
           const moveY = (dy / distance) * force * 10;
+
           newX = bubble.x - moveX;
           newY = bubble.y - moveY;
         }
@@ -133,7 +136,7 @@ const BubblePitFooter: React.FC = () => {
         }
 
         return { ...bubble, x: newX, y: newY };
-      })
+      }),
     );
   };
 

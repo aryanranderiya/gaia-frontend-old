@@ -1,7 +1,3 @@
-import NotLoggedIn from "@/components/NotLoggedInDialog";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import SuspenseLoader from "@/components/SuspenseLoader";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import {
   Navigate,
@@ -10,6 +6,11 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+
+import NotLoggedIn from "@/components/NotLoggedInDialog";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
+import SuspenseLoader from "@/components/SuspenseLoader";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 // Providers
 import { ConversationListProvider } from "@/contexts/ConversationList";
@@ -148,9 +149,9 @@ export default function MainInterface() {
 
               <Suspense fallback={<SuspenseLoader />}>
                 <Sidebar
+                  isSidebarVisible={isSidebarVisible}
                   sidebarref={sidebarRef}
                   toggleSidebar={toggleSidebar}
-                  isSidebarVisible={isSidebarVisible}
                 />
               </Suspense>
 
@@ -170,7 +171,7 @@ export default function MainInterface() {
 
                 <Routes>
                   {routes.map(({ path, element }) => (
-                    <Route key={path} path={path} element={element} />
+                    <Route key={path} element={element} path={path} />
                   ))}
                 </Routes>
               </div>

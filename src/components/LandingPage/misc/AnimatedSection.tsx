@@ -1,7 +1,8 @@
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Children, useMemo, useRef } from "react";
+
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ export function AnimatedSection({
         },
       },
     }),
-    [staggerDelay]
+    [staggerDelay],
   );
 
   const itemVariants = useMemo(
@@ -37,16 +38,16 @@ export function AnimatedSection({
       hidden: { opacity: 0, y: 50 },
       visible: { opacity: 1, y: 0 },
     }),
-    []
+    [],
   );
 
   return (
     <motion.div
       ref={ref}
-      variants={containerVariants}
-      initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
       className={cn(className)}
+      initial="hidden"
+      variants={containerVariants}
     >
       {Children.map(children, (child, index) => (
         <motion.div key={index} variants={itemVariants}>

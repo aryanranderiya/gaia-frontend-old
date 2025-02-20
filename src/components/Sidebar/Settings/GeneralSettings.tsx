@@ -1,5 +1,6 @@
 import { Button } from "@heroui/button";
 import { Eraser } from "lucide-react";
+
 import { ModalAction } from "./SettingsMenu";
 export default function GeneralSection({
   setModalAction,
@@ -15,10 +16,10 @@ export default function GeneralSection({
           Delete all chats
         </div>
         <Button
-          variant="flat"
-          color="danger"
           className="w-1/5"
+          color="danger"
           radius="sm"
+          variant="flat"
           onPress={() => setModalAction("clear_chats")}
         >
           Delete all

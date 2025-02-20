@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Modal, ModalBody, ModalContent } from "@heroui/modal";
 import { useState } from "react";
+
 import PrivacySection from "./PrivacySettings";
 import GeneralSection from "./GeneralSettings";
 import AccountSection from "./AccountSettings";
@@ -43,7 +44,7 @@ export default function SettingsModal({
   };
 
   return (
-    <Modal isOpen={openSettings} onOpenChange={setOpenSettings} backdrop="blur">
+    <Modal backdrop="blur" isOpen={openSettings} onOpenChange={setOpenSettings}>
       <ModalContent className="max-w-4xl min-h-[400px]">
         <ModalBody className="flex flex-row p-5">
           <div className="w-1/4 border-r border-r-[#ffffff20] pr-4">
@@ -51,10 +52,10 @@ export default function SettingsModal({
               {sidebarItems.map((item) => (
                 <li key={item.key}>
                   <Button
+                    className="w-full justify-start"
                     radius="sm"
                     variant={activeSection === item.key ? "solid" : "light"}
                     onPress={() => setActiveSection(item.key)}
-                    className="w-full justify-start"
                   >
                     {item.label}
                   </Button>

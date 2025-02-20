@@ -11,13 +11,13 @@ export default function Section_Document() {
     // >
     <LandingPage1Layout
       heading={"Chat with Documents"}
-      subheading={"..."}
       icon={
         <FileUploadIcon
-          color="#9b9b9b"
           className="sm:size-[30px] size-[30px]"
+          color="#9b9b9b"
         />
       }
+      subheading={"..."}
     >
       update this
     </LandingPage1Layout>

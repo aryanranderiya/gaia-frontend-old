@@ -1,13 +1,15 @@
-import { parseDate2 } from "@/utils/fetchDate";
 import { Chip } from "@heroui/chip";
 import { Link } from "react-router-dom";
 import { GlobeIcon, ArrowUpRight } from "lucide-react";
+
 import { CommandItem } from "../ui/command";
 import {
   BubbleChatIcon,
   BubbleConversationChatIcon,
   StickyNote01Icon,
 } from "../icons";
+
+import { parseDate2 } from "@/utils/fetchDate";
 
 interface SearchCardProps {
   result: any;
@@ -24,25 +26,25 @@ interface SearchCardProps {
 const defaultConfigs = {
   message: {
     icon: (
-      <BubbleChatIcon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />
+      <BubbleChatIcon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
     linkTo: (result: any) => `/try/chat/${result.conversation_id}`,
     bodyContent: (result: any) => (
       <>
         <div className="flex items-center gap-2">
           <Chip
-            size="sm"
             color={result.message.type === "bot" ? "primary" : "default"}
+            size="sm"
           >
             {result.message.type === "bot" ? "From GAIA" : "From You"}
           </Chip>
 
           {result.message.searchWeb && (
             <Chip
-              size="sm"
-              startContent={<GlobeIcon height={20} color="#00bbff" />}
-              variant="flat"
               color="primary"
+              size="sm"
+              startContent={<GlobeIcon color="#00bbff" height={20} />}
+              variant="flat"
             >
               Live Search Results from the Web
             </Chip>
@@ -50,10 +52,10 @@ const defaultConfigs = {
 
           {!!result.message.pageFetchURL && (
             <Chip
-              size="sm"
-              startContent={<ArrowUpRight height={20} color="#00bbff" />}
-              variant="flat"
               color="primary"
+              size="sm"
+              startContent={<ArrowUpRight color="#00bbff" height={20} />}
+              variant="flat"
             >
               Fetched Webpage
             </Chip>
@@ -69,8 +71,8 @@ const defaultConfigs = {
   conversation: {
     icon: (
       <BubbleConversationChatIcon
-        color="#9b9b9b"
         className="min-h-[22px] min-w-[22px]"
+        color="#9b9b9b"
       />
     ),
     linkTo: (result: any) => `/try/chat/${result.conversation_id}`,
@@ -83,7 +85,7 @@ const defaultConfigs = {
   },
   note: {
     icon: (
-      <StickyNote01Icon color="#9b9b9b" className="min-h-[22px] min-w-[22px]" />
+      <StickyNote01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
     linkTo: (result: any) => `/try/notes/${result.id}`,
     bodyContent: (result: any) => (
@@ -109,8 +111,8 @@ export function SearchCard({
       key={
         type === "message" ? result.message.message_id : result.conversation_id
       }
-      to={linkTo(result)}
       className={`bg-zinc-800 p-2 px-3 rounded-xl h-full overflow-hidden flex flex-row hover:bg-zinc-700 transition-colors my-2 items-center gap-2 ${className}`}
+      to={linkTo(result)}
     >
       <div className="min-h-[22px] min-w-[22px]">{icon}</div>
       <div className="flex-1">{bodyContent(result)}</div>

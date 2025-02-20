@@ -1,13 +1,14 @@
-import SuspenseLoader from "@/components/SuspenseLoader";
 import { Suspense, lazy } from "react";
+
+import SuspenseLoader from "@/components/SuspenseLoader";
 // import { AnimatedSection } from "../misc/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
-  () => import("@/components/LandingPage/Sections/Sections_ConvoManagement")
+  () => import("@/components/LandingPage/Sections/Sections_ConvoManagement"),
 );
 
 const Section_Document = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Documents")
+  () => import("@/components/LandingPage/Sections/Section_Documents"),
 );
 
 // const Section_Notes = lazy(
@@ -15,11 +16,11 @@ const Section_Document = lazy(
 // );
 
 const FlowchartDemo = lazy(
-  () => import("@/components/LandingPage/Sections/Section_Flowchart")
+  () => import("@/components/LandingPage/Sections/Section_Flowchart"),
 );
 
 const ImageGeneration = lazy(
-  () => import("@/components/LandingPage/Sections/Section_GenerateImage")
+  () => import("@/components/LandingPage/Sections/Section_GenerateImage"),
 );
 
 export default function Section_Grid() {
@@ -36,8 +37,8 @@ export default function Section_Grid() {
 
       <div className="w-screen max-w-screen-xl relative z-[0]">
         <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
-          <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative"></div>
-          <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]"></div>
+          <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative" />
+          <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]" />
         </div>
 
         <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
