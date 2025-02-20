@@ -910,6 +910,10 @@ code {
     rotate2 3s infinite ease;
 }
 
+.animate-bounce3 {
+  animation: bounce3 4s infinite ease-in-out;
+}
+
 @keyframes rotate2 {
   0% {
     transform: rotate(0);
@@ -926,6 +930,16 @@ code {
   }
   50% {
     transform: translateY(-25%);
+  }
+}
+
+@keyframes bounce3 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5%);
   }
 }
 /* 

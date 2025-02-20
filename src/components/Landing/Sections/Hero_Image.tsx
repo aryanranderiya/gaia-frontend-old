@@ -71,7 +71,7 @@ export default function Hero_Image() {
             </div>
           </div> */}
 
-          <div className=" absolute -left-28 top-0 h-full flex items-start">
+          <div className=" absolute -left-28 top-0 h-full flex items-start animate-bounce3">
             <div className="bg-zinc-800 w-[250px] h-fit px-2 pb-2 rounded-3xl top-24 relative outline outline-2 outline-zinc-700">
               <GeneratedImageChatBubble
                 selectedOption={{
