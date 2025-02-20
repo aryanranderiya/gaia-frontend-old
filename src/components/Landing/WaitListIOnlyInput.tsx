@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { CheckmarkCircle02Icon } from "../Misc/icons.js";
 
-import CreateConfetti from "@/hooks/createConfetti.js";
+import CreateConfetti from "@/hooks/createConfetti";
 import api from "@/utils/apiaxios";
 
 export default function WaitlistOnlyInput() {
