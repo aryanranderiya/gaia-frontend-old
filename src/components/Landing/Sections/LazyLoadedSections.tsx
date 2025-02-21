@@ -1,17 +1,16 @@
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import { lazy, Suspense } from "react";
 
-import Section_Calendar from "./Section_Calendar";
-import Section_Memories from "./Section_Memories";
-
-import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+const Section_Calendar = lazy(() => import("./Section_Calendar"));
+const Section_Memories = lazy(() => import("./Section_Memories"));
 
 const Section_Grid = lazy(
   () => import("@/components/Landing/Sections/Section_Grid")
 );
 
-const FreePricing = lazy(
-  () => import("@/components/Landing/Sections/Free_Pricing")
-);
+// const FreePricing = lazy(
+//   () => import("@/components/Landing/Sections/Free_Pricing")
+// );
 
 const WhatCanYouDo = lazy(
   () => import("@/components/Landing/Sections/Section_WhatCanYouDo")
@@ -41,7 +40,7 @@ const FinalSection = lazy(
 
 export default function LazyLoadedSections() {
   return (
-    <div className="space-y-[15rem] mt-[18rem]">
+    <div className="sm:space-y-[15rem] space-y-[5rem] sm:mt-[18rem] mt-[12rem]">
       <Suspense fallback={<SuspenseLoader />}>
         <GoalSection />
       </Suspense>
@@ -70,7 +69,7 @@ export default function LazyLoadedSections() {
         <TargetAudience />
       </Suspense> */}
 
-      <FreePricing />
+      {/* <FreePricing /> */}
 
       <Suspense fallback={<SuspenseLoader />}>
         <WhatCanYouDo />

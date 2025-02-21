@@ -1,8 +1,6 @@
 // import StarterEmoji from "../Chat/StarterEmoji";
 // import StarterText from "../Chat/StarterText";
 // import { useState } from "react";
-
-// import { Spinner } from "@heroui/spinner";
 import { AnimatedSection } from "../AnimatedSection";
 import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
@@ -10,15 +8,9 @@ import { GeneratedImageChatBubble } from "./Section_GenerateImage";
 import DummySearchbar from "../DummySearchbar";
 
 export default function Hero_Image() {
-  // const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-  // const handleImageLoad = () => {
-  //   setIsImageLoaded(true);
-  // };
-
   return (
-    <AnimatedSection>
-      <div className="flex items-center justify-center h-fit w-screen mt-14 sm:mb-0 mb-[20vh]">
+    <div className="w-screen flex items-center justify-center">
+      <AnimatedSection className="flex items-center justify-center h-fit w-screen max-w-screen-lg lg:max-w-screen-xl  mt-14 sm:mb-0 mb-[20vh]">
         {/* <GridPattern
           width={20}
           height={20}
@@ -30,12 +22,6 @@ export default function Hero_Image() {
         /> */}
 
         <div className="relative sm:scale-100 scale-[175%]">
-          {/* {!isImageLoaded && (
-            <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full bg-zinc-950 rounded-xl">
-              <Spinner size="lg" />
-            </div>
-          )} */}
-
           <ShineBorder
             borderRadius={10}
             borderWidth={3}
@@ -49,7 +35,7 @@ export default function Hero_Image() {
               className="w-full h-fit"
               imageSrc="/landing/hero_image_nosearchbar.png"
             />
-            <div className="absolute text-white flex w-full bottom-4 justify-center left-0 items-center">
+            <div className="absolute text-white flex w-full sm:bottom-4 bottom-[-15px] justify-center left-0 items-center sm:scale-100 scale-50">
               <DummySearchbar />
             </div>
           </ShineBorder>
@@ -75,7 +61,7 @@ export default function Hero_Image() {
             </div>
           </div> */}
 
-          <div className=" absolute -left-28 top-0 h-full flex items-start animate-bounce3 ">
+          <div className="sm:flex hidden absolute -left-28 top-0 h-full items-start animate-bounce3 ">
             <div className="bg-zinc-800 w-[250px] h-fit px-2 pb-2 rounded-3xl top-24 relative outline outline-2 outline-zinc-700 -rotate-2">
               <GeneratedImageChatBubble
                 selectedOption={{
@@ -87,15 +73,15 @@ export default function Hero_Image() {
             </div>
           </div>
 
-          <div className=" absolute -right-28 top-0 h-full flex items-end">
+          <div className="sm:flex hidden absolute -right-28 top-0 h-full items-end">
             <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl bottom-24 relative outline outline-2 outline-zinc-700 flex items-center justify-center">
               <div className="pingspinner !min-h-[100px] !min-w-[100px]" />
               update this
             </div>
           </div>
         </div>
-      </div>
-    </AnimatedSection>
+      </AnimatedSection>
+    </div>
   );
 }
 

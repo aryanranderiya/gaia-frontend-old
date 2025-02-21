@@ -18,7 +18,7 @@ export function SectionHeading({
       <div
         className={`${
           smallHeading ? "sm:text-3xl" : "sm:text-4xl"
-        } text-2xl font-bold flex items-center gap-4 mb-2`}
+        } text-3xl font-bold flex items-center gap-4 mb-2`}
       >
         {icon}
         <span>{heading}</span>

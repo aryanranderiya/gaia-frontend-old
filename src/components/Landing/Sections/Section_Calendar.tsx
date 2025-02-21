@@ -80,11 +80,16 @@ export default function Section_Calendar() {
 
   return (
     <AnimatedSection className="w-screen justify-center items-center flex z-[1] relative">
-      <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
+      <div className="max-w-screen-xl w-screen flex sm:flex-row flex-col justify-evenly items-start sm:space-x-10 space-x-5 ">
         <SectionHeading
           className="w-full"
           heading={"Manage your Calendar"}
-          icon={<CalendarAdd01Icon color="#9b9b9b" height={45} width={45} />}
+          icon={
+            <CalendarAdd01Icon
+              color="#9b9b9b"
+              className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+            />
+          }
           subheading={
             <div>
               <div>
@@ -106,7 +111,10 @@ export default function Section_Calendar() {
           }
         />
 
-        <Tabs className="w-full h-[340px] overflow-hidden" defaultValue="chat">
+        <Tabs
+          className="w-full box-border sm:m-0 !m-0 px-4 h-[340px] overflow-hidden"
+          defaultValue="chat"
+        >
           <TabsList className="w-full mb-3 rounded-full">
             <TabsTrigger className="rounded-full" value="chat">
               <BubbleConversationChatIcon className="mr-2" />
@@ -136,7 +144,7 @@ export default function Section_Calendar() {
               <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
             </div>
           </TabsContent>
-          <TabsContent className="space-y-2 px-10" value="calendar">
+          <TabsContent className="space-y-2 sm:px-10 px-4" value="calendar">
             {addedToCalendar && (
               <div className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden">
                 <div className="flex items-center gap-2 relative z-[1]">

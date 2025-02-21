@@ -54,7 +54,7 @@ export default function Section_Grid() {
             <FlowchartDemo />
           </Suspense>
 
-          <div className="col-span-2">
+          <div className="sm:col-span-2 col-span-1">
             <Suspense fallback={<SuspenseLoader />}>
               <Section_Document />
             </Suspense>

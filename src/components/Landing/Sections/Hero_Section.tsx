@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col w-screen justify-center items-center gap-8 sm:pt-32 pt-16 min-h-[80vh] h-fit">
+    <div className="flex flex-col w-screen justify-center items-center gap-8 sm:pt-32 pt-16 min-h-[75vh] h-fit">
       <div className="fixed top-0 left-0 w-screen">
         <Spotlight duration={15} />
       </div>

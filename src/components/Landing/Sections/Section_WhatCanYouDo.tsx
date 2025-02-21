@@ -85,7 +85,9 @@ export default function WhatCanYouDo() {
 
   return (
     <AnimatedSection className="w-screen flex items-center min-h-fit justify-center flex-col z-[1] relative">
-      <div className="font-medium text-4xl">What can GAIA do for you?</div>
+      <div className="font-medium text-4xl text-center">
+        What can GAIA do for you?
+      </div>
       <div className="max-w-screen-xl w-full min-h-fit rounded-3xl p-10 items-center grid sm:grid-cols-4 grid-cols-1 relative">
         <div className="h-full w-full absolute top-0 flex justify-start flex-col items-center pointer-events-none">
           <div className="size-[250px] blur-[100px] bg-[#00bbff] z-[-1] relative top-[40px]" />

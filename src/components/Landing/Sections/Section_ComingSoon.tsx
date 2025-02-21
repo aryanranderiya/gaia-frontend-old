@@ -71,17 +71,17 @@ const list: {
   //   description: "Track & Manage your goals",
   //   icon: <Target02Icon width={35} height={35} />,
   // },
-  {
-    title: "Integrated",
-    description: "Integrate into existing workspaces",
-    icon: (
-      <div className="flex gap-2">
-        <GoogleDriveIcon height={35} width={35} />
-        <CalendarIcon height={35} width={35} />
-        <Mail01Icon height={35} width={35} />
-      </div>
-    ),
-  },
+  // {
+  //   title: "Integrated",
+  //   description: "Integrate into existing workspaces",
+  //   icon: (
+  //     <div className="flex gap-2">
+  //       <GoogleDriveIcon height={35} width={35} />
+  //       <CalendarIcon height={35} width={35} />
+  //       <Mail01Icon height={35} width={35} />
+  //     </div>
+  //   ),
+  // },
   // {
   //   description: "and many more features coming soon...",
   //   className: "col-span-3 text-center",

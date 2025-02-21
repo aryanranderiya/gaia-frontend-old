@@ -27,11 +27,16 @@ function LocalNotecard({ plaintext }: { plaintext: string }) {
 export default function Section_Memories() {
   return (
     <AnimatedSection className="w-screen justify-center items-center flex relative z-[1]">
-      <div className="max-w-screen-xl w-screen flex flex-row justify-evenly items-start sm:space-x-10 space-x-5 ">
+      <div className="max-w-screen-xl w-screen flex sm:flex-row flex-col justify-evenly items-start sm:space-x-10 space-x-5 ">
         <SectionHeading
           className="w-full"
           heading={"An Assistant That Remembers"}
-          icon={<Brain02Icon color="#9b9b9b" height={45} width={45} />}
+          icon={
+            <Brain02Icon
+              color="#9b9b9b"
+              className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+            />
+          }
           subheading={
             <div>
               GAIA remembers what matters to you. Your preferences, past
@@ -45,8 +50,11 @@ export default function Section_Memories() {
           }
         />
 
-        <div className="w-full px-10 !mt-0">
-          <Tabs className="h-[280px]" defaultValue="chat1">
+        <div className="w-full sm:px-10 !m-0 !mt-0">
+          <Tabs
+            className="w-full box-border sm:m-0 !m-0 px-4 h-[300px] overflow-hidden"
+            defaultValue="chat1"
+          >
             <TabsList className="w-full mb-6 rounded-full">
               <TabsTrigger className="rounded-full" value="chat1">
                 Chat 1

@@ -211,7 +211,12 @@ export default function Internet() {
 
         <SectionHeading
           heading={"Smarter Answers, Always Up-to-Date"}
-          icon={<BrainCircuitIcon color="#9b9b9b" height={45} width={45} />}
+          icon={
+            <BrainCircuitIcon
+              color="#9b9b9b"
+              className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+            />
+          }
           subheading={
             "GAIA doesn’t just rely on preloaded knowledge—it actively searches the web for the latest and most relevant information."
           }
