@@ -62,7 +62,7 @@ interface CalendarCardProps {
 }
 
 function groupEventsByDate(
-  events: GoogleCalendarEvent[],
+  events: GoogleCalendarEvent[]
 ): Record<string, GoogleCalendarEvent[]> {
   const grouped: Record<string, GoogleCalendarEvent[]> = {};
 
@@ -165,7 +165,7 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
 export default function Calendar() {
   const [loading, setLoading] = useState<boolean>(false);
   const [calendarEvents, setCalendarEvents] = useState<GoogleCalendarEvent[]>(
-    [],
+    []
   );
   const [selectedEvent, setSelectedEvent] =
     useState<GoogleCalendarEvent | null>(null);
@@ -188,7 +188,7 @@ export default function Calendar() {
           fetchEvents(nextPageToken); // Fetch next page
         }
       },
-      { rootMargin: "0px" },
+      { rootMargin: "0px" }
     );
 
     if (observerRef.current) {
@@ -250,7 +250,7 @@ export default function Calendar() {
 
   const fetchEvents = async (
     pageToken: string | null = null,
-    calendarIds: string[] | null = null,
+    calendarIds: string[] | null = null
   ) => {
     if (calendarEvents.length <= 0) setLoading(true);
 
@@ -274,7 +274,7 @@ export default function Calendar() {
 
       // Filter out duplicates and add new events
       const newEvents = allEvents.filter(
-        (event) => !eventIdsRef.current.has(event.id),
+        (event) => !eventIdsRef.current.has(event.id)
       );
 
       newEvents.forEach((event) => eventIdsRef.current.add(event.id));
@@ -328,15 +328,14 @@ export default function Calendar() {
       // If a calendar is deselected, remove its events
       if (!newSelection.includes(calendarId)) {
         setCalendarEvents((prevEvents) =>
-          prevEvents.filter((event) => event.organizer.email !== calendarId),
+          prevEvents.filter((event) => event.organizer.email !== calendarId)
         );
         eventIdsRef.current = new Set(
           Array.from(eventIdsRef.current).filter((id) =>
             calendarEvents.find(
-              (event) =>
-                event.id === id && event.organizer.email !== calendarId,
-            ),
-          ),
+              (event) => event.id === id && event.organizer.email !== calendarId
+            )
+          )
         );
       } else {
         // If a new calendar is selected, fetch its events
@@ -413,7 +412,7 @@ export default function Calendar() {
                     </div>
                   </div>
                 );
-              },
+              }
             )}
           </div>
 

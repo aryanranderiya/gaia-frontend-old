@@ -13,6 +13,7 @@ import {
 } from "@/components/Misc/icons";
 import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 import { Dispatch, SetStateAction, useState } from "react";
+import { Clock } from "lucide-react";
 
 export function CalendarBotMessage({
   dummyAddToCalendar,
@@ -146,38 +147,44 @@ export default function Section_Calendar() {
           </TabsContent>
           <TabsContent className="space-y-2 sm:px-10 px-4" value="calendar">
             {addedToCalendar && (
-              <div className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden">
-                <div className="flex items-center gap-2 relative z-[1]">
-                  <span className="text-xl">🔔</span>
-                  <div className="font-bold text-lg">Meeting with Sarah</div>
+              <div className="text-white bg-opacity-65 p-4 rounded-lg bg-yellow-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+                <div className="min-h-[90%] min-w-1 bg-yellow-500 rounded-full absolute top-[5px] left-[8px]"></div>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2 relative z-[1]">
+                    {/* <span className="text-xl">🔔</span> */}
+                    <div className="font-bold text-lg">Meeting with Sarah</div>
+                  </div>
+                  <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-yellow-500">
+                    <Clock width={18} height={18} />
+                    Friday Feb 14 2025
+                  </div>
                 </div>
-                <div className="text-sm mt-2 relative z-[1] opacity-70">
-                  Friday Feb 14 2025
-                </div>
-                <div className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full bg-yellow-500" />
               </div>
             )}
 
-            <div className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden">
-              <div className="flex items-center gap-2 relative z-[1]">
-                <span className="text-xl">📅</span>
-                <div className="font-bold text-lg">{"Event 1"}</div>
+            <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+              <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]"></div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 relative z-[1]">
+                  <div className="font-bold text-lg">📅 Event 1</div>
+                </div>
+                <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
+                  <Clock width={18} height={18} />
+                  Friday Feb 14 2025
+                </div>
               </div>
-              <div className="text-sm mt-2 relative z-[1] opacity-70">
-                Friday Feb 14 2025
-              </div>
-              <div className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full bg-primary" />
             </div>
-
-            <div className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden">
-              <div className="flex items-center gap-2 relative z-[1]">
-                <span className="text-xl">📅</span>
-                <div className="font-bold text-lg">{"Event 2"}</div>
+            <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+              <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]"></div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 relative z-[1]">
+                  <div className="font-bold text-lg">📅 Event 2</div>
+                </div>
+                <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
+                  <Clock width={18} height={18} />
+                  Friday Feb 14 2025
+                </div>
               </div>
-              <div className="text-sm mt-2 relative z-[1] opacity-70">
-                Friday Feb 14 2025
-              </div>
-              <div className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full bg-primary" />
             </div>
           </TabsContent>
         </Tabs>

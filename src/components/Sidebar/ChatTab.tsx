@@ -61,7 +61,11 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
         </div>
       </Button>
 
-      <div className="absolute right-0">
+      <div
+        className={`absolute right-0 ${
+          buttonHovered ? "bg-black/20 backdrop-blur-md " : "bg-transparent"
+        } rounded-full`}
+      >
         <ChatOptionsDropdown
           buttonHovered={buttonHovered}
           chatId={id}

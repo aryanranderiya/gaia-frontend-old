@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 import {
   BubbleChatLockIcon,
-  CalendarIcon,
   ComputerPhoneSyncIcon,
-  GoogleDriveIcon,
   Mail01Icon,
   MoneyBag02Icon,
-  VoiceIcon,
+  VoiceIcon
 } from "../../Misc/icons";
 
 const list: {

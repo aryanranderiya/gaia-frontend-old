@@ -27,11 +27,11 @@ export default function Sidebar({
         ref={sidebarref}
         className={`sidebar flex ${className} ${
           isSidebarVisible
-            ? "sm:min-w-[280px] sm:max-w-[280px] sm:translate-x-0 translate-x-[-350px]"
+            ? "sm:min-w-[250px] sm:max-w-[250px] sm:translate-x-0 translate-x-[-300px]"
             : "sm:min-w-0 sm:max-w-0 sm:w-0 translate-x-0"
         } transition-all duration-100`}
       >
-        <div className="overflow-y-auto min-w-[280px]">
+        <div className="overflow-y-auto min-w-[250px]">
           <div className="p-4 pb-0 ">
             <div className="flex items-center justify-between mb-1">
               <Tooltip
