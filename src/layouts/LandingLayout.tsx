@@ -5,11 +5,11 @@ import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import LandingPage from "@/pages/Landing";
 
 // Lazy-loaded components
-// const LandingPage = lazy(() => import("@/pages/Landing"));
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
-const Pricing = lazy(() => import("@/pages/Pricing"));
-const TermsOfService = lazy(() => import("@/pages/PrivacyPolicy"));
-const PrivacyPolicy = lazy(() => import("@/pages/TermsOfService"));
+// const Pricing = lazy(() => import("@/pages/Pricing"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
+const Contact = lazy(() => import("@/pages/Contact"));
 const PageNotFound = lazy(() => import("@/pages/PageNotFound"));
 const LoginSignup = lazy(() => import("@/pages/LoginSignup"));
 
@@ -63,11 +63,19 @@ const routesConfig = [
       </Suspense>
     ),
   },
+  // {
+  //   path: "pricing",
+  //   element: (
+  //     <Suspense fallback={<SuspenseLoader fullHeight />}>
+  //       <Pricing />
+  //     </Suspense>
+  //   ),
+  // },
   {
-    path: "pricing",
+    path: "contact",
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight />}>
-        <Pricing />
+        <Contact />
       </Suspense>
     ),
   },

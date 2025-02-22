@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import PrivacySection from "./PrivacySettings";
 import GeneralSection from "./GeneralSettings";
-import AccountSection from "./AccountSettings";
+// import AccountSection from "./AccountSettings";
 import { ModalAction } from "./SettingsMenu";
 
 interface SidebarItem {
@@ -36,8 +36,8 @@ export default function SettingsModal({
         return <GeneralSection setModalAction={setModalAction} />;
       case "privacy":
         return <PrivacySection />;
-      case "account":
-        return <AccountSection setModalAction={setModalAction} />;
+      // case "account":
+      //   return <AccountSection setModalAction={setModalAction} />;
       default:
         return null;
     }
