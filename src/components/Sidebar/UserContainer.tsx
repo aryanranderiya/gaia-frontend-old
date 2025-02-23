@@ -29,6 +29,7 @@ const UserContainer: React.FC = () => {
               <img
                 className="min-h-[35px] min-w-[35px]"
                 src="https://links.aryanranderiya.com/l/default_user"
+                alt={"User Profile photo"}
               />
             ),
             size: "sm",

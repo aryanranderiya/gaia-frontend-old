@@ -121,6 +121,7 @@ export default function ChatBubbleBot({
                 isLoaded={!loading && !imageLoaded && !!imageSrc}
               >
                 <img
+                  alt={"Generated Image"}
                   className="rounded-3xl my-2 !cursor-pointer"
                   height="250px"
                   src={imageSrc as string}

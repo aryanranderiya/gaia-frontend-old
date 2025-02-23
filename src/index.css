@@ -71,19 +71,19 @@
   }
 }
 
-.pulsating-shadow {
+/* .pulsating-shadow {
   animation: pulseShadow 2s infinite ease-in-out;
 }
 
 @keyframes pulseShadow {
   0%,
   100% {
-    box-shadow: 0px 0px 200px rgba(0, 187, 255, 0.7);
+    box-shadow: 0 0 200px rgba(0, 187, 255, 0.7);
   }
   50% {
-    box-shadow: 0px 0px 200px rgba(0, 187, 255, 1);
+    box-shadow: 0 0 200px rgba(0, 187, 255, 1);
   }
-}
+} */
 
 /* * {
   user-select: none;
@@ -128,14 +128,6 @@ main {
   /* transform: translateX(0%); */
 }
 
-.sidebar.hide {
-  /* width: 0 !important;
-  min-width: 0 !important;
-  max-width: 0 !important; */
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
 .hr_container {
   display: flex;
   justify-content: center;
@@ -154,7 +146,6 @@ main {
   display: flex;
   padding: 0.5em;
   height: fit-content;
-  min-height: fit-content;
 }
 
 .user_container span {
@@ -216,13 +207,6 @@ main {
   cursor: pointer;
 }
 
-.starter_text {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.4em;
-}
-
 .main_container {
   display: flex;
   flex-direction: row;
@@ -250,8 +234,7 @@ main {
 .chat_bubble {
   display: flex;
   flex-direction: column;
-  border-radius: 25px;
-  border-bottom-left-radius: 0px;
+  border-radius: 25px 25px 25px 0px;
   padding: 8px 17px;
   color: rgb(255, 255, 255);
   width: fit-content;
@@ -275,7 +258,7 @@ main {
 }
 
 .chat_bubble pre div {
-  border-radius: 0px 0px 15px 15px;
+  border-radius: 0 0 15px 15px;
 }
 
 /* .chat_bubble code {
@@ -320,15 +303,7 @@ main {
   gap: 0.5em;
 }
 
-.toast_custom {
-  background-color: #00bbff !important;
-  box-shadow: 0px -5px 10px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
-.toast_error {
-  background-color: maroon !important;
-}
-/* 
+/*
 .custom_toast {
   padding: 10px;
   border-radius: 20px;
@@ -599,7 +574,6 @@ main {
   padding: 1em 0;
   height: 60vh;
   display: grid;
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 1.5em;
 }
@@ -653,8 +627,7 @@ main {
 
   .pricingcards_layout div:nth-child(2) {
     border-bottom-right-radius: 20px;
-    border-left: solid 2px black;
-    border: unset;
+    border-left: 2px solid black;
   }
 
   .pricingcards_layout div:nth-child(1) {

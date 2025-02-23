@@ -97,6 +97,7 @@ export default function ChatRenderer() {
             height={"auto"}
             src={imageData?.src}
             width={"auto"}
+            alt={"Generated Image"}
           />
 
           <div className="flex max-w-[65vh] min-w-[65vh] justify-evenly flex-col gap-1">

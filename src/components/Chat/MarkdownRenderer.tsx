@@ -318,6 +318,7 @@ export function CustomAnchor({ props }: { props: any }) {
                   className="size-[20px] rounded-full"
                   src={metadata.favicon}
                   onError={() => setValidFavicon(false)}
+                  alt={"Fav Icon"}
                 />
               ) : (
                 <GlobeIcon color="#9b9b9b" height={17} width={17} />
@@ -400,7 +401,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               />
             ),
             img: ({ node, ...props }) => (
-              <img className="max-w-full h-auto my-4" {...props} />
+              <img className="max-w-full h-auto my-4" alt={"image"} {...props} />
             ),
             table: ({ node, ...props }) => (
               <div className="overflow-x-auto">
