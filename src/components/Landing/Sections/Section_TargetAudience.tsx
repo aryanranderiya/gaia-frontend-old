@@ -37,7 +37,7 @@ const TargetCard = ({
       current?.title === title && current?.description === description
         ? "text-white "
         : "text-foreground-400 hover:text-foreground-600",
-      "cursor-pointer transition-all",
+      "cursor-pointer transition-all"
     )}
     onClick={() => setCurrent({ title, description, icon, img })}
   >
@@ -55,28 +55,28 @@ const targetData: TargetData[] = [
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod temporibus debitis fugit possimus odio amet reprehenderit mollitia recusandae vero quis.",
     icon: <GraduationCap />,
-    img: "/landing/screenshot.png",
+    img: "/landing/screenshot.webp",
   },
   {
     title: "For Professionals",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod temporibus debitis fugit possimus odio amet reprehenderit mollitia recusandae vero quis.",
     icon: <BriefcaseBusiness />,
-    img: "/landing/screenshot.png",
+    img: "/landing/screenshot.webp",
   },
   {
     title: "For Businesses",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod temporibus debitis fugit possimus odio amet reprehenderit mollitia recusandae vero quis.",
     icon: <Handshake />,
-    img: "/landing/screenshot.png",
+    img: "/landing/screenshot.webp",
   },
   {
     title: "For Developers",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod temporibus debitis fugit possimus odio amet reprehenderit mollitia recusandae vero quis.",
     icon: <Code />,
-    img: "/landing/screenshot.png",
+    img: "/landing/screenshot.webp",
   },
 ];
 
