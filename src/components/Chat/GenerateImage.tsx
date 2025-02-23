@@ -7,19 +7,19 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/modal";
-import { useEffect, useState } from "react";
+import ObjectID from "bson-objectid";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import ObjectID from "bson-objectid";
 
-import { BrushIcon } from "../Misc/icons";
 import fetchDate from "../../utils/fetchDate";
+import { BrushIcon } from "../Misc/icons";
 
+import { useConversationList } from "@/contexts/ConversationList";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { MessageType } from "@/types/convoTypes";
 import api from "@/utils/apiaxios";
 import { ApiService } from "@/utils/chatUtils";
-import { useConversationList } from "@/contexts/ConversationList";
-import { MessageType } from "@/types/convoTypes";
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface GenerateImageProps {
   openImageDialog: boolean;
@@ -60,7 +60,7 @@ export default function GenerateImage({
     conversationId: string,
     newMessages: MessageType[],
     description?: string,
-    replaceLastMessage: boolean = false,
+    replaceLastMessage: boolean = false
   ) => {
     try {
       setConvoMessages((prev) => {
@@ -74,7 +74,7 @@ export default function GenerateImage({
       ApiService.updateConversationDescription(
         conversationId,
         description || "New Chat",
-        fetchConversations,
+        fetchConversations
       );
     } catch (error) {
       console.error("Failed to update conversation:", error);
@@ -83,7 +83,7 @@ export default function GenerateImage({
   };
 
   const createNewConversation = async (
-    initialMessages: MessageType[],
+    initialMessages: MessageType[]
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
@@ -92,7 +92,7 @@ export default function GenerateImage({
       await updateConversationState(
         convoID,
         initialMessages,
-        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`,
+        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
       );
       navigate(`/try/chat/${convoID}`);
 
@@ -110,7 +110,7 @@ export default function GenerateImage({
         { message: prompt },
         {
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
 
       return [response.data.url, response.data.improved_prompt];
@@ -180,7 +180,7 @@ export default function GenerateImage({
         conversationId,
         [userMessage, finalBotMessage],
         undefined,
-        true,
+        true
       );
 
       setImagePrompt("");

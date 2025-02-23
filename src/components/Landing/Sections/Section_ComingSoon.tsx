@@ -6,6 +6,7 @@ import {
   MoneyBag02Icon,
   VoiceIcon,
 } from "../../Misc/icons";
+import React from "react";
 
 const list: {
   icon?: React.ReactNode;

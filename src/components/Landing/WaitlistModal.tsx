@@ -1,26 +1,26 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
-import { toast } from "sonner";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import { useEffect, useMemo, useState } from "react";
-
+import React, { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "../ui/dialog";
+
 import {
   ArrowUpRight01Icon,
-  Mail01Icon,
   Calendar01Icon,
   Cancel01Icon,
+  Mail01Icon,
 } from "../Misc/icons";
 
-import api from "@/utils/apiaxios";
 import PartySmiley from "@/components/Smileys/20.webp";
 import createConfetti from "@/hooks/createConfetti";
+import api from "@/utils/apiaxios";
 
 export default function WaitListButton({
   props,

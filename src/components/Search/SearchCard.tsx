@@ -10,6 +10,7 @@ import {
 } from "../Misc/icons";
 
 import { parseDate2 } from "@/utils/fetchDate";
+import React from "react";
 
 interface SearchCardProps {
   result: any;

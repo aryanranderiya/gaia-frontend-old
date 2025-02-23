@@ -8,6 +8,7 @@ import {
   StarsIcon,
   Tick02Icon,
 } from "@/components/Misc/icons";
+import React from "react";
 
 function FAQAccordion() {
   const faqItems = [

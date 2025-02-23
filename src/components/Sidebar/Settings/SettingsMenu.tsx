@@ -7,7 +7,7 @@ import {
 } from "@heroui/dropdown";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Eraser } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Logout02Icon, Settings01Icon, ThreeDotsMenu } from "../../Misc/icons";

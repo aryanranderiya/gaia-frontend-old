@@ -2,7 +2,7 @@ import { Chip } from "@heroui/chip";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
 import { ArrowUpRight, DeleteIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { InternetIcon } from "@/components/Misc/icons";

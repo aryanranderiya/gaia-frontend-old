@@ -10,6 +10,7 @@ import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../Misc/icons";
 import { ApiService } from "@/utils/chatUtils";
 import { apiauth } from "@/utils/apiaxios";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import React from "react";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
