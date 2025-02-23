@@ -58,7 +58,7 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
 };
 
 export default function Calendar() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [calendarEvents, setCalendarEvents] = useState<GoogleCalendarEvent[]>(
     []
   );

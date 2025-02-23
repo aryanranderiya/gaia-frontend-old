@@ -82,7 +82,7 @@ export function GoalCard({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <div className="bg-black bg-opacity-50 sm:w-[45vw] md:w-[23vw] flex flex-col p-4 rounded-lg  w-full group">
+      <div className="bg-black bg-opacity-50 flex flex-col p-4 rounded-lg  w-full group">
         <div className="font-medium text-xl flex items-center gap-1 w-full relative ">
           <Target04Icon height={20} width={20} />
           <span className="truncate w-[85%]">
@@ -143,6 +143,11 @@ export function GoalCard({
               className={`absolute left-0 bg-[#00bbff] top-0 h-3 rounded-full`}
               style={{ width: `${goal?.progress || 0}%` }}
             />
+
+            <div
+              className={`absolute left-0 bg-[#00bbff40] top-0 h-3 rounded-full w-full`}
+              // style={{ width: `${goal?.progress || 0}%` }}
+            />
           </div>
           <span className="text-xs">{goal?.progress || 0}%</span>
         </div>
@@ -157,7 +162,7 @@ export function GoalCard({
           </div>
           <Button
             color="primary"
-            size="sm"
+            // size="sm"
             variant="flat"
             onPress={() => navigate(`./${goal.id}`)}
           >

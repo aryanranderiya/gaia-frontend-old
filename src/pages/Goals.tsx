@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Goals() {
   const [goals, setGoals] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
@@ -50,10 +50,12 @@ export default function Goals() {
 
   return (
     <>
-      <div className="flex flex-col justify-between h-full">
-        <ScrollArea>
-          <div className="flex items-center flex-col gap-2">
-            <div className="font-bold text-center text-5xl">Roadmaps</div>
+      <div className="flex flex-col justify-between h-full w-full">
+        <div className="w-full overflow-y-auto">
+          <div className="flex items-center flex-col gap-2 w-full">
+            <div className="font-bold text-center sm:text-5xl text-3xl">
+              Roadmaps
+            </div>
             <div className=" text-center text-md pb-6 max-w-screen-md">
               A tool that instantly generates personalized goal roadmaps from a
               single prompt, helping you plan and track your objectives
@@ -61,18 +63,18 @@ export default function Goals() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 justify-center pb-8 dark">
-            {goals.length > 0 ? (
-              goals.map((goal, index) => (
+          {goals.length > 0 ? (
+            <div className="grid sm:grid-cols-3 px-1 pb-28 sm:px-16 grid-cols-1 gap-4 justify-center dark">
+              {goals.map((goal, index) => (
                 <GoalCard key={index} fetchGoals={fetchGoals} goal={goal} />
-              ))
-            ) : (
-              <div className="h-[80vh] flex items-center">
-                {loading ? <Spinner /> : <div>No Goals created yet.</div>}
-              </div>
-            )}
-          </div>
-        </ScrollArea>
+              ))}
+            </div>
+          ) : (
+            <div className="h-[70vh] w-full flex items-center justify-center">
+              {loading ? <Spinner /> : <div>No Goals created yet.</div>}
+            </div>
+          )}
+        </div>
         <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
           <Button
             className="font-semibold gap-2"

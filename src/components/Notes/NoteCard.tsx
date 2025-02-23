@@ -15,9 +15,9 @@ export default function NoteCard({
   // const [openDialog, setOpenDialog] = useState(false);
 
   return (
-    <Link to={`./${note.id}`}>
+    <Link to={`./${note.id}`} className="w-full px-1">
       <div
-        className="bg-zinc-950 hover:bg-zinc-800 hover:-translate-y-1 transition-all min-w-[250px] max-w-[250px] max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative outline outline-2 outline-zinc-700"
+        className="w-full bg-zinc-800 hover:bg-zinc-700 transition-all max-h-[250px] rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative "
         // onClick={() => setOpenDialog(true)} // Open dialog on click
       >
         {note.auto_created && (

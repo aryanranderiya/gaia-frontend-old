@@ -1,7 +1,8 @@
 import { GoogleCalendar } from "@/types/calendarTypes";
 import { isTooDark } from "@/utils/calendarUtils";
 import { Chip, useCheckbox, VisuallyHidden } from "@heroui/react";
-import { Eye, EyeOffIcon } from "lucide-react";
+import { Eye, EyeOffIcon, X, XIcon } from "lucide-react";
+import { useState } from "react";
 
 interface CalendarChipProps {
   calendar: GoogleCalendar;
@@ -61,26 +62,61 @@ interface CalendarSelectorProps {
   onCalendarSelect: (calendarId: string) => void;
 }
 
+import { Filter } from "lucide-react";
+import { Button } from "../ui/button";
+
 export default function CalendarSelector({
   calendars,
   selectedCalendars,
   onCalendarSelect,
 }: CalendarSelectorProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="flex flex-col fixed bottom-5 right-5 px-3 min-w-[220px] py-3 gap-1 justify-center pb-4 bg-zinc-800 rounded-xl max-h-[70vh] flex-nowrap overflow-y-scroll">
-      <div className="text-sm font-medium mb-2">Your Calendars</div>
-      {calendars &&
-        calendars.length > 0 &&
-        calendars
-          .sort((a, b) => a.summary.localeCompare(b.summary))
-          .map((calendar) => (
-            <CalendarChip
-              key={calendar.id}
-              calendar={calendar}
-              selected={selectedCalendars.includes(calendar.id)}
-              onSelect={onCalendarSelect}
-            />
-          ))}
-    </div>
+    <>
+      {/* Filters Button (Opens the calendar selector) */}
+      <Button
+        className="fixed bottom-2 right-2 bg-primary text-white size-[50px] shadow-md flex items-center gap-2 hover:bg-primary sm:hover:bg-[#0075a1] transition-all z-40 rounded-full"
+        size={"icon"}
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        {isOpen ? (
+          <XIcon width={27} height={27}  />
+        ) : (
+          <Filter width={27} height={27} />
+        )}
+      </Button>
+
+      <div
+        className={`flex flex-col fixed bottom-4 right-4 px-3 min-w-[250px] py-3 gap-1 justify-center pb-4 bg-zinc-800 rounded-xl max-h-[70vh] flex-nowrap overflow-y-scroll z-30 shadow-lg transition-all ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "!opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm font-medium">Your Calendars</span>
+          <button
+            className="text-gray-400 hover:text-white"
+            onClick={() => setIsOpen(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {calendars &&
+          calendars.length > 0 &&
+          calendars
+            .sort((a, b) => a.summary.localeCompare(b.summary))
+            .map((calendar) => (
+              <CalendarChip
+                key={calendar.id}
+                calendar={calendar}
+                selected={selectedCalendars.includes(calendar.id)}
+                onSelect={onCalendarSelect}
+              />
+            ))}
+      </div>
+    </>
   );
 }

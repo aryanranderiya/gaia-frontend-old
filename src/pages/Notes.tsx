@@ -20,7 +20,7 @@ export interface Note {
 export default function Notes() {
   // const [openDialog, setOpenDialog] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchNotes = async () => {
     setLoading(true);
@@ -68,7 +68,7 @@ export default function Notes() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-4 justify-center pb-8 sm:px-[10vw]">
-              <div className="flex flex-wrap gap-4">
+              <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 sm:pb-20 pb-24">
                 {notes.length > 0 &&
                   notes?.map((note, index) => (
                     <NoteCard key={index} note={note} onDelete={deleteNote} />
@@ -78,7 +78,7 @@ export default function Notes() {
           )}
         </ScrollArea>
 
-        <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
+        <div className="absolute left-0 bottom-4 flex justify-center items-center w-full z-10">
           <Link to={"./add"}>
             <Button
               className="font-semibold gap-1"
