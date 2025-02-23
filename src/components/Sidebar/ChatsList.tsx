@@ -54,9 +54,7 @@ export default function ChatsList() {
   // We assume the provider auto-fetches the first page.
   // Once paginationMeta is available, we consider the initial load complete.
   useEffect(() => {
-    if (paginationMeta) {
-      setLoading(false);
-    }
+    if (paginationMeta) setLoading(false);
   }, [paginationMeta]);
 
   // Set up an IntersectionObserver to load more pages.
@@ -150,7 +148,7 @@ export default function ChatsList() {
                 onPress={createNewChat}
               >
                 <ChatBubbleAddIcon color="#00bbff" width={18} />
-                Start new chat
+                Create new chat
               </Button>
             </div>
 

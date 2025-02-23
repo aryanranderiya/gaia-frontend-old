@@ -27,7 +27,7 @@ export default function Sidebar({
         ref={sidebarref}
         className={`sidebar flex ${className} ${
           isSidebarVisible
-            ? "sm:min-w-[250px] sm:max-w-[250px] sm:translate-x-0 translate-x-[-300px]"
+            ? "sm:min-w-[250px] sm:max-w-[250px] sm:translate-x-0 translate-x-[-350px]"
             : "sm:min-w-0 sm:max-w-0 sm:w-0 translate-x-0"
         } transition-all duration-100`}
       >
@@ -45,17 +45,7 @@ export default function Sidebar({
                 {/* </div> */}
               </Tooltip>
 
-              {/* */}
               <div className="flex items-center gap-1">
-                {/* <Button onPress={createNewChat} isIconOnly variant="light">
-                  <PencilSquareIcon
-                    width="23"
-                    color={
-                      location.pathname == "/try/chat" ? "#00bbff" : "#9b9b9b"
-                    }
-                  />
-                </Button> */}
-
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
             </div>

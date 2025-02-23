@@ -1,33 +1,22 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-// Providers
-import { ConversationListProvider } from "@/contexts/ConversationList";
-import { ConvoProvider } from "@/contexts/CurrentConvoMessages";
+import {
+  BubbleConversationChatIcon,
+  PencilSquareIcon,
+} from "@/components/Misc/icons";
+import { Button } from "@/components/ui/button";
+import { useConversationList } from "@/contexts/ConversationList";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { LoadingProvider } from "@/contexts/LoadingContext";
-
-// Lazy loaded components
-const Sidebar = React.lazy(() => import("../layouts/Sidebar"));
-const Search = React.lazy(() => import("@/components/Search/Search"));
-const MainChat = React.lazy(() => import("./MainChat"));
-const Explore = React.lazy(() => import("./Explore"));
-const Calendar = React.lazy(() => import("@/components/Calendar/Calendar"));
-const Pins = React.lazy(() => import("./Pins"));
-const Notes = React.lazy(() => import("./Notes"));
-const Goals = React.lazy(() => import("./Goals"));
-const GoalPage = React.lazy(() => import("./GoalPage"));
-const NotesAdd = React.lazy(() => import("./NotePage"));
+import useMediaQuery from "@/hooks/mediaQuery";
+import Sidebar from "@/layouts/Sidebar";
+import ChatOptionsDropdown from "@/components/Sidebar/ChatOptionsDropdown";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -35,6 +24,10 @@ export default function MainInterface() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarVisible, setSidebarVisible] = useState(true);
+  const { conversations } = useConversationList();
+  const { convoIdParam } = useParams();
+  const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
+  const { resetMessages } = useConvo();
 
   useEffect(() => {
     if (location.pathname === "/try/") navigate("/try/chat");
@@ -46,139 +39,80 @@ export default function MainInterface() {
     }
   }
 
-  const routes = [
-    {
-      path: "chat/:convoIdParam",
-      element: <MainChat />,
-    },
-    {
-      path: "chat",
-      element: <MainChat />,
-    },
-    {
-      path: "explore",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Explore />
-        </Suspense>
-      ),
-    },
-    {
-      path: "calendar",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Calendar />
-        </Suspense>
-      ),
-    },
-    {
-      path: "pins",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Pins />
-        </Suspense>
-      ),
-    },
-    {
-      path: "notes",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Notes />
-        </Suspense>
-      ),
-    },
-    {
-      path: "notes/add",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <NotesAdd />
-        </Suspense>
-      ),
-    },
-    {
-      path: "notes/:id",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <NotesAdd />
-        </Suspense>
-      ),
-    },
-    {
-      path: "goals",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Goals />
-        </Suspense>
-      ),
-    },
-    {
-      path: "goals/:goalId",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <GoalPage />
-        </Suspense>
-      ),
-    },
-    {
-      path: "search",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Search />
-        </Suspense>
-      ),
-    },
-    {
-      path: "*",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight />}>
-          <Navigate to="/404" />
-        </Suspense>
-      ),
-    },
-  ];
-
   return (
-    <ConversationListProvider>
-      <ConvoProvider>
-        <LoadingProvider>
-          <TooltipProvider>
-            <div className="main_container dark">
-              <Suspense fallback={<SuspenseLoader />}>
-                <NotLoggedIn />
-              </Suspense>
+    <LoadingProvider>
+      <TooltipProvider>
+        <div className="main_container dark">
+          <Suspense fallback={<SuspenseLoader />}>
+            <NotLoggedIn />
+          </Suspense>
+          <Suspense fallback={<SuspenseLoader />}>
+            {/* Sidebar layout */}
+            <Sidebar
+              isSidebarVisible={isSidebarVisible}
+              sidebarref={sidebarRef}
+              toggleSidebar={toggleSidebar}
+            />
+          </Suspense>
+          <div ref={contentContainerRef} className="main_chat transition-all">
+            <div
+              className={`sm:left-4 sm:px-0 pb-3 top-0 rounded-xl transition-opacity flex w-full justify-between z-10`}
+            >
+              <CloseOpenSidebarBtn
+                toggleSidebar={toggleSidebar}
+                isSidebarVisible={isSidebarVisible}
+              />
 
-              <Suspense fallback={<SuspenseLoader />}>
-                <Sidebar
-                  isSidebarVisible={isSidebarVisible}
-                  sidebarref={sidebarRef}
-                  toggleSidebar={toggleSidebar}
-                />
-              </Suspense>
+              <div>
+                {convoIdParam ? (
+                  <ChatOptionsDropdown
+                    logo2={true}
+                    buttonHovered={true}
+                    chatId={convoIdParam}
+                    btnChildren={
+                      <div className="!text-sm max-w-[250px] truncate flex items-center gap-2">
+                        <BubbleConversationChatIcon width={18} height={18} />
 
-              <div
-                ref={contentContainerRef}
-                // onClick={hideSidebar}
-                // onClick={() => setSidebarVisible(false)}
-                className="main_chat transition-all"
-              >
-                <div
-                  className={`chat_sidebar_toggle_btn bg-black rounded-xl transition-opacity ${
-                    isSidebarVisible ? "sm:opacity-0" : "sm:opacity-100"
-                  }`}
-                >
-                  <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
-                </div>
-
-                <Routes>
-                  {routes.map(({ path, element }) => (
-                    <Route key={path} element={element} path={path} />
-                  ))}
-                </Routes>
+                        {conversations.find(
+                          (convo) => convo.conversation_id == convoIdParam
+                        )?.description || "New Chat"}
+                      </div>
+                    }
+                    chatName={
+                      conversations.find(
+                        (convo) => convo.conversation_id == convoIdParam
+                      )?.description || "New Chat"
+                    }
+                    starred={
+                      conversations.find(
+                        (convo) => convo.conversation_id == convoIdParam
+                      )?.starred || false
+                    }
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
+
+              <Button
+                aria-label="Create new chat"
+                className={`rounded-lg hover:bg-[#00bbff] group`}
+                size="icon"
+                variant={isMobileScreen ? "default" : "ghost"}
+                onClick={() => {
+                  navigate("/try/chat");
+                  resetMessages();
+                }}
+              >
+                <PencilSquareIcon className="group-hover:text-white transition-all" />
+              </Button>
             </div>
-          </TooltipProvider>
-        </LoadingProvider>
-      </ConvoProvider>
-    </ConversationListProvider>
+
+            {/* This Outlet will render the nested routes (MainRoutes) */}
+            <Outlet />
+          </div>
+        </div>
+      </TooltipProvider>
+    </LoadingProvider>
   );
 }

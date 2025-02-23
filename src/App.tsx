@@ -3,11 +3,15 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 
+import { mainRoutes } from "@/routes/mainRoutes";
 import SuspenseLoader from "./components/Misc/SuspenseLoader";
+import { ConversationListProvider } from "./contexts/ConversationList";
+import { ConvoProvider } from "./contexts/CurrentConvoMessages";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
 
+// Lazy-loaded layouts/components
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
 
@@ -17,24 +21,18 @@ export default function App() {
   useEffect(() => {
     const { pathname } = location;
     let title;
-
     if (/^\/try\/chat\/[^/]+$/.test(pathname)) {
       const titleElement = document.querySelector("title");
-
-      if (titleElement && titleElement?.id != "chat_title") {
+      if (titleElement && titleElement.id !== "chat_title") {
         titleElement.remove();
       }
-
       return;
     }
-
     let titleElement = document.querySelector("title");
-
     if (!titleElement) {
       titleElement = document.createElement("title");
       document.head.appendChild(titleElement);
     }
-
     switch (pathname) {
       case "/try/chat":
         title = "GAIA - New Chat";
@@ -67,7 +65,6 @@ export default function App() {
       default:
         title = "GAIA - Your Personal Assistant";
     }
-
     titleElement.textContent = title;
   }, [location]);
 
@@ -77,26 +74,31 @@ export default function App() {
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <UserProvider>
         <UIProviderLayout>
-          <Toaster richColors theme="dark" />
+          <ConvoProvider>
+            <ConversationListProvider>
+              <Toaster richColors theme="dark" />
+              <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+                <Routes>
+                  <Route path="/try" element={<MainInterface />}>
+                    {mainRoutes.map(({ path, element }) => (
+                      <Route key={path} path={path} element={element} />
+                    ))}
+                  </Route>
 
-          <Routes>
-            <Route
-              element={
-                <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
-                  <MainInterface />
-                </Suspense>
-              }
-              path="/try/*"
-            />
-            <Route
-              element={
-                <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
-                  <LandingLayout />
-                </Suspense>
-              }
-              path="/*"
-            />
-          </Routes>
+                  <Route
+                    path="/*"
+                    element={
+                      <Suspense
+                        fallback={<SuspenseLoader fullHeight fullWidth />}
+                      >
+                        <LandingLayout />
+                      </Suspense>
+                    }
+                  />
+                </Routes>
+              </Suspense>
+            </ConversationListProvider>
+          </ConvoProvider>
         </UIProviderLayout>
       </UserProvider>
     </GoogleOAuthProvider>

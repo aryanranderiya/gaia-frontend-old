@@ -167,7 +167,7 @@ const DummySearchbar = () => {
             }
             maxRows={13}
             minRows={1}
-            placeholder="Ask gaia..."
+            placeholder="Ask gaia something..."
             radius="full"
             size="lg"
             startContent={<DummyLeftDropdown />}

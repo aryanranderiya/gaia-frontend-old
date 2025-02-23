@@ -33,7 +33,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
       onMouseOver={() => setButtonHovered(true)}
     >
       <Button
-        className={`w-full flex justify-start pr-0 pl-2 h-[35px] min-h-[35px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
+        className={`w-full flex justify-start pr-0 pl-2 h-[32px] min-h-[32px] font-normal duration-0 hover:bg-white/10 bg-transparent ${
           currentConvoId === id ? "text-primary" : "text-white"
         }`}
         onClick={() => {

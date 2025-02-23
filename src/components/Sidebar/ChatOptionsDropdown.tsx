@@ -14,8 +14,8 @@ import {
   ModalHeader,
 } from "@heroui/modal";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Star, Trash } from "lucide-react";
-import { SetStateAction, useState } from "react";
+import { ChevronDown, Star, Trash } from "lucide-react";
+import { ReactNode, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { apiauth } from "@/utils/apiaxios";
@@ -28,11 +28,15 @@ export default function ChatOptionsDropdown({
   chatId,
   chatName,
   starred = false,
+  logo2 = false,
+  btnChildren = undefined,
 }: {
   buttonHovered: boolean;
   chatId: string;
   chatName: string;
   starred: boolean;
+  logo2?: boolean;
+  btnChildren?: ReactNode;
 }) {
   const { fetchConversations } = useConversationList();
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
@@ -91,21 +95,27 @@ export default function ChatOptionsDropdown({
       <Dropdown className="dark text-foreground w-fit min-w-fit" size="sm">
         <DropdownTrigger>
           <Button
-            isIconOnly
+            isIconOnly={btnChildren ? false : true}
             className="ml-auto"
-            radius="full"
+            radius={btnChildren ? "md" : "full"}
+            // size={btnChildren ? "md" : "sm"}
             size="sm"
-            variant="light"
+            variant={btnChildren ? "flat" : "light"}
           >
-            <DotsVerticalIcon
-              className={
-                "transition-all " +
-                (buttonHovered
-                  ? "opacity-100"
-                  : "opacity-0 min-w-[20px] w-[20px]")
-              }
-              width={20}
-            />
+            {btnChildren}
+            {logo2 ? (
+              <ChevronDown width={25} />
+            ) : (
+              <DotsVerticalIcon
+                className={
+                  "transition-all " +
+                  (buttonHovered
+                    ? "opacity-100"
+                    : "opacity-0 min-w-[20px] w-[20px]")
+                }
+                width={20}
+              />
+            )}
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">

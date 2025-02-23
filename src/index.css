@@ -168,7 +168,7 @@ main {
   display: flex;
   height: 100vh;
   align-items: center;
-  padding: 1em 2em;
+  padding: 1rem 1rem;
   position: relative;
   overflow: hidden;
   flex-direction: column;
@@ -228,13 +228,13 @@ main {
   flex-direction: row;
   width: 100vw;
 }
-
+/* 
 .chat_sidebar_toggle_btn {
   position: fixed;
   top: 16px;
   left: 16px;
   z-index: 5;
-}
+} */
 
 .conversation_history {
   display: flex;

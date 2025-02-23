@@ -28,6 +28,9 @@ export default function ChatRenderer() {
   const location = useLocation();
   const { messageId } = location.state || "";
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
+
+  console.log("this is the convoIdParam", convoIdParam);
+
   const [imageData, setImageData] = useState({
     src: "",
     prompt: "",
@@ -63,7 +66,8 @@ export default function ChatRenderer() {
     return (
       <div className="flex items-center justify-center flex-1">
         <div className="flex items-center justify-center flex-col gap-2">
-          <StarterEmoji />
+          <div className="pingspinner sm:!min-w-[10vw] sm:!min-h-[10vw] !min-w-[30vw] !min-h-[30vw] aspect-square"></div>
+          {/* <StarterEmoji /> */}
           {/* <img
             src={"/gaialogo.png"}
             width={200}
@@ -177,7 +181,7 @@ export default function ChatRenderer() {
             subtype={message.subtype || null}
             text={message.response}
           />
-        ),
+        )
       )}
     </>
   );
