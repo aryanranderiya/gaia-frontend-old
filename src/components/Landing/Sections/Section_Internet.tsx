@@ -213,8 +213,8 @@ export default function Internet() {
           heading={"Smarter Answers, Always Up-to-Date"}
           icon={
             <BrainCircuitIcon
-              color="#9b9b9b"
               className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+              color="#9b9b9b"
             />
           }
           subheading={

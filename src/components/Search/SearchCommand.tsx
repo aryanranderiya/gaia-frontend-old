@@ -166,13 +166,13 @@ export default function SearchCommand({
       handleSearch();
       setFilteredPages(
         pages.filter((page) =>
-          page.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          page.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
       );
       setFilteredCommands(
         commands.filter((command) =>
-          command.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          command.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
       );
     }, 200);
 

@@ -1,7 +1,7 @@
 import { Menu02Icon, SidebarLeftIcon } from "../Misc/icons";
+import { Button } from "../ui/button";
 
 import useMediaQuery from "@/hooks/mediaQuery";
-import { Button } from "../ui/button";
 
 export interface CloseOpenSidebarBtnProps {
   isSidebarVisible?: boolean;
@@ -26,13 +26,13 @@ function CloseOpenSidebarBtn({
     >
       {isMobileScreen ? (
         <Menu02Icon
-          height="24"
           className="group-hover:text-white transition-all"
+          height="24"
         />
       ) : (
         <SidebarLeftIcon
-          height="24"
           className="group-hover:text-white transition-all"
+          height="24"
         />
       )}
     </Button>

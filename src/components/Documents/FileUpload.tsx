@@ -56,7 +56,7 @@ export default function FileUpload({
   };
 
   const handleFileSelect = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     // setFileLoading(true);
     const selectedFile = event.target.files?.[0];
@@ -129,7 +129,7 @@ export default function FileUpload({
         ApiService.updateConversationDescription(
           conversationId,
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
-          fetchConversations
+          fetchConversations,
         );
       }, 3000);
 
@@ -180,7 +180,7 @@ export default function FileUpload({
       const response = await apiauth.post(
         isImage ? "/image" : "/document/query",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { headers: { "Content-Type": "multipart/form-data" } },
       );
 
       console.log(response);

@@ -1,5 +1,14 @@
 "use client";
 
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
+import { Tooltip } from "@heroui/tooltip";
+import { AnimatePresence } from "framer-motion";
+import { Send, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import { Mic02Icon } from "../Misc/icons";
+
 import {
   Dialog,
   DialogContent,
@@ -7,13 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@heroui/button";
-import { Textarea } from "@heroui/input";
-import { Tooltip } from "@heroui/tooltip";
-import { AnimatePresence } from "framer-motion";
-import { Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Mic02Icon } from "../Misc/icons";
 
 interface AnimatedAudioTranscriptionProps {
   transcription: string;
@@ -44,6 +46,7 @@ export default function AnimatedAudioTranscription({
         setError("Connection error. Please try again.");
       wsRef.current.onclose = () => console.log("WebSocket connection closed");
     }
+
     return () => {
       stopRecording();
       wsRef.current?.close();
@@ -56,6 +59,7 @@ export default function AnimatedAudioTranscription({
 
     if (!navigator.mediaDevices?.getUserMedia) {
       setError("Your browser does not support audio recording.");
+
       return;
     }
 
@@ -66,18 +70,19 @@ export default function AnimatedAudioTranscription({
 
       audioContextRef.current = new AudioContext({ sampleRate: 16000 });
       sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
-        streamRef.current
+        streamRef.current,
       );
 
       processorRef.current = audioContextRef.current.createScriptProcessor(
         4096,
         1,
-        1
+        1,
       );
       processorRef.current.onaudioprocess = (e) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
           const audioData = e.inputBuffer.getChannelData(0);
           const intData = new Int16Array(audioData.length);
+
           for (let i = 0; i < audioData.length; i++) {
             intData[i] = Math.max(-1, Math.min(1, audioData[i])) * 0x7fff;
           }

@@ -2,10 +2,12 @@
 // import StarterText from "../Chat/StarterText";
 // import { useState } from "react";
 import { AnimatedSection } from "../AnimatedSection";
+import DummySearchbar from "../DummySearchbar";
+
+import { GeneratedImageChatBubble } from "./Section_GenerateImage";
+
 import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
-import { GeneratedImageChatBubble } from "./Section_GenerateImage";
-import DummySearchbar from "../DummySearchbar";
 
 export default function Hero_Image() {
   return (
@@ -30,10 +32,10 @@ export default function Hero_Image() {
             duration={7}
           >
             <Safari
-              mode="simple"
-              url="heygaia.io"
               className="w-full h-fit"
               imageSrc="/landing/hero_image_nosearchbar.webp"
+              mode="simple"
+              url="heygaia.io"
             />
             <div className="absolute text-white flex w-full sm:bottom-4 bottom-[-15px] justify-center left-0 items-center sm:scale-100 scale-50">
               <DummySearchbar />

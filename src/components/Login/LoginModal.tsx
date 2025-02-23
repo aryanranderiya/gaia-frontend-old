@@ -1,12 +1,11 @@
-import {
-  Dialog,
-  DialogContent
-} from "@/components/ui/dialog";
-import { apiauth } from "@/utils/apiaxios";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
+
 import { GoogleColouredIcon } from "../Misc/icons";
 import { Button } from "../ui/button";
+
+import { apiauth } from "@/utils/apiaxios";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function LoginModal({
   open,

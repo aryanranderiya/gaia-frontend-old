@@ -1,7 +1,11 @@
 // src/components/Calendar.tsx
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
-import { apiauth } from "@/utils/apiaxios";
+import { Spinner } from "@heroui/spinner";
+import { Clock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+import CalendarSelector from "./CalendarSelector";
+import CalendarEventDialog from "./CalendarEventDialog";
+
 import {
   formatEventDate,
   getEventColor,
@@ -9,11 +13,9 @@ import {
   groupEventsByDate,
   isTooDark,
 } from "@/utils/calendarUtils";
-import { Spinner } from "@heroui/spinner";
-import { Clock } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import CalendarSelector from "./CalendarSelector";
-import CalendarEventDialog from "./CalendarEventDialog";
+import { apiauth } from "@/utils/apiaxios";
+import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface CalendarCardProps {
   event: GoogleCalendarEvent;
@@ -45,13 +47,13 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
           className="text-sm mt-2 relative z-[1] opacity-70 flex items-center gap-1"
           style={{ color: backgroundColor }}
         >
-          <Clock width={17} height={17} />
+          <Clock height={17} width={17} />
           {formatEventDate(event)}
         </div>
       )}
       <div
-        style={{ backgroundColor }}
         className="absolute inset-0 z-[0] opacity-25 rounded-lg w-full"
+        style={{ backgroundColor }}
       />
     </div>
   );
@@ -60,7 +62,7 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
 export default function Calendar() {
   const [loading, setLoading] = useState<boolean>(true);
   const [calendarEvents, setCalendarEvents] = useState<GoogleCalendarEvent[]>(
-    []
+    [],
   );
   const [selectedEvent, setSelectedEvent] =
     useState<GoogleCalendarEvent | null>(null);
@@ -87,7 +89,7 @@ export default function Calendar() {
           fetchEvents(nextPageToken); // Fetch next page
         }
       },
-      { rootMargin: "0px" }
+      { rootMargin: "0px" },
     );
 
     if (observerRef.current) {
@@ -104,12 +106,14 @@ export default function Calendar() {
   const fetchCalendars = async () => {
     try {
       const response = await apiauth.get("/calendar/list");
+
       setCalendars(response.data.items);
 
       // Find the primary calendar and set it as selected
       const primaryCalendar = response.data.items.find(
-        (cal: { primary: boolean }) => cal.primary === true
+        (cal: { primary: boolean }) => cal.primary === true,
       );
+
       if (primaryCalendar) {
         setSelectedCalendars([primaryCalendar.id]);
         // Fetch events for the primary calendar
@@ -117,6 +121,7 @@ export default function Calendar() {
       }
 
       const response2 = await apiauth.get("/calendar/all/events");
+
       console.log(response2);
     } catch (error) {
       console.error("Error fetching calendars:", error);
@@ -125,13 +130,14 @@ export default function Calendar() {
 
   const fetchEvents = async (
     pageToken: string | null = null,
-    calendarIds: string[] | null = null
+    calendarIds: string[] | null = null,
   ) => {
     if (calendarEvents.length <= 0) setLoading(true);
 
     try {
       const allEvents: GoogleCalendarEvent[] = [];
       const calendarsToFetch = calendarIds || selectedCalendars;
+
       for (const calendarId of calendarsToFetch) {
         const response = await apiauth.get<{
           events: GoogleCalendarEvent[];
@@ -148,16 +154,19 @@ export default function Calendar() {
 
       // Filter out duplicates and add new events
       const newEvents = allEvents.filter(
-        (event) => !eventIdsRef.current.has(event.id)
+        (event) => !eventIdsRef.current.has(event.id),
       );
+
       newEvents.forEach((event) => eventIdsRef.current.add(event.id));
 
       // Merge new events with existing events, sort by start date, and update state
       setCalendarEvents((prev) => {
         const mergedEvents = [...prev, ...newEvents];
+
         return mergedEvents.sort((a, b) => {
           const dateA = new Date(a.start.dateTime || a.start.date || "");
           const dateB = new Date(b.start.dateTime || b.start.date || "");
+
           return dateA.getTime() - dateB.getTime();
         });
       });
@@ -184,14 +193,15 @@ export default function Calendar() {
       // If a calendar is deselected, remove its events
       if (!newSelection.includes(calendarId)) {
         setCalendarEvents((prevEvents) =>
-          prevEvents.filter((event) => event.organizer.email !== calendarId)
+          prevEvents.filter((event) => event.organizer.email !== calendarId),
         );
         eventIdsRef.current = new Set(
           Array.from(eventIdsRef.current).filter((id) =>
             calendarEvents.find(
-              (event) => event.id === id && event.organizer.email !== calendarId
-            )
-          )
+              (event) =>
+                event.id === id && event.organizer.email !== calendarId,
+            ),
+          ),
         );
       } else {
         // If a new calendar is selected, fetch its events
@@ -227,6 +237,7 @@ export default function Calendar() {
             {Object.entries(groupEventsByDate(calendarEvents)).map(
               ([date, events]) => {
                 const [day, dayOfWeek] = date.split(" ");
+
                 return (
                   <div key={date} className="w-full flex gap-7">
                     <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-zinc-700 flex items-center break-words p-3 justify-center leading-none flex-col">
@@ -239,15 +250,15 @@ export default function Calendar() {
                       {events.map((event) => (
                         <CalendarCard
                           key={event.id}
+                          calendars={calendars}
                           event={event}
                           onClick={() => handleEventClick(event)}
-                          calendars={calendars}
                         />
                       ))}
                     </div>
                   </div>
                 );
-              }
+              },
             )}
           </div>
           {loading && (

@@ -3,13 +3,14 @@ import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import { mainRoutes } from "@/routes/mainRoutes";
 import SuspenseLoader from "./components/Misc/SuspenseLoader";
 import { ConversationListProvider } from "./contexts/ConversationList";
 import { ConvoProvider } from "./contexts/CurrentConvoMessages";
 import { UserProvider } from "./contexts/UserContext";
 import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
+
+import { mainRoutes } from "@/routes/mainRoutes";
 
 // Lazy-loaded layouts/components
 const MainInterface = lazy(() => import("./pages/MainInterface"));
@@ -21,14 +22,18 @@ export default function App() {
   useEffect(() => {
     const { pathname } = location;
     let title;
+
     if (/^\/try\/chat\/[^/]+$/.test(pathname)) {
       const titleElement = document.querySelector("title");
+
       if (titleElement && titleElement.id !== "chat_title") {
         titleElement.remove();
       }
+
       return;
     }
     let titleElement = document.querySelector("title");
+
     if (!titleElement) {
       titleElement = document.createElement("title");
       document.head.appendChild(titleElement);
@@ -79,14 +84,13 @@ export default function App() {
               <Toaster richColors theme="dark" />
               <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                 <Routes>
-                  <Route path="/try" element={<MainInterface />}>
+                  <Route element={<MainInterface />} path="/try">
                     {mainRoutes.map(({ path, element }) => (
-                      <Route key={path} path={path} element={element} />
+                      <Route key={path} element={element} path={path} />
                     ))}
                   </Route>
 
                   <Route
-                    path="/*"
                     element={
                       <Suspense
                         fallback={<SuspenseLoader fullHeight fullWidth />}
@@ -94,6 +98,7 @@ export default function App() {
                         <LandingLayout />
                       </Suspense>
                     }
+                    path="/*"
                   />
                 </Routes>
               </Suspense>

@@ -92,7 +92,7 @@ const BubblePitFooter: React.FC = () => {
           size: 20 + Math.random() * 20,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
           component,
-        })
+        }),
       );
 
       setBubbles(newBubbles);
@@ -136,7 +136,7 @@ const BubblePitFooter: React.FC = () => {
         }
 
         return { ...bubble, x: newX, y: newY };
-      })
+      }),
     );
   };
 

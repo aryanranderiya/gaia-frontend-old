@@ -4,11 +4,11 @@ import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 // import { AnimatedSection } from "../misc/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
-  () => import("@/components/Landing/Sections/Sections_ConvoManagement")
+  () => import("@/components/Landing/Sections/Sections_ConvoManagement"),
 );
 
 const Section_Document = lazy(
-  () => import("@/components/Landing/Sections/Section_Documents")
+  () => import("@/components/Landing/Sections/Section_Documents"),
 );
 
 // const Section_Notes = lazy(
@@ -16,11 +16,11 @@ const Section_Document = lazy(
 // );
 
 const FlowchartDemo = lazy(
-  () => import("@/components/Landing/Sections/Section_Flowchart")
+  () => import("@/components/Landing/Sections/Section_Flowchart"),
 );
 
 const ImageGeneration = lazy(
-  () => import("@/components/Landing/Sections/Section_GenerateImage")
+  () => import("@/components/Landing/Sections/Section_GenerateImage"),
 );
 
 export default function Section_Grid() {

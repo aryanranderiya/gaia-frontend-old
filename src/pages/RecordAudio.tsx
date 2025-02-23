@@ -2,6 +2,7 @@
 
 import { Loader2, Mic, MicOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,6 +36,7 @@ export default function AudioTranscription() {
     wsRef.current.onmessage = (event) => {
       try {
         const response = JSON.parse(event.data);
+
         if (response.text) {
           setTranscription((prev) => prev + (prev ? "\n" : "") + response.text);
         }
@@ -57,6 +59,7 @@ export default function AudioTranscription() {
   const startRecording = async () => {
     if (!navigator.mediaDevices?.getUserMedia) {
       setError("Your browser does not support audio recording.");
+
       return;
     }
 
@@ -157,8 +160,8 @@ export default function AudioTranscription() {
           {isLoading
             ? "Initializing..."
             : isRecording
-            ? "Stop Recording"
-            : "Start Recording"}
+              ? "Stop Recording"
+              : "Start Recording"}
         </Button>
 
         {error && (

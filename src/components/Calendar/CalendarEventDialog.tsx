@@ -1,12 +1,4 @@
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { GoogleCalendarEvent } from "@/types/calendarTypes";
-import { formatEventDate, getEventIcon } from "@/utils/calendarUtils";
-import {
   Bell,
   Calendar as CalendarIcon,
   Clock,
@@ -18,7 +10,17 @@ import {
   User,
 } from "lucide-react";
 import React from "react";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { GoogleCalendarEvent } from "@/types/calendarTypes";
+import { formatEventDate, getEventIcon } from "@/utils/calendarUtils";
 
 interface CalendarEventDialogProps {
   event: GoogleCalendarEvent;
@@ -125,10 +127,10 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
           </InfoSection>
 
           {/* Accordion Sections for Less Important Info */}
-          <Accordion type="single" collapsible className="space-y-4  my-2">
+          <Accordion collapsible className="space-y-4  my-2" type="single">
             <AccordionItem
-              value="people"
               className="border-none  bg-zinc-800 rounded-xl"
+              value="people"
             >
               <AccordionTrigger className="px-4 py-3 hover:no-underline">
                 <span className="text-medium font-medium">People</span>
@@ -149,7 +151,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
 
             {/* Recurrence Section */}
             {event.recurrence && (
-              <AccordionItem value="recurrence" className="border-none">
+              <AccordionItem className="border-none" value="recurrence">
                 <AccordionTrigger className="bg-zinc-800 rounded-xl px-4 py-3 hover:no-underline">
                   <span className="text-lg font-semibold">Recurrence</span>
                 </AccordionTrigger>
@@ -165,8 +167,8 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
 
             {/* Additional Details Section */}
             <AccordionItem
-              value="additional"
               className="border-none bg-zinc-800 rounded-xl"
+              value="additional"
             >
               <AccordionTrigger className=" px-4 py-3 hover:no-underline">
                 <span className="text-medium font-medium">
@@ -193,8 +195,8 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
             </AccordionItem>
 
             <AccordionItem
-              value="technical"
               className="border-none bg-zinc-800 rounded-xl"
+              value="technical"
             >
               <AccordionTrigger className=" px-4 py-3 hover:no-underline">
                 <span className="text-medium font-medium">
@@ -237,10 +239,10 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                     </div>
                     <span className="font-medium text-zinc-400">Link:</span>
                     <a
-                      href={event.htmlLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300 underline truncate max-w-[300px]"
+                      href={event.htmlLink}
+                      rel="noopener noreferrer"
+                      target="_blank"
                     >
                       {event.htmlLink}
                     </a>

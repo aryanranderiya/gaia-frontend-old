@@ -8,7 +8,11 @@ import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
-import { FlowchartIcon, Task01Icon, TaskDone01Icon } from "@/components/Misc/icons";
+import {
+  FlowchartIcon,
+  Task01Icon,
+  TaskDone01Icon,
+} from "@/components/Misc/icons";
 import LandingPage1Layout from "@/layouts/LandingPage1";
 
 mermaid.initialize({});

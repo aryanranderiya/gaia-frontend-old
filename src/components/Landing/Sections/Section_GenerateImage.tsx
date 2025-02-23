@@ -64,11 +64,14 @@ export default function ImageGeneration() {
 
   useEffect(() => {
     imageOptions.forEach((option, index) => {
-      setTimeout(() => {
-        const img = new Image();
+      setTimeout(
+        () => {
+          const img = new Image();
 
-        img.src = option.src;
-      }, 1000 * (index + 1));
+          img.src = option.src;
+        },
+        1000 * (index + 1),
+      );
     });
   }, []);
 

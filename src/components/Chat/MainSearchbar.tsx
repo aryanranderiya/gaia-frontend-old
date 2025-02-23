@@ -54,7 +54,7 @@ const MainSearchbar = ({
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();

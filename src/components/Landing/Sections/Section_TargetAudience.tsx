@@ -37,7 +37,7 @@ const TargetCard = ({
       current?.title === title && current?.description === description
         ? "text-white "
         : "text-foreground-400 hover:text-foreground-600",
-      "cursor-pointer transition-all"
+      "cursor-pointer transition-all",
     )}
     onClick={() => setCurrent({ title, description, icon, img })}
   >

@@ -55,7 +55,7 @@ export function ChatBubble_Actions({
       // Pin/unpin the message
       await apiauth.put(
         `/conversations/${convoIdParam}/messages/${message_id}/pin`,
-        { pinned: !pinned }
+        { pinned: !pinned },
       );
 
       console.log("Updated pin route");

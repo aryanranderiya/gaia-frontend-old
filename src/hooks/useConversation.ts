@@ -43,7 +43,7 @@ export const useConversation = (convoIdParam: string | null) => {
         ApiService.updateConversationDescription(
           conversationId,
           JSON.stringify(currentMessages[0]?.response || currentMessages[0]),
-          fetchConversations
+          fetchConversations,
         );
       }, 1000);
 
@@ -63,7 +63,7 @@ export const useConversation = (convoIdParam: string | null) => {
     conversationId: string,
     enableSearch: boolean,
     pageFetchURL: string,
-    bot_message_id: string
+    bot_message_id: string,
   ) => {
     let botResponseText = "";
 
@@ -171,14 +171,14 @@ export const useConversation = (convoIdParam: string | null) => {
       conversationId,
       onMessage,
       onClose,
-      onError
+      onError,
     );
   };
 
   const updateConversation = async (
     inputText: string,
     enableSearch: boolean = false,
-    pageFetchURL: string
+    pageFetchURL: string,
   ) => {
     const bot_message_id = String(ObjectID());
 
@@ -220,7 +220,7 @@ export const useConversation = (convoIdParam: string | null) => {
       conversationId,
       enableSearch,
       pageFetchURL,
-      bot_message_id
+      bot_message_id,
     );
   };
 

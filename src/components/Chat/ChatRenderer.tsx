@@ -65,7 +65,7 @@ export default function ChatRenderer() {
     return (
       <div className="flex items-start justify-center flex-1">
         <div className="flex items-center justify-center flex-col gap-2">
-          <div className="pingspinner sm:!min-w-[10vw] sm:!min-h-[10vw] !min-w-[30vw] !min-h-[30vw] aspect-square"></div>
+          <div className="pingspinner sm:!min-w-[10vw] sm:!min-h-[10vw] !min-w-[30vw] !min-h-[30vw] aspect-square" />
           {/* <StarterEmoji /> */}
           {/* <img
             src={"/gaialogo.png"}
@@ -93,11 +93,11 @@ export default function ChatRenderer() {
       <Dialog open={openImage} onOpenChange={setOpenImage}>
         <DialogContent className="!rounded-3xl bg-zinc-800 border-none text-white flex items-center flex-col min-w-fit py-3 px-5">
           <img
+            alt={"Generated Image"}
             className="rounded-3xl my-2 size-[65vh] min-w-[65vh] min-h-[65vh] aspect-square"
             height={"auto"}
             src={imageData?.src}
             width={"auto"}
-            alt={"Generated Image"}
           />
 
           <div className="flex max-w-[65vh] min-w-[65vh] justify-evenly flex-col gap-1">
@@ -181,7 +181,7 @@ export default function ChatRenderer() {
             subtype={message.subtype || null}
             text={message.response}
           />
-        )
+        ),
       )}
     </>
   );

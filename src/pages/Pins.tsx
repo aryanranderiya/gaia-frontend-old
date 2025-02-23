@@ -119,7 +119,7 @@ export default function Pins() {
 
   const filterPins = (query: string) => {
     const filtered = fetchedResults.filter((result) =>
-      result.message.response.toLowerCase().includes(query.toLowerCase())
+      result.message.response.toLowerCase().includes(query.toLowerCase()),
     );
 
     setFilteredResults(filtered);

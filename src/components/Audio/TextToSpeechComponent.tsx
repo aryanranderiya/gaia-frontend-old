@@ -29,7 +29,7 @@ export default function TextToSpeech({ text }: { text: string }) {
         const response = await api.post(
           "/synthesize",
           { text },
-          { responseType: "arraybuffer" }
+          { responseType: "arraybuffer" },
         );
 
         // Convert audio data to a Blob

@@ -1,21 +1,25 @@
 // src/utils/calendarUtils.ts
 
-import { GoogleCalendarEvent } from "@/types/calendarTypes";
 import tinycolor from "tinycolor2";
+
+import { GoogleCalendarEvent } from "@/types/calendarTypes";
 
 // Group events by a date string like "day dayOfWeek"
 export function groupEventsByDate(
-  events: GoogleCalendarEvent[]
+  events: GoogleCalendarEvent[],
 ): Record<string, GoogleCalendarEvent[]> {
   const grouped: Record<string, GoogleCalendarEvent[]> = {};
+
   events.forEach((event) => {
     const [day, dayOfWeek] = formatDateDay(event);
     const eventDate = `${day} ${dayOfWeek}`;
+
     if (!grouped[eventDate]) {
       grouped[eventDate] = [];
     }
     grouped[eventDate].push(event);
   });
+
   return grouped;
 }
 
@@ -26,6 +30,7 @@ export function formatDateDay(event: GoogleCalendarEvent): [string, string] {
   const dayOfWeek = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
   }).format(startDate);
+
   return [day, dayOfWeek];
 }
 
@@ -34,6 +39,7 @@ export function formatEventDate(event: GoogleCalendarEvent): string | null {
   if (event.start.dateTime && event.end?.dateTime) {
     const startDateTime = new Date(event.start.dateTime);
     const endDateTime = new Date(event.end.dateTime);
+
     return `${new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
       minute: "2-digit",
@@ -44,6 +50,7 @@ export function formatEventDate(event: GoogleCalendarEvent): string | null {
       hour12: true,
     }).format(endDateTime)}`;
   }
+
   return null;
 }
 
@@ -58,6 +65,7 @@ export function getEventIcon(event: GoogleCalendarEvent): string {
       if (event.transparency === "transparent") {
         return "🔔";
       }
+
       return "📅";
   }
 }
@@ -73,11 +81,13 @@ export function getEventColor(event: GoogleCalendarEvent): string {
       if (event.transparency === "transparent") {
         return "bg-purple-500 hover:bg-purple-600";
       }
+
       return "bg-blue-500 hover:bg-blue-600";
   }
 }
 
 export function isTooDark(color: string, threshold: number = 0.04): boolean {
   const luminance = tinycolor(color).getLuminance();
+
   return luminance < threshold;
 }

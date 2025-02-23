@@ -2,6 +2,12 @@ import { Button } from "@heroui/button";
 import { Input, Textarea } from "@heroui/input";
 import { ArrowUpRight } from "lucide-react";
 import React, { useState } from "react";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/dropdown";
 
 import {
   AiImageIcon,
@@ -11,6 +17,7 @@ import {
   PlusSignIcon,
   SentIcon,
 } from "../Misc/icons";
+import LoginModal from "../Login/LoginModal";
 
 import {
   Dialog,
@@ -20,13 +27,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
-import LoginModal from "../Login/LoginModal";
 
 function DummyLeftDropdown() {
   return (
@@ -47,7 +47,7 @@ function DummyLeftDropdown() {
         </div>
       </DropdownTrigger>
 
-      <DropdownMenu variant="faded" aria-label="Static Actions">
+      <DropdownMenu aria-label="Static Actions" variant="faded">
         <DropdownItem key="image" className="w-full transition-all">
           <div className="flex justify-between items-center">
             Upload Image
@@ -85,7 +85,7 @@ const DummySearchbar = () => {
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -99,6 +99,7 @@ const DummySearchbar = () => {
   function isValidURL(url: string) {
     try {
       new URL(url);
+
       return true;
     } catch {
       return false;

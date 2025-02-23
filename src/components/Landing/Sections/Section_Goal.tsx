@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
+import { Send } from "lucide-react";
+
 import { AnimatedSection } from "../AnimatedSection";
+
 import {
   CheckmarkSquare03Icon,
   FlowchartIcon1,
   Target02Icon,
 } from "@/components/Misc/icons";
 import StaticSidebar from "@/components/Goals/StaticSidebar";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
-import { Send } from "lucide-react";
 
 interface Step {
   icon: React.ReactNode;
@@ -43,7 +45,7 @@ export default function GoalSection(): JSX.Element {
     },
   ];
   const [selectedImage, setSelectedImage] = useState<string>(
-    steps[selectedStep].image
+    steps[selectedStep].image,
   );
 
   useEffect(() => {
@@ -56,10 +58,10 @@ export default function GoalSection(): JSX.Element {
     <AnimatedSection className="flex w-screen flex-col items-center min-h-fit relative transition-all p-4 sm:mt-0 gap-5 ">
       <GoalHeader />
       <GoalSteps
-        steps={steps}
         selectedStep={selectedStep}
-        setSelectedStep={setSelectedStep}
         setSelectedImage={setSelectedImage}
+        setSelectedStep={setSelectedStep}
+        steps={steps}
       />
       <GoalImage image={selectedImage} />
     </AnimatedSection>
@@ -111,7 +113,7 @@ function GoalSteps({
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (goalSectionRef.current) {
@@ -140,8 +142,8 @@ function GoalSteps({
       </AnimatedSection>
 
       <StaticSidebar
-        isVisible={selectedStep === 2 && isVisible}
         isComplete={isComplete}
+        isVisible={selectedStep === 2 && isVisible}
         setIsComplete={setIsComplete}
       />
     </div>
@@ -199,15 +201,15 @@ function GoalImage({ image }: GoalImageProps): JSX.Element {
   return (
     <div className="relative sm:flex hidden">
       <img
-        src={image}
         alt="Goal step illustration"
         className="h-[50vh] sm:w-screen max-w-screen-sm sm:max-w-screen-xl object-center object-cover rounded-3xl transition-all outline outline-4 outline-zinc-800"
+        src={image}
       />
       {image == "/landing/blur_goals.webp" && (
         <div className="absolute h-full w-full flex items-center justify-center z-[2] top-0 left-0">
           <Input
-            classNames={{ inputWrapper: "pr-2" }}
             className="w-96"
+            classNames={{ inputWrapper: "pr-2" }}
             endContent={
               <Button
                 isIconOnly

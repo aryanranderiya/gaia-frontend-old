@@ -112,7 +112,7 @@ const TranslateDropdown: FC<TranslateDropdownProps> = ({
             variant="faded"
           >
             {(
-              item: Language // Explicitly type the item
+              item: Language, // Explicitly type the item
             ) => (
               <AutocompleteItem
                 key={item.value}

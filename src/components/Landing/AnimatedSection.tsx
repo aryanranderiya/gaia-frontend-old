@@ -30,7 +30,7 @@ export function AnimatedSection({
         },
       },
     }),
-    [staggerDelay]
+    [staggerDelay],
   );
 
   const itemVariants = useMemo(
@@ -38,7 +38,7 @@ export function AnimatedSection({
       hidden: { opacity: 0, y: 50 },
       visible: { opacity: 1, y: 0 },
     }),
-    []
+    [],
   );
 
   return (

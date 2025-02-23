@@ -5,7 +5,6 @@ import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
 import {
   BubbleConversationChatIcon,
   PencilSquareIcon,
@@ -21,7 +20,7 @@ import Sidebar from "@/layouts/Sidebar";
 export default function MainInterface() {
   const location = useLocation();
   const navigate = useNavigate();
-const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const { conversations } = useConversationList();
@@ -59,33 +58,33 @@ const sidebarRef = useRef<HTMLDivElement | null>(null);
               className={`sm:left-4 sm:px-0 pb-3 top-0 rounded-xl transition-opacity flex w-full justify-between z-10`}
             >
               <CloseOpenSidebarBtn
-                toggleSidebar={toggleSidebar}
                 isSidebarVisible={isSidebarVisible}
+                toggleSidebar={toggleSidebar}
               />
 
               <div>
                 {convoIdParam ? (
                   <ChatOptionsDropdown
-                    logo2={true}
-                    buttonHovered={true}
-                    chatId={convoIdParam}
                     btnChildren={
                       <div className="!text-sm max-w-[250px] truncate flex items-center gap-2">
-                        <BubbleConversationChatIcon width={18} height={18} />
+                        <BubbleConversationChatIcon height={18} width={18} />
 
                         {conversations.find(
-                          (convo) => convo.conversation_id == convoIdParam
+                          (convo) => convo.conversation_id == convoIdParam,
                         )?.description || "New Chat"}
                       </div>
                     }
+                    buttonHovered={true}
+                    chatId={convoIdParam}
                     chatName={
                       conversations.find(
-                        (convo) => convo.conversation_id == convoIdParam
+                        (convo) => convo.conversation_id == convoIdParam,
                       )?.description || "New Chat"
                     }
+                    logo2={true}
                     starred={
                       conversations.find(
-                        (convo) => convo.conversation_id == convoIdParam
+                        (convo) => convo.conversation_id == convoIdParam,
                       )?.starred || false
                     }
                   />

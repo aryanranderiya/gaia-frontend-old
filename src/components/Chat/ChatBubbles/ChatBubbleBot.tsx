@@ -51,7 +51,7 @@ export default function ChatBubbleBot({
   const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
-    "Uploading Document..."
+    "Uploading Document...",
   );
 
   // Update file scanning text while the document is processing
@@ -267,7 +267,7 @@ export default function ChatBubbleBot({
                       From{" "}
                       {calendar_options?.start
                         ? String(
-                            new Date(calendar_options.start).toDateString()
+                            new Date(calendar_options.start).toDateString(),
                           )
                         : ""}
                     </div>

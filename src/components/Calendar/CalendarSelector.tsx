@@ -1,5 +1,6 @@
 import { GoogleCalendar } from "@/types/calendarTypes";
 import { isTooDark } from "@/utils/calendarUtils";
+
 import { Chip, useCheckbox, VisuallyHidden } from "@heroui/react";
 import { Eye, EyeOffIcon, X, XIcon } from "lucide-react";
 import { useState } from "react";
@@ -32,6 +33,13 @@ function CalendarChip({ calendar, selected, onSelect }: CalendarChipProps) {
           className="text-center items-center "
           variant="faded"
           {...(getLabelProps() as any)}
+          startContent={
+            selected ? (
+              <Eye className="mr-1" />
+            ) : (
+              <EyeOffIcon className="mr-1" />
+            )
+          }
           style={{
             maxWidth: "100%",
             minWidth: "100%",
@@ -41,13 +49,6 @@ function CalendarChip({ calendar, selected, onSelect }: CalendarChipProps) {
             color: computedColor,
             borderRadius: "7px",
           }}
-          startContent={
-            selected ? (
-              <Eye className="mr-1" />
-            ) : (
-              <EyeOffIcon className="mr-1" />
-            )
-          }
         >
           <div className="text-sm">{calendar.summary}</div>
         </Chip>
@@ -63,6 +64,7 @@ interface CalendarSelectorProps {
 }
 
 import { Filter } from "lucide-react";
+
 import { Button } from "../ui/button";
 
 export default function CalendarSelector({
@@ -81,9 +83,9 @@ export default function CalendarSelector({
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {isOpen ? (
-          <XIcon width={27} height={27}  />
+          <XIcon height={27} width={27} />
         ) : (
-          <Filter width={27} height={27} />
+          <Filter height={27} width={27} />
         )}
       </Button>
 

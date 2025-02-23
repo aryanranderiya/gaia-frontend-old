@@ -79,7 +79,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         y: e.clientY - position.y,
       });
     },
-    [position]
+    [position],
   );
 
   const handleMouseMove = useCallback(
@@ -91,7 +91,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         });
       }
     },
-    [isDragging, startPosition]
+    [isDragging, startPosition],
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -100,7 +100,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!
+      mermaidRef.current.querySelector("svg")!,
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",
@@ -315,10 +315,10 @@ export function CustomAnchor({ props }: { props: any }) {
             <div className="flex items-center gap-2">
               {metadata.favicon && validFavicon ? (
                 <img
+                  alt={"Fav Icon"}
                   className="size-[20px] rounded-full"
                   src={metadata.favicon}
                   onError={() => setValidFavicon(false)}
-                  alt={"Fav Icon"}
                 />
               ) : (
                 <GlobeIcon color="#9b9b9b" height={17} width={17} />
@@ -401,7 +401,11 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               />
             ),
             img: ({ node, ...props }) => (
-              <img className="max-w-full h-auto my-4" alt={"image"} {...props} />
+              <img
+                alt={"image"}
+                className="max-w-full h-auto my-4"
+                {...props}
+              />
             ),
             table: ({ node, ...props }) => (
               <div className="overflow-x-auto">

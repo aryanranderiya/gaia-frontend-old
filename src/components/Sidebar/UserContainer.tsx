@@ -27,9 +27,9 @@ const UserContainer: React.FC = () => {
             isBordered: true,
             fallback: (
               <img
+                alt={"User Profile photo"}
                 className="min-h-[35px] min-w-[35px]"
                 src="https://links.aryanranderiya.com/l/default_user"
-                alt={"User Profile photo"}
               />
             ),
             size: "sm",

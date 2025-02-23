@@ -33,8 +33,8 @@ export default function Section_Memories() {
           heading={"An Assistant That Remembers"}
           icon={
             <Brain02Icon
-              color="#9b9b9b"
               className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+              color="#9b9b9b"
             />
           }
           subheading={

@@ -41,7 +41,7 @@ export default function Navbar() {
         setUserData(
           response?.data?.name,
           response?.data?.email,
-          response?.data?.picture
+          response?.data?.picture,
         );
 
         if (

@@ -118,7 +118,7 @@ export default function Search() {
                                 >
                                   {result.message.pageFetchURL.replace(
                                     /^https?:\/\//,
-                                    ""
+                                    "",
                                   )}
                                 </a>
                               </div>

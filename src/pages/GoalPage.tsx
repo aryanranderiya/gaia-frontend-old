@@ -97,7 +97,7 @@ const CustomNode = React.memo(
         <Handle position={Position.Bottom} type="source" />
       </>
     );
-  }
+  },
 );
 
 export default function GoalPage() {
@@ -122,7 +122,7 @@ export default function GoalPage() {
         />
       ),
     }),
-    [currentlySelectedNodeId]
+    [currentlySelectedNodeId],
   );
 
   const fetchGoalData = async () => {
@@ -206,7 +206,7 @@ export default function GoalPage() {
   }, [goalId]);
 
   const handleInit = (
-    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>
+    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>,
   ) => {
     const viewport = reactFlowInstance.getViewport();
 
@@ -224,7 +224,7 @@ export default function GoalPage() {
 
     // Find the currently selected node
     const selectedNode = nodes.find(
-      (node) => node.id === currentlySelectedNodeId
+      (node) => node.id === currentlySelectedNodeId,
     );
 
     if (!selectedNode) return;
@@ -242,15 +242,15 @@ export default function GoalPage() {
                 isComplete: updatedIsComplete,
               },
             }
-          : node
-      )
+          : node,
+      ),
     );
 
     // Update the server state
     try {
       await apiauth.patch(
         `/goals/${selectedNode.data.goalId}/roadmap/nodes/${selectedNode.id}`,
-        { is_complete: updatedIsComplete }
+        { is_complete: updatedIsComplete },
       );
     } catch (error) {
       console.error("Error updating node status:", error);
@@ -266,8 +266,8 @@ export default function GoalPage() {
                   isComplete: !updatedIsComplete,
                 },
               }
-            : node
-        )
+            : node,
+        ),
       );
     }
   };
@@ -297,7 +297,7 @@ export default function GoalPage() {
               {currentlySelectedNodeId &&
                 (() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId
+                    (node) => node.id === currentlySelectedNodeId,
                   );
                   const estimatedTime = selectedNode?.data?.estimatedTime;
 
@@ -349,7 +349,7 @@ export default function GoalPage() {
               <>
                 {(() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId
+                    (node) => node.id === currentlySelectedNodeId,
                   );
 
                   return (
@@ -367,13 +367,13 @@ export default function GoalPage() {
                                 key={index}
                                 className="hover:text-[#00bbff] underline underline-offset-4"
                                 href={`https://www.google.com/search?q=${resource.split(
-                                  "+"
+                                  "+",
                                 )}`}
                                 target="__blank"
                               >
                                 <li>{resource}</li>
                               </a>
-                            )
+                            ),
                           )}
                         </div>
                       </div>

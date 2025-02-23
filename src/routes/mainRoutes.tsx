@@ -1,6 +1,7 @@
 // src/routes/mainRoutes.tsx
-import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import { Suspense, lazy } from "react";
+
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const MainChat = lazy(() => import("@/pages/MainChat"));
 const Explore = lazy(() => import("@/pages/Explore"));

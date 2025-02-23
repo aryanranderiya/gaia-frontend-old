@@ -42,7 +42,7 @@ export default function ChatOptionsDropdown({
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
-    null
+    null,
   );
   const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();
@@ -95,12 +95,12 @@ export default function ChatOptionsDropdown({
       <Dropdown className="dark text-foreground w-fit min-w-fit" size="sm">
         <DropdownTrigger>
           <Button
-            isIconOnly={btnChildren ? false : true}
             className="ml-auto"
+            isIconOnly={btnChildren ? false : true}
+            variant={btnChildren ? "flat" : "light"}
             radius={btnChildren ? "md" : "full"}
             // size={btnChildren ? "md" : "sm"}
             size="sm"
-            variant={btnChildren ? "flat" : "light"}
           >
             {btnChildren}
             {logo2 ? (
