@@ -14,7 +14,7 @@ export default function LandingPage() {
     const img = new Image();
 
     // img.src = "/landing/screenshot.png";
-    img.src = "/landing/hero_image_nosearchbar.png";
+    img.src = "/landing/hero_image_nosearchbar.webp";
 
     img.decode();
 

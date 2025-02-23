@@ -32,14 +32,14 @@ export default function GoalSection(): JSX.Element {
       title: "Create a Flowchart",
       description:
         "GAIA provides a step-by-step plan with resources to help you achieve your goal!",
-      image: "/landing/goal tracking.png",
+      image: "/landing/goal_tracking.webp",
     },
     {
       icon: <CheckmarkSquare03Icon color={undefined} height={30} width={30} />,
       title: "Keep Track",
       description:
         "Monitor your milestones and celebrate every step toward achieving your goal.",
-      image: "/landing/goal_cropped.png",
+      image: "/landing/goal_cropped.webp",
     },
   ];
   const [selectedImage, setSelectedImage] = useState<string>(
@@ -100,7 +100,7 @@ function GoalSteps({
 
   useEffect(() => {
     if (selectedStep === 2 && isComplete) {
-      setSelectedImage("/landing/goal_checked.png");
+      setSelectedImage("/landing/goal_checked.webp");
     } else {
       setSelectedImage(steps[selectedStep].image);
     }

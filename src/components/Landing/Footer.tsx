@@ -7,10 +7,10 @@ export default function Footer() {
     <div className="!m-0">
       <div className="w-screen flex h-fit justify-center items-center sm:p-20 p-5">
         <div className="w-full max-w-screen-lg grid grid-cols-2 sm:grid-cols-3 gap-8 ">
-          <div className="flex flex-col w-fit h-full text-foreground-500">
+          <div className="flex flex-col w-fit h-full text-foreground-600">
             <div className="text-3xl font-medium text-white">G.A.I.A</div>
             <div>© 2024 GAIA</div>
-            <div className="text-foreground-400">heygaia.io</div>
+            <div className="text-foreground-500">heygaia.io</div>
           </div>
 
           <div className="flex flex-col w-fit h-full text-foreground-500">

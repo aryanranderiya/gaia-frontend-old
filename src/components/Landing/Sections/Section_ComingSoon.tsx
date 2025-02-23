@@ -4,7 +4,7 @@ import {
   ComputerPhoneSyncIcon,
   Mail01Icon,
   MoneyBag02Icon,
-  VoiceIcon
+  VoiceIcon,
 } from "../../Misc/icons";
 
 const list: {
@@ -103,9 +103,7 @@ export function Feature({
     >
       {icon}
       <span className="font-medium text-xl">{title}</span>
-      <span className="text-foreground text-opacity-45 text-md">
-        {description}
-      </span>
+      <span className="text-foreground-500 text-md">{description}</span>
     </div>
   );
 }

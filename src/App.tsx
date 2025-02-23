@@ -65,7 +65,7 @@ export default function App() {
         title = "GAIA - Get Started";
         break;
       default:
-        title = "GAIA";
+        title = "GAIA - Your Personal Assistant";
     }
 
     titleElement.textContent = title;

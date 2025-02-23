@@ -33,7 +33,7 @@ export default function Hero_Image() {
               mode="simple"
               url="heygaia.io"
               className="w-full h-fit"
-              imageSrc="/landing/hero_image_nosearchbar.png"
+              imageSrc="/landing/hero_image_nosearchbar.webp"
             />
             <div className="absolute text-white flex w-full sm:bottom-4 bottom-[-15px] justify-center left-0 items-center sm:scale-100 scale-50">
               <DummySearchbar />
@@ -97,16 +97,3 @@ export default function Hero_Image() {
         </div>
          */
 }
-
-// {
-//   /* <img
-//     //       src={"/landing/landing_pc.png"}
-//     //       alt="Homepage Image with screenshots of GAIA"
-//     //       className="rounded-3xl scale-100"
-//     //     /> */
-// }
-// //     <img
-// //       src={"/landing/new_devices.png"}
-// //       // srcSet={image_webp}
-// //       alt="Homepage Image with screenshots of GAIA"
-// //     />

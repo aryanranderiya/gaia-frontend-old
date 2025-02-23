@@ -83,14 +83,13 @@ const StaticSidebar = ({
           </div>
           <ul className="text-sm">
             {resources.map((resource, index) => (
-              <a
+              <li
                 className="hover:text-[#00bbff] underline underline-offset-4 cursor-pointer"
                 key={index}
                 // href={`https://www.google.com/search?q=${resource.split("+")}`}
-                target="__blank"
               >
-                <li>{resource}</li>
-              </a>
+                {resource}
+              </li>
             ))}
           </ul>
         </div>

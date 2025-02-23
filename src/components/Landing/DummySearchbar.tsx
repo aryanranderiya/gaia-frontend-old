@@ -41,8 +41,8 @@ function DummyLeftDropdown() {
       placement="top"
       shouldCloseOnInteractOutside={() => true}
     >
-      <DropdownTrigger>
-        <div className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-zinc-900 text-small gap-2 rounded-full px-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10 mr-[2px]">
+      <DropdownTrigger className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 border-medium bg-zinc-900 text-small gap-2 rounded-full px-0 transition-transform-colors-opacity motion-reduce:transition-none border-default text-default-foreground hover:!bg-default min-w-10 w-10 h-10 mr-[2px]">
+        <div>
           <PlusSignIcon />
         </div>
       </DropdownTrigger>
@@ -110,6 +110,7 @@ const DummySearchbar = () => {
       <div className="searchbar bg-zinc-900 px-3 py-2 rounded-3xl gap-3">
         <div className="flex items-center justify-start mb-[6px] gap-1">
           <button
+            aria-label="Dummy Search Button"
             className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
               enableSearch
                 ? "bg-primary text-white hover:bg-[#00bbffAA]"
@@ -127,6 +128,7 @@ const DummySearchbar = () => {
           </button>
 
           <button
+            aria-label="Dummy Fetch Page Button"
             className={`flex w-fit gap-1 rounded-full px-3 py-1 text-sm items-center transition-all ${
               pageFetchURL.length > 0 && !fetchPageModal
                 ? "bg-primary text-white hover:bg-[#00bbffAA]"

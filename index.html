@@ -2,6 +2,62 @@
 <html lang="en" className="dark">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- ! Primary SEO Tags -->
+    <meta
+      name="description"
+      content="GAIA is your personal AI assistant designed to help increase your productivity."
+    />
+    <meta
+      name="keywords"
+      content="GAIA, Personal AI Assistant, AI, digital assistant, personal assistant, productivity, Hey GAIA"
+    />
+    <link rel="canonical" href="https://heygaia.io/" />
+
+    <!-- ! Open Graph / Facebook -->
+    <meta property="og:title" content="GAIA - Your Personal Assistant" />
+    <meta
+      property="og:description"
+      content="GAIA is your personal AI assistant designed to help increase your productivity."
+    />
+    <meta
+      property="og:image"
+      content="https://heygaia.io/landing/screenshot.png"
+    />
+    <meta property="og:url" content="https://heygaia.io/" />
+    <meta property="og:type" content="website" />
+
+    <!-- ! Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GAIA - Your Personal Assistant" />
+    <meta
+      name="twitter:description"
+      content="GAIA is your personal AI assistant designed to help increase your productivity."
+    />
+    <meta
+      name="twitter:image"
+      content="https://heygaia.io/landing/screenshot.png"
+    />
+
+    <!-- ! Additional Essential Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      key="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0"
+      name="viewport"
+    />
+    <meta name="author" content="GAIA" />
+    <meta name="theme-color" content="#00bbff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- ! Favicon & Icon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta name="msapplication-TileColor" content="#00bbff" />
+
     <link rel="preload" as="image" href="/landing/screenshot.png" />
 
     <link
@@ -25,6 +81,7 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
+
     <style>
       @font-face {
         font-family: "Creato";
@@ -77,25 +134,33 @@
       }
     </style>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      key="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-      name="viewport"
-    />
     <link rel="stylesheet" href="./src/index.css" />
   </head>
 
   <body>
     <div id="root"></div>
+
     <!-- Main React File -->
     <script type="module" src="/src/main.tsx"></script>
 
+    <!-- Preconnect & DNS Prefetch to critical external origins -->
+    <link
+      rel="preconnect"
+      href="https://www.googletagmanager.com"
+      crossorigin
+    />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://accounts.google.com" crossorigin />
+    <link rel="dns-prefetch" href="https://accounts.google.com" />
+
     <!-- For Google OAuth -->
-    <script src="https://accounts.google.com/gsi/client"></script>
+    <script async src="https://accounts.google.com/gsi/client"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-R6EGV9FG2Q"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
