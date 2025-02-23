@@ -1,4 +1,4 @@
-import { CalendarOptions } from "./ConvoTypes";
+import { CalendarOptions } from "./convoTypes";
 
 export interface ChatBubbleUserProps {
   message_id: string;

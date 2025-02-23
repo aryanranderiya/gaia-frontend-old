@@ -3,7 +3,7 @@ import { ArrowUpRight, File } from "lucide-react";
 
 import { parseDate } from "../../../utils/fetchDate";
 
-import { ChatBubbleUserProps } from "@/types/ChatBubbleTypes";
+import { ChatBubbleUserProps } from "@/types/chatBubbleTypes";
 
 // import { PdfContainer } from "../../Documents/PdfComponent";
 import { StarsIcon } from "@/components/Misc/icons";

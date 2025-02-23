@@ -18,7 +18,7 @@ import fetchDate from "../../utils/fetchDate";
 import api from "@/utils/apiaxios";
 import { ApiService } from "@/utils/chatUtils";
 import { useConversationList } from "@/contexts/ConversationList";
-import { MessageType } from "@/types/ConvoTypes";
+import { MessageType } from "@/types/convoTypes";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 interface GenerateImageProps {

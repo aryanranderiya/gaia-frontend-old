@@ -2,55 +2,50 @@
 
 import { Loader2, Mic, MicOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+interface AudioRecorderState {
+  audioContext: AudioContext | null;
+  stream: MediaStream | null;
+  processor: ScriptProcessorNode | null;
+  sourceNode: MediaStreamAudioSourceNode | null;
+}
+
 export default function AudioTranscription() {
-  const [transcription, setTranscription] = useState<string>("");
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [transcription, setTranscription] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const wsRef = useRef<WebSocket | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const processorRef = useRef<ScriptProcessorNode | null>(null);
-  const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const audioStateRef = useRef<AudioRecorderState>({
+    audioContext: null,
+    stream: null,
+    processor: null,
+    sourceNode: null,
+  });
 
   useEffect(() => {
+    // Initialize WebSocket connection
     wsRef.current = new WebSocket("ws://localhost:8000/api/v1/transcribe");
 
     wsRef.current.onmessage = (event) => {
-      setTranscription((prev) => {
-        // Only add new text if it's different from the last line
-        const newText = event.data.trim();
-        const lines = prev.split("\n");
-        const lastLine = lines[lines.length - 1];
-
-        if (!prev || lastLine !== newText) {
-          return prev + (prev ? "\n" : "") + newText;
+      try {
+        const response = JSON.parse(event.data);
+        if (response.text) {
+          setTranscription((prev) => prev + (prev ? "\n" : "") + response.text);
         }
-
-        return prev;
-      });
+      } catch (e) {
+        // Handle plain text responses
+        setTranscription((prev) => prev + (prev ? "\n" : "") + event.data);
+      }
     };
 
-    wsRef.current.onerror = (error) => {
-      console.error("WebSocket error:", error);
+    wsRef.current.onerror = () => {
       setError("Connection error. Please try again.");
-    };
-
-    wsRef.current.onclose = () => {
-      console.log("WebSocket connection closed");
     };
 
     return () => {
@@ -60,9 +55,8 @@ export default function AudioTranscription() {
   }, []);
 
   const startRecording = async () => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    if (!navigator.mediaDevices?.getUserMedia) {
       setError("Your browser does not support audio recording.");
-
       return;
     }
 
@@ -70,53 +64,41 @@ export default function AudioTranscription() {
       setIsLoading(true);
       setError(null);
 
-      // Get audio stream with specific constraints for Vosk
-      streamRef.current = await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
-          sampleRate: 16_000,
+          sampleRate: 16000,
           channelCount: 1,
           echoCancellation: true,
           noiseSuppression: true,
         },
       });
 
-      // Create audio context with specific sample rate
-      audioContextRef.current = new AudioContext({
-        sampleRate: 16_000,
-      });
+      const audioContext = new AudioContext({ sampleRate: 16000 });
+      const sourceNode = audioContext.createMediaStreamSource(stream);
+      const processor = audioContext.createScriptProcessor(4096, 1, 1);
 
-      // Create source node
-      sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
-        streamRef.current,
-      );
-
-      // Create processor node
-      processorRef.current = audioContextRef.current.createScriptProcessor(
-        4096,
-        1,
-        1,
-      );
-
-      // Handle audio processing
-      processorRef.current.onaudioprocess = (e) => {
+      processor.onaudioprocess = (e) => {
         if (wsRef.current?.readyState !== WebSocket.OPEN) return;
 
         const audioData = e.inputBuffer.getChannelData(0);
         const intData = new Int16Array(audioData.length);
 
-        // Convert Float32Array to Int16Array for Vosk
         for (let i = 0; i < audioData.length; i++) {
-          // Convert float32 to int16
           intData[i] = Math.max(-1, Math.min(1, audioData[i])) * 0x7fff;
         }
 
-        // Send the audio data to the server
         wsRef.current.send(intData.buffer);
       };
 
-      // Connect the nodes
-      sourceNodeRef.current.connect(processorRef.current);
-      processorRef.current.connect(audioContextRef.current.destination);
+      sourceNode.connect(processor);
+      processor.connect(audioContext.destination);
+
+      audioStateRef.current = {
+        audioContext,
+        stream,
+        processor,
+        sourceNode,
+      };
 
       setIsRecording(true);
     } catch (error) {
@@ -128,27 +110,28 @@ export default function AudioTranscription() {
   };
 
   const stopRecording = () => {
-    // Disconnect and cleanup audio nodes
-    if (processorRef.current) {
-      processorRef.current.disconnect();
-      processorRef.current = null;
+    const { processor, sourceNode, audioContext, stream } =
+      audioStateRef.current;
+
+    if (processor) {
+      processor.disconnect();
+    }
+    if (sourceNode) {
+      sourceNode.disconnect();
+    }
+    if (audioContext) {
+      audioContext.close();
+    }
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
     }
 
-    if (sourceNodeRef.current) {
-      sourceNodeRef.current.disconnect();
-      sourceNodeRef.current = null;
-    }
-
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
-
-    // Stop all tracks in the stream
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
-    }
+    audioStateRef.current = {
+      audioContext: null,
+      stream: null,
+      processor: null,
+      sourceNode: null,
+    };
 
     setIsRecording(false);
   };
@@ -159,45 +142,24 @@ export default function AudioTranscription() {
         <CardTitle>Real-Time Audio Transcription</CardTitle>
       </CardHeader>
       <CardContent>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              disabled={isLoading}
-              variant={isRecording ? "destructive" : "default"}
-              onClick={isRecording ? stopRecording : startRecording}
-            >
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : isRecording ? (
-                <MicOff className="mr-2 h-4 w-4" />
-              ) : (
-                <Mic className="mr-2 h-4 w-4" />
-              )}
-              {isLoading
-                ? "Initializing..."
-                : isRecording
-                  ? "Stop Recording"
-                  : "Start Recording"}
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {isRecording ? "Recording in Progress" : "Recording Stopped"}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="flex items-center justify-center p-6">
-              {isRecording ? (
-                <div className="w-16 h-16 bg-red-500 rounded-full animate-pulse" />
-              ) : (
-                <div className="w-16 h-16 bg-gray-300 rounded-full" />
-              )}
-            </div>
-            <Button onClick={isRecording ? stopRecording : startRecording}>
-              {isRecording ? "Stop Recording" : "Resume Recording"}
-            </Button>
-          </DialogContent>
-        </Dialog>
+        <Button
+          disabled={isLoading}
+          variant={isRecording ? "destructive" : "default"}
+          onClick={isRecording ? stopRecording : startRecording}
+        >
+          {isLoading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : isRecording ? (
+            <MicOff className="mr-2 h-4 w-4" />
+          ) : (
+            <Mic className="mr-2 h-4 w-4" />
+          )}
+          {isLoading
+            ? "Initializing..."
+            : isRecording
+            ? "Stop Recording"
+            : "Start Recording"}
+        </Button>
 
         {error && (
           <Alert className="mt-4" variant="destructive">

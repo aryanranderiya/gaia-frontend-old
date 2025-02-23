@@ -1,59 +1,19 @@
-import { Checkbox } from "@heroui/checkbox";
-import { Spinner } from "@heroui/spinner";
-import { useEffect, useRef, useState } from "react";
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { ScrollArea } from "../ui/scroll-area";
-
+// src/components/Calendar.tsx
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
 import { apiauth } from "@/utils/apiaxios";
-
-interface GoogleCalendarDateTime {
-  date?: string;
-  dateTime?: string;
-  timeZone?: string;
-}
-
-interface GoogleCalendarPerson {
-  email: string;
-  self?: boolean;
-}
-
-interface BirthdayProperties {
-  contact: string;
-  type: "birthday";
-}
-
-export interface GoogleCalendarEvent {
-  kind: string;
-  etag: string;
-  id: string;
-  status: "confirmed" | "tentative" | "cancelled";
-  htmlLink: string;
-  created: string;
-  updated: string;
-  summary: string;
-  creator: GoogleCalendarPerson;
-  organizer: GoogleCalendarPerson;
-  start: GoogleCalendarDateTime;
-  end: GoogleCalendarDateTime;
-  recurrence?: string[];
-  transparency?: "opaque" | "transparent";
-  visibility?: "default" | "public" | "private";
-  iCalUID: string;
-  sequence: number;
-  reminders?: {
-    useDefault: boolean;
-  };
-  birthdayProperties?: BirthdayProperties;
-  eventType?: "default" | "birthday" | "outOfOffice";
-}
-
-export interface GoogleCalendar {
-  id: string;
-  summary: string;
-  backgroundColor: string;
-  primary: boolean;
-}
+import {
+  formatEventDate,
+  getEventColor,
+  getEventIcon,
+  groupEventsByDate,
+  isTooDark,
+} from "@/utils/calendarUtils";
+import { Spinner } from "@heroui/spinner";
+import { Clock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import CalendarSelector from "./CalendarSelector";
+import CalendarEventDialog from "./CalendarEventDialog";
 
 interface CalendarCardProps {
   event: GoogleCalendarEvent;
@@ -61,102 +21,37 @@ interface CalendarCardProps {
   calendars: GoogleCalendar[];
 }
 
-function groupEventsByDate(
-  events: GoogleCalendarEvent[]
-): Record<string, GoogleCalendarEvent[]> {
-  const grouped: Record<string, GoogleCalendarEvent[]> = {};
-
-  events.forEach((event) => {
-    const [day, dayOfWeek] = formatDateDay(event);
-    const eventDate = `${day} ${dayOfWeek}`;
-
-    if (!grouped[eventDate]) grouped[eventDate] = [];
-
-    grouped[eventDate].push(event);
-  });
-
-  return grouped;
-}
-
-function formatDateDay(event: GoogleCalendarEvent): [string, string] {
-  const startDate = new Date(event.start.date || event.start.dateTime || "");
-  const day = startDate.getDate().toString();
-  const dayOfWeek = new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
-  }).format(startDate);
-
-  return [day, dayOfWeek];
-}
-
-function formatEventDate(event: GoogleCalendarEvent): string | null {
-  if (event.start.dateTime && event.end?.dateTime) {
-    const startDateTime = new Date(event.start.dateTime);
-    const endDateTime = new Date(event.end.dateTime);
-
-    return `${new Intl.DateTimeFormat("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    }).format(startDateTime)} - ${new Intl.DateTimeFormat("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    }).format(endDateTime)}`;
-  }
-
-  return null;
-}
-
-function getEventIcon(event: GoogleCalendarEvent): string {
-  switch (event.eventType) {
-    case "birthday":
-      return "🎂";
-    case "outOfOffice":
-      return "🏖️";
-    default:
-      if (event.transparency === "transparent") {
-        return "🔔";
-      }
-
-      return "📅";
-  }
-}
-
-function getEventColor(event: GoogleCalendarEvent): string {
-  switch (event.eventType) {
-    case "birthday":
-      return "bg-pink-500 hover:bg-pink-600";
-    case "outOfOffice":
-      return "bg-teal-500 hover:bg-teal-600";
-    default:
-      if (event.transparency === "transparent") {
-        return "bg-purple-500 hover:bg-purple-600";
-      }
-
-      return "bg-blue-500 hover:bg-blue-600";
-  }
-}
-
 const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
   const calendar = calendars?.find((cal) => cal.id === event.organizer.email);
-  const backgroundColor = calendar?.backgroundColor || getEventColor(event);
+  const color = calendar?.backgroundColor || getEventColor(event);
+  const backgroundColor = isTooDark(color) ? "#ffffff" : color;
   const icon = getEventIcon(event);
 
   return (
     <div
-      className="text-white bg-opacity-65 p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden"
+      className="text-white p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden"
       onClick={onClick}
     >
+      <div
+        className="absolute inset-0 border-l-5 z-[2]"
+        style={{ borderColor: backgroundColor }}
+      />
       <div className="flex items-center gap-2 relative z-[1]">
         <span className="text-xl">{icon}</span>
         <div className="font-bold text-lg">{event.summary}</div>
       </div>
-      <div className="text-sm mt-2 relative z-[1] opacity-70">
-        {formatEventDate(event)}
-      </div>
+      {formatEventDate(event) && (
+        <div
+          className="text-sm mt-2 relative z-[1] opacity-70 flex items-center gap-1"
+          style={{ color: backgroundColor }}
+        >
+          <Clock width={17} height={17} />
+          {formatEventDate(event)}
+        </div>
+      )}
       <div
-        className="absolute inset-0 z-[0] opacity-50 rounded-lg w-full"
         style={{ backgroundColor }}
+        className="absolute inset-0 z-[0] opacity-25 rounded-lg w-full"
       />
     </div>
   );
@@ -181,6 +76,10 @@ export default function Calendar() {
   }, []);
 
   useEffect(() => {
+    console.log(selectedEvent);
+  }, [selectedEvent]);
+
+  useEffect(() => {
     // Set up Intersection Observer for infinite scrolling
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -202,46 +101,22 @@ export default function Calendar() {
     };
   }, [loading, nextPageToken]);
 
-  // NEW: Fetch the user’s saved calendar preferences
-  const fetchCalendarPreferences = async (allCalendars: GoogleCalendar[]) => {
-    try {
-      const response = await apiauth.get("/user/calendar/preferences");
-      const savedSelection: string[] = response.data.selected_calendars || [];
-
-      if (savedSelection.length > 0) {
-        setSelectedCalendars(savedSelection);
-        // Fetch events for the saved calendar selection
-        fetchEvents(null, savedSelection);
-      } else {
-        // If no preferences are saved, default to all calendars
-        const allCalendarIds = allCalendars.map((cal) => cal.id);
-
-        setSelectedCalendars(allCalendarIds);
-        fetchEvents(null, allCalendarIds);
-      }
-    } catch (error) {
-      console.error("Error fetching calendar preferences:", error);
-      // In case of error, default to all calendars
-      const allCalendarIds = allCalendars.map((cal) => cal.id);
-
-      setSelectedCalendars(allCalendarIds);
-      fetchEvents(null, allCalendarIds);
-    }
-  };
-
   const fetchCalendars = async () => {
     try {
       const response = await apiauth.get("/calendar/list");
-      const calendarItems = response.data.items;
+      setCalendars(response.data.items);
 
-      setCalendars(calendarItems);
+      // Find the primary calendar and set it as selected
+      const primaryCalendar = response.data.items.find(
+        (cal: { primary: boolean }) => cal.primary === true
+      );
+      if (primaryCalendar) {
+        setSelectedCalendars([primaryCalendar.id]);
+        // Fetch events for the primary calendar
+        fetchEvents(null, [primaryCalendar.id]);
+      }
 
-      // Fetch and set the user’s saved calendar preferences
-      await fetchCalendarPreferences(calendarItems);
-
-      // (Optional) You can still fetch all events endpoint if needed:
       const response2 = await apiauth.get("/calendar/all/events");
-
       console.log(response2);
     } catch (error) {
       console.error("Error fetching calendars:", error);
@@ -257,7 +132,6 @@ export default function Calendar() {
     try {
       const allEvents: GoogleCalendarEvent[] = [];
       const calendarsToFetch = calendarIds || selectedCalendars;
-
       for (const calendarId of calendarsToFetch) {
         const response = await apiauth.get<{
           events: GoogleCalendarEvent[];
@@ -276,17 +150,14 @@ export default function Calendar() {
       const newEvents = allEvents.filter(
         (event) => !eventIdsRef.current.has(event.id)
       );
-
       newEvents.forEach((event) => eventIdsRef.current.add(event.id));
 
-      // Merge new events with existing events, sort, and update state
+      // Merge new events with existing events, sort by start date, and update state
       setCalendarEvents((prev) => {
         const mergedEvents = [...prev, ...newEvents];
-
         return mergedEvents.sort((a, b) => {
           const dateA = new Date(a.start.dateTime || a.start.date || "");
           const dateB = new Date(b.start.dateTime || b.start.date || "");
-
           return dateA.getTime() - dateB.getTime();
         });
       });
@@ -302,18 +173,6 @@ export default function Calendar() {
     setIsDialogOpen(true);
   };
 
-  // NEW: Update user’s calendar preferences in the database
-  const updateCalendarPreferences = async (newSelection: string[]) => {
-    try {
-      await apiauth.post("/user/calendar/preferences", {
-        selected_calendars: newSelection,
-      });
-    } catch (error) {
-      console.error("Error updating calendar preferences:", error);
-    }
-  };
-
-  // Modified to update preferences when toggling a calendar
   const handleCalendarSelect = (calendarId: string) => {
     if (loading) return; // Prevent actions when still loading
 
@@ -321,9 +180,6 @@ export default function Calendar() {
       const newSelection = prev.includes(calendarId)
         ? prev.filter((id) => id !== calendarId)
         : [...prev, calendarId];
-
-      // Save the new selection to the database
-      updateCalendarPreferences(newSelection);
 
       // If a calendar is deselected, remove its events
       if (!newSelection.includes(calendarId)) {
@@ -347,7 +203,6 @@ export default function Calendar() {
   };
 
   useEffect(() => {
-    // When selected calendars change, fetch events for them
     if (selectedCalendars.length > 0) {
       fetchEvents();
     }
@@ -357,33 +212,14 @@ export default function Calendar() {
     <>
       <div className="flex flex-col justify-between h-full relative">
         <div className="flex items-center flex-col gap-2">
-          <div className="font-bold text-center text-5xl">Calendar</div>
-          <div className="text-center text-md pb-6 max-w-screen-md">
-            Manage your calendar events
+          <div className="font-bold text-center text-5xl pb-6">
+            Your Calendar
           </div>
-          <div className="flex flex-wrap gap-4 justify-center pb-4">
-            {calendars?.length > 0 &&
-              calendars.map((calendar, index) => (
-                <div
-                  key={index}
-                  className="py-2 px-4 rounded-lg"
-                  style={{
-                    backgroundColor: `${calendar.backgroundColor}50`,
-                  }}
-                >
-                  <Checkbox
-                    key={calendar.id}
-                    color="default"
-                    isSelected={selectedCalendars.includes(calendar.id)}
-                    onValueChange={() => handleCalendarSelect(calendar.id)}
-                  >
-                    <div className="font-medium text-white">
-                      {calendar.summary}
-                    </div>
-                  </Checkbox>
-                </div>
-              ))}
-          </div>
+          <CalendarSelector
+            calendars={calendars}
+            selectedCalendars={selectedCalendars}
+            onCalendarSelect={handleCalendarSelect}
+          />
         </div>
 
         <ScrollArea>
@@ -391,11 +227,10 @@ export default function Calendar() {
             {Object.entries(groupEventsByDate(calendarEvents)).map(
               ([date, events]) => {
                 const [day, dayOfWeek] = date.split(" ");
-
                 return (
                   <div key={date} className="w-full flex gap-7">
-                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-[#00bbff] flex items-center break-words p-3 justify-center leading-none flex-col">
-                      <div className="font-normal text-sm text-[#b7ecff]">
+                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-zinc-700 flex items-center break-words p-3 justify-center leading-none flex-col">
+                      <div className="font-normal text-sm text-foreground-600">
                         {dayOfWeek}
                       </div>
                       <div>{day}</div>
@@ -404,9 +239,9 @@ export default function Calendar() {
                       {events.map((event) => (
                         <CalendarCard
                           key={event.id}
-                          calendars={calendars}
                           event={event}
                           onClick={() => handleEventClick(event)}
+                          calendars={calendars}
                         />
                       ))}
                     </div>
@@ -415,54 +250,21 @@ export default function Calendar() {
               }
             )}
           </div>
-
           {loading && (
             <div className="h-[80vh] flex items-center justify-center">
               <Spinner />
             </div>
           )}
-
           <div ref={observerRef} className="h-1" />
         </ScrollArea>
-
         <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
       </div>
       {selectedEvent && (
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <span>{getEventIcon(selectedEvent)}</span>
-                {selectedEvent.summary}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="p-4 space-y-2">
-              <p className="flex items-center gap-2">
-                <strong>Date:</strong> {formatEventDate(selectedEvent)}
-              </p>
-              {selectedEvent.eventType && (
-                <p>
-                  <strong>Event Type:</strong> {selectedEvent.eventType}
-                </p>
-              )}
-              <p>
-                <strong>Creator:</strong> {selectedEvent.creator.email}
-              </p>
-              <p>
-                <strong>Organizer:</strong> {selectedEvent.organizer.email}
-              </p>
-              <p>
-                <strong>Status:</strong> {selectedEvent.status}
-              </p>
-              {selectedEvent.recurrence && (
-                <p>
-                  <strong>Recurrence:</strong>{" "}
-                  {selectedEvent.recurrence[0].replace("RRULE:", "")}
-                </p>
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        <CalendarEventDialog
+          event={selectedEvent}
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+        />
       )}
     </>
   );

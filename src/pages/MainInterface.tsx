@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
@@ -10,18 +10,18 @@ import {
   BubbleConversationChatIcon,
   PencilSquareIcon,
 } from "@/components/Misc/icons";
+import ChatOptionsDropdown from "@/components/Sidebar/ChatOptionsDropdown";
 import { Button } from "@/components/ui/button";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import useMediaQuery from "@/hooks/mediaQuery";
 import Sidebar from "@/layouts/Sidebar";
-import ChatOptionsDropdown from "@/components/Sidebar/ChatOptionsDropdown";
 
 export default function MainInterface() {
   const location = useLocation();
   const navigate = useNavigate();
-  const sidebarRef = useRef<HTMLDivElement | null>(null);
+const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
   const [isSidebarVisible, setSidebarVisible] = useState(true);
   const { conversations } = useConversationList();

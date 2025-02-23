@@ -7,12 +7,11 @@ import { ScrollArea } from "../ui/scroll-area";
 import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
 import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
 import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
-import StarterEmoji from "./StarterEmoji";
 
-import { useConvo } from "@/contexts/CurrentConvoMessages";
-import { useConversationList } from "@/contexts/ConversationList";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import StarterText from "@/components/Chat/StarterText";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useConversationList } from "@/contexts/ConversationList";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 // const ChatBubbleBot = React.lazy(
 //   () => import("@/components/Chat/ChatBubbles/ChatBubbleBot")
@@ -64,7 +63,7 @@ export default function ChatRenderer() {
 
   if (!!convoMessages && convoMessages?.length === 0) {
     return (
-      <div className="flex items-center justify-center flex-1">
+      <div className="flex items-start justify-center flex-1">
         <div className="flex items-center justify-center flex-col gap-2">
           <div className="pingspinner sm:!min-w-[10vw] sm:!min-h-[10vw] !min-w-[30vw] !min-h-[30vw] aspect-square"></div>
           {/* <StarterEmoji /> */}

@@ -1,14 +1,5 @@
 "use client";
 
-import { Button } from "@heroui/button";
-import { Textarea } from "@heroui/input";
-import { Tooltip } from "@heroui/tooltip";
-import { AnimatePresence } from "framer-motion";
-import { Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-import { Mic02Icon } from "../Misc/icons";
-
 import {
   Dialog,
   DialogContent,
@@ -16,17 +7,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-// import MicrophoneBtn from "./MicrophoneBtn";
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
+import { Tooltip } from "@heroui/tooltip";
+import { AnimatePresence } from "framer-motion";
+import { Send, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Mic02Icon } from "../Misc/icons";
+
+interface AnimatedAudioTranscriptionProps {
+  transcription: string;
+  setTranscription: (text: string) => void;
+  handleFormSubmit: () => void;
+}
 
 export default function AnimatedAudioTranscription({
-  setTranscription,
   transcription,
+  setTranscription,
   handleFormSubmit,
-}: {
-  transcription: string;
-  setTranscription: any;
-  handleFormSubmit: any;
-}) {
+}: AnimatedAudioTranscriptionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,64 +38,33 @@ export default function AnimatedAudioTranscription({
   useEffect(() => {
     if (isOpen) {
       startRecording();
-
       wsRef.current = new WebSocket("ws://localhost:8000/api/v1/transcribe");
-
-      wsRef.current.onmessage = (event) => {
-        setTranscription(() => {
-          // const lines = prev.split("\n");
-          // const lastLine = lines[lines.length - 1];
-
-          // if (!prev || lastLine !== newText) {
-          //   return prev + (prev ? "\n" : "") + newText;
-          // }
-          // return prev;
-          return event.data.trim();
-        });
-      };
-
-      wsRef.current.onerror = (error) => {
-        console.error("WebSocket error:", error);
+      wsRef.current.onmessage = (event) => setTranscription(event.data.trim());
+      wsRef.current.onerror = () =>
         setError("Connection error. Please try again.");
-      };
-
-      wsRef.current.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
+      wsRef.current.onclose = () => console.log("WebSocket connection closed");
     }
-
     return () => {
       stopRecording();
       wsRef.current?.close();
     };
-  }, [isOpen]);
+  }, [isOpen, setTranscription]);
 
   const startRecording = async () => {
-    setError("");
+    setError(null);
     setTranscription("");
 
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    if (!navigator.mediaDevices?.getUserMedia) {
       setError("Your browser does not support audio recording.");
-
       return;
     }
 
     try {
-      setError(null);
-
       streamRef.current = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          sampleRate: 16_000,
-          channelCount: 1,
-          // echoCancellation: true,
-          // noiseSuppression: true,
-        },
+        audio: { sampleRate: 16000, channelCount: 1 },
       });
 
-      audioContextRef.current = new AudioContext({
-        sampleRate: 16_000,
-      });
-
+      audioContextRef.current = new AudioContext({ sampleRate: 16000 });
       sourceNodeRef.current = audioContextRef.current.createMediaStreamSource(
         streamRef.current
       );
@@ -106,48 +74,33 @@ export default function AnimatedAudioTranscription({
         1,
         1
       );
-
       processorRef.current.onaudioprocess = (e) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
           const audioData = e.inputBuffer.getChannelData(0);
           const intData = new Int16Array(audioData.length);
-
           for (let i = 0; i < audioData.length; i++) {
             intData[i] = Math.max(-1, Math.min(1, audioData[i])) * 0x7fff;
           }
-
           wsRef.current.send(intData.buffer);
         }
       };
 
       sourceNodeRef.current.connect(processorRef.current);
       processorRef.current.connect(audioContextRef.current.destination);
-    } catch (error) {
-      console.error("Error accessing microphone:", error);
+    } catch (err) {
       setError("Error accessing microphone. Please check your settings.");
     }
   };
 
   const stopRecording = () => {
-    if (processorRef.current) {
-      processorRef.current.disconnect();
-      processorRef.current = null;
-    }
-
-    if (sourceNodeRef.current) {
-      sourceNodeRef.current.disconnect();
-      sourceNodeRef.current = null;
-    }
-
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
-
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
-    }
+    processorRef.current?.disconnect();
+    processorRef.current = null;
+    sourceNodeRef.current?.disconnect();
+    sourceNodeRef.current = null;
+    audioContextRef.current?.close();
+    audioContextRef.current = null;
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
   };
 
   const handleSend = () => {
@@ -166,26 +119,18 @@ export default function AnimatedAudioTranscription({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        {/* <Button variant="outline">
-          <Mic className="mr-2 h-4 w-4" />
-          Transcribe Audio
-        </Button> */}
-
         <Tooltip content="Record Voice" placement="top">
           <Button
-            // disabled={loading}
             isIconOnly
-            aria-label="Send message"
+            aria-label="Record voice message"
             className="mr-1"
             color="default"
             radius="full"
             type="button"
             variant="faded"
             onPress={() => setIsOpen(true)}
-            // className={`${loading && "cursor-wait"}`}
           >
             <Mic02Icon className="text-zinc-400" />
-            {/* <Mic className="text-[#ffffff70]" /> */}
           </Button>
         </Tooltip>
       </DialogTrigger>
@@ -196,32 +141,9 @@ export default function AnimatedAudioTranscription({
         <div className="grid gap-4 py-4">
           <div className="flex justify-center items-center">
             <AnimatePresence>
-              {/* <motion.div
-                className={`w-32 h-32 rounded-full flex items-center justify-center cursor-pointer ${
-                  isRecording ? "bg-red-500" : "bg-blue-500"
-                }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={isRecording ? stopRecording : startRecording}
-              >
-                <Mic
-                  className={`h-16 w-16 ${
-                    isRecording ? "text-white animate-pulse" : "text-white"
-                  }`}
-                />
-              </motion.div> */}
-              <div
-                className="pingspinner pingspinner_large relative"
-                // onClick={isRecording ? stopRecording : startRecording}
-              >
-                <div className="h-full w-full absolute items-center justify-center flex z-[2]">
-                  {" "}
-                  <Mic02Icon
-                    className="text-xl"
-                    color="white"
-                    height={50}
-                    width={50}
-                  />
+              <div className="pingspinner pingspinner_large relative">
+                <div className="h-full w-full absolute flex items-center justify-center z-[2]">
+                  <Mic02Icon color="white" height={50} width={50} />
                 </div>
               </div>
             </AnimatePresence>
@@ -234,9 +156,7 @@ export default function AnimatedAudioTranscription({
               value={transcription}
               variant="faded"
               onValueChange={setTranscription}
-            >
-              {transcription}
-            </Textarea>
+            />
           )}
           {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="flex justify-center gap-5 mt-3">
@@ -247,7 +167,7 @@ export default function AnimatedAudioTranscription({
             <Button
               color="primary"
               disabled={!transcription}
-              onClick={handleSend}
+              onPress={handleSend}
             >
               <Send className="mr-2 h-4 w-4" />
               Submit

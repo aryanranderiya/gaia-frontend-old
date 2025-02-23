@@ -23,7 +23,7 @@ import {
 } from "./ChatBubble_Actions";
 
 import { apiauth } from "@/utils/apiaxios";
-import { ChatBubbleBotProps } from "@/types/ChatBubbleTypes";
+import { ChatBubbleBotProps } from "@/types/chatBubbleTypes";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));

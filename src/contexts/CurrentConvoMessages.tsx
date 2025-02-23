@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-import { MessageType } from "@/types/ConvoTypes";
+import { MessageType } from "@/types/convoTypes";
 
 interface ConvoContextType {
   convoMessages: MessageType[];
