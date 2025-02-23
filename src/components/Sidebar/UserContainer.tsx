@@ -1,10 +1,10 @@
 import { User } from "@heroui/user";
+import React from "react";
 
 import SettingsMenu from "./Settings/SettingsMenu";
 
 import { useUser } from "@/contexts/UserContext";
 import useFetchUser from "@/hooks/useFetchUser";
-import React from "react";
 // import { Spinner } from "@heroui/spinner";
 
 const UserContainer: React.FC = () => {

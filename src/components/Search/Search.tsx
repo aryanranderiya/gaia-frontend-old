@@ -70,7 +70,7 @@ export default function Search() {
                         key={result.message.message_id}
                         className="bg-black p-3 rounded-xl h-full overflow-hidden max-h-[190px] min-h-[190px] flex flex-col gap-2 outline outline-zinc-800 outline-2 hover:bg-zinc-800 transition-colors"
                         state={{ messageId: result.message.message_id }}
-                        to={`/try/chat/${result.conversation_id}`}
+                        to={`/c/${result.conversation_id}`}
                       >
                         <Chip
                           className="min-h-7"

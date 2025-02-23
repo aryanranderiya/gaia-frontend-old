@@ -47,7 +47,7 @@ export default function SettingsMenu() {
 
   // Confirm clear chats action.
   const handleConfirmClearChats = async () => {
-    navigate("/try/chat");
+    navigate("/c");
     await ApiService.deleteAllConversations();
     await fetchConversations();
     setConvoMessages([]);

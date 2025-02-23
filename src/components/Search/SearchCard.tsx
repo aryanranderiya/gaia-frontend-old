@@ -1,6 +1,7 @@
 import { Chip } from "@heroui/chip";
 import { Link } from "react-router-dom";
 import { GlobeIcon, ArrowUpRight } from "lucide-react";
+import React from "react";
 
 import { CommandItem } from "../ui/command";
 import {
@@ -10,7 +11,6 @@ import {
 } from "../Misc/icons";
 
 import { parseDate2 } from "@/utils/fetchDate";
-import React from "react";
 
 interface SearchCardProps {
   result: any;
@@ -29,7 +29,7 @@ const defaultConfigs = {
     icon: (
       <BubbleChatIcon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
-    linkTo: (result: any) => `/try/chat/${result.conversation_id}`,
+    linkTo: (result: any) => `/c/${result.conversation_id}`,
     bodyContent: (result: any) => (
       <>
         <div className="flex items-center gap-2">
@@ -76,7 +76,7 @@ const defaultConfigs = {
         color="#9b9b9b"
       />
     ),
-    linkTo: (result: any) => `/try/chat/${result.conversation_id}`,
+    linkTo: (result: any) => `/c/${result.conversation_id}`,
     bodyContent: (result: any) => (
       <CommandItem className="truncate w-full cursor-pointer data-[selected='true']:!bg-transparent !py-1 !px-0">
         {result.description}
@@ -88,7 +88,7 @@ const defaultConfigs = {
     icon: (
       <StickyNote01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
-    linkTo: (result: any) => `/try/notes/${result.id}`,
+    linkTo: (result: any) => `/notes/${result.id}`,
     bodyContent: (result: any) => (
       <CommandItem className="truncate w-full cursor-pointer data-[selected='true']:!bg-transparent !py-1 !px-0">
         {result.snippet}

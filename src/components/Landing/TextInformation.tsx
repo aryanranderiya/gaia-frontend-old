@@ -1,9 +1,9 @@
 import { Button } from "@heroui/button";
 import { Link } from "react-router-dom";
+import React from "react";
 
 import { ColoredLine } from "../Misc/HorizontalRuler";
 import WordPullUp from "../MagicUI/word-pull-up";
-import React from "react";
 
 export default function TextInformation({
   alignleft = true,

@@ -1,10 +1,10 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
+import React from "react";
 
 import { Logout02Icon, Mail01Icon, UserIcon } from "../../Misc/icons";
 
 import { ModalAction } from "./SettingsMenu";
-import React from "react";
 
 export default function AccountSection({
   setModalAction,

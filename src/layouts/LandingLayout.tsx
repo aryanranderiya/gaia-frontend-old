@@ -94,7 +94,6 @@ export default function LandingLayout() {
 
   return (
     <>
-      <title>GAIA</title>
       <Suspense fallback={null}>
         <Navbar />
       </Suspense>

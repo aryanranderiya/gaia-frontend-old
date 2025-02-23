@@ -12,11 +12,11 @@ const NotesAdd = lazy(() => import("@/pages/NotePage"));
 const Goals = lazy(() => import("@/pages/Goals"));
 const GoalPage = lazy(() => import("@/pages/GoalPage"));
 const Search = lazy(() => import("@/components/Search/Search"));
-const LandingLayout = lazy(() => import("@/layouts/LandingLayout"));
+// const LandingLayout = lazy(() => import("@/layouts/LandingLayout"));
 
 export const mainRoutes = [
-  { path: "chat/:convoIdParam", element: <MainChat /> },
-  { path: "chat", element: <MainChat /> },
+  { path: "c/:convoIdParam", element: <MainChat /> },
+  { path: "c", element: <MainChat /> },
   {
     path: "explore",
     element: (
@@ -89,13 +89,12 @@ export const mainRoutes = [
       </Suspense>
     ),
   },
-  // Catch-all for unknown routes under /try
-  {
-    path: "*",
-    element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
-        <LandingLayout />
-      </Suspense>
-    ),
-  },
+  // {
+  //   path: "*",
+  //   element: (
+  //     <Suspense fallback={<SuspenseLoader fullHeight />}>
+  //       <LandingLayout />
+  //     </Suspense>
+  //   ),
+  // },
 ];

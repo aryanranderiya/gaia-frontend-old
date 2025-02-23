@@ -47,7 +47,7 @@ export default function LoginSignup({
         code: codeResponse.code,
       });
 
-      navigate("/try/chat");
+      navigate("/c");
       console.log(tokens);
     },
     onError: (errorResponse) => console.log(errorResponse),

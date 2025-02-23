@@ -75,7 +75,7 @@ export default function ChatOptionsDropdown({
 
   const handleDelete = async () => {
     try {
-      navigate("/try/chat");
+      navigate("/c");
       resetMessages();
       await apiauth.delete(`/conversations/${chatId}`);
       setIsOpen(false);

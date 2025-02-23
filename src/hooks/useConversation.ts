@@ -19,7 +19,7 @@ export const useConversation = (convoIdParam: string | null) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    convoIdParam ? fetchMessages(convoIdParam) : navigate("/try/chat");
+    convoIdParam ? fetchMessages(convoIdParam) : navigate("/c");
   }, [convoIdParam]);
 
   const fetchMessages = async (conversationId: string) => {
@@ -29,7 +29,7 @@ export const useConversation = (convoIdParam: string | null) => {
       if (messages.length > 1) setConvoMessages(messages);
     } catch (e) {
       console.error("Failed to fetch messages:", e);
-      navigate("/try/chat");
+      navigate("/c");
     }
   };
 
@@ -47,7 +47,7 @@ export const useConversation = (convoIdParam: string | null) => {
         );
       }, 1000);
 
-      navigate(`/try/chat/${conversationId}`);
+      navigate(`/c/${conversationId}`);
 
       return conversationId;
     } catch (err) {

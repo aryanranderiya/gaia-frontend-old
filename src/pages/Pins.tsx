@@ -30,7 +30,7 @@ export const PinCard: React.FC<PinCardProps> = ({
       key={message.message_id}
       className="bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl h-full overflow-hidden max-h-[195px] min-h-[150px] flex flex-col gap-2 transition-colors relative"
       state={{ messageId: message.message_id }}
-      to={`/try/chat/${conversation_id}`}
+      to={`/c/${conversation_id}`}
     >
       {/* <Chip
         className="min-h-7"

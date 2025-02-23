@@ -129,7 +129,7 @@ export default function ChatsList() {
   const { resetMessages } = useConvo();
 
   const createNewChat = (): void => {
-    navigate(`/try/chat/`);
+    navigate(`/c`);
     resetMessages();
   };
 

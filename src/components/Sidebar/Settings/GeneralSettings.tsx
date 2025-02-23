@@ -1,8 +1,8 @@
 import { Button } from "@heroui/button";
 import { Eraser } from "lucide-react";
+import React from "react";
 
 import { ModalAction } from "./SettingsMenu";
-import React from "react";
 export default function GeneralSection({
   setModalAction,
 }: {

@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+import React from "react";
+
 import {
   BubbleChatLockIcon,
   ComputerPhoneSyncIcon,
@@ -6,7 +8,6 @@ import {
   MoneyBag02Icon,
   VoiceIcon,
 } from "../../Misc/icons";
-import React from "react";
 
 const list: {
   icon?: React.ReactNode;

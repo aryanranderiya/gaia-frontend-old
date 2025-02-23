@@ -38,7 +38,7 @@ export const ChatTab: FC<ChatTabProps> = ({ name, id, starred }) => {
         }`}
         onClick={() => {
           setButtonHovered(false);
-          navigate(`/try/chat/${id}`);
+          navigate(`/c/${id}`);
         }}
       >
         <div className="flex items-center gap-2 w-full">

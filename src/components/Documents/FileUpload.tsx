@@ -133,7 +133,7 @@ export default function FileUpload({
         );
       }, 3000);
 
-      navigate(`/try/chat/${conversationId}`);
+      navigate(`/c/${conversationId}`);
 
       return conversationId;
     } catch (err) {
@@ -160,7 +160,7 @@ export default function FileUpload({
   //       return [...baseMessages, ...newMessages];
   //     });
 
-  //     navigate(`/try/chat/${convoID}`);
+  //     navigate(`/try/c/${convoID}`);
   //     return convoID;
   //   } catch (error) {
   //     console.error("Failed to create conversation:", error);

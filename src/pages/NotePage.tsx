@@ -181,7 +181,7 @@ export default function NotesAdd() {
     try {
       await apiauth.delete(`/notes/${id}`);
       toast.success("Note has been deleted");
-      navigate("/try/notes");
+      navigate("/notes");
       setHasUnsavedChanges(false);
     } catch (error) {
       console.error("Error saving note:", error);
@@ -201,7 +201,7 @@ export default function NotesAdd() {
   return (
     <div className="flex flex-col justify-between min-h-screen h-screen w-full">
       <div className="flex w-full justify-between items-center dark">
-        <Link to={"/try/notes"}>
+        <Link to={"/notes"}>
           <Button
             className="text-white w-fit gap-2 px-0 font-normal"
             variant={"link"}

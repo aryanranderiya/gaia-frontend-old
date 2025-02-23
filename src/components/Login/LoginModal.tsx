@@ -26,7 +26,7 @@ export default function LoginModal({
         code: codeResponse.code,
       });
 
-      navigate("/try/chat");
+      navigate("/c");
     },
     onError: (errorResponse) => console.log(errorResponse),
   });

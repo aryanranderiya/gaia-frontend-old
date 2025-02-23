@@ -12,7 +12,6 @@ import UIProviderLayout from "./layouts/UIProviderLayout";
 
 import { mainRoutes } from "@/routes/mainRoutes";
 
-// Lazy-loaded layouts/components
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
 
@@ -23,12 +22,11 @@ export default function App() {
     const { pathname } = location;
     let title;
 
-    if (/^\/try\/chat\/[^/]+$/.test(pathname)) {
+    if (/^\/c\/[^/]+$/.test(pathname)) {
       const titleElement = document.querySelector("title");
 
-      if (titleElement && titleElement.id !== "chat_title") {
+      if (titleElement && titleElement.id !== "chat_title")
         titleElement.remove();
-      }
 
       return;
     }
@@ -39,19 +37,19 @@ export default function App() {
       document.head.appendChild(titleElement);
     }
     switch (pathname) {
-      case "/try/chat":
+      case "/c":
         title = "GAIA - New Chat";
         break;
-      case "/try/search":
+      case "/search":
         title = "GAIA - Search";
         break;
-      case "/try/goals":
+      case "/goals":
         title = "GAIA - Goals";
         break;
-      case "/try/notes":
+      case "/notes":
         title = "GAIA - Notes";
         break;
-      case "/try/pins":
+      case "/pins":
         title = "GAIA - Pins";
         break;
       case "/terms":
@@ -84,7 +82,7 @@ export default function App() {
               <Toaster richColors theme="dark" />
               <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                 <Routes>
-                  <Route element={<MainInterface />} path="/try">
+                  <Route element={<MainInterface />}>
                     {mainRoutes.map(({ path, element }) => (
                       <Route key={path} element={element} path={path} />
                     ))}

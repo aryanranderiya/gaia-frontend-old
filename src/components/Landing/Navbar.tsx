@@ -49,9 +49,9 @@ export default function Navbar() {
           location.pathname == "/signup" ||
           location.pathname == "/get-started"
         )
-          navigate("/try/chat");
+          navigate("/c");
       } catch (err) {
-        if (location.pathname.startsWith("/try")) navigate("/get-started");
+        if (location.pathname != "/") navigate("/get-started");
       }
     };
 
@@ -120,7 +120,7 @@ export default function Navbar() {
                       size="md"
                       variant="shadow"
                       onPress={() => {
-                        navigate("/try/chat");
+                        navigate("/c");
                         setOpen(false);
                       }}
                     >
@@ -198,7 +198,7 @@ export default function Navbar() {
                 }
                 radius="full"
                 size="md"
-                to={"/try/chat"}
+                to={"/c"}
                 variant="shadow"
               >
                 Chat

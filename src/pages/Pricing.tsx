@@ -2,13 +2,13 @@ import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
+import React from "react";
 
 import {
   ArrowLeft01Icon,
   StarsIcon,
   Tick02Icon,
 } from "@/components/Misc/icons";
-import React from "react";
 
 function FAQAccordion() {
   const faqItems = [

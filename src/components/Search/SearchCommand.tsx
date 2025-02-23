@@ -38,7 +38,7 @@ import {
 
 const pages = [
   {
-    path: "/try/explore",
+    path: "/explore",
     icon: (
       <DiscoverCircleIcon
         className="min-h-[22px] min-w-[22px]"
@@ -48,26 +48,26 @@ const pages = [
     name: "Go to Explore",
   },
   {
-    path: "/try/pins",
+    path: "/pins",
     icon: <PinIcon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />,
     name: "Go to Pins",
   },
   {
-    path: "/try/calendar",
+    path: "/calendar",
     icon: (
       <Calendar01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
     name: "Go to Calendar",
   },
   {
-    path: "/try/notes",
+    path: "/notes",
     icon: (
       <StickyNote01Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />
     ),
     name: "Go to Notes",
   },
   {
-    path: "/try/goals",
+    path: "/goals",
     icon: <Route02Icon className="min-h-[22px] min-w-[22px]" color="#9b9b9b" />,
     name: "Go to Goals",
   },

@@ -31,27 +31,27 @@ export default function SidebarTopButtons() {
       label: "Search",
     },
     {
-      route: "/try/explore",
+      route: "/explore",
       icon: <NotificationIcon height={27} width={27} />,
       label: "Notifications",
     },
     {
-      route: "/try/pins",
+      route: "/pins",
       icon: <PinIcon height={27} width={27} />,
       label: "Pins",
     },
     {
-      route: "/try/calendar",
+      route: "/calendar",
       icon: <CalendarIcon height={27} width={27} />,
       label: "Calendar",
     },
     {
-      route: "/try/notes",
+      route: "/notes",
       icon: <StickyNote01Icon height={27} width={27} />,
       label: "Notes",
     },
     {
-      route: "/try/goals",
+      route: "/goals",
       icon: <Route02Icon height={27} width={27} />,
       label: "Goals",
     },

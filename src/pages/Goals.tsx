@@ -33,7 +33,7 @@ export default function Goals() {
     try {
       const response = await apiauth.post("/goals", { title: goalTitle });
 
-      navigate(`/try/goals/${response.data.id}`);
+      navigate(`/goals/${response.data.id}`);
     } catch (err) {
       console.error(err);
     }

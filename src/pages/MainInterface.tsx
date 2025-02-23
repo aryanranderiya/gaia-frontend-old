@@ -1,16 +1,16 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Suspense, useRef, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
-import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
-import SuspenseLoader from "@/components/Misc/SuspenseLoader";
-import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   BubbleConversationChatIcon,
   PencilSquareIcon,
 } from "@/components/Misc/icons";
+import NotLoggedIn from "@/components/Misc/NotLoggedInDialog";
+import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import ChatOptionsDropdown from "@/components/Sidebar/ChatOptionsDropdown";
+import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import { Button } from "@/components/ui/button";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { LoadingProvider } from "@/contexts/LoadingContext";
@@ -18,7 +18,7 @@ import useMediaQuery from "@/hooks/mediaQuery";
 import Sidebar from "@/layouts/Sidebar";
 
 export default function MainInterface() {
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
@@ -28,9 +28,9 @@ export default function MainInterface() {
   const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
   const { resetMessages } = useConvo();
 
-  useEffect(() => {
-    if (location.pathname === "/try/") navigate("/try/chat");
-  }, [location, navigate]);
+  // useEffect(() => {
+  //   if (location.pathname === "/") navigate("/c");
+  // }, [location, navigate]);
 
   function toggleSidebar(): void {
     if (sidebarRef.current && contentContainerRef.current) {
@@ -99,7 +99,7 @@ export default function MainInterface() {
                 size="icon"
                 variant={isMobileScreen ? "default" : "ghost"}
                 onClick={() => {
-                  navigate("/try/chat");
+                  navigate("/c");
                   resetMessages();
                 }}
               >

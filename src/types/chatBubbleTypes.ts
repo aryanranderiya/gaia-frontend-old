@@ -1,5 +1,6 @@
-import { CalendarOptions } from "./convoTypes";
 import React from "react";
+
+import { CalendarOptions } from "./convoTypes";
 
 export interface ChatBubbleUserProps {
   message_id: string;
