@@ -3,11 +3,10 @@ import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { apiauth } from "@/utils/apiaxios";
 import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { GoalCard } from "@/components/Goals/GoalCard";
 import { Target04Icon } from "@/components/Misc/icons";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiauth } from "@/utils/apiaxios";
 
 export default function Goals() {
   const [goals, setGoals] = useState([]);
