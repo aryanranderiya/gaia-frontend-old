@@ -56,7 +56,6 @@ export default function GenerateImage({
     setIsValid(value.trim() !== "");
   };
 
-  // Update conversation by replacing the last message if needed
   const updateConversationState = async (
     conversationId: string,
     newMessages: MessageType[],
@@ -66,8 +65,9 @@ export default function GenerateImage({
     try {
       setConvoMessages((prev) => {
         const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
-        // Here, we also update the conversation in the database.
+
         ApiService.updateConversation(conversationId, newMessages);
+
         return [...baseMessages, ...newMessages];
       });
 
@@ -87,6 +87,7 @@ export default function GenerateImage({
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
+
       await ApiService.createConversation(convoID);
       await updateConversationState(
         convoID,
@@ -94,6 +95,7 @@ export default function GenerateImage({
         `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
       );
       navigate(`/c/${convoID}`);
+
       return convoID;
     } catch (error) {
       console.error("Failed to create conversation:", error);
@@ -103,13 +105,18 @@ export default function GenerateImage({
 
   const generateImage = async (prompt: string): Promise<[string, string]> => {
     try {
-      console.log("Starting image generation");
+      console.log("hey there 0 ");
+
       const response = await api.post(
         "/image/generate",
         { message: prompt },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       );
-      console.log("Image generation response:", response.data);
+
+      console.log("hey there", response.data);
+
       return [response.data.url, response.data.improved_prompt];
     } catch (error) {
       console.error("Image generation failed:", error);
@@ -132,7 +139,6 @@ export default function GenerateImage({
         message_id: user_message_id,
       };
 
-      // Bot loading message with loading: true
       const botLoadingMessage: MessageType = {
         type: "bot",
         response: "Generating Image...",
@@ -143,24 +149,20 @@ export default function GenerateImage({
         message_id: bot_message_id,
       };
 
-      let conversationId = convoIdParam;
-      if (!conversationId) {
-        // If no conversation exists, create a new one with the initial messages.
-        conversationId = await createNewConversation([
-          userMessage,
-          botLoadingMessage,
-        ]);
-      } else {
-        // Append messages to the existing conversation.
-        setConvoMessages((prev) => [...prev, userMessage, botLoadingMessage]);
-      }
+      const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
+
+      const conversationId =
+        convoIdParam || (await createNewConversation(initialMessages));
+
+      // Initially set the user prompt message along with the loading bot state
+      setConvoMessages((prev) => {
+        return [...prev, ...initialMessages];
+      });
 
       setOpenImageDialog(false);
 
-      // Generate the image
       const [imageUrl, improved_prompt] = await generateImage(imagePrompt);
 
-      // Final bot message (replace the loading message)
       const finalBotMessage: MessageType = {
         type: "bot",
         response: "Here is your generated image",
@@ -173,10 +175,15 @@ export default function GenerateImage({
         message_id: bot_message_id,
       };
 
-      // Replace the last message (loading bot message) with the final message
+      // Remove the user prompt from list of messages (because convo messages is set again in updateConversationState to store in the database)
+      setConvoMessages((prev) => {
+        return [...prev.slice(0, -1)];
+      });
+
+      // udpate the conversation messages, and store messages in the database
       await updateConversationState(
         conversationId,
-        [finalBotMessage],
+        [userMessage, finalBotMessage],
         undefined,
         true
       );
