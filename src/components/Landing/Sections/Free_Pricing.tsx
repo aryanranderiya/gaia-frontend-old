@@ -18,22 +18,22 @@ export default function FreePricing() {
         />
       </div> */}
       <div className="max-w-screen-lg w-full relative flex justify-center">
-        <div className="w-[300px]">
-          <PricingCard
-            className="rounded-2xl !bg-zinc-900 !bg-opacity-[100%] !backdrop-blur-none"
-            description=""
-            durationIsMonth={true}
-            features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
-            featurestitle={
-              <div className="flex flex-col mb-1 !border-none">
-                <span>What's Included?</span>
-              </div>
-            }
-            price={0}
-            title="Free"
-            type="secondary"
-          />
-        </div>
+        {/* <div className="w-[300px]"> */}
+        <PricingCard
+          className="rounded-2xl !bg-zinc-900 !bg-opacity-[100%] !backdrop-blur-none"
+          description=""
+          durationIsMonth={true}
+          features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
+          featurestitle={
+            <div className="flex flex-col mb-1 !border-none">
+              <span>What's Included?</span>
+            </div>
+          }
+          price={0}
+          title="Free"
+          type="secondary"
+        />
+        {/* </div> */}
       </div>
     </div>
   );

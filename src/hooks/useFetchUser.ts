@@ -19,11 +19,11 @@ const useFetchUser = () => {
       setUserData(
         response?.data?.name,
         response?.data?.id,
-        response?.data?.picture,
+        response?.data?.picture
       );
     } catch (err) {
       console.error(err);
-      navigate("/get-started");
+      // navigate("/get-started");
     }
   };
 

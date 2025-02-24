@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Button } from "@heroui/button";
 import { toast } from "sonner";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -6,7 +7,7 @@ import { Clock } from "lucide-react";
 import { AnimatedSection } from "../AnimatedSection";
 import { SectionHeading } from "../SectionHeading";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, Tab } from "@heroui/tabs";
 import {
   BubbleConversationChatIcon,
   Calendar01Icon,
@@ -38,12 +39,7 @@ export function CalendarBotMessage({
           </div>
         </div>
 
-        <Button
-          className="w-full"
-          color="primary"
-          onPress={dummyAddToCalendar}
-          // isLoading={eventAddLoading}
-        >
+        <Button className="w-full" color="primary" onPress={dummyAddToCalendar}>
           Add Event
         </Button>
       </div>
@@ -59,7 +55,6 @@ function CalendarAddChat({
   const dummyAddToCalendar = () => {
     setAddedToCalendar((prev: boolean) => {
       if (!prev) return true;
-
       return prev;
     });
     toast.success("Event has been added to Calendar!");
@@ -95,7 +90,7 @@ export default function Section_Calendar() {
           subheading={
             <div>
               <div>
-                Easily schedule, update, and check events just by texting GAIA.{" "}
+                Easily schedule, update, and check events just by texting GAIA.
                 <br />
                 No need to open your calendar—add appointments, set reminders,
                 and stay organized with a simple message!
@@ -113,82 +108,107 @@ export default function Section_Calendar() {
           }
         />
 
-        <Tabs
-          className="w-full box-border sm:m-0 !m-0 px-4 h-[340px] overflow-hidden"
-          defaultValue="chat"
-        >
-          <TabsList className="w-full mb-3 rounded-full">
-            <TabsTrigger className="rounded-full" value="chat">
-              <BubbleConversationChatIcon className="mr-2" />
-              New Chat
-            </TabsTrigger>
-            <TabsTrigger
-              className="rounded-full"
-              value="calendar"
-              onClick={() => {
-                if (addedToCalendar) setOpenedCalendar(true);
-              }}
-            >
-              <Calendar01Icon className="mr-2" />
-              <div className="relative">
-                Calendar
-                {addedToCalendar && !openedCalendar && (
-                  <div
-                    className="bg-red-500 min-h-2 min-w-2 rounded-full absolute -right-2
-                   -top-[2px]"
+        <div className="w-full sm:px-10 !m-0 !mt-0">
+          {/* <Tabs
+            aria-label="Calendar Options"
+            className="w-full"
+            defaultValue="chat"
+            color="primary"
+            radius="full"
+          >
+           */}
+          <Tabs
+            aria-label="GAIA Calendar Options"
+            className="w-full"
+            classNames={{
+              tabList: "w-full",
+              tabContent: "group-data-[selected=true]:text-black font-medium",
+            }}
+            color="primary"
+            radius="full"
+          >
+            <Tab
+              key="chat"
+              title={
+                <div className="flex items-center gap-2">
+                  <BubbleConversationChatIcon
+                    className="mr-2"
+                    color={undefined}
                   />
-                )}
-              </div>
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="chat">
-            <div className="w-full h-fit !mt-0 bg-gradient-to-bl px-10 rounded-3xl z-[1]">
-              <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
-            </div>
-          </TabsContent>
-          <TabsContent className="space-y-2 sm:px-10 px-4" value="calendar">
-            {addedToCalendar && (
-              <div className="text-white bg-opacity-65 p-4 rounded-lg bg-yellow-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-                <div className="min-h-[90%] min-w-1 bg-yellow-500 rounded-full absolute top-[5px] left-[8px]" />
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2 relative z-[1]">
-                    {/* <span className="text-xl">🔔</span> */}
-                    <div className="font-bold text-lg">Meeting with Sarah</div>
-                  </div>
-                  <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-yellow-500">
-                    <Clock height={18} width={18} />
-                    Friday Feb 14 2025
-                  </div>
+                  New Chat
                 </div>
+              }
+            >
+              <div className="w-full h-[300px] overflow-hidden bg-gradient-to-bl px-10 rounded-3xl z-[1]">
+                <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
               </div>
-            )}
+            </Tab>
 
-            <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-              <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 relative z-[1]">
-                  <div className="font-bold text-lg">📅 Event 1</div>
+            <Tab
+              key="calendar"
+              title={
+                <div
+                  className="flex items-center gap-2"
+                  onClick={() => {
+                    if (addedToCalendar) setOpenedCalendar(true);
+                  }}
+                >
+                  <Calendar01Icon className="mr-2" color={undefined} />
+                  <div className="relative">
+                    Your Calendar
+                    {addedToCalendar && !openedCalendar && (
+                      <div className="bg-red-500 min-h-2 min-w-2 rounded-full absolute -right-2 -top-[2px]" />
+                    )}
+                  </div>
                 </div>
-                <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
-                  <Clock height={18} width={18} />
-                  Friday Feb 14 2025
+              }
+            >
+              <div className="space-y-2 sm:px-10 px-4 h-[300px] overflow-hidden">
+                {addedToCalendar && (
+                  <div className="text-white bg-opacity-65 p-4 rounded-lg bg-yellow-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+                    <div className="min-h-[90%] min-w-1 bg-yellow-500 rounded-full absolute top-[5px] left-[8px]" />
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 relative z-[1]">
+                        <div className="font-bold text-lg">
+                          Meeting with Sarah
+                        </div>
+                      </div>
+                      <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-yellow-500">
+                        <Clock height={18} width={18} />
+                        Friday Feb 14 2025
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+                  <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 relative z-[1]">
+                      <div className="font-bold text-lg">📅 Event 1</div>
+                    </div>
+                    <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
+                      <Clock height={18} width={18} />
+                      Friday Feb 14 2025
+                    </div>
+                  </div>
+                </div>
+                <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
+                  <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 relative z-[1]">
+                      <div className="font-bold text-lg">📅 Event 2</div>
+                    </div>
+                    <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
+                      <Clock height={18} width={18} />
+                      Friday Feb 14 2025
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-              <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 relative z-[1]">
-                  <div className="font-bold text-lg">📅 Event 2</div>
-                </div>
-                <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
-                  <Clock height={18} width={18} />
-                  Friday Feb 14 2025
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+            </Tab>
+          </Tabs>
+        </div>
       </div>
     </AnimatedSection>
   );

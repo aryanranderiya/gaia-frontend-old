@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BrainCircuitIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -213,7 +214,7 @@ export default function Internet() {
           heading={"Smarter Answers, Always Up-to-Date"}
           icon={
             <BrainCircuitIcon
-              className="sm:w-[40px] w-[35px] sm:h-[40px] h-[40px]"
+              className="sm:min-w-[40px] min-w-[35px] sm:min-h-[40px] min-h-[40px]"
               color="#9b9b9b"
             />
           }

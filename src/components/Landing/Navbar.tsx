@@ -41,7 +41,7 @@ export default function Navbar() {
         setUserData(
           response?.data?.name,
           response?.data?.email,
-          response?.data?.picture,
+          response?.data?.picture
         );
 
         if (
@@ -51,7 +51,7 @@ export default function Navbar() {
         )
           navigate("/c");
       } catch (err) {
-        if (location.pathname != "/") navigate("/get-started");
+        // if (location.pathname != "/") navigate("/get-started");
       }
     };
 

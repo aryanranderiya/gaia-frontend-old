@@ -30,7 +30,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const setUserData = (
     name: string,
     email: string,
-    profile_picture: string,
+    profile_picture: string
   ) => {
     setUser({ name, email, profile_picture });
   };
@@ -42,7 +42,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         {},
         {
           withCredentials: true,
-        },
+        }
       );
 
       if (response.status !== 200) throw new Error("Logout failed");

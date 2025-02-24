@@ -6,7 +6,7 @@ import LandingPage from "@/pages/Landing";
 
 // Lazy-loaded components
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
-// const Pricing = lazy(() => import("@/pages/Pricing"));
+const Pricing = lazy(() => import("@/pages/Pricing"));
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
 const Contact = lazy(() => import("@/pages/Contact"));
@@ -63,14 +63,14 @@ const routesConfig = [
       </Suspense>
     ),
   },
-  // {
-  //   path: "pricing",
-  //   element: (
-  //     <Suspense fallback={<SuspenseLoader fullHeight />}>
-  //       <Pricing />
-  //     </Suspense>
-  //   ),
-  // },
+  {
+    path: "pricing",
+    element: (
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
+        <Pricing />
+      </Suspense>
+    ),
+  },
   {
     path: "contact",
     element: (

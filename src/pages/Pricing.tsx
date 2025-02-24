@@ -1,14 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
 import React from "react";
 
-import {
-  ArrowLeft01Icon,
-  StarsIcon,
-  Tick02Icon,
-} from "@/components/Misc/icons";
+import { ArrowLeft01Icon, Tick02Icon } from "@/components/Misc/icons";
 
 function FAQAccordion() {
   const faqItems = [
@@ -67,13 +64,9 @@ function FAQAccordion() {
     <div className="sm:py-[1em] px-[5%] w-full py-[1em] flex justify-center items-center">
       <div className="mb-[10vh] faq_container mt-[20px] bg-foreground-50 p-10 rounded-3xl">
         <div className="flex flex-col justify-center w-full items-center gap-3 mb-5">
-          {/* <div className="flex gap-2 -mr-[15px]"> */}
           <span className="font-medium text-4xl">
             Frequently asked questions
           </span>
-          {/* <BubbleChatQuestionIcon color="foreground" height="40" width="40" className="-mt-2" /> */}
-          {/* </div> */}
-          {/* <span className="text-foreground-500"></span> */}
         </div>
 
         <Accordion variant="light">
@@ -98,6 +91,7 @@ interface PricingCardProps {
   description: string;
   type: "main" | "secondary";
   price: number;
+  discountPercentage: number; // new prop for discount percentage
   featurestitle: React.ReactNode;
   features?: string[];
   durationIsMonth: boolean;
@@ -109,81 +103,57 @@ export function PricingCard({
   description,
   type,
   price,
+  discountPercentage,
   featurestitle,
   features,
   durationIsMonth,
   className,
 }: PricingCardProps) {
+  const yearlyPrice = price * 12;
+  const discountAmount = !durationIsMonth
+    ? (discountPercentage / 100) * yearlyPrice
+    : 0;
+  const finalPrice = durationIsMonth ? price : yearlyPrice - discountAmount;
+
   return (
     <>
       <div
-        className={`bg-white w-full relative ${className} ${
-          type === "main"
-            ? "bg-opacity-[15%]"
-            : "bg-opacity-[7%] backdrop-blur-xl"
+        className={`w-full relative rounded-2xl ${className} ${
+          type === "main" ? "bg-zinc-800 " : "bg-zinc-900"
         } `}
       >
-        {type === "main" && (
-          <div className="absolute -top-7 w-full flex justify-center bg-primary !rounded-tr-3xl !rounded-tl-3xl !rounded-bl-none !rounded-br-none text-black text-sm py-1 items-center gap-1 mostpopular_banner">
-            Most popular <StarsIcon color="black" fill="black" width="16" />
-          </div>
-        )}
-
         <div className="p-[7%] h-full flex-col flex gap-4">
-          <div className="flex flex-col !border-none">
-            <span className="text-2xl flex justify-between">
-              {title}
-              {type === "main" && (
-                <Chip
-                  className="mostpopular_banner2"
-                  color="primary"
-                  variant="shadow"
-                >
-                  <div className="flex items-center gap-1 font-medium">
-                    Most popular{" "}
-                    <StarsIcon color="black" fill="black" width="16" />
-                  </div>
-                </Chip>
-              )}
-            </span>
-            <span className="font-normal text-white text-opacity-70">
+          <div className="flex flex-row justify-between items-center !border-none">
+            <div className="text-2xl flex justify-between">{title}</div>
+            {!durationIsMonth && discountPercentage > 0 && (
+              <Chip
+                className="flex text-sm items-center gap-[2px] !border-none"
+                color="primary"
+                variant="flat"
+              >
+                <span>Save $ {discountAmount.toFixed(2)}</span>
+              </Chip>
+            )}
+            {/* <span className="font-normal text-white text-opacity-70">
               {description}
-            </span>
+            </span> */}
           </div>
 
-          <div className="!border-none flex flex-col gap-0 !m-0">
+          <div className="!border-none flex flex-col gap-0 !m-0 flex-1">
             <div className="!border-none flex gap-2 items-baseline">
-              <span className="text-5xl">
-                $
-                {durationIsMonth
-                  ? price
-                  : price * 12 - (40 / 100) * (price * 12)}
-              </span>
+              {!durationIsMonth && discountPercentage > 0 && price > 0 && (
+                <span className="text-red-500 line-through text-3xl font-normal">
+                  ${yearlyPrice}
+                </span>
+              )}
+              <span className="text-5xl">${finalPrice}</span>
               <span className="text-2xl">USD</span>
             </div>
 
             <span className="font-normal text-sm text-white text-opacity-70">
               {durationIsMonth ? "/ per month" : "/ per year"}
             </span>
-            {/* 
-            {!durationIsMonth && price > 0 && (
-              <div className="flex text-sm items-center gap-[2px] !border-none">
-                <span>Save</span>
-                <span>
-                  $ 
-                  {!durationIsMonth && price * 12 - (price * 12 - (40 / 100) * (price * 12))}
-                </span>
-              </div>
-            )} */}
           </div>
-
-          <Button
-            className="w-full font-medium"
-            color="primary"
-            variant={type === "main" ? "shadow" : "flat"}
-          >
-            Get started
-          </Button>
 
           <div className="flex flex-col gap-1 mt-1">
             {featurestitle}
@@ -194,11 +164,23 @@ export function PricingCard({
                   key={index}
                   className="text-sm font-normal flex items-center gap-3 !border-none"
                 >
-                  <Tick02Icon height="20" width="20" />
+                  <Tick02Icon
+                    height="20"
+                    width="20"
+                    className="min-w-[20px] min-h-[20px]"
+                  />
                   {feature}
                 </div>
               ))}
           </div>
+
+          <Button
+            className="w-full font-medium"
+            color="primary"
+            variant={type === "main" ? "shadow" : "flat"}
+          >
+            Get started
+          </Button>
         </div>
       </div>
     </>
@@ -207,54 +189,47 @@ export function PricingCard({
 
 export function PricingCards({ durationIsMonth = false }) {
   return (
-    <div className="pricingcards_layout">
+    <div className="grid grid-cols-2 w-screen max-w-screen-sm gap-3">
       <PricingCard
         description="lorem ipsum"
         durationIsMonth={durationIsMonth}
-        features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
+        features={[
+          "Instant Messaging",
+          "Conversation Management",
+          "Limited Email Integration",
+          "Limited access to goal tracking, stored notes/memories, calendar bookings, image generation, and more",
+          "Talk to GAIA with your voice (Speech-to-text)",
+        ]}
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
           </div>
         }
         price={0}
+        discountPercentage={0}
         title="Basic"
         type="secondary"
       />
       <PricingCard
         description="lorem ipsum"
         durationIsMonth={durationIsMonth}
-        features={["Feature 1", "Feature 2", "Feature 3", "Feature 4"]}
-        featurestitle={
-          <div className="flex flex-col mb-1 !border-none">
-            <span>What's Included?</span>
-            <span className="text-sm">Everything in Free, and:</span>
-          </div>
-        }
-        price={10}
-        title="Pro"
-        type="main"
-      />
-
-      <PricingCard
-        description="lorem ipsum"
-        durationIsMonth={durationIsMonth}
         features={[
-          "Feature 1",
-          "Feature 2",
-          "Feature 3",
-          "Feature 4",
-          "Feature 5",
+          "Everything in Free",
+          "Advanced Email Integration",
+          "Generated upto 50 images per day",
+          "Chat with Documents",
+          "Early Access to new features",
+          "Ability to use more open-source models",
         ]}
         featurestitle={
           <div className="flex flex-col mb-1 !border-none">
             <span>What's Included?</span>
-            <span className="text-sm">Everything in Pro, and:</span>
           </div>
         }
-        price={20}
-        title="Premium"
-        type="secondary"
+        price={10}
+        discountPercentage={40}
+        title="Pro"
+        type="main"
       />
     </div>
   );
@@ -262,7 +237,7 @@ export function PricingCards({ durationIsMonth = false }) {
 
 export default function Pricing() {
   return (
-    <div className="flex justify-center h-full w-screen mt-[110px] flex-col">
+    <div className="flex justify-center h-full w-screen pt-[110px] flex-col">
       <div className="flex-col flex gap-2 items-center">
         <div className="flex items-center flex-col gap-3 mb-2 w-full">
           <Chip color="primary" size="lg" variant="light">
@@ -270,7 +245,7 @@ export default function Pricing() {
           </Chip>
 
           <span className="font-medium text-5xl text-center px-6 w-full">
-            Your Personalised AI Assistant awaits.
+            GAIA - Your Personal AI Assistant
           </span>
           <span className="text-md text-center text-foreground-500">
             Compare plans & features
@@ -280,7 +255,7 @@ export default function Pricing() {
         <div className="flex w-full flex-col items-center font-medium mt-5">
           <Tabs aria-label="Options" radius="full">
             <Tab key="monthly" title="Monthly">
-              <PricingCards durationIsMonth={true} />
+              <PricingCards durationIsMonth />
             </Tab>
             <Tab
               key="music"
