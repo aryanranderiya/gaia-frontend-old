@@ -91,7 +91,7 @@ export default function ChatBubbleUser({
           )}
 
           {!!text && (
-            <div className="flex select-text text-wrap max-w-[30vw]">
+            <div className="flex select-text text-wrap max-w-[30vw] whitespace-pre-wrap">
               {text}
             </div>
           )}

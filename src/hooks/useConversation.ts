@@ -10,6 +10,7 @@ import { useLoading } from "@/contexts/LoadingContext";
 import { CalendarOptions, MessageType } from "@/types/convoTypes";
 import { ApiService } from "@/utils/chatUtils";
 import fetchDate from "@/utils/fetchDate";
+import { toast } from "sonner";
 
 export const useConversation = (convoIdParam: string | null) => {
   const { setIsLoading } = useLoading();
@@ -67,17 +68,13 @@ export const useConversation = (convoIdParam: string | null) => {
   ) => {
     let botResponseText = "";
 
+    // Initialize finalIntent with calendar_options as null.
     let finalIntent: {
       intent: string | undefined;
-      calendar_options?: CalendarOptions;
+      calendar_options?: CalendarOptions[] | null;
     } = {
       intent: undefined,
-      calendar_options: {
-        summary: undefined,
-        description: undefined,
-        start: undefined,
-        end: undefined,
-      },
+      calendar_options: null,
     };
 
     setLoading(true);
@@ -85,17 +82,23 @@ export const useConversation = (convoIdParam: string | null) => {
     const onMessage = (event: EventSourceMessage) => {
       const dataJson = JSON.parse(event.data);
 
+      if (dataJson.error) toast.error(dataJson.error);
+
       const intent = dataJson?.intent;
       const calendar_options = dataJson?.calendar_options;
-
       const response = dataJson.response || "\n";
 
       botResponseText += response;
 
       if (dataJson.intent) {
+        // Ensure calendar_options is always an array
+        let options = calendar_options || null;
+        if (options && !Array.isArray(options)) {
+          options = [options];
+        }
         finalIntent = {
           intent,
-          calendar_options: calendar_options || null,
+          calendar_options: options,
         };
       }
 
@@ -107,7 +110,7 @@ export const useConversation = (convoIdParam: string | null) => {
         pageFetchURL,
         date: fetchDate(),
         intent: finalIntent.intent,
-        calendar_options: finalIntent.calendar_options as CalendarOptions,
+        calendar_options: finalIntent.calendar_options, // Always an array or null
       };
 
       setConvoMessages((oldMessages = []) => {
@@ -116,7 +119,6 @@ export const useConversation = (convoIdParam: string | null) => {
 
         // If the last message was a user message, append the bot response to it
         const lastMessage = oldMessages[oldMessages.length - 1];
-
         if (lastMessage.type === "user") return [...oldMessages, botResponse];
 
         return [
@@ -141,7 +143,7 @@ export const useConversation = (convoIdParam: string | null) => {
         pageFetchURL,
         message_id: bot_message_id,
         intent: finalIntent.intent,
-        calendar_options: finalIntent.calendar_options as CalendarOptions,
+        calendar_options: finalIntent.calendar_options, // remains an array (or null)
       };
 
       currentMessages[currentMessages.length - 1] = finalizedBotResponse;

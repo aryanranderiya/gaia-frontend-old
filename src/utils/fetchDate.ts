@@ -16,6 +16,19 @@ export default function fetchDate(): string {
   return new Date().toISOString();
 }
 
+export const parsingDate = (isoString: string) => {
+  const withoutTimezone = isoString.replace(/([+-]\d{2}:\d{2})$/, "");
+  const date = new Date(withoutTimezone);
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  }).format(date);
+};
+
 export function parseDate(isoDateString: string): string {
   console.log(isoDateString);
 

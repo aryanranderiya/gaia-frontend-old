@@ -1,4 +1,3 @@
-import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { Skeleton } from "@heroui/skeleton";
 import { AlertTriangleIcon, ArrowUpRight, Check, Loader2 } from "lucide-react";
@@ -11,10 +10,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { toast } from "sonner";
 
 import { parseDate } from "../../../utils/fetchDate";
-import { GoogleCalendar, InternetIcon } from "../../Misc/icons";
+import { InternetIcon } from "../../Misc/icons";
 import { CustomAnchor } from "../MarkdownRenderer";
 
 import {
@@ -22,29 +20,11 @@ import {
   ChatBubble_Actions_Image,
 } from "./ChatBubble_Actions";
 
-import { apiauth } from "@/utils/apiaxios";
-import { ChatBubbleBotProps } from "@/types/chatBubbleTypes";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+import { ChatBubbleBotProps } from "@/types/chatBubbleTypes";
+import CalendarEventCard from "./CalendarEventCard";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
-
-const convertToUserTimezone = (isoString: string) => {
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const date = new Date(isoString);
-
-  return new Intl.DateTimeFormat("en-US", {
-    timeZone: userTimezone,
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  }).format(date);
-};
-
-// const isoString = "2025-02-24T09:00:00+00:00";
-// console.log(convertToUserTimezone(isoString));
 
 export default function ChatBubbleBot({
   text,
@@ -101,37 +81,6 @@ export default function ChatBubbleBot({
     }
   }, [filename, loading]);
 
-  const [eventLoadingStates, setEventLoadingStates] = useState<
-    Record<number, boolean>
-  >({});
-
-  const addSingleEventToCalendar = useCallback(
-    async (option: any, index: number) => {
-      // Set loading state for this specific event
-      setEventLoadingStates((prev) => ({ ...prev, [index]: true }));
-      try {
-        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const response = await apiauth.post(`/calendar/event`, {
-          summary: option.summary,
-          description: option.description,
-          start: option.start,
-          end: option.end,
-          timezone: userTimeZone,
-        });
-        toast.success("Added event to calendar!", {
-          description: option.description,
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        toast.error("Failed to add event to calendar!");
-      } finally {
-        // Reset loading state for this event
-        setEventLoadingStates((prev) => ({ ...prev, [index]: false }));
-      }
-    },
-    []
-  );
   // Memoize the rendered component to avoid recalculations unless dependencies change
   const renderedComponent = useMemo(() => {
     if (isImage) {
@@ -204,7 +153,6 @@ export default function ChatBubbleBot({
                   </div>
                 </Chip>
               )}
-
               {!!pageFetchURL && (
                 <Chip
                   color="primary"
@@ -222,7 +170,6 @@ export default function ChatBubbleBot({
                   </div>
                 </Chip>
               )}
-
               {!!filename && (
                 <Chip color="primary" size="lg" variant="flat">
                   {loading ? (
@@ -242,13 +189,11 @@ export default function ChatBubbleBot({
                   )}
                 </Chip>
               )}
-
               {!!text && (
                 <Suspense fallback={<SuspenseLoader />}>
                   <MarkdownRenderer content={text.toString()} />
                 </Suspense>
               )}
-
               {!!disclaimer && (
                 <Chip
                   className="text-xs font-medium text-warning-500"
@@ -276,7 +221,6 @@ export default function ChatBubbleBot({
                 ? calendar_options
                 : [calendar_options];
 
-              // Only render if each event has the required fields
               if (
                 !eventsArray.every(
                   (option) =>
@@ -287,7 +231,6 @@ export default function ChatBubbleBot({
                 )
               )
                 return "could not add event";
-              // return null;
 
               return (
                 <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
@@ -297,40 +240,7 @@ export default function ChatBubbleBot({
                     to your Calendar?
                   </div>
                   {eventsArray.map((option, index) => (
-                    <div
-                      key={index}
-                      className="bg-zinc-900 p-3 flex flex-col rounded-xl items-start gap-3"
-                    >
-                      <div className="flex flex-row items-start gap-4">
-                        <GoogleCalendar height={35} width={25} />
-                        <div className="flex flex-col gap-1 flex-1">
-                          <div>
-                            <div className="font-medium">{option.summary}</div>
-                            <div className="text-sm max-w-[300px]">
-                              {option.description}
-                            </div>
-                          </div>
-                          <div className="text-xs text-foreground-500">
-                            From {option.start}
-                            {option.start
-                              ? convertToUserTimezone(option.start)
-                              : ""}
-                          </div>
-                          <div className="text-xs text-foreground-500">
-                            To {option.end ? parseDate(option.end) : ""}
-                          </div>
-                        </div>
-                      </div>
-
-                      <Button
-                        className="w-full"
-                        color="primary"
-                        isLoading={eventLoadingStates[index] || false}
-                        onPress={() => addSingleEventToCalendar(option, index)}
-                      >
-                        Add Event
-                      </Button>
-                    </div>
+                    <CalendarEventCard key={index} option={option} />
                   ))}
                 </div>
               );
