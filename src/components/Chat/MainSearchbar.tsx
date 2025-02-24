@@ -19,6 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface MainSearchbarProps {
   scrollToBottom: () => void;
@@ -54,7 +55,7 @@ const MainSearchbar = ({
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event,
+    event
   ) => {
     if (event.key === "Enter" && event.shiftKey) {
       event.preventDefault();
@@ -65,9 +66,19 @@ const MainSearchbar = ({
     }
   };
 
-  const toggleSearch = () => setEnableSearch((prev) => !prev);
+  const toggleSearch = () => {
+    if (pageFetchURL.length > 0) {
+      toast.error("Please disable page fetching before enabling web search.");
+      return;
+    }
+    setEnableSearch((prev) => !prev);
+  };
 
   const openPageFetchModal = () => {
+    if (enableSearch) {
+      toast.error("Please disable web search before fetching a page.");
+      return;
+    }
     setFetchPageModal(true);
   };
 

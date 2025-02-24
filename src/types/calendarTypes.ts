@@ -39,7 +39,23 @@ export interface GoogleCalendarEvent {
     useDefault: boolean;
   };
   birthdayProperties?: BirthdayProperties;
-  eventType?: "default" | "birthday" | "outOfOffice";
+  eventType?:
+    | "default"
+    | "birthday"
+    | "outOfOffice"
+    | "reminder"
+    | "appointment"
+    | "meeting"
+    | "task"
+    | "holiday"
+    | "work"
+    | "travel"
+    | "sports"
+    | "concert"
+    | "party"
+    | "health"
+    | "study"
+    | "wedding";
 }
 
 export interface GoogleCalendar {

@@ -66,13 +66,15 @@ interface CalendarSelectorProps {
 import { Filter } from "lucide-react";
 
 import { Button } from "../ui/button";
+import useMediaQuery from "@/hooks/mediaQuery";
 
 export default function CalendarSelector({
   calendars,
   selectedCalendars,
   onCalendarSelect,
 }: CalendarSelectorProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
+  const [isOpen, setIsOpen] = useState(!isMobileScreen);
 
   return (
     <>
@@ -106,8 +108,7 @@ export default function CalendarSelector({
           </button>
         </div>
 
-        {calendars &&
-          calendars.length > 0 &&
+        {calendars && calendars.length > 0 ? (
           calendars
             .sort((a, b) => a.summary.localeCompare(b.summary))
             .map((calendar) => (
@@ -117,7 +118,12 @@ export default function CalendarSelector({
                 selected={selectedCalendars.includes(calendar.id)}
                 onSelect={onCalendarSelect}
               />
-            ))}
+            ))
+        ) : (
+          <div className="text-sm text-foreground-500">
+            You have no Calendars
+          </div>
+        )}
       </div>
     </>
   );

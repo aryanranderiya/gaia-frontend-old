@@ -1,4 +1,5 @@
 import { Clock } from "lucide-react";
+import Twemoji from "react-twemoji";
 
 import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
 import {
@@ -30,7 +31,10 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
         style={{ borderColor: backgroundColor }}
       />
       <div className="flex items-center gap-2 relative z-[1]">
-        <span className="text-xl">{icon}</span>
+        <Twemoji options={{ className: "twemoji max-w-[20px]" }}>
+          <span className="text-xl">{icon}</span>
+        </Twemoji>
+
         <div className="font-bold text-lg">{event.summary}</div>
       </div>
       {formatEventDate(event) && (
@@ -43,7 +47,7 @@ const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
         </div>
       )}
       <div
-        className="absolute inset-0 z-[0] opacity-25 rounded-lg w-full"
+        className="absolute inset-0 z-[0] opacity-20 rounded-lg w-full"
         style={{ backgroundColor }}
       />
     </div>

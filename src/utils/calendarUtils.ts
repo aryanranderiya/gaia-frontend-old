@@ -54,21 +54,49 @@ export function formatEventDate(event: GoogleCalendarEvent): string | null {
   return null;
 }
 
-// Determine which icon to use based on event type and transparency.
+
+
+
 export function getEventIcon(event: GoogleCalendarEvent): string {
   switch (event.eventType) {
     case "birthday":
-      return "🎂";
+      return "🎂"; // Birthday
     case "outOfOffice":
-      return "🏖️";
+      return "🏖️"; // Out of Office
+    case "reminder":
+      return "⏰"; // Reminder
+    case "appointment":
+      return "📅"; // Appointment
+    case "meeting":
+      return "💼"; // Business Meeting
+    case "task":
+      return "📝"; // Task or To-Do
+    case "holiday":
+      return "🎉"; // Public or Personal Holiday
+    case "work":
+      return "🏢"; // Work-Related Event
+    case "travel":
+      return "✈️"; // Travel Event
+    case "sports":
+      return "⚽"; // Sports Event
+    case "concert":
+      return "🎵"; // Concert or Music Event
+    case "party":
+      return "🍾"; // Party or Celebration
+    case "health":
+      return "🏥"; // Medical or Health-related Event
+    case "study":
+      return "📖"; // Study Session or Exam
+    case "wedding":
+      return "💍"; // Wedding or Anniversary
     default:
       if (event.transparency === "transparent") {
-        return "🔔";
+        return "🔔"; // Notification for Tentative Events
       }
-
-      return "📅";
+      return "📅"; // Default Calendar Event
   }
 }
+
 
 // Determine which color to use for the event (as a Tailwind class).
 export function getEventColor(event: GoogleCalendarEvent): string {

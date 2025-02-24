@@ -204,10 +204,10 @@ export default function NotesAdd() {
       <div className="flex w-full justify-between items-center dark">
         <Link to={"/notes"}>
           <Button
-            className="text-white w-fit gap-2 px-0 font-normal"
+            className="text-white w-fit gap-1 px-0 font-normal"
             variant={"link"}
           >
-            <ArrowLeft />
+            <ArrowLeft width={17} />
             All Notes
           </Button>
         </Link>

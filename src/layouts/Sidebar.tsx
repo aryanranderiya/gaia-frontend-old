@@ -7,6 +7,11 @@ import ChatsList from "@/components/Sidebar/ChatsList";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
+import { Button } from "@/components/ui/button";
+import useMediaQuery from "@/hooks/mediaQuery";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { useNavigate } from "react-router-dom";
+import { PencilSquareIcon } from "@/components/Misc/icons";
 
 export default function Sidebar({
   sidebarref,
@@ -20,6 +25,9 @@ export default function Sidebar({
   isSidebarVisible: boolean;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
+  const { resetMessages } = useConvo();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -46,6 +54,19 @@ export default function Sidebar({
               </Tooltip>
 
               <div className="flex items-center gap-1">
+                <Button
+                  aria-label="Create new chat"
+                  className={`rounded-lg hover:bg-[#00bbff] group`}
+                  size="icon"
+                  variant={isMobileScreen ? "default" : "ghost"}
+                  onClick={() => {
+                    navigate("/c");
+                    resetMessages();
+                  }}
+                >
+                  <PencilSquareIcon className="group-hover:text-white transition-all" />
+                </Button>
+
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
             </div>

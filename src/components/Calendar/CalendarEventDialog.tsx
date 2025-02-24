@@ -9,10 +9,10 @@ import {
   Repeat,
   User,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import Twemoji from "react-twemoji";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-
 import {
   Accordion,
   AccordionContent,
@@ -23,16 +23,114 @@ import { GoogleCalendarEvent } from "@/types/calendarTypes";
 import { formatEventDate, getEventIcon } from "@/utils/calendarUtils";
 
 interface CalendarEventDialogProps {
-  event: GoogleCalendarEvent;
+  event?: GoogleCalendarEvent | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  mode?: "view" | "create";
 }
 
 const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
   event,
   open,
   onOpenChange,
+  mode = "view",
 }) => {
+  if (mode === "create") {
+    // Create mode: render a form to create a new event.
+    const [summary, setSummary] = useState("");
+    const [description, setDescription] = useState("");
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      // TODO: Replace this console.log with your API call to create the event.
+      console.log("Creating event", { summary, description, start, end });
+      onOpenChange(false);
+    };
+
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="!bg-zinc-900 border-none max-w-lg max-h-[80vh] overflow-y-auto">
+          <DialogHeader className="pb-4 border-b border-zinc-800">
+            <DialogTitle className="flex items-center gap-3">
+              <CalendarIcon size={20} className="text-zinc-100" />
+              <span className="font-bold text-xl text-zinc-100">
+                Create Event
+              </span>
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <div>
+              <label className="block text-zinc-300 font-medium mb-1">
+                Summary
+              </label>
+              <input
+                type="text"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+                className="w-full p-2 rounded bg-zinc-800 text-zinc-100"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-zinc-300 font-medium mb-1">
+                Description
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-2 rounded bg-zinc-800 text-zinc-100"
+              />
+            </div>
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <label className="block text-zinc-300 font-medium mb-1">
+                  Start
+                </label>
+                <input
+                  type="datetime-local"
+                  value={start}
+                  onChange={(e) => setStart(e.target.value)}
+                  className="w-full p-2 rounded bg-zinc-800 text-zinc-100"
+                  required
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-zinc-300 font-medium mb-1">
+                  End
+                </label>
+                <input
+                  type="datetime-local"
+                  value={end}
+                  onChange={(e) => setEnd(e.target.value)}
+                  className="w-full p-2 rounded bg-zinc-800 text-zinc-100"
+                  required
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                className="px-4 py-2 bg-gray-600 text-white rounded"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
+                Create
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // View mode: render event details.
   const InfoSection = ({
     title,
     children,
@@ -56,8 +154,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
     value: string | null;
   }) => {
     if (!value) return null;
-
-    const content = (
+    return (
       <div className="flex items-center gap-3 text-zinc-300">
         <div className="w-6 h-6 flex items-center justify-center text-zinc-400">
           <Icon size={16} />
@@ -66,8 +163,6 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
         <span className="text-zinc-200">{value}</span>
       </div>
     );
-
-    return content;
   };
 
   return (
@@ -75,24 +170,25 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
       <DialogContent className="!bg-zinc-900 border-none max-w-lg max-h-[80vh] overflow-y-auto">
         <DialogHeader className="pb-4 border-b border-zinc-800">
           <DialogTitle className="flex items-center gap-3">
-            <div className="p-2 bg-zinc-800 rounded-xl">
-              {getEventIcon(event)}
-            </div>
+            <Twemoji options={{ className: "twemoji max-w-[20px]" }}>
+              <div className="p-2 bg-zinc-800 rounded-xl">
+                {getEventIcon(event)}
+              </div>
+            </Twemoji>
             <span className="font-bold text-xl text-zinc-100">
-              {event.summary}
+              {event?.summary}
             </span>
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
-          {/* Essential Event Details */}
           <InfoSection title="Event Details">
             <InfoItem
               icon={Clock}
               label="Date"
               value={formatEventDate(event)}
             />
-            {event.description && (
+            {event?.description && (
               <div className="flex gap-3 mt-2">
                 <div className="w-6 h-6 flex items-center justify-center text-zinc-400">
                   <Edit3 size={16} />
@@ -105,31 +201,29 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                 </div>
               </div>
             )}
-
             <InfoItem
               icon={CalendarIcon}
               label="Start"
               value={
-                event.start?.dateTime
+                event?.start?.dateTime
                   ? new Date(event.start.dateTime).toLocaleString()
-                  : event.start?.date || null
+                  : event?.start?.date || null
               }
             />
             <InfoItem
               icon={CalendarIcon}
               label="End"
               value={
-                event.end?.dateTime
+                event?.end?.dateTime
                   ? new Date(event.end.dateTime).toLocaleString()
-                  : event.end?.date || null
+                  : event?.end?.date || null
               }
             />
           </InfoSection>
 
-          {/* Accordion Sections for Less Important Info */}
-          <Accordion collapsible className="space-y-4  my-2" type="single">
+          <Accordion collapsible className="space-y-4 my-2" type="single">
             <AccordionItem
-              className="border-none  bg-zinc-800 rounded-xl"
+              className="border-none bg-zinc-800 rounded-xl"
               value="people"
             >
               <AccordionTrigger className="px-4 py-3 hover:no-underline">
@@ -139,23 +233,22 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                 <InfoItem
                   icon={User}
                   label="Creator"
-                  value={event.creator?.email || null}
+                  value={event?.creator?.email || null}
                 />
                 <InfoItem
                   icon={User}
                   label="Organizer"
-                  value={event.organizer?.email || null}
+                  value={event?.organizer?.email || null}
                 />
               </AccordionContent>
             </AccordionItem>
 
-            {/* Recurrence Section */}
-            {event.recurrence && (
+            {event?.recurrence && (
               <AccordionItem className="border-none" value="recurrence">
                 <AccordionTrigger className="bg-zinc-800 rounded-xl px-4 py-3 hover:no-underline">
                   <span className="text-lg font-semibold">Recurrence</span>
                 </AccordionTrigger>
-                <AccordionContent className=" px-4 pb-4 mt-1 rounded-b-lg">
+                <AccordionContent className="px-4 pb-4 mt-1 rounded-b-lg">
                   <InfoItem
                     icon={Repeat}
                     label="Pattern"
@@ -165,12 +258,11 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
               </AccordionItem>
             )}
 
-            {/* Additional Details Section */}
             <AccordionItem
               className="border-none bg-zinc-800 rounded-xl"
               value="additional"
             >
-              <AccordionTrigger className=" px-4 py-3 hover:no-underline">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline">
                 <span className="text-medium font-medium">
                   Additional Details
                 </span>
@@ -179,17 +271,17 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                 <InfoItem
                   icon={Info}
                   label="Status"
-                  value={event.status || null}
+                  value={event?.status || null}
                 />
                 <InfoItem
                   icon={Bell}
                   label="Reminders"
-                  value={event.reminders?.useDefault ? "Default" : "Custom"}
+                  value={event?.reminders?.useDefault ? "Default" : "Custom"}
                 />
                 <InfoItem
                   icon={Info}
                   label="Event Type"
-                  value={event.eventType || null}
+                  value={event?.eventType || null}
                 />
               </AccordionContent>
             </AccordionItem>
@@ -198,7 +290,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
               className="border-none bg-zinc-800 rounded-xl"
               value="technical"
             >
-              <AccordionTrigger className=" px-4 py-3 hover:no-underline">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline">
                 <span className="text-medium font-medium">
                   Technical Details
                 </span>
@@ -208,7 +300,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                   icon={History}
                   label="Created"
                   value={
-                    event.created
+                    event?.created
                       ? new Date(event.created).toLocaleString()
                       : null
                   }
@@ -217,7 +309,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                   icon={History}
                   label="Updated"
                   value={
-                    event.updated
+                    event?.updated
                       ? new Date(event.updated).toLocaleString()
                       : null
                   }
@@ -225,14 +317,14 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
                 <InfoItem
                   icon={Info}
                   label="iCalUID"
-                  value={event.iCalUID || null}
+                  value={event?.iCalUID || null}
                 />
                 <InfoItem
                   icon={Info}
                   label="Sequence"
-                  value={event.sequence?.toString() || null}
+                  value={event?.sequence?.toString() || null}
                 />
-                {event.htmlLink && (
+                {event?.htmlLink && (
                   <div className="flex items-center gap-3 text-zinc-300">
                     <div className="w-6 h-6 flex items-center justify-center text-zinc-400">
                       <Link2 size={16} />

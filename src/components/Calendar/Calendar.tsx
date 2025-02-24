@@ -7,6 +7,8 @@ import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
 import { apiauth } from "@/utils/apiaxios";
 import CalendarCard from "./CalendarCard";
 import { toast } from "sonner";
+import { Button } from "@heroui/button";
+import { CalendarAdd01Icon } from "../Misc/icons";
 
 // Utility function for debouncing
 function debounce<T extends (...args: any[]) => void>(
@@ -33,6 +35,7 @@ export default function Calendar() {
   const eventIdsRef = useRef<Set<string>>(new Set());
   const [calendars, setCalendars] = useState<GoogleCalendar[]>([]);
   const [selectedCalendars, setSelectedCalendars] = useState<string[]>([]);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
 
   // Fetch events; if pageToken is null, we are (re)loading so we show the spinner.
   const fetchEvents = useCallback(
@@ -46,7 +49,7 @@ export default function Calendar() {
       try {
         const allEvents: GoogleCalendarEvent[] = [];
         const calendarsToFetch = calendarIds || selectedCalendars;
-        toast.loading("Fetching Events...");
+        toast.loading("Fetching Events...", { id: "fetching" });
         for (const calendarId of calendarsToFetch) {
           const response = await apiauth.get<{
             events: GoogleCalendarEvent[];
@@ -62,8 +65,8 @@ export default function Calendar() {
             setNextPageToken(null);
           }
         }
-
-        toast.success("Fetched Events!");
+        // toast.dismiss("Fetching Events...");
+        toast.success("Fetched Events!", { id: "fetching" });
 
         // Deduplicate events
         const newEvents = allEvents.filter(
@@ -231,10 +234,23 @@ export default function Calendar() {
   return (
     <>
       <div className="flex flex-col h-full relative overflow-y-scroll w-full">
-        <div className="flex items-center flex-col gap-2">
-          <div className="font-bold text-center text-5xl pb-6 sticky top-0 z-20">
+        <div className="flex items-center flex-col gap-2 pb-6">
+          <div className="font-bold text-center text-5xl  sticky top-0 z-20">
             Your Calendar
           </div>
+
+          <Button
+            color="primary"
+            variant="flat"
+            // size="sm"
+            isDisabled
+            onPress={() => setIsAddDialogOpen(true)}
+            // className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            <CalendarAdd01Icon color={undefined} width={17} />
+            Add event
+          </Button>
+
           <CalendarSelector
             calendars={calendars}
             selectedCalendars={selectedCalendars}
@@ -287,6 +303,15 @@ export default function Calendar() {
           event={selectedEvent}
           open={isDialogOpen}
           onOpenChange={setIsDialogOpen}
+        />
+      )}
+
+      {isAddDialogOpen && (
+        <CalendarEventDialog
+          event={null}
+          open={isAddDialogOpen}
+          onOpenChange={setIsAddDialogOpen}
+          mode="create"
         />
       )}
     </>
