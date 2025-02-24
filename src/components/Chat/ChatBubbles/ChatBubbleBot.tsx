@@ -46,7 +46,7 @@ export default function ChatBubbleBot({
   intent,
   calendar_options,
 }: ChatBubbleBotProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  // const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
     "Uploading Document..."
   );
@@ -91,7 +91,7 @@ export default function ChatBubbleBot({
               <span>{text}</span>
               <Skeleton
                 className="rounded-3xl my-2 max-w-[250px] min-w-[250px] max-h-[250px] min-h-[250px] aspect-square"
-                isLoaded={!loading && !imageLoaded && !!imageSrc}
+                isLoaded={!loading && !!imageSrc}
               >
                 <img
                   alt={"Generated Image"}
@@ -109,8 +109,8 @@ export default function ChatBubbleBot({
                       });
                     }
                   }}
-                  onError={() => setImageLoaded(true)}
-                  onLoad={() => setImageLoaded(true)}
+                  // onError={() => setImageLoaded(true)}
+                  // onLoad={() => setImageLoaded(true)}
                 />
               </Skeleton>
               {imagePrompt && (
@@ -258,7 +258,7 @@ export default function ChatBubbleBot({
     isImage,
     text,
     loading,
-    imageLoaded,
+    // imageLoaded,
     imageSrc,
     setOpenImage,
     setImageData,

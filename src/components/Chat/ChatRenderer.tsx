@@ -102,7 +102,7 @@ export default function ChatRenderer() {
                 <ScrollArea className="max-h-[50px]">
                   <div className="font-medium">Your Prompt:</div>
 
-                  <div className="text-foreground-300 text-sm">
+                  <div className="text-foreground-500 text-sm">
                     {imageData.prompt}
                   </div>
                 </ScrollArea>
@@ -112,7 +112,7 @@ export default function ChatRenderer() {
               <div className="w-full bg-black/30 p-3 rounded-xl">
                 <ScrollArea className="h-[70px]">
                   <div className="font-medium">Improved Prompt:</div>
-                  <div className="text-foreground-300 text-sm">
+                  <div className="text-foreground-500 text-sm">
                     {imageData.improvedPrompt}
                   </div>
                 </ScrollArea>

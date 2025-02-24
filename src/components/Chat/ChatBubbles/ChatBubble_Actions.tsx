@@ -210,7 +210,7 @@ export function ChatBubble_Actions_Image({
             height="22"
           />
           <span className="text-black font-medium">
-            {fullWidth ? "Download Image" : ""}
+            {fullWidth ? "Download" : ""}
           </span>
         </Button>
       </Tooltip>

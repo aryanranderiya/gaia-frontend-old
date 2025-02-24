@@ -12,7 +12,6 @@ import { apiauth } from "@/utils/apiaxios";
 
 interface CalendarEventCardProps {
   option: any; // ideally replace with your CalIntentOptions type
-  index: number;
 }
 
 const CalendarEventCard: React.FC<CalendarEventCardProps> = ({ option }) => {
