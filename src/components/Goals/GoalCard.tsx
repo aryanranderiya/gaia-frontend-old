@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { GoalData } from "@/pages/GoalPage";
 import { CalendarSimpleIcon, Target04Icon } from "@/components/Misc/icons";
 import { apiauth } from "@/utils/apiaxios";
+import { toast } from "sonner";
 
 export function GoalCard({
   goal,
@@ -36,8 +37,10 @@ export function GoalCard({
       const response = await apiauth.delete(`/goals/${goalId}`);
 
       console.log("Goal deleted successfully:", response.data);
+      toast.success("Goal deleted successfully");
       fetchGoals();
     } catch (error) {
+      toast.error("Error deleting goal. Please try again later.");
       console.error("Error deleting goal:", error);
     }
   }
@@ -83,8 +86,8 @@ export function GoalCard({
         </ModalContent>
       </Modal>
       <div className="bg-black bg-opacity-50 flex flex-col p-4 rounded-lg  w-full group">
-        <div className="font-medium text-xl flex items-center gap-1 w-full relative ">
-          <Target04Icon height={20} width={20} />
+        <div className="font-medium text-lg flex items-center gap-2 w-full relative ">
+          <Target04Icon height={20} width={20} color="#9b9b9b" />
           <span className="truncate w-[85%]">
             {goal?.roadmap?.title || goal.title}
           </span>
@@ -120,10 +123,10 @@ export function GoalCard({
             !goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
               ? "warning"
               : goal.progress === 100
-                ? "success"
-                : goal.progress > 0
-                  ? "primary"
-                  : "warning"
+              ? "success"
+              : goal.progress > 0
+              ? "primary"
+              : "warning"
           }
           size="sm"
           variant="flat"
@@ -131,10 +134,10 @@ export function GoalCard({
           {!goal.roadmap?.nodes?.length || !goal.roadmap?.edges?.length
             ? "Not Started"
             : goal.progress === 100
-              ? "Completed"
-              : goal.progress > 0
-                ? "In Progress"
-                : "Not Started"}
+            ? "Completed"
+            : goal.progress > 0
+            ? "In Progress"
+            : "Not Started"}
         </Chip>
 
         <div className="my-3 flex items-center gap-2 justify-between">

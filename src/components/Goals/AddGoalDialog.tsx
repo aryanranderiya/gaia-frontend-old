@@ -8,18 +8,24 @@ import {
   ModalHeader,
 } from "@heroui/modal";
 import { Send } from "lucide-react";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function AddGoalDialog({
   openDialog,
   setOpenDialog,
   addGoal,
+  prevGoalTitle,
 }: {
   openDialog: boolean;
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
   addGoal: (goal: string) => void;
+  prevGoalTitle?: string | null;
 }) {
-  const [goalTitle, setGoalTitle] = useState("");
+  const [goalTitle, setGoalTitle] = useState(prevGoalTitle || "");
+
+  useEffect(() => {
+    if (prevGoalTitle) setGoalTitle(prevGoalTitle);
+  }, [prevGoalTitle]);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {

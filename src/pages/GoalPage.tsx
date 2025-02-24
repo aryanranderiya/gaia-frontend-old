@@ -15,13 +15,13 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import dagre from "dagre";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, TriangleAlert } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 
 export interface GoalData {
   id: string;
@@ -219,7 +219,7 @@ export default function GoalPage() {
     });
   };
 
-  if (goalData === null && !loading) return <div>Page Not Found</div>;
+  // if (goalData === null && !loading) return <div>Page Not Found</div>;
   const handleCheckboxClick = async () => {
     if (!currentlySelectedNodeId) return;
 
@@ -404,6 +404,11 @@ export default function GoalPage() {
                 {goalData?.title}
                 <div className="text-foreground-500 text-medium">
                   Please Wait. This may take a while.
+                </div>
+
+                <div className="text-red-500 flex items-center gap-2">
+                  <TriangleAlert width={17} />
+                  Do not leave this page while the roadmap is being generated.
                 </div>
               </div>
               <div className="px-32">

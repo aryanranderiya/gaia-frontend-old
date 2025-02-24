@@ -7,10 +7,12 @@ import AddGoalDialog from "@/components/Goals/AddGoalDialog";
 import { GoalCard } from "@/components/Goals/GoalCard";
 import { Target04Icon } from "@/components/Misc/icons";
 import { apiauth } from "@/utils/apiaxios";
+import { Chip } from "@heroui/chip";
 
 export default function Goals() {
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [prevGoalTitle, setPrevGoalTitle] = useState<string | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
@@ -74,7 +76,31 @@ export default function Goals() {
             </div>
           )}
         </div>
-        <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10">
+        <div className="absolute left-0 bottom-6 flex justify-center items-center w-full z-10 flex-col gap-4">
+          <div className="flex flex-wrap gap-2 max-w-screen-lg justify-center">
+            {[
+              "Build a strong morning routine",
+              "Read 12 books this year",
+              "Develop better financial habits",
+              "Journal daily for self-reflection",
+              "Workout consistently for 3 months",
+              "Improve work-life balance",
+              "Master full-stack development",
+            ].map((suggestion, index) => (
+              <Chip
+                key={index}
+                variant="flat"
+                color="primary"
+                className="cursor-pointer"
+                onClick={() => {
+                  setPrevGoalTitle(suggestion);
+                  setOpenDialog(true);
+                }}
+              >
+                {suggestion}
+              </Chip>
+            ))}
+          </div>
           <Button
             className="font-semibold gap-2"
             color="primary"
@@ -93,6 +119,7 @@ export default function Goals() {
         addGoal={handleAddGoal}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        prevGoalTitle={prevGoalTitle}
       />
     </>
   );
