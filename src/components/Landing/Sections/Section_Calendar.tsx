@@ -108,7 +108,7 @@ export default function Section_Calendar() {
           }
         />
 
-        <div className="w-full sm:px-10 !m-0 !mt-0">
+        <div className="w-full sm:px-10 px-2 !m-0 !mt-0">
           {/* <Tabs
             aria-label="Calendar Options"
             className="w-full"
@@ -139,7 +139,7 @@ export default function Section_Calendar() {
                 </div>
               }
             >
-              <div className="w-full h-[300px] overflow-hidden bg-gradient-to-bl px-10 rounded-3xl z-[1]">
+              <div className="w-full h-[300px] overflow-hidden bg-gradient-to-bl sm:px-10 rounded-3xl z-[1]">
                 <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
               </div>
             </Tab>

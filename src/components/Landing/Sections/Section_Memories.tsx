@@ -17,7 +17,7 @@ import { SectionHeading } from "../SectionHeading";
 
 function LocalNotecard({ plaintext }: { plaintext: string }) {
   return (
-    <div className="bg-zinc-800 hover:bg-zinc-700 transition-all w-full max-h-fit rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative">
+    <div className="bg-zinc-800 hover:bg-zinc-700 transition-all w-full rounded-xl text-foreground flex p-[1em] flex-col justify-start overflow-hidden gap-1 cursor-pointer h-full relative">
       <Chip className="mb-1" color="primary" size="sm" variant="flat">
         Auto Created by GAIA
       </Chip>
@@ -54,7 +54,7 @@ export default function Section_Memories() {
           }
         />
 
-        <div className="w-full sm:px-10 !m-0 !mt-0">
+        <div className="w-full sm:px-10 px-2 !m-0 !mt-0">
           <Tabs
             aria-label="GAIA Notes Options"
             className="w-full"
@@ -101,7 +101,9 @@ export default function Section_Memories() {
             >
               <div className="grid sm:grid-cols-2 grid-cols-1 gap-2">
                 <LocalNotecard plaintext={"My name is Jake"} />
-                <LocalNotecard plaintext={"I was born in England, UK"} />
+                <LocalNotecard
+                  plaintext={"Jake is a 3rd year Computer Science student"}
+                />
               </div>
             </Tab>
           </Tabs>

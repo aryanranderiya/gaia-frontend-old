@@ -28,6 +28,24 @@ import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 
+const convertToUserTimezone = (isoString: string) => {
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const date = new Date(isoString);
+
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: userTimezone,
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
+};
+
+// const isoString = "2025-02-24T09:00:00+00:00";
+// console.log(convertToUserTimezone(isoString));
+
 export default function ChatBubbleBot({
   text,
   loading = false,
@@ -48,7 +66,6 @@ export default function ChatBubbleBot({
   intent,
   calendar_options,
 }: ChatBubbleBotProps) {
-  const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
     "Uploading Document..."
@@ -84,33 +101,37 @@ export default function ChatBubbleBot({
     }
   }, [filename, loading]);
 
-  // Memoized callback to add event to the calendar
-  const addToCalendar = useCallback(async () => {
-    try {
-      setEventAddLoading(true);
-      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [eventLoadingStates, setEventLoadingStates] = useState<
+    Record<number, boolean>
+  >({});
 
-      const response = await apiauth.post(`/calendar/event`, {
-        summary: calendar_options?.summary,
-        description: calendar_options?.description,
-        start: calendar_options?.start,
-        end: calendar_options?.end,
-        timezone: userTimeZone,
-      });
-
-      toast.success("Added event to calendar!", {
-        description: calendar_options?.description,
-      });
-
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to add event to calendar!");
-    } finally {
-      setEventAddLoading(false);
-    }
-  }, [calendar_options]);
-
+  const addSingleEventToCalendar = useCallback(
+    async (option: any, index: number) => {
+      // Set loading state for this specific event
+      setEventLoadingStates((prev) => ({ ...prev, [index]: true }));
+      try {
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const response = await apiauth.post(`/calendar/event`, {
+          summary: option.summary,
+          description: option.description,
+          start: option.start,
+          end: option.end,
+          timezone: userTimeZone,
+        });
+        toast.success("Added event to calendar!", {
+          description: option.description,
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to add event to calendar!");
+      } finally {
+        // Reset loading state for this event
+        setEventLoadingStates((prev) => ({ ...prev, [index]: false }));
+      }
+    },
+    []
+  );
   // Memoize the rendered component to avoid recalculations unless dependencies change
   const renderedComponent = useMemo(() => {
     if (isImage) {
@@ -248,51 +269,72 @@ export default function ChatBubbleBot({
           </div>
 
           {intent === "calendar" &&
-            calendar_options?.start &&
-            calendar_options?.end &&
-            calendar_options?.summary &&
-            calendar_options?.description && (
-              <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
-                <div>Would you like to add this event to your Calendar?</div>
+            calendar_options &&
+            (() => {
+              // Always treat calendar_options as an array
+              const eventsArray = Array.isArray(calendar_options)
+                ? calendar_options
+                : [calendar_options];
 
-                <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3">
-                  <GoogleCalendar height={35} width={25} />
-                  <div className="flex flex-col gap-1">
-                    <div>
-                      <div className="font-medium">
-                        {calendar_options?.summary}
-                      </div>
-                      <div className="text-sm">
-                        {calendar_options?.description}
-                      </div>
-                    </div>
-                    <div className="text-xs text-foreground-500">
-                      From{" "}
-                      {calendar_options?.start
-                        ? String(
-                            new Date(calendar_options.start).toDateString()
-                          )
-                        : ""}
-                    </div>
-                    <div className="text-xs text-foreground-500">
-                      To{" "}
-                      {calendar_options?.end
-                        ? String(new Date(calendar_options.end).toDateString())
-                        : ""}
-                    </div>
+              // Only render if each event has the required fields
+              if (
+                !eventsArray.every(
+                  (option) =>
+                    option.start &&
+                    option.end &&
+                    option.summary &&
+                    option.description
+                )
+              )
+                return "could not add event";
+              // return null;
+
+              return (
+                <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
+                  <div>
+                    Would you like to add{" "}
+                    {eventsArray.length === 1 ? "this event" : "these events"}{" "}
+                    to your Calendar?
                   </div>
-                </div>
+                  {eventsArray.map((option, index) => (
+                    <div
+                      key={index}
+                      className="bg-zinc-900 p-3 flex flex-col rounded-xl items-start gap-3"
+                    >
+                      <div className="flex flex-row items-start gap-4">
+                        <GoogleCalendar height={35} width={25} />
+                        <div className="flex flex-col gap-1 flex-1">
+                          <div>
+                            <div className="font-medium">{option.summary}</div>
+                            <div className="text-sm max-w-[300px]">
+                              {option.description}
+                            </div>
+                          </div>
+                          <div className="text-xs text-foreground-500">
+                            From {option.start}
+                            {option.start
+                              ? convertToUserTimezone(option.start)
+                              : ""}
+                          </div>
+                          <div className="text-xs text-foreground-500">
+                            To {option.end ? parseDate(option.end) : ""}
+                          </div>
+                        </div>
+                      </div>
 
-                <Button
-                  className="w-full"
-                  color="primary"
-                  isLoading={eventAddLoading}
-                  onPress={addToCalendar}
-                >
-                  Add Event
-                </Button>
-              </div>
-            )}
+                      <Button
+                        className="w-full"
+                        color="primary"
+                        isLoading={eventLoadingStates[index] || false}
+                        onPress={() => addSingleEventToCalendar(option, index)}
+                      >
+                        Add Event
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
 
           {date && (
             <span className="text-xs text-white text-opacity-40 flex flex-col select-text p-1">
@@ -320,7 +362,6 @@ export default function ChatBubbleBot({
     disclaimer,
     intent,
     calendar_options,
-    eventAddLoading,
   ]);
 
   // Memoized mouse event handlers to prevent unnecessary re-renders
