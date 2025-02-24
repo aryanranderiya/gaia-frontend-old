@@ -95,6 +95,7 @@ export default function SearchbarLeftDropdown({
             key="pdf"
             className="w-full darktransition-all"
             onPress={chooseFile}
+            isDisabled
           >
             <div className="flex justify-between items-center">
               Upload Document

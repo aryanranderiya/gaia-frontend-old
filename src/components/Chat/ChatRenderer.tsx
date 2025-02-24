@@ -28,8 +28,6 @@ export default function ChatRenderer() {
   const { messageId } = location.state || "";
   const { convoIdParam } = useParams<{ convoIdParam: string }>();
 
-  console.log("this is the convoIdParam", convoIdParam);
-
   const [imageData, setImageData] = useState({
     src: "",
     prompt: "",
@@ -38,8 +36,6 @@ export default function ChatRenderer() {
 
   useEffect(() => {
     if (messageId && convoMessages.length > 0) scrollToMessage(messageId);
-
-    console.log(convoMessages);
   }, [messageId, convoMessages]);
 
   const scrollToMessage = (messageId: string) => {
@@ -181,7 +177,7 @@ export default function ChatRenderer() {
             subtype={message.subtype || null}
             text={message.response}
           />
-        ),
+        )
       )}
     </>
   );

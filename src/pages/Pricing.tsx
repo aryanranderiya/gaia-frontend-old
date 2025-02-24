@@ -91,7 +91,7 @@ interface PricingCardProps {
   description: string;
   type: "main" | "secondary";
   price: number;
-  discountPercentage: number; // new prop for discount percentage
+  discountPercentage?: number; // new prop for discount percentage
   featurestitle: React.ReactNode;
   features?: string[];
   durationIsMonth: boolean;
@@ -103,7 +103,7 @@ export function PricingCard({
   description,
   type,
   price,
-  discountPercentage,
+  discountPercentage = 0,
   featurestitle,
   features,
   durationIsMonth,

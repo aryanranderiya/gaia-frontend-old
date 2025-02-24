@@ -22,6 +22,7 @@ import { apiauth } from "@/utils/apiaxios";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useConversationList } from "@/contexts/ConversationList";
 import { PencilRenameIcon } from "@/components/Misc/icons";
+import { toast } from "sonner";
 
 export default function ChatOptionsDropdown({
   buttonHovered,
@@ -42,7 +43,7 @@ export default function ChatOptionsDropdown({
   const [dangerStateHovered, setDangerStateHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [modalAction, setModalAction] = useState<"edit" | "delete" | null>(
-    null,
+    null
   );
   const [newName, setNewName] = useState(chatName);
   const navigate = useNavigate();
@@ -54,9 +55,17 @@ export default function ChatOptionsDropdown({
         starred: !starred,
       });
       setIsOpen(false);
+      toast.success(
+        starred
+          ? "Conversation removed from starred"
+          : "Conversation added to starred"
+      );
+
       await fetchConversations();
     } catch (error) {
-      console.error("Failed to update chat name", error);
+      toast.error("Could not rename conversation ");
+
+      console.error("Failed to update star", error);
     }
   };
 
@@ -67,8 +76,10 @@ export default function ChatOptionsDropdown({
         description: newName,
       });
       setIsOpen(false);
+      toast.success("Successfully renamed conversation");
       await fetchConversations(1, 20, false);
     } catch (error) {
+      toast.error("Could not rename conversation ");
       console.error("Failed to update chat name", error);
     }
   };
@@ -79,8 +90,10 @@ export default function ChatOptionsDropdown({
       resetMessages();
       await apiauth.delete(`/conversations/${chatId}`);
       setIsOpen(false);
+      toast.success("Successfully deleted conversation");
       await fetchConversations(1, 20, false);
     } catch (error) {
+      toast.error("Could not delete conversation ");
       console.error("Failed to delete chat", error);
     }
   };

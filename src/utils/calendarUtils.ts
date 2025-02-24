@@ -6,7 +6,7 @@ import { GoogleCalendarEvent } from "@/types/calendarTypes";
 
 // Group events by a date string like "day dayOfWeek"
 export function groupEventsByDate(
-  events: GoogleCalendarEvent[],
+  events: GoogleCalendarEvent[]
 ): Record<string, GoogleCalendarEvent[]> {
   const grouped: Record<string, GoogleCalendarEvent[]> = {};
 

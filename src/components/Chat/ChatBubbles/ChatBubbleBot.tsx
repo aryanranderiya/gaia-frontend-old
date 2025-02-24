@@ -51,7 +51,7 @@ export default function ChatBubbleBot({
   const [eventAddLoading, setEventAddLoading] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [fileScanningText, setFileScanningText] = useState(
-    "Uploading Document...",
+    "Uploading Document..."
   );
 
   // Update file scanning text while the document is processing
@@ -98,11 +98,14 @@ export default function ChatBubbleBot({
         timezone: userTimeZone,
       });
 
-      toast.success("Event has been added to Calendar!");
+      toast.success("Added event to calendar!", {
+        description: calendar_options?.description,
+      });
+
       console.log(response.data);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add event to Calendar!");
+      toast.error("Failed to add event to calendar!");
     } finally {
       setEventAddLoading(false);
     }
@@ -267,7 +270,7 @@ export default function ChatBubbleBot({
                       From{" "}
                       {calendar_options?.start
                         ? String(
-                            new Date(calendar_options.start).toDateString(),
+                            new Date(calendar_options.start).toDateString()
                           )
                         : ""}
                     </div>

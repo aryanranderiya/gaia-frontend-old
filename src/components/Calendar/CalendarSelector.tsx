@@ -78,7 +78,7 @@ export default function CalendarSelector({
     <>
       {/* Filters Button (Opens the calendar selector) */}
       <Button
-        className="fixed bottom-2 right-2 bg-primary text-white size-[50px] shadow-md flex items-center gap-2 hover:bg-primary sm:hover:bg-[#0075a1] transition-all z-40 rounded-full"
+        className="fixed bottom-2 right-2 bg-primary size-[50px] shadow-md flex items-center gap-2 hover:bg-primary sm:hover:bg-[#0075a1] transition-all z-40 rounded-full text-black"
         size={"icon"}
         onClick={() => setIsOpen((prev) => !prev)}
       >

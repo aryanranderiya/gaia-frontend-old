@@ -60,7 +60,7 @@ export default function GenerateImage({
     conversationId: string,
     newMessages: MessageType[],
     description?: string,
-    replaceLastMessage: boolean = false,
+    replaceLastMessage: boolean = false
   ) => {
     try {
       setConvoMessages((prev) => {
@@ -74,7 +74,7 @@ export default function GenerateImage({
       ApiService.updateConversationDescription(
         conversationId,
         description || "New Chat",
-        fetchConversations,
+        fetchConversations
       );
     } catch (error) {
       console.error("Failed to update conversation:", error);
@@ -83,7 +83,7 @@ export default function GenerateImage({
   };
 
   const createNewConversation = async (
-    initialMessages: MessageType[],
+    initialMessages: MessageType[]
   ): Promise<string> => {
     try {
       const convoID = crypto.randomUUID();
@@ -92,7 +92,7 @@ export default function GenerateImage({
       await updateConversationState(
         convoID,
         initialMessages,
-        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`,
+        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
       );
       navigate(`/c/${convoID}`);
 
@@ -105,13 +105,17 @@ export default function GenerateImage({
 
   const generateImage = async (prompt: string): Promise<[string, string]> => {
     try {
+      console.log("hey there 0 ");
+
       const response = await api.post(
         "/image/generate",
         { message: prompt },
         {
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
+
+      console.log("hey there", response.data);
 
       return [response.data.url, response.data.improved_prompt];
     } catch (error) {
@@ -180,7 +184,7 @@ export default function GenerateImage({
         conversationId,
         [userMessage, finalBotMessage],
         undefined,
-        true,
+        true
       );
 
       setImagePrompt("");

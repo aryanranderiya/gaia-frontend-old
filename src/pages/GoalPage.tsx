@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 
 import { apiauth } from "@/utils/apiaxios";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner";
 
 export interface GoalData {
   id: string;
@@ -97,7 +98,7 @@ const CustomNode = React.memo(
         <Handle position={Position.Bottom} type="source" />
       </>
     );
-  },
+  }
 );
 
 export default function GoalPage() {
@@ -122,7 +123,7 @@ export default function GoalPage() {
         />
       ),
     }),
-    [currentlySelectedNodeId],
+    [currentlySelectedNodeId]
   );
 
   const fetchGoalData = async () => {
@@ -206,7 +207,7 @@ export default function GoalPage() {
   }, [goalId]);
 
   const handleInit = (
-    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>,
+    reactFlowInstance: ReactFlowInstance<Node<NodeData>, Edge<EdgeType>>
   ) => {
     const viewport = reactFlowInstance.getViewport();
 
@@ -224,7 +225,7 @@ export default function GoalPage() {
 
     // Find the currently selected node
     const selectedNode = nodes.find(
-      (node) => node.id === currentlySelectedNodeId,
+      (node) => node.id === currentlySelectedNodeId
     );
 
     if (!selectedNode) return;
@@ -242,18 +243,23 @@ export default function GoalPage() {
                 isComplete: updatedIsComplete,
               },
             }
-          : node,
-      ),
+          : node
+      )
     );
 
     // Update the server state
     try {
       await apiauth.patch(
         `/goals/${selectedNode.data.goalId}/roadmap/nodes/${selectedNode.id}`,
-        { is_complete: updatedIsComplete },
+        { is_complete: updatedIsComplete }
+      );
+
+      toast.success(
+        updatedIsComplete ? "Marked as completed!" : "Marked as not completed!"
       );
     } catch (error) {
       console.error("Error updating node status:", error);
+      toast.error("Could not mark as complete");
 
       // Revert the change if the update fails
       setNodes((prevNodes) =>
@@ -266,8 +272,8 @@ export default function GoalPage() {
                   isComplete: !updatedIsComplete,
                 },
               }
-            : node,
-        ),
+            : node
+        )
       );
     }
   };
@@ -297,7 +303,7 @@ export default function GoalPage() {
               {currentlySelectedNodeId &&
                 (() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId,
+                    (node) => node.id === currentlySelectedNodeId
                   );
                   const estimatedTime = selectedNode?.data?.estimatedTime;
 
@@ -349,7 +355,7 @@ export default function GoalPage() {
               <>
                 {(() => {
                   const selectedNode = nodes.find(
-                    (node) => node.id === currentlySelectedNodeId,
+                    (node) => node.id === currentlySelectedNodeId
                   );
 
                   return (
@@ -367,13 +373,13 @@ export default function GoalPage() {
                                 key={index}
                                 className="hover:text-[#00bbff] underline underline-offset-4"
                                 href={`https://www.google.com/search?q=${resource.split(
-                                  "+",
+                                  "+"
                                 )}`}
                                 target="__blank"
                               >
                                 <li>{resource}</li>
                               </a>
-                            ),
+                            )
                           )}
                         </div>
                       </div>
@@ -386,7 +392,7 @@ export default function GoalPage() {
         </div>
 
         <ScrollArea>
-          <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[90vh] w-screen text-background relative flex-row">
+          <div className="flex flex-wrap gap-4 justify-center items-center pb-8 h-[85vh] w-screen text-background relative flex-row">
             <div className="flex flex-col justify-center items-center">
               <div className="font-bold text-white text-2xl mt-1">
                 {goalData?.roadmap?.title || goalData?.title}

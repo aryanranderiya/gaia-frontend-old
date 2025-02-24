@@ -1,68 +1,29 @@
-// src/components/Calendar.tsx
 import { Spinner } from "@heroui/spinner";
-import { Clock } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import CalendarSelector from "./CalendarSelector";
 import CalendarEventDialog from "./CalendarEventDialog";
-
-import {
-  formatEventDate,
-  getEventColor,
-  getEventIcon,
-  groupEventsByDate,
-  isTooDark,
-} from "@/utils/calendarUtils";
-import { apiauth } from "@/utils/apiaxios";
+import CalendarSelector from "./CalendarSelector";
 import { GoogleCalendar, GoogleCalendarEvent } from "@/types/calendarTypes";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { apiauth } from "@/utils/apiaxios";
+import CalendarCard from "./CalendarCard";
+import { toast } from "sonner";
 
-interface CalendarCardProps {
-  event: GoogleCalendarEvent;
-  onClick: () => void;
-  calendars: GoogleCalendar[];
+// Utility function for debouncing
+function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number
+): T {
+  let timeout: ReturnType<typeof setTimeout>;
+  return ((...args: any[]) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  }) as T;
 }
-
-const CalendarCard = ({ event, onClick, calendars }: CalendarCardProps) => {
-  const calendar = calendars?.find((cal) => cal.id === event.organizer.email);
-  const color = calendar?.backgroundColor || getEventColor(event);
-  const backgroundColor = isTooDark(color) ? "#ffffff" : color;
-  const icon = getEventIcon(event);
-
-  return (
-    <div
-      className="text-white p-4 rounded-lg shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden"
-      onClick={onClick}
-    >
-      <div
-        className="absolute inset-0 border-l-5 z-[2]"
-        style={{ borderColor: backgroundColor }}
-      />
-      <div className="flex items-center gap-2 relative z-[1]">
-        <span className="text-xl">{icon}</span>
-        <div className="font-bold text-lg">{event.summary}</div>
-      </div>
-      {formatEventDate(event) && (
-        <div
-          className="text-sm mt-2 relative z-[1] opacity-70 flex items-center gap-1"
-          style={{ color: backgroundColor }}
-        >
-          <Clock height={17} width={17} />
-          {formatEventDate(event)}
-        </div>
-      )}
-      <div
-        className="absolute inset-0 z-[0] opacity-25 rounded-lg w-full"
-        style={{ backgroundColor }}
-      />
-    </div>
-  );
-};
 
 export default function Calendar() {
   const [loading, setLoading] = useState<boolean>(true);
   const [calendarEvents, setCalendarEvents] = useState<GoogleCalendarEvent[]>(
-    [],
+    []
   );
   const [selectedEvent, setSelectedEvent] =
     useState<GoogleCalendarEvent | null>(null);
@@ -73,156 +34,205 @@ export default function Calendar() {
   const [calendars, setCalendars] = useState<GoogleCalendar[]>([]);
   const [selectedCalendars, setSelectedCalendars] = useState<string[]>([]);
 
-  useEffect(() => {
-    fetchCalendars();
-  }, []);
-
-  useEffect(() => {
-    console.log(selectedEvent);
-  }, [selectedEvent]);
-
-  useEffect(() => {
-    // Set up Intersection Observer for infinite scrolling
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !loading && !!nextPageToken) {
-          fetchEvents(nextPageToken); // Fetch next page
+  // Fetch events; if pageToken is null, we are (re)loading so we show the spinner.
+  const fetchEvents = useCallback(
+    async (
+      pageToken: string | null = null,
+      calendarIds: string[] | null = null
+    ) => {
+      if (!pageToken) {
+        setLoading(true);
+      }
+      try {
+        const allEvents: GoogleCalendarEvent[] = [];
+        const calendarsToFetch = calendarIds || selectedCalendars;
+        toast.loading("Fetching Events...");
+        for (const calendarId of calendarsToFetch) {
+          const response = await apiauth.get<{
+            events: GoogleCalendarEvent[];
+            nextPageToken: string | null;
+          }>(`/calendar/${calendarId}/events`, {
+            params: { page_token: pageToken },
+          });
+          allEvents.push(...response.data.events);
+          if (response.data.nextPageToken) {
+            setNextPageToken(response.data.nextPageToken);
+          } else {
+            // If there are no more pages for this calendar, clear nextPageToken
+            setNextPageToken(null);
+          }
         }
-      },
-      { rootMargin: "0px" },
-    );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
+        toast.success("Fetched Events!");
 
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+        // Deduplicate events
+        const newEvents = allEvents.filter(
+          (event) => !eventIdsRef.current.has(event.id)
+        );
+        newEvents.forEach((event) => eventIdsRef.current.add(event.id));
+        // Merge and sort events
+        setCalendarEvents((prev) => {
+          const mergedEvents = [...prev, ...newEvents];
+          return mergedEvents.sort((a, b) => {
+            const dateA = new Date(a.start.dateTime || a.start.date || "");
+            const dateB = new Date(b.start.dateTime || b.start.date || "");
+            return dateA.getTime() - dateB.getTime();
+          });
+        });
+      } catch (error) {
+        console.error("Error fetching calendar events:", error);
+      } finally {
+        setLoading(false);
       }
-    };
-  }, [loading, nextPageToken]);
+    },
+    [selectedCalendars]
+  );
 
-  const fetchCalendars = async () => {
+  // Fetch the list of calendars and the user's preferences.
+  const fetchCalendars = useCallback(async () => {
     try {
-      const response = await apiauth.get("/calendar/list");
+      const calendarListResponse = await apiauth.get("/calendar/list");
+      const calendarItems = calendarListResponse.data.items;
+      setCalendars(calendarItems);
 
-      setCalendars(response.data.items);
-
-      // Find the primary calendar and set it as selected
-      const primaryCalendar = response.data.items.find(
-        (cal: { primary: boolean }) => cal.primary === true,
-      );
-
-      if (primaryCalendar) {
-        setSelectedCalendars([primaryCalendar.id]);
-        // Fetch events for the primary calendar
-        fetchEvents(null, [primaryCalendar.id]);
+      // Attempt to fetch user calendar preferences.
+      let storedSelectedCalendars: string[] = [];
+      try {
+        const preferencesResponse = await apiauth.get("/calendar/preferences");
+        if (preferencesResponse.data.selectedCalendars) {
+          storedSelectedCalendars = preferencesResponse.data.selectedCalendars;
+        }
+      } catch (err) {
+        console.error("No calendar preferences found, using primary calendar.");
       }
-
-      const response2 = await apiauth.get("/calendar/all/events");
-
-      console.log(response2);
+      // Default to primary calendar if no preferences.
+      if (!storedSelectedCalendars.length) {
+        const primaryCalendar = calendarItems.find(
+          (cal: { primary: boolean }) => cal.primary
+        );
+        if (primaryCalendar) {
+          storedSelectedCalendars = [primaryCalendar.id];
+          await apiauth.put("/calendar/preferences", {
+            selected_calendars: [primaryCalendar.id],
+          });
+        }
+      }
+      setSelectedCalendars(storedSelectedCalendars);
+      // Reset events and fetch for these calendars
+      setCalendarEvents([]);
+      eventIdsRef.current = new Set();
+      await fetchEvents(null, storedSelectedCalendars);
     } catch (error) {
       console.error("Error fetching calendars:", error);
     }
-  };
+  }, []); // Empty dependency array as we want to call this on mount
 
-  const fetchEvents = async (
-    pageToken: string | null = null,
-    calendarIds: string[] | null = null,
-  ) => {
-    if (calendarEvents.length <= 0) setLoading(true);
-
-    try {
-      const allEvents: GoogleCalendarEvent[] = [];
-      const calendarsToFetch = calendarIds || selectedCalendars;
-
-      for (const calendarId of calendarsToFetch) {
-        const response = await apiauth.get<{
-          events: GoogleCalendarEvent[];
-          nextPageToken: string | null;
-        }>(`/calendar/${calendarId}/events`, {
-          params: { page_token: pageToken },
+  // Debounced function to update calendar preferences.
+  const updatePreferences = useCallback(
+    debounce(async (newSelection: string[]) => {
+      try {
+        await apiauth.put("/calendar/preferences", {
+          selected_calendars: newSelection,
         });
-
-        allEvents.push(...response.data.events);
-        if (response.data.nextPageToken) {
-          setNextPageToken(response.data.nextPageToken);
-        }
+      } catch (error) {
+        console.error("Error updating calendar preferences:", error);
       }
+    }, 300),
+    []
+  );
 
-      // Filter out duplicates and add new events
-      const newEvents = allEvents.filter(
-        (event) => !eventIdsRef.current.has(event.id),
-      );
+  // Handle calendar selection: if deselected, remove events; if added, fetch events.
+  const handleCalendarSelect = useCallback(
+    (calendarId: string) => {
+      if (loading) return;
 
-      newEvents.forEach((event) => eventIdsRef.current.add(event.id));
+      setSelectedCalendars((prev) => {
+        const isSelected = prev.includes(calendarId);
+        const newSelection = isSelected
+          ? prev.filter((id) => id !== calendarId)
+          : [...prev, calendarId];
 
-      // Merge new events with existing events, sort by start date, and update state
-      setCalendarEvents((prev) => {
-        const mergedEvents = [...prev, ...newEvents];
-
-        return mergedEvents.sort((a, b) => {
-          const dateA = new Date(a.start.dateTime || a.start.date || "");
-          const dateB = new Date(b.start.dateTime || b.start.date || "");
-
-          return dateA.getTime() - dateB.getTime();
-        });
+        if (isSelected) {
+          // Remove events for the deselected calendar.
+          setCalendarEvents((prevEvents) => {
+            const updatedEvents = prevEvents.filter(
+              (event) => event.organizer.email !== calendarId
+            );
+            eventIdsRef.current = new Set(updatedEvents.map((e) => e.id));
+            return updatedEvents;
+          });
+        } else {
+          // Fetch events for the newly added calendar.
+          fetchEvents(null, [calendarId]);
+        }
+        updatePreferences(newSelection);
+        return newSelection;
       });
-    } catch (error) {
-      console.error("Error fetching calendar events:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [loading, fetchEvents, updatePreferences]
+  );
 
-  const handleEventClick = (event: GoogleCalendarEvent) => {
+  // Set up the Intersection Observer for infinite scrolling.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !loading && nextPageToken) {
+          fetchEvents(nextPageToken);
+        }
+      },
+      { rootMargin: "0px" }
+    );
+    const currentElement = observerRef.current;
+    if (currentElement) {
+      observer.observe(currentElement);
+    }
+    return () => {
+      if (currentElement) {
+        observer.unobserve(currentElement);
+      }
+    };
+  }, [loading, nextPageToken, fetchEvents]);
+
+  // Group events by month and day.
+  const groupedEventsByMonth = useMemo(() => {
+    const months: { [key: string]: { [key: string]: GoogleCalendarEvent[] } } =
+      {};
+    calendarEvents.forEach((event) => {
+      const eventDate = new Date(event.start.dateTime || event.start.date);
+      const monthKey = eventDate.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+      const dayKey = eventDate.toLocaleString("default", {
+        day: "numeric",
+        weekday: "short",
+      });
+      if (!months[monthKey]) {
+        months[monthKey] = {};
+      }
+      if (!months[monthKey][dayKey]) {
+        months[monthKey][dayKey] = [];
+      }
+      months[monthKey][dayKey].push(event);
+    });
+    return months;
+  }, [calendarEvents]);
+
+  // Fetch calendars on mount.
+  useEffect(() => {
+    fetchCalendars();
+  }, [fetchCalendars]);
+
+  const handleEventClick = useCallback((event: GoogleCalendarEvent) => {
     setSelectedEvent(event);
     setIsDialogOpen(true);
-  };
-
-  const handleCalendarSelect = (calendarId: string) => {
-    if (loading) return; // Prevent actions when still loading
-
-    setSelectedCalendars((prev) => {
-      const newSelection = prev.includes(calendarId)
-        ? prev.filter((id) => id !== calendarId)
-        : [...prev, calendarId];
-
-      // If a calendar is deselected, remove its events
-      if (!newSelection.includes(calendarId)) {
-        setCalendarEvents((prevEvents) =>
-          prevEvents.filter((event) => event.organizer.email !== calendarId),
-        );
-        eventIdsRef.current = new Set(
-          Array.from(eventIdsRef.current).filter((id) =>
-            calendarEvents.find(
-              (event) =>
-                event.id === id && event.organizer.email !== calendarId,
-            ),
-          ),
-        );
-      } else {
-        // If a new calendar is selected, fetch its events
-        fetchEvents(null, [calendarId]);
-      }
-
-      return newSelection;
-    });
-  };
-
-  useEffect(() => {
-    if (selectedCalendars.length > 0) {
-      fetchEvents();
-    }
-  }, [selectedCalendars]);
+  }, []);
 
   return (
     <>
-      <div className="flex flex-col justify-between h-full relative">
+      <div className="flex flex-col h-full relative overflow-y-scroll w-full">
         <div className="flex items-center flex-col gap-2">
-          <div className="font-bold text-center text-5xl pb-6">
+          <div className="font-bold text-center text-5xl pb-6 sticky top-0 z-20">
             Your Calendar
           </div>
           <CalendarSelector
@@ -232,43 +242,45 @@ export default function Calendar() {
           />
         </div>
 
-        <ScrollArea>
-          <div className="flex flex-wrap gap-4 justify-center pb-8 max-w-screen-sm mx-auto">
-            {Object.entries(groupEventsByDate(calendarEvents)).map(
-              ([date, events]) => {
-                const [day, dayOfWeek] = date.split(" ");
-
-                return (
-                  <div key={date} className="w-full flex gap-7">
-                    <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-zinc-700 flex items-center break-words p-3 justify-center leading-none flex-col">
-                      <div className="font-normal text-sm text-foreground-600">
-                        {dayOfWeek}
-                      </div>
-                      <div>{day}</div>
+        <div className="max-w-screen-sm mx-auto">
+          {Object.entries(groupedEventsByMonth).map(([month, days]) => (
+            <div key={month}>
+              {/* Sticky Month Header */}
+              <div className="sticky top-0 z-10 p-2 bg-zinc-900 rounded-lg">
+                <h2 className="text-lg font-medium text-center">{month}</h2>
+              </div>
+              {Object.entries(days).map(([day, events]) => (
+                <div key={day} className="flex gap-7 my-2">
+                  <div className="text-lg font-bold text-center min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] rounded-full bg-zinc-900 text-foreground-500 flex items-center justify-center leading-none flex-col">
+                    <div className="font-normal text-md">
+                      {day.split(" ")[1]}
                     </div>
-                    <div className="flex flex-wrap gap-4 justify-center w-full">
-                      {events.map((event) => (
-                        <CalendarCard
-                          key={event.id}
-                          calendars={calendars}
-                          event={event}
-                          onClick={() => handleEventClick(event)}
-                        />
-                      ))}
+                    <div className="text-foreground-600">
+                      {day.split(" ")[0]}
                     </div>
                   </div>
-                );
-              },
-            )}
-          </div>
-          {loading && (
-            <div className="h-[80vh] flex items-center justify-center">
-              <Spinner />
+                  <div className="flex flex-wrap gap-4 justify-center w-full">
+                    {events.map((event) => (
+                      <CalendarCard
+                        key={event.id}
+                        calendars={calendars}
+                        event={event}
+                        onClick={() => handleEventClick(event)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
-          <div ref={observerRef} className="h-1" />
-        </ScrollArea>
-        <div className="bg-custom-gradient2 left-0 absolute bottom-0 w-full h-[100px] z-[1]" />
+          ))}
+        </div>
+
+        {loading && (
+          <div className="h-[80vh] flex items-center justify-center">
+            <Spinner />
+          </div>
+        )}
+        <div ref={observerRef} className="h-1" />
       </div>
       {selectedEvent && (
         <CalendarEventDialog

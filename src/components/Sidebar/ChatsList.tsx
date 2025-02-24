@@ -3,7 +3,12 @@ import { Loader } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/button";
-
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ChatBubbleAddIcon } from "../Misc/icons";
 
 import { ChatTab } from "./ChatTab";
@@ -86,7 +91,7 @@ export default function ChatsList() {
       {
         root: null, // viewport as container
         threshold: 1.0,
-      },
+      }
     );
 
     if (loadMoreRef.current) {
@@ -101,28 +106,25 @@ export default function ChatsList() {
   }, [currentPage, isFetchingMore, paginationMeta, fetchConversations]);
 
   // Group conversations by time frame.
-  const groupedConversations = conversations.reduce(
-    (acc, conversation) => {
-      const timeFrame = getTimeFrame(conversation.createdAt);
+  const groupedConversations = conversations.reduce((acc, conversation) => {
+    const timeFrame = getTimeFrame(conversation.createdAt);
 
-      if (!acc[timeFrame]) {
-        acc[timeFrame] = [];
-      }
-      acc[timeFrame].push(conversation);
+    if (!acc[timeFrame]) {
+      acc[timeFrame] = [];
+    }
+    acc[timeFrame].push(conversation);
 
-      return acc;
-    },
-    {} as Record<string, any[]>,
-  );
+    return acc;
+  }, {} as Record<string, any[]>);
 
   // Sort time frames by defined priority.
   const sortedTimeFrames = Object.entries(groupedConversations).sort(
     ([timeFrameA], [timeFrameB]) =>
-      timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB),
+      timeFramePriority(timeFrameA) - timeFramePriority(timeFrameB)
   );
 
   const starredConversations = conversations.filter(
-    (conversation) => conversation.starred,
+    (conversation) => conversation.starred
   );
 
   const navigate = useNavigate();
@@ -155,47 +157,58 @@ export default function ChatsList() {
               </Button>
             </div>
 
-            {/* Starred Chats Section */}
-            <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
+            <Accordion type="single" collapsible className="w-full p-0">
+              <AccordionItem
+                value="item-1"
+                className="bg-zinc-900 min-h-fit pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden pt-0 border-b-0"
+              >
+                <AccordionTrigger className="text-xs px-3 pt-3 pb-2 w-[210px]">
+                  Starred Chats
+                </AccordionTrigger>
+                <AccordionContent className="!p-0 w-full">
+                  <div className="flex w-full flex-col -mr-4">
+                    {starredConversations.length > 0 ? (
+                      starredConversations.map(
+                        (conversation: {
+                          conversation_id: string;
+                          description: string;
+                          starred?: boolean;
+                        }) => (
+                          <ChatTab
+                            key={conversation.conversation_id}
+                            id={conversation.conversation_id}
+                            name={conversation.description || "New Chat"}
+                            starred={conversation.starred || false}
+                          />
+                        )
+                      )
+                    ) : (
+                      <div className="text-xs text-center text-foreground-500 pt-2 pb-3">
+                        No Starred Chats yet.
+                      </div>
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            {/* <div className="bg-zinc-900 min-h-fit pt-3 pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden w-full">
               <div className="font-medium text-xs flex items-center gap-1 px-3 pb-1">
                 Starred Chats
               </div>
-
-              <div className="flex w-full px-1 flex-col">
-                {starredConversations.length > 0 ? (
-                  starredConversations.map(
-                    (conversation: {
-                      conversation_id: string;
-                      description: string;
-                      starred?: boolean;
-                    }) => (
-                      <ChatTab
-                        key={conversation.conversation_id}
-                        id={conversation.conversation_id}
-                        name={conversation.description || "New Chat"}
-                        starred={conversation.starred || false}
-                      />
-                    ),
-                  )
-                ) : (
-                  <div className="text-xs text-center text-foreground-500 pt-2 pb-3">
-                    No Starred Chats yet.
-                  </div>
-                )}
-              </div>
-            </div>
+            </div> */}
 
             {/* Grouped Conversations by Time Frame */}
             {sortedTimeFrames.map(([timeFrame, conversationsGroup]) => (
               <div key={timeFrame}>
-                <div className="font-medium px-2 text-xs pt-5 sticky top-0 bg-black z-[1]">
+                <div className="font-medium px-2 text-xs pt-2 sticky top-0 bg-black z-[1]">
                   {timeFrame}
                 </div>
                 {conversationsGroup
                   .sort(
                     (a: { createdAt: string }, b: { createdAt: string }) =>
                       new Date(b.createdAt).getTime() -
-                      new Date(a.createdAt).getTime(),
+                      new Date(a.createdAt).getTime()
                   )
                   .map(
                     (conversation: {
@@ -209,7 +222,7 @@ export default function ChatsList() {
                         name={conversation.description || "New Chat"}
                         starred={conversation.starred}
                       />
-                    ),
+                    )
                   )}
               </div>
             ))}

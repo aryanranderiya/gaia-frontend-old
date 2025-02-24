@@ -30,17 +30,21 @@ export function ChatBubble_Actions({
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
-    toast.success("Copied to clipboard", {
-      unstyled: true,
-      classNames: {
-        toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_custom",
-        title: "text-black text-sm",
-        description: "text-sm text-black",
-      },
-      duration: 3000,
-      description: `${text.substring(0, 35)}...`,
-      icon: <Task01Icon color="black" height="23" />,
+    toast.info("Copied to clipboard", {
+      description: `${text.slice(0, 30)}...`,
     });
+
+    // toast.success("Copied to clipboard", {
+    //   unstyled: true,
+    //   classNames: {
+    //     toast: "flex items-center p-3 rounded-xl gap-3 w-[350px] toast_custom",
+    //     title: "text-black text-sm",
+    //     description: "text-sm text-black",
+    //   },
+    //   duration: 3000,
+    //   description: `${text.substring(0, 35)}...`,
+    //   icon: <Task01Icon color="black" height="23" />,
+    // });
   };
 
   const handlePinToggle = async () => {
@@ -56,16 +60,18 @@ export function ChatBubble_Actions({
       // Pin/unpin the message
       await apiauth.put(
         `/conversations/${convoIdParam}/messages/${message_id}/pin`,
-        { pinned: !pinned },
+        { pinned: !pinned }
       );
 
-      console.log("Updated pin route");
+      toast.success("Pinned message!");
+
       // Fetch messages again to reflect the pin state
       const updatedMessages = await ApiService.fetchMessages(convoIdParam);
 
       setConvoMessages(updatedMessages);
     } catch (error) {
-      console.error("Failed to update chat name", error);
+      toast.error("Could not pin this message");
+      console.error("Could not pin this message", error);
     }
   };
 
@@ -78,7 +84,7 @@ export function ChatBubble_Actions({
             className="w-fit p-0 h-fit rounded-md"
             style={{ minWidth: "22px" }}
             variant="light"
-            onClick={copyToClipboard}
+            onPress={copyToClipboard}
           >
             <Task01Icon className="cursor-pointer" height="22" width="22" />
           </Button>

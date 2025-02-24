@@ -11,12 +11,14 @@ import "./index.css";
 import UIProviderLayout from "./layouts/UIProviderLayout";
 
 import { mainRoutes } from "@/routes/mainRoutes";
+import useAxiosInterceptor from "./hooks/useAxiosInterceptor";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
 
 export default function App() {
   const location = useLocation();
+  useAxiosInterceptor();
 
   useEffect(() => {
     const { pathname } = location;
@@ -79,7 +81,12 @@ export default function App() {
         <UIProviderLayout>
           <ConvoProvider>
             <ConversationListProvider>
-              <Toaster richColors theme="dark" />
+              <Toaster
+                richColors
+                theme="dark"
+                position="top-right"
+                closeButton
+              />
               <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                 <Routes>
                   <Route element={<MainInterface />}>

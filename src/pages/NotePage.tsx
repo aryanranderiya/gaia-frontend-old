@@ -13,16 +13,17 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-import { apiauth } from "@/utils/apiaxios";
+import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
+import { MenuBar } from "@/components/Notes/NotesMenuBar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { MenuBar } from "@/components/Notes/NotesMenuBar";
-import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
+import { apiauth } from "@/utils/apiaxios";
+import { SaveIcon } from "@/components/Misc/icons";
 
 interface Note {
   id: string;
@@ -214,12 +215,22 @@ export default function NotesAdd() {
         <Suspense fallback={<Spinner />}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover:bg-zinc-800 hover:text-white"
+              >
                 <DotsVerticalIcon height={20} width={20} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="text-red-500" onClick={deleteNote}>
+            <DropdownMenuContent
+              align="end"
+              className="bg-zinc-800 border-none hover:!bg-zinc-900 p-0"
+            >
+              <DropdownMenuItem
+                className="text-red-500 hover:!bg-zinc-900 hover:!text-red-500 p-3 cursor-pointer"
+                onClick={deleteNote}
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete Note
               </DropdownMenuItem>
@@ -245,20 +256,21 @@ export default function NotesAdd() {
       )}
 
       <div
-        className={`fixed bottom-4 right-4 bg-[#00bbff] p-5 rounded-lg shadow-lg transition-all duration-200 ${
+        className={`fixed bottom-4 right-4 bg-zinc-800 p-5 rounded-lg shadow-lg transition-all duration-200 ${
           hasUnsavedChanges
             ? "opacity-100 pointer-events-auto scale-100"
             : "opacity-0 pointer-events-none scale-80"
         }`}
       >
-        <p className="text-white mb-2 font-medium text-xl">
+        <p className="text-white mb-2 font-medium text-lg">
           You have unsaved changes!
         </p>
         <Button
           disabled={!hasUnsavedChanges || isSaving}
-          size={"lg"}
+          className="bg-[#00bbff] hover:bg-[#7bdcff] text-zinc-800 flex gap-2"
           onClick={saveNote}
         >
+          <SaveIcon />
           {isSaving ? "Saving..." : "Save Changes"}
         </Button>
       </div>
