@@ -2,6 +2,7 @@
 import { Suspense, lazy } from "react";
 
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+import Emails from "@/pages/Email";
 
 const MainChat = lazy(() => import("@/pages/MainChat"));
 const Explore = lazy(() => import("@/pages/Explore"));
@@ -30,6 +31,14 @@ export const mainRoutes = [
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight />}>
         <Calendar />
+      </Suspense>
+    ),
+  },
+  {
+    path: "email",
+    element: (
+      <Suspense fallback={<SuspenseLoader fullHeight />}>
+        <Emails />
       </Suspense>
     ),
   },

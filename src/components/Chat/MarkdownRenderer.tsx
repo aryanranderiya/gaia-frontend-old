@@ -79,7 +79,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         y: e.clientY - position.y,
       });
     },
-    [position],
+    [position]
   );
 
   const handleMouseMove = useCallback(
@@ -91,7 +91,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         });
       }
     },
-    [isDragging, startPosition],
+    [isDragging, startPosition]
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -100,7 +100,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!,
+      mermaidRef.current.querySelector("svg")!
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",
@@ -136,7 +136,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
 
   if (isMermaid) {
     return (
-      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[15px] w-[40vw]">
+      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[10px] w-[40vw]">
         <Tabs
           className="px-3"
           disabledKeys={isLoading ? ["editor"] : []}
@@ -230,7 +230,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     <>
       {!inline && match ? (
         <div className="relative flex flex-col gap-0 ">
-          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[15px] !rounded-b-none mb-[-0.5em] !sticky top-0">
+          <div className="flex justify-between items-center bg-zinc-900  text-white px-4 py-1 !rounded-t-[10px] !rounded-b-none mb-[-0.5em] !sticky top-0">
             <span className="text-sm font-mono monospace">{match[1]}</span>
             <Button
               className="text-foreground hover:text-gray-300 text-xs"

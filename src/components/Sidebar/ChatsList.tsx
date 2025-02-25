@@ -157,7 +157,12 @@ export default function ChatsList() {
               </Button>
             </div>
 
-            <Accordion type="single" collapsible className="w-full p-0">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full p-0"
+              defaultValue="item-1"
+            >
               <AccordionItem
                 value="item-1"
                 className="bg-zinc-900 min-h-fit pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden pt-0 border-b-0"

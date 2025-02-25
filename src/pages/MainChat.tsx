@@ -38,11 +38,16 @@ const MainChat = React.memo(function MainChat() {
 
   return (
     <>
-      <ScrollArea onScrollCapture={handleScroll}>
-        <div ref={convoRef} className="conversation_history">
+      {/* <ScrollArea onScrollCapture={handleScroll}> */}
+      <div className="w-full flex justify-center overflow-y-scroll">
+        <div
+          ref={convoRef}
+          className="conversation_history max-w-screen-md w-full"
+        >
           <ChatRenderer />
         </div>
-      </ScrollArea>
+      </div>
+      {/* </ScrollArea> */}
       <MainSearchbar
         inputRef={inputRef}
         isAtBottom={isAtBottom}

@@ -224,9 +224,10 @@ main {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 2em;
+  padding: 2rem;
+  padding-left: 0.5rem;
   gap: 1em;
-  width: 50vw;
+  /* width: 50vw; */
   height: fit-content;
   min-height: 70vh;
 }
@@ -240,7 +241,7 @@ main {
   width: fit-content;
   user-select: auto;
   height: fit-content;
-  overflow: hidden;
+  /* overflow: hidden; */
   max-width: 30vw;
   min-width: fit-content;
 }

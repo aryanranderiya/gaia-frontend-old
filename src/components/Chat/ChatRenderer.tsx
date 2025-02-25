@@ -131,7 +131,7 @@ export default function ChatRenderer() {
 
       {convoMessages?.map((message, index) =>
         message.type === "bot" ? (
-          <div key={index} className="relative flex items-end gap-3">
+          <div key={index} className="relative flex items-end gap-2">
             <div
               className={`pingspinner relative ${
                 message.loading ? "bottom-3" : "bottom-9"
