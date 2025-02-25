@@ -7,7 +7,7 @@ import React from "react";
 
 import { ArrowLeft01Icon, Tick02Icon } from "@/components/Misc/icons";
 
-function FAQAccordion() {
+export function FAQAccordion() {
   const faqItems = [
     {
       question: "What is Gaia and how does it work?",
