@@ -40,7 +40,7 @@ export default function LoginSignup({
     flow: "auth-code",
     ux_mode: "popup",
     scope:
-      "openid email profile https://www.googleapis.com/auth/calendar.events",
+      "openid email profile https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.readonly",
     onSuccess: async (codeResponse) => {
       console.log(codeResponse);
       const tokens = await apiauth.post("/oauth/callback", {

@@ -1,20 +1,20 @@
-import { isToday, isYesterday, subDays } from "date-fns";
-import { Loader } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@heroui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@heroui/button";
+import { isToday, isYesterday, subDays } from "date-fns";
+import { Loader } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChatBubbleAddIcon } from "../Misc/icons";
 
 import { ChatTab } from "./ChatTab";
 
-import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { useConversationList } from "@/contexts/ConversationList";
+import { useConvo } from "@/contexts/CurrentConvoMessages";
 
 const getTimeFrame = (dateString: string): string => {
   const date = new Date(dateString);
@@ -55,6 +55,10 @@ export default function ChatsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    fetchConversations();
+  }, []);
 
   // We assume the provider auto-fetches the first page.
   // Once paginationMeta is available, we consider the initial load complete.

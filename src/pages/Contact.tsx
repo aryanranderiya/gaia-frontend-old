@@ -12,8 +12,15 @@ const ContactPage = () => {
           href="mailto:support@heygaia.io"
           // className="inline-block mt-4 bg-primary text-white font-medium py-2 px-6 rounded-lg hover:bg-[#00bbff80] transition"
         >
-          <Button className="mt-4" color="primary" variant="shadow">
-            Email us at support@heygaia.io
+          <Button
+            className="mt-4"
+            color="primary"
+            size="lg"
+            variant="shadow"
+            radius="full"
+          >
+            Email us at:
+            <b>support@heygaia.io</b>
           </Button>
         </a>
       </div>

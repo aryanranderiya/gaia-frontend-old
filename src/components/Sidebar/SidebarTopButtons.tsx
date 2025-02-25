@@ -30,11 +30,11 @@ export default function SidebarTopButtons() {
       icon: <SearchIcon height={26} width={26} />,
       label: "Search",
     },
-    {
-      route: "/email",
-      icon: <Mail01Icon height={27} width={27} />,
-      label: "Email",
-    },
+    // {
+    //   route: "/email",
+    //   icon: <Mail01Icon height={27} width={27} />,
+    //   label: "Email",
+    // },
     {
       route: "/explore",
       icon: <DiscoverCircleIcon height={27} width={27} />,

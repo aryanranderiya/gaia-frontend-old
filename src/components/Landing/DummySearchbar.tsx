@@ -85,7 +85,7 @@ const DummySearchbar = () => {
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
-    event,
+    event
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -181,7 +181,9 @@ const DummySearchbar = () => {
           <DialogHeader>
             <DialogTitle>Fetch Page</DialogTitle>
             <DialogDescription>
-              Lorem ipsum dolor sit. to fetch data from the webpage
+              Enter a URL to fetch and analyze the webpage's content. GAIA will
+              extract and process the text and relevant information to help
+              understand the page's context.
             </DialogDescription>
           </DialogHeader>
           <Input

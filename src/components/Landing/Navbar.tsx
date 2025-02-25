@@ -60,7 +60,7 @@ export default function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="navbar_content bg-zinc-950 outline outline-zinc-900 w-full max-w-screen-xl">
+      <div className="navbar_content bg-zinc-950 outline-[1px] outline outline-zinc-900 w-full max-w-screen-xl">
         <Button
           as={Link}
           className="text-xl font-medium"
