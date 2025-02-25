@@ -88,7 +88,7 @@ function FAQAccordion() {
 
 interface PricingCardProps {
   title: string;
-  description: string;
+  // description: string;
   type: "main" | "secondary";
   price: number;
   discountPercentage?: number; // new prop for discount percentage
@@ -100,7 +100,7 @@ interface PricingCardProps {
 
 export function PricingCard({
   title,
-  description,
+  // description,
   type,
   price,
   discountPercentage = 0,
@@ -191,7 +191,7 @@ export function PricingCards({ durationIsMonth = false }) {
   return (
     <div className="grid grid-cols-2 w-screen max-w-screen-sm gap-3">
       <PricingCard
-        description="lorem ipsum"
+        // description="lorem ipsum"
         durationIsMonth={durationIsMonth}
         features={[
           "Instant Messaging",
@@ -211,7 +211,7 @@ export function PricingCards({ durationIsMonth = false }) {
         type="secondary"
       />
       <PricingCard
-        description="lorem ipsum"
+        // description="lorem ipsum"
         durationIsMonth={durationIsMonth}
         features={[
           "Everything in Free",

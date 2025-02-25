@@ -29,12 +29,12 @@ interface CalendarEventDialogProps {
   mode?: "view" | "create";
 }
 
-const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
+export default function CalendarEventDialog({
   event,
   open,
   onOpenChange,
   mode = "view",
-}) => {
+}: CalendarEventDialogProps) {
   if (mode === "create") {
     // Create mode: render a form to create a new event.
     const [summary, setSummary] = useState("");
@@ -165,6 +165,8 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
     );
   };
 
+  if (!event) return;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!bg-zinc-900 border-none max-w-lg max-h-[80vh] overflow-y-auto">
@@ -172,7 +174,7 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
           <DialogTitle className="flex items-center gap-3">
             <Twemoji options={{ className: "twemoji max-w-[20px]" }}>
               <div className="p-2 bg-zinc-800 rounded-xl">
-                {getEventIcon(event)}
+                {event && getEventIcon(event)}
               </div>
             </Twemoji>
             <span className="font-bold text-xl text-zinc-100">
@@ -347,6 +349,4 @@ const CalendarEventDialog: React.FC<CalendarEventDialogProps> = ({
       </DialogContent>
     </Dialog>
   );
-};
-
-export default CalendarEventDialog;
+}

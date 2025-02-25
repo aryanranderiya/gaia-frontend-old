@@ -36,5 +36,5 @@ export interface ChatBubbleBotProps {
   // setImagePrompt: React.Dispatch<React.SetStateAction<string>>;
 
   intent?: string;
-  calendar_options?: CalendarOptions;
+  calendar_options?: CalendarOptions[] | null;
 }

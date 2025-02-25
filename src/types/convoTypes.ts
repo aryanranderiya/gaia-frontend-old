@@ -21,7 +21,7 @@ export type MessageType = {
   pinned?: boolean;
 
   intent?: string;
-  calendar_options?: CalendarOptions;
+  calendar_options?: CalendarOptions[] | null;
 };
 
 export type CalendarOptions = {

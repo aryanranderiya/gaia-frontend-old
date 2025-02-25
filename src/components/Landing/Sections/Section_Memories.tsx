@@ -5,10 +5,8 @@ import {
 } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 import {
   Brain02Icon,
-  BubbleChatIcon,
   BubbleConversationChatIcon,
-  ChatBubbleAddIcon,
-  StickyNote01Icon,
+  StickyNote01Icon
 } from "@/components/Misc/icons";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";

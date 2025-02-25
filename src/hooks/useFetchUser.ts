@@ -1,14 +1,12 @@
-// hooks/useFetchUser.ts
-
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import { useUser } from "@/contexts/UserContext";
 import { apiauth } from "@/utils/apiaxios";
 
 const useFetchUser = () => {
   const { setUserData } = useUser();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const fetchUserInfo = async () => {
     try {

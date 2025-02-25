@@ -302,6 +302,9 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^2.11.5
         version: 2.11.5
+      '@types/react-twemoji':
+        specifier: ^0.4.3
+        version: 0.4.3
       '@uiw/react-md-editor':
         specifier: ^4.0.5
         version: 4.0.5(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3343,6 +3346,9 @@ packages:
 
   '@types/react-syntax-highlighter@15.5.13':
     resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
+
+  '@types/react-twemoji@0.4.3':
+    resolution: {integrity: sha512-VzWkjmO8yJ31JSWgQhe0LCLU3FxcurTOklECm9p8v1xI/WfUBOGbSrqPjQPL46LE4oOqfrYIQ+0LM/8I6A8EDQ==}
 
   '@types/react@18.3.3':
     resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
@@ -10439,6 +10445,10 @@ snapshots:
       redux: 4.2.1
 
   '@types/react-syntax-highlighter@15.5.13':
+    dependencies:
+      '@types/react': 18.3.3
+
+  '@types/react-twemoji@0.4.3':
     dependencies:
       '@types/react': 18.3.3
 

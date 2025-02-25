@@ -201,7 +201,9 @@ export default function Calendar() {
     const months: { [key: string]: { [key: string]: GoogleCalendarEvent[] } } =
       {};
     calendarEvents.forEach((event) => {
-      const eventDate = new Date(event.start.dateTime || event.start.date);
+      const eventDate = new Date(
+        (event.start.dateTime || event.start.date) as string | number | Date
+      );
       const monthKey = eventDate.toLocaleString("default", {
         month: "long",
         year: "numeric",
