@@ -8,7 +8,6 @@ import { AnimatedSection } from "../AnimatedSection";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 // import { cn } from "@/lib/utils";
-import TypingAnimation from "@/components/MagicUI/typing-animation";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { cn } from "@/lib/utils";
