@@ -22,8 +22,10 @@ export default function LoginModal({
     scope:
       "openid email profile https://www.googleapis.com/auth/calendar.events",
     onSuccess: async (codeResponse) => {
-      await apiauth.post("/oauth/callback", {
-        code: codeResponse.code,
+      await apiauth.get("/oauth/google/callback", {
+        params: {
+          code: codeResponse.code,
+        },
       });
 
       navigate("/c");

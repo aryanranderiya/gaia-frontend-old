@@ -1,5 +1,11 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { apiauth } from "@/utils/apiaxios";
 
@@ -26,6 +32,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const setUserData = (
     name: string,
@@ -53,6 +60,29 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       navigate("/get-started");
     }
   };
+
+  // Handle redirect from backend after oauth login
+  useEffect(() => {
+    const { search } = location;
+
+    if (search) {
+      const params = new URLSearchParams(search);
+
+      const accessToken = params.get("access_token");
+      const refreshToken = params.get("refresh_token");
+
+      if (accessToken && refreshToken && !user) {
+        // set cookies
+        document.cookie = `access_token=${accessToken};`;
+        document.cookie = `refresh_token=${refreshToken};`;
+      }
+
+      params.delete("access_token");
+      params.delete("refresh_token");
+
+      navigate("/c");
+    }
+  }, [location.search, user]);
 
   return (
     <UserContext.Provider value={{ user, setUserData, logout }}>

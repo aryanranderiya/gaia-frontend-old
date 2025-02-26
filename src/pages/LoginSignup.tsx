@@ -1,5 +1,4 @@
-import { useGoogleLogin } from "@react-oauth/google";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { GoogleColouredIcon } from "@/components/Misc/icons";
 import { Button } from "@/components/ui/button";
@@ -34,24 +33,26 @@ export default function LoginSignup({
 }: {
   isLogin?: boolean;
 }) {
-  const navigate = useNavigate();
+  // const handleGoogleLogin = useGoogleLogin({
+  //   flow: "auth-code",
+  //   ux_mode: "popup",
+  //   scope:
+  //     "openid email profile https://www.googleapis.com/auth/calendar.events",
+  //   onSuccess: async (codeResponse) => {
+  //     console.log(codeResponse);
+  //     const tokens = await apiauth.post("/oauth/callback", {
+  //       code: codeResponse.code,
+  //     });
 
-  const handleGoogleLogin = useGoogleLogin({
-    flow: "auth-code",
-    ux_mode: "popup",
-    scope:
-      "openid email profile https://www.googleapis.com/auth/calendar.events",
-    onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
-      const tokens = await apiauth.post("/oauth/callback", {
-        code: codeResponse.code,
-      });
+  //     navigate("/c");
+  //     console.log(tokens);
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // });
 
-      navigate("/c");
-      console.log(tokens);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
+  const handleGoogleLogin = () => {
+    window.location.href = apiauth.getUri() + "oauth/login/google";
+  };
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">

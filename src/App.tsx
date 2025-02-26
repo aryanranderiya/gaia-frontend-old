@@ -7,17 +7,18 @@ import SuspenseLoader from "./components/Misc/SuspenseLoader";
 import { ConversationListProvider } from "./contexts/ConversationList";
 import { ConvoProvider } from "./contexts/CurrentConvoMessages";
 import { UserProvider } from "./contexts/UserContext";
-import "./index.css";
+import useAxiosInterceptor from "./hooks/useAxiosInterceptor";
 import UIProviderLayout from "./layouts/UIProviderLayout";
 
 import { mainRoutes } from "@/routes/mainRoutes";
-import useAxiosInterceptor from "./hooks/useAxiosInterceptor";
+import "./index.css";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
 
 export default function App() {
   const location = useLocation();
+
   useAxiosInterceptor();
 
   useEffect(() => {
@@ -82,10 +83,10 @@ export default function App() {
           <ConvoProvider>
             <ConversationListProvider>
               <Toaster
-                richColors
-                theme="dark"
-                position="top-right"
                 closeButton
+                richColors
+                position="top-right"
+                theme="dark"
               />
               <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
                 <Routes>
