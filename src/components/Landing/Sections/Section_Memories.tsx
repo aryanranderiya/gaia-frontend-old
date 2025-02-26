@@ -6,7 +6,7 @@ import {
 import {
   Brain02Icon,
   BubbleConversationChatIcon,
-  StickyNote01Icon
+  StickyNote01Icon,
 } from "@/components/Misc/icons";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
@@ -52,10 +52,10 @@ export default function Section_Memories() {
           }
         />
 
-        <div className="w-full sm:px-10 px-2 !m-0 !mt-0">
+        <div className="w-full sm:px-10 px-2 !m-0 !mt-0 h-[300px]">
           <Tabs
             aria-label="GAIA Notes Options"
-            className="w-full"
+            className="w-full overflow-hidden"
             classNames={{
               tabList: "w-full",
               tabContent: "group-data-[selected=true]:text-black font-medium",

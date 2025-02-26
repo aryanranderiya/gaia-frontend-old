@@ -78,7 +78,7 @@ export default function Hero_Image() {
           <div className="sm:flex hidden absolute -right-28 top-0 h-full items-end">
             <div className="bg-zinc-800 w-[250px] h-[250px] rounded-xl bottom-24 relative outline outline-2 outline-zinc-700 flex items-center justify-center">
               <div className="pingspinner !min-h-[100px] !min-w-[100px]" />
-              update this
+              {/* update this */}
             </div>
           </div>
         </div>

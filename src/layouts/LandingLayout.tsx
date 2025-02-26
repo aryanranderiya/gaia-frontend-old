@@ -4,7 +4,6 @@ import { useRoutes } from "react-router-dom";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import LandingPage from "@/pages/Landing";
 
-// Lazy-loaded components
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
@@ -16,11 +15,7 @@ const LoginSignup = lazy(() => import("@/pages/LoginSignup"));
 const routesConfig = [
   {
     path: "/",
-    element: (
-      <LandingPage />
-      // <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
-      // {/* </Suspense> */}
-    ),
+    element: <LandingPage />,
     index: true,
   },
   {
@@ -50,7 +45,7 @@ const routesConfig = [
   {
     path: "privacy",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <PrivacyPolicy />
       </Suspense>
     ),
@@ -58,7 +53,7 @@ const routesConfig = [
   {
     path: "terms",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <TermsOfService />
       </Suspense>
     ),
@@ -66,7 +61,7 @@ const routesConfig = [
   {
     path: "pricing",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <Pricing />
       </Suspense>
     ),
@@ -74,7 +69,7 @@ const routesConfig = [
   {
     path: "contact",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <Contact />
       </Suspense>
     ),
@@ -82,7 +77,7 @@ const routesConfig = [
   {
     path: "*",
     element: (
-      <Suspense fallback={<SuspenseLoader fullHeight />}>
+      <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
         <PageNotFound />
       </Suspense>
     ),

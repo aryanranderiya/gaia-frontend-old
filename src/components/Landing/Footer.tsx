@@ -14,7 +14,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col w-fit h-full text-foreground-500">
-            <div className="text-xl font-medium text-white">Resources</div>
+            <div className="text-xl font-medium text-white">Sitemap</div>
             {/* <div>
               <Link className="hover:underline hover:text-white" to="/blog">
                 Blog

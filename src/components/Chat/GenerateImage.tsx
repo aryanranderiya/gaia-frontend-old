@@ -56,6 +56,10 @@ export default function GenerateImage({
     setIsValid(value.trim() !== "");
   };
 
+  /**
+   * Updates conversation both in UI state and (via ApiService) in the DB.
+   * When `replaceLastMessage` is true, the last message in state is removed.
+   */
   const updateConversationState = async (
     conversationId: string,
     newMessages: MessageType[],
@@ -65,9 +69,8 @@ export default function GenerateImage({
     try {
       setConvoMessages((prev) => {
         const baseMessages = replaceLastMessage ? prev.slice(0, -1) : prev;
-
+        // Send only final messages to the DB
         ApiService.updateConversation(conversationId, newMessages);
-
         return [...baseMessages, ...newMessages];
       });
 
@@ -82,31 +85,8 @@ export default function GenerateImage({
     }
   };
 
-  const createNewConversation = async (
-    initialMessages: MessageType[]
-  ): Promise<string> => {
-    try {
-      const convoID = crypto.randomUUID();
-
-      await ApiService.createConversation(convoID);
-      await updateConversationState(
-        convoID,
-        initialMessages,
-        `Generate Image: ${initialMessages[0]?.imagePrompt || ""}`
-      );
-      navigate(`/c/${convoID}`);
-
-      return convoID;
-    } catch (error) {
-      console.error("Failed to create conversation:", error);
-      throw new Error("Failed to create new conversation");
-    }
-  };
-
   const generateImage = async (prompt: string): Promise<[string, string]> => {
     try {
-      console.log("hey there 0 ");
-
       const response = await api.post(
         "/image/generate",
         { message: prompt },
@@ -114,9 +94,6 @@ export default function GenerateImage({
           headers: { "Content-Type": "application/json" },
         }
       );
-
-      console.log("hey there", response.data);
-
       return [response.data.url, response.data.improved_prompt];
     } catch (error) {
       console.error("Image generation failed:", error);
@@ -129,14 +106,15 @@ export default function GenerateImage({
     setLoading(true);
 
     try {
-      const bot_message_id = String(ObjectID());
-      const user_message_id = String(ObjectID());
+      const botMessageId = String(ObjectID());
+      const userMessageId = String(ObjectID());
 
+      // Create user message and a loading bot message (for UI only)
       const userMessage: MessageType = {
         type: "user",
-        response: `Generate Image: \n${imagePrompt}`,
+        response: `Generate Image:\n${imagePrompt}`,
         date: fetchDate(),
-        message_id: user_message_id,
+        message_id: userMessageId,
       };
 
       const botLoadingMessage: MessageType = {
@@ -146,47 +124,71 @@ export default function GenerateImage({
         loading: true,
         imagePrompt,
         isImage: true,
-        message_id: bot_message_id,
+        message_id: botMessageId,
       };
 
-      const initialMessages: MessageType[] = [userMessage, botLoadingMessage];
+      const isNewConversation = !convoIdParam;
+      let conversationId = convoIdParam || "";
 
-      const conversationId =
-        convoIdParam || (await createNewConversation(initialMessages));
+      // Update UI state with user message and temporary loading state.
+      if (isNewConversation) {
+        // For new conversations, start a fresh state.
+        setConvoMessages([userMessage, botLoadingMessage]);
+      } else {
+        setConvoMessages((prev) => [...prev, userMessage, botLoadingMessage]);
+      }
 
-      // Initially set the user prompt message along with the loading bot state
-      setConvoMessages((prev) => {
-        return [...prev, ...initialMessages];
-      });
+      // If new conversation, create it in the DB now (but do not store the loading message)
+      if (isNewConversation) {
+        conversationId = crypto.randomUUID();
+        await ApiService.createConversation(conversationId);
+        navigate(`/c/${conversationId}`);
+      }
 
       setOpenImageDialog(false);
 
-      const [imageUrl, improved_prompt] = await generateImage(imagePrompt);
+      const [imageUrl, improvedPrompt] = await generateImage(imagePrompt);
 
+      // Prepare final bot message without the loading flag.
       const finalBotMessage: MessageType = {
         type: "bot",
         response: "Here is your generated image",
         date: fetchDate(),
         imageUrl,
         imagePrompt,
-        improvedImagePrompt: improved_prompt,
+        improvedImagePrompt: improvedPrompt,
         isImage: true,
         loading: false,
-        message_id: bot_message_id,
+        message_id: botMessageId,
       };
 
-      // Remove the user prompt from list of messages (because convo messages is set again in updateConversationState to store in the database)
+      // Update UI: remove the loading message and add the final bot message.
       setConvoMessages((prev) => {
-        return [...prev.slice(0, -1)];
+        // If the last message is the loading message, replace it.
+        if (prev.length && prev[prev.length - 1].loading) {
+          return [...prev.slice(0, -1), finalBotMessage];
+        }
+        return [...prev, finalBotMessage];
       });
 
-      // udpate the conversation messages, and store messages in the database
-      await updateConversationState(
-        conversationId,
-        [userMessage, finalBotMessage],
-        undefined,
-        true
-      );
+      // --- Update the DB with final messages only ---
+      if (isNewConversation) {
+        // For new conversations, store only [userMessage, finalBotMessage]
+        await updateConversationState(
+          conversationId,
+          [userMessage, finalBotMessage],
+          `Generate Image: ${imagePrompt}`,
+          false
+        );
+      } else {
+        // For existing conversations, replace the temporary loading message with the final bot message.
+        await updateConversationState(
+          conversationId,
+          [finalBotMessage],
+          undefined,
+          true
+        );
+      }
 
       setImagePrompt("");
     } catch (error) {

@@ -7,7 +7,7 @@ import React from "react";
 
 import { ArrowLeft01Icon, Tick02Icon } from "@/components/Misc/icons";
 
-function FAQAccordion() {
+export function FAQAccordion() {
   const faqItems = [
     {
       question: "What is Gaia and how does it work?",
@@ -117,9 +117,12 @@ export function PricingCard({
 
   return (
     <>
+      {/* bg-custom-gradients */}
       <div
         className={`w-full relative rounded-2xl ${className} ${
-          type === "main" ? "bg-zinc-800 " : "bg-zinc-900"
+          type === "main"
+            ? "bg-zinc-900  outline outline-2 outline-primary"
+            : "bg-zinc-900 "
         } `}
       >
         <div className="p-[7%] h-full flex-col flex gap-4">
@@ -189,7 +192,7 @@ export function PricingCard({
 
 export function PricingCards({ durationIsMonth = false }) {
   return (
-    <div className="grid grid-cols-2 w-screen max-w-screen-sm gap-3">
+    <div className="grid grid-cols-2 w-screen max-w-screen-sm gap-3 ">
       <PricingCard
         // description="lorem ipsum"
         durationIsMonth={durationIsMonth}
@@ -237,7 +240,7 @@ export function PricingCards({ durationIsMonth = false }) {
 
 export default function Pricing() {
   return (
-    <div className="flex justify-center h-full w-screen pt-[110px] flex-col">
+    <div className="flex justify-center w-screen items-center min-h-screen flex-col bg-custom-gradient">
       <div className="flex-col flex gap-2 items-center">
         <div className="flex items-center flex-col gap-3 mb-2 w-full">
           <Chip color="primary" size="lg" variant="light">
@@ -273,7 +276,7 @@ export default function Pricing() {
           </Tabs>
         </div>
 
-        <FAQAccordion />
+        {/* <FAQAccordion /> */}
       </div>
     </div>
   );

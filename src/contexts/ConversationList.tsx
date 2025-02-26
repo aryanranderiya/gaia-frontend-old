@@ -1,9 +1,8 @@
 import React, {
   createContext,
-  useContext,
-  useState,
-  useEffect,
   ReactNode,
+  useContext,
+  useState
 } from "react";
 
 import { apiauth } from "@/utils/apiaxios";
@@ -30,7 +29,7 @@ interface ConversationContextType {
   fetchConversations: (
     page?: number,
     limit?: number,
-    append?: boolean,
+    append?: boolean
   ) => Promise<void>;
   setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
   paginationMeta: PaginationMeta | null;
@@ -41,7 +40,7 @@ interface ConversationContextType {
 
 // Create the context.
 const ConversationContext = createContext<ConversationContextType | undefined>(
-  undefined,
+  undefined
 );
 
 // Provider component.
@@ -50,7 +49,7 @@ export const ConversationListProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [paginationMeta, setPaginationMeta] = useState<PaginationMeta | null>(
-    null,
+    null
   );
 
   // Fetch conversations with pagination.
@@ -59,7 +58,7 @@ export const ConversationListProvider: React.FC<{ children: ReactNode }> = ({
   const fetchConversations = async (page = 1, limit = 20, append = true) => {
     try {
       const response = await apiauth.get(
-        `/conversations?page=${page}&limit=${limit}`,
+        `/conversations?page=${page}&limit=${limit}`
       );
       const data = response?.data;
       const newConversations: Conversation[] = data?.conversations ?? [];
@@ -70,7 +69,7 @@ export const ConversationListProvider: React.FC<{ children: ReactNode }> = ({
           const combined = [...prev, ...newConversations];
           // Create a Map keyed by conversation_id; later values overwrite earlier ones
           const uniqueMap = new Map(
-            combined.map((conv) => [conv.conversation_id, conv]),
+            combined.map((conv) => [conv.conversation_id, conv])
           );
 
           // Return the deduplicated array
@@ -90,11 +89,6 @@ export const ConversationListProvider: React.FC<{ children: ReactNode }> = ({
       console.error("Error fetching conversations:", error);
     }
   };
-
-  // Optionally, load the first page automatically.
-  useEffect(() => {
-    fetchConversations();
-  }, []);
 
   return (
     <ConversationContext.Provider
@@ -117,7 +111,7 @@ export const useConversationList = (): ConversationContextType => {
 
   if (!context) {
     throw new Error(
-      "useConversationList must be used within a ConversationListProvider",
+      "useConversationList must be used within a ConversationListProvider"
     );
   }
 

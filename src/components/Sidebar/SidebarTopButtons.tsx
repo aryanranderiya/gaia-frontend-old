@@ -7,10 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   CalendarIcon,
   DiscoverCircleIcon,
-  Mail01Icon,
   PinIcon,
   Route02Icon,
-  StickyNote01Icon,
+  StickyNote01Icon
 } from "../Misc/icons";
 import SearchCommand from "../Search/SearchCommand";
 
@@ -30,11 +29,11 @@ export default function SidebarTopButtons() {
       icon: <SearchIcon height={26} width={26} />,
       label: "Search",
     },
-    {
-      route: "/email",
-      icon: <Mail01Icon height={27} width={27} />,
-      label: "Email",
-    },
+    // {
+    //   route: "/email",
+    //   icon: <Mail01Icon height={27} width={27} />,
+    //   label: "Email",
+    // },
     {
       route: "/explore",
       icon: <DiscoverCircleIcon height={27} width={27} />,

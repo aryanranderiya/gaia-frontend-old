@@ -43,7 +43,6 @@ export default function LoginSignup({
   //     const tokens = await apiauth.post("/oauth/callback", {
   //       code: codeResponse.code,
   //     });
-
   //     navigate("/c");
   //     console.log(tokens);
   //   },

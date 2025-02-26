@@ -8,7 +8,6 @@ import { AnimatedSection } from "../AnimatedSection";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";
 // import { Avatar, AvatarGroup } from "@heroui/avatar";
 // import { cn } from "@/lib/utils";
-import TypingAnimation from "@/components/MagicUI/typing-animation";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { cn } from "@/lib/utils";
@@ -28,7 +27,7 @@ export default function HeroSection() {
 
         <div
           className={cn(
-            "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800",
+            "group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-neutral-900 hover:bg-neutral-800"
           )}
         >
           <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:duration-300 hover:text-neutral-400">
@@ -42,15 +41,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* <div
+        <div
           className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl
         text-white max-w-screen-sm text-center"
         >
-          GAIA is your all-in-one personal assistant for seamless calendar
-          management, goal tracking, and more.
-        </div> */}
+          GAIA is your all-in-one personal assistant to help organise your life.
+        </div>
 
-        <TypingAnimation
+        {/* <TypingAnimation
           className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl text-white max-w-screen-sm text-center"
           duration={8}
           text={
@@ -58,7 +56,7 @@ export default function HeroSection() {
             // "GAIA is your one stop solution personal assistant that helps with everything from calendar management to goal tracking"
             "GAIA is your all-in-one personal assistant to help organise your life."
           }
-        />
+        /> */}
         <Button
           as={Link}
           className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
