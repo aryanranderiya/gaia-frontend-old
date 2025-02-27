@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 // Define the shape of the user object
 interface User {
   name: string;
@@ -18,7 +17,11 @@ interface User {
 // Define the shape of the context
 interface UserContextType {
   user: User | null;
-  setUserData: (name: string, email: string, profile_picture: string) => void;
+  setUserData: (
+    name: string | null,
+    email: string | null,
+    profile_picture: string | null
+  ) => void;
   logout: () => Promise<void>; // Update to return a Promise
 }
 
@@ -34,11 +37,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const location = useLocation();
 
   const setUserData = (
-    name: string,
-    email: string,
-    profile_picture: string
+    name: string | null,
+    email: string | null,
+    profile_picture: string | null
   ) => {
-    setUser({ name, email, profile_picture });
+    if (name && email && profile_picture)
+      setUser({ name, email, profile_picture });
+    else setUser(null);
   };
 
   const logout = async () => {

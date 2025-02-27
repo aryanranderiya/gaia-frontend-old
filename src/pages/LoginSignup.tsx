@@ -1,11 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { GoogleColouredIcon } from "@/components/Misc/icons";
 import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
-import { useEffect, useState } from "react";
 import { Spinner } from "@heroui/spinner";
-import { useUser } from "@/contexts/UserContext";
+import { useState } from "react";
 // import { Button as NextUIBtn } from "@heroui/button";
 
 // export function Calendaradd() {
@@ -40,13 +39,7 @@ export default function LoginSignup({
 }: {
   isLogin?: boolean;
 }) {
-  const { user } = useUser();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (user) navigate("/c");
-  }, [user, location.pathname]);
 
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">

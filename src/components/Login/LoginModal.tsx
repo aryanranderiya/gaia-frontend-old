@@ -1,11 +1,9 @@
 import { handleGoogleLogin } from "@/pages/LoginSignup";
+import { Modal, ModalBody, ModalContent } from "@heroui/modal";
+import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { GoogleColouredIcon } from "../Misc/icons";
 import { Button } from "../ui/button";
-// import { Dialog, DialogContent } from "@/components/ui/dialog";
-// import { handleGoogleLogin } from "@/pages/LoginSignup";
-import { Modal, ModalBody, ModalContent } from "@heroui/modal";
-import { Dispatch, SetStateAction } from "react";
 
 export default function LoginModal({
   open,
@@ -42,16 +40,12 @@ export default function LoginModal({
               <GoogleColouredIcon />
               Sign in with Google
             </Button>
-            <Link to={"/get-started"}>
-              <Button
-                className="rounded-full text-md gap-2 px-4 text-primary font-normal text-center w-full"
-                size={"lg"}
-                type="button"
-                variant="link"
-                onClick={() => setOpen(false)}
-              >
-                New to GAIA? Create an Account
-              </Button>
+            <Link
+              to="/get-started"
+              className="rounded-full text-md gap-2 px-4 text-primary font-normal text-center w-full"
+              onClick={() => setOpen(false)}
+            >
+              New to GAIA? Create an Account
             </Link>
           </>
         </ModalBody>

@@ -17,7 +17,7 @@ export default function App() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   useAxiosInterceptor(setLoginModalOpen);
-  useFetchUser(setLoginModalOpen);
+  useFetchUser();
 
   useEffect(() => {
     const { pathname } = location;
@@ -70,6 +70,12 @@ export default function App() {
   }, [location]);
 
   window.document.documentElement.classList.add("dark");
+
+  // useEffect(() => {
+  //   if (!user && !publicPages.includes(location.pathname)) {
+  //     setLoginModalOpen(true);
+  //   } else setLoginModalOpen(false);
+  // }, [user, location.pathname]);
 
   return (
     <>

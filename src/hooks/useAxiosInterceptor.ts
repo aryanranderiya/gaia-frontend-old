@@ -1,7 +1,7 @@
 import { apiauth } from "@/utils/apiaxios";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { publicPages } from "./useFetchUser";
 
 export default function useAxiosInterceptor(
@@ -18,7 +18,7 @@ export default function useAxiosInterceptor(
           error.response.status === 401 &&
           !publicPages.includes(location.pathname)
         ) {
-          toast.error("Session expired. Please log in again.");
+          // toast.error("Session expired. Please log in again.");
           setModalOpen(true);
         }
         return Promise.reject(error);
