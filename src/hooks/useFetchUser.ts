@@ -3,7 +3,7 @@ import { useUser } from "@/contexts/UserContext";
 import { apiauth } from "@/utils/apiaxios";
 import { useNavigate } from "react-router-dom";
 
-export const authPages = ["/login", "/signup", "/get-started", "/"];
+export const authPages = ["/login", "/signup", "/get-started"];
 export const publicPages = [...authPages, "/terms", "/privacy", "/contact"];
 
 const useFetchUser = (setModalOpen: Dispatch<SetStateAction<boolean>>) => {
