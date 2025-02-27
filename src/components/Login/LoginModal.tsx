@@ -48,6 +48,7 @@ export default function LoginModal({
                 size={"lg"}
                 type="button"
                 variant="link"
+                onClick={() => setOpen(false)}
               >
                 New to GAIA? Create an Account
               </Button>

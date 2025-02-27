@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { GoogleColouredIcon } from "@/components/Misc/icons";
 import { Button } from "@/components/ui/button";
 import { apiauth } from "@/utils/apiaxios";
+import { useState } from "react";
+import { Spinner } from "@heroui/spinner";
 // import { Button as NextUIBtn } from "@heroui/button";
 
 // export function Calendaradd() {
@@ -37,6 +39,8 @@ export default function LoginSignup({
 }: {
   isLogin?: boolean;
 }) {
+  const [loading, setLoading] = useState(false);
+
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
       <div className="w-full max-w-screen-sm p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-950 bg-transparent  backdrop-blur-lg bg-opacity-75 rounded-3xl">
@@ -51,14 +55,29 @@ export default function LoginSignup({
           </div>
         </div>
         <Button
-          className="rounded-full text-md gap-2 px-4"
+          className={`rounded-full text-md gap-2 px-4  ${
+            loading ? "bg-zinc-800 hover:bg-zinc-800 text-primary" : ""
+          }`}
           size={"lg"}
           type="button"
           variant="secondary"
-          onClick={() => handleGoogleLogin()}
+          disabled={loading}
+          onClick={() => {
+            setLoading(true);
+            handleGoogleLogin();
+          }}
         >
-          <GoogleColouredIcon />
-          {isLogin ? "Sign in" : "Sign up"} with Google
+          {loading ? (
+            <>
+              <Spinner size="sm" />
+              <span>Loading ...</span>
+            </>
+          ) : (
+            <>
+              <GoogleColouredIcon />
+              <span>{isLogin ? "Sign in" : "Sign up"} with Google</span>
+            </>
+          )}
         </Button>
         <Link to={isLogin ? "/get-started" : "/login"}>
           <Button
