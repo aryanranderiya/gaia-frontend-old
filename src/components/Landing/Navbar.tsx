@@ -1,8 +1,9 @@
+import { useUser } from "@/contexts/UserContext";
+import useMediaQuery from "@/hooks/mediaQuery";
 import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   BubbleConversationChatIcon,
   Home01Icon,
@@ -17,46 +18,11 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 
-import useMediaQuery from "@/hooks/mediaQuery";
-import { useUser } from "@/contexts/UserContext";
-// import WaitListButton from "./WaitlistModal";
-import { apiauth } from "@/utils/apiaxios";
-
 export default function Navbar() {
-  const { user, setUserData } = useUser();
-  const location = useLocation();
+  const { user } = useUser();
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
-
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    // LoadTranslationModel();
-    const fetchUserInfo = async () => {
-      try {
-        const response = await apiauth.get("/oauth/me", {
-          withCredentials: true,
-        });
-
-        setUserData(
-          response?.data?.name,
-          response?.data?.email,
-          response?.data?.picture
-        );
-
-        if (
-          location.pathname == "/login" ||
-          location.pathname == "/signup" ||
-          location.pathname == "/get-started"
-        )
-          navigate("/c");
-      } catch (err) {
-        // if (location.pathname != "/") navigate("/get-started");
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
     <div className="navbar">
@@ -72,14 +38,14 @@ export default function Navbar() {
           gaia
         </Button>
         {/* 
-        <div className="flex justify-center w-full items-center">
-          <Button variant="light" radius="none" size="md" onPress={() => navigate("features")}>Features</Button>
-          <Button variant="light" radius="none" size="md" onPress={() => navigate("pricing")}>Pricing</Button>
-          <Button variant="light" radius="none" size="md" onPress={() => navigate("feedback")}>Survey</Button>
-        </div> */}
+      <div className="flex justify-center w-full items-center">
+        <Button variant="light" radius="none" size="md" onPress={() => navigate("features")}>Features</Button>
+        <Button variant="light" radius="none" size="md" onPress={() => navigate("pricing")}>Pricing</Button>
+        <Button variant="light" radius="none" size="md" onPress={() => navigate("feedback")}>Survey</Button>
+      </div> */}
 
         {isMobileScreen ? (
-          <Sheet open={open} onOpenChange={setOpen}>
+          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger>
               <div className="rounded-full p-3">
                 <Menu01Icon color="foreground" />
@@ -100,7 +66,7 @@ export default function Navbar() {
                     // variant="ghost"
                     onPress={() => {
                       navigate("/");
-                      setOpen(false);
+                      setSheetOpen(false);
                     }}
                   >
                     Home
@@ -121,7 +87,7 @@ export default function Navbar() {
                       variant="shadow"
                       onPress={() => {
                         navigate("/c");
-                        setOpen(false);
+                        setSheetOpen(false);
                       }}
                     >
                       Chat
@@ -154,34 +120,34 @@ export default function Navbar() {
                   )}
 
                   {/* 
-                  <Button
-                    className="w-full flex justify-between font-medium"
-                    variant="ghost"
-                    color="success"
-                    onPress={() => {
-                      navigate("/feedback");
-                      setOpen(false);
-                    }}
-                    endContent={
-                      <CommentAdd01Icon
-                        color="foreground"
-                        width="20"
-                        height="20"
-                      />
-                    }
-                  >
-                    Feedback
-                  </Button> */}
+                <Button
+                  className="w-full flex justify-between font-medium"
+                  variant="ghost"
+                  color="success"
+                  onPress={() => {
+                    navigate("/feedback");
+                    setOpen(false);
+                  }}
+                  endContent={
+                    <CommentAdd01Icon
+                      color="foreground"
+                      width="20"
+                      height="20"
+                    />
+                  }
+                >
+                  Feedback
+                </Button> */}
 
                   {/* <WaitListButton
-                    text="Waitlist Signup"
-                    props={{
-                      variant: "ghost",
-                      size: "md",
-                      radius: "md",
-                      className: "font-normal",
-                    }}
-                  /> */}
+                  text="Waitlist Signup"
+                  props={{
+                    variant: "ghost",
+                    size: "md",
+                    radius: "md",
+                    className: "font-normal",
+                  }}
+                /> */}
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>

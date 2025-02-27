@@ -29,30 +29,15 @@ import { apiauth } from "@/utils/apiaxios";
 //   );
 // }
 
+export const handleGoogleLogin = () => {
+  window.location.href = `${apiauth.getUri()}oauth/login/google`;
+};
+
 export default function LoginSignup({
   isLogin = false,
 }: {
   isLogin?: boolean;
 }) {
-  const navigate = useNavigate();
-
-  const handleGoogleLogin = useGoogleLogin({
-    flow: "auth-code",
-    ux_mode: "popup",
-    scope:
-      "openid email profile https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.readonly",
-    onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
-      const tokens = await apiauth.post("/oauth/callback", {
-        code: codeResponse.code,
-      });
-
-      navigate("/c");
-      console.log(tokens);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
-
   return (
     <form className="w-screen h-screen flex justify-center items-center flex-col overflow-auto bg-custom-gradient select-none">
       <div className="w-full max-w-screen-sm p-10 flex justify-center items-center flex-col gap-5 z-[1] relative sm:bg-zinc-950 bg-transparent  backdrop-blur-lg bg-opacity-75 rounded-3xl">

@@ -28,14 +28,9 @@ export default function MainInterface() {
   const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
   const { resetMessages } = useConvo();
 
-  // useEffect(() => {
-  //   if (location.pathname === "/") navigate("/c");
-  // }, [location, navigate]);
-
   function toggleSidebar(): void {
-    if (sidebarRef.current && contentContainerRef.current) {
+    if (sidebarRef.current && contentContainerRef.current)
       setSidebarVisible((prev) => !prev);
-    }
   }
 
   return (
@@ -70,7 +65,7 @@ export default function MainInterface() {
                         <BubbleConversationChatIcon height={18} width={18} />
 
                         {conversations.find(
-                          (convo) => convo.conversation_id == convoIdParam,
+                          (convo) => convo.conversation_id == convoIdParam
                         )?.description || "New Chat"}
                       </div>
                     }
@@ -78,13 +73,13 @@ export default function MainInterface() {
                     chatId={convoIdParam}
                     chatName={
                       conversations.find(
-                        (convo) => convo.conversation_id == convoIdParam,
+                        (convo) => convo.conversation_id == convoIdParam
                       )?.description || "New Chat"
                     }
                     logo2={true}
                     starred={
                       conversations.find(
-                        (convo) => convo.conversation_id == convoIdParam,
+                        (convo) => convo.conversation_id == convoIdParam
                       )?.starred || false
                     }
                   />

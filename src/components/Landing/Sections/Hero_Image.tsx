@@ -1,15 +1,15 @@
-// import StarterEmoji from "../Chat/StarterEmoji";
-// import StarterText from "../Chat/StarterText";
-// import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { AnimatedSection } from "../AnimatedSection";
 import DummySearchbar from "../DummySearchbar";
-
 import { GeneratedImageChatBubble } from "./Section_GenerateImage";
-
 import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
 
-export default function Hero_Image() {
+export default function HeroImage({
+  setLoginModalOpen,
+}: {
+  setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <div className="w-screen flex items-center justify-center">
       <AnimatedSection className="flex items-center justify-center h-fit w-screen max-w-screen-lg lg:max-w-screen-xl  mt-14 sm:mb-0 mb-[20vh]">
@@ -38,7 +38,7 @@ export default function Hero_Image() {
               url="heygaia.io"
             />
             <div className="absolute text-white flex w-full sm:bottom-4 bottom-[-15px] justify-center left-0 items-center sm:scale-100 scale-50">
-              <DummySearchbar />
+              <DummySearchbar setLoginModalOpen={setLoginModalOpen} />
             </div>
           </ShineBorder>
 
@@ -85,17 +85,4 @@ export default function Hero_Image() {
       </AnimatedSection>
     </div>
   );
-}
-
-{
-  /* <div className="flex items-center justify-center top-0 z-10 absolute w-full h-full">
-          <div className="flex items-center justify-center flex-1 ">
-            <div className="flex items-center justify-center flex-col gap-2">
-              <StarterEmoji />
-
-              <StarterText />
-            </div>
-          </div>
-        </div>
-         */
 }

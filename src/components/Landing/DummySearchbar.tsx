@@ -1,13 +1,13 @@
 import { Button } from "@heroui/button";
-import { Input, Textarea } from "@heroui/input";
-import { ArrowUpRight } from "lucide-react";
-import React, { useState } from "react";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/dropdown";
+import { Input, Textarea } from "@heroui/input";
+import { ArrowUpRight } from "lucide-react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 import {
   AiImageIcon,
@@ -17,7 +17,6 @@ import {
   PlusSignIcon,
   SentIcon,
 } from "../Misc/icons";
-import LoginModal from "../Login/LoginModal";
 
 import {
   Dialog,
@@ -73,15 +72,18 @@ function DummyLeftDropdown() {
   );
 }
 
-const DummySearchbar = () => {
+const DummySearchbar = ({
+  setLoginModalOpen,
+}: {
+  setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [enableSearch, setEnableSearch] = useState(false);
   const [pageFetchURL, setPageFetchURL] = useState("");
   const [fetchPageModal, setFetchPageModal] = useState(false);
-  const [loginModal, setLoginModal] = useState(false);
 
   const handleFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
-    setLoginModal(true);
+    setLoginModalOpen(true);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
@@ -89,7 +91,7 @@ const DummySearchbar = () => {
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setLoginModal(true);
+      setLoginModalOpen(true);
     }
   };
 
@@ -99,7 +101,6 @@ const DummySearchbar = () => {
   function isValidURL(url: string) {
     try {
       new URL(url);
-
       return true;
     } catch {
       return false;
@@ -219,8 +220,6 @@ const DummySearchbar = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      <LoginModal open={loginModal} setOpen={setLoginModal} />
     </>
   );
 };

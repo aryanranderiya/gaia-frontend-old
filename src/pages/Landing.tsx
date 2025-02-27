@@ -1,21 +1,22 @@
-import { lazy, useEffect, useState } from "react";
+import { Dispatch, lazy, SetStateAction, useEffect, useState } from "react";
 
-import ImagePreview from "@/components/Landing/Sections/Hero_Image";
+import HeroImage from "@/components/Landing/Sections/Hero_Image";
 import HeroSection from "@/components/Landing/Sections/Hero_Section";
 
 const LazyLoadedSections = lazy(
-  () => import("@/components/Landing/Sections/LazyLoadedSections"),
+  () => import("@/components/Landing/Sections/LazyLoadedSections")
 );
 
-export default function LandingPage() {
+export default function LandingPage({
+  setLoginModalOpen,
+}: {
+  setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const img = new Image();
-
-    // img.src = "/landing/screenshot.png";
     img.src = "/landing/hero_image_nosearchbar.webp";
-
     img.decode();
 
     setTimeout(() => {
@@ -29,17 +30,14 @@ export default function LandingPage() {
     };
   }, []);
 
-  // className = "landing_page relative select-none overflow-y-scroll";
   return (
-    // <ScrollArea className="h-fit" type="scroll">
     <div className="relative min-h-screen overflow-hidden">
       <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
 
       <HeroSection />
-      <ImagePreview />
+      <HeroImage setLoginModalOpen={setLoginModalOpen} />
 
       {load && <LazyLoadedSections />}
     </div>
-    // {/* </ScrollArea> */}
   );
 }

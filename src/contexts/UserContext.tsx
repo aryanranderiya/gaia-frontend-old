@@ -1,7 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { apiauth } from "@/utils/apiaxios";
 
 // Define the shape of the user object
 interface User {
@@ -37,20 +36,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = async () => {
     try {
-      const response = await apiauth.post(
-        "/oauth/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      // const response = await apiauth.post(
+      //   "/oauth/logout",
+      //   {},
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
 
-      if (response.status !== 200) throw new Error("Logout failed");
+      // if (response.status !== 200) throw new Error("Logout failed");
+      document.cookie =
+        "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       setUser(null);
     } catch (error) {
       console.error("Error during logout:", error);
     } finally {
-      navigate("/get-started");
+      navigate("/login");
     }
   };
 

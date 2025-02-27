@@ -169,7 +169,7 @@ export default function ChatsList() {
             >
               <AccordionItem
                 value="item-1"
-                className="bg-zinc-900 min-h-fit pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden pt-0 border-b-0"
+                className="bg-zinc-900 min-h-fit pb-1 mt-2 flex items-start justify-start rounded-lg flex-col overflow-hidden pt-0 border-b-0 w-full"
               >
                 <AccordionTrigger className="text-xs px-3 pt-3 pb-2 w-[210px]">
                   Starred Chats
@@ -192,7 +192,7 @@ export default function ChatsList() {
                         )
                       )
                     ) : (
-                      <div className="text-xs text-center text-foreground-500 pt-2 pb-3">
+                      <div className="text-xs text-center text-nowrap text-foreground-500 pt-2 pb-3 w-full">
                         No Starred Chats yet.
                       </div>
                     )}
