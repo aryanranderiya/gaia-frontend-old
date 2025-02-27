@@ -18,7 +18,14 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 
-function MobileMenu({ user, navigate, sheetOpen, setSheetOpen }) {
+type MobileMenuProps = {
+  user: any;
+  navigate: any;
+  sheetOpen: boolean;
+  setSheetOpen: (open: boolean) => void;
+};
+
+function MobileMenu({ user, navigate, sheetOpen, setSheetOpen }: MobileMenuProps) {
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger>
@@ -94,7 +101,12 @@ function MobileMenu({ user, navigate, sheetOpen, setSheetOpen }) {
   );
 }
 
-function DesktopMenu({ user, scrolled }) {
+type DesktopMenuProps = {
+  user: any;
+  scrolled: boolean;
+};
+
+function DesktopMenu({ user, scrolled }: DesktopMenuProps) {
   if (scrolled)
     return (
       <div className="flex items-center gap-1">
