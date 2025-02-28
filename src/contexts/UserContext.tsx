@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 // Define the shape of the user object
 interface User {
@@ -62,7 +63,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       document.cookie =
         "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       setUser(null);
+      toast.success("Successfully logged out!");
     } catch (error) {
+      toast.error("Could not logout");
       console.error("Error during logout:", error);
     } finally {
       navigate("/login");
@@ -79,10 +82,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       const accessToken = params.get("access_token");
       const refreshToken = params.get("refresh_token");
 
-      if (accessToken && refreshToken && !user) {
-        // set cookies
-        document.cookie = `access_token=${accessToken};`;
-        document.cookie = `refresh_token=${refreshToken};`;
+      if (window.location.hostname === "localhost") {
+        document.cookie = `access_token=${accessToken}; Path=/;`;
+        document.cookie = `refresh_token=${refreshToken}; Path=/;`;
+      } else {
+        document.cookie = `access_token=${accessToken}; Path=/; Secure; HttpOnly; SameSite=None`;
+        document.cookie = `refresh_token=${refreshToken}; Path=/; Secure; HttpOnly; SameSite=None`;
       }
 
       params.delete("access_token");

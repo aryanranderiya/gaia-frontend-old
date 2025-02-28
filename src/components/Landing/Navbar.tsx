@@ -25,7 +25,12 @@ type MobileMenuProps = {
   setSheetOpen: (open: boolean) => void;
 };
 
-function MobileMenu({ user, navigate, sheetOpen, setSheetOpen }: MobileMenuProps) {
+function MobileMenu({
+  user,
+  navigate,
+  sheetOpen,
+  setSheetOpen,
+}: MobileMenuProps) {
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger>
@@ -160,18 +165,18 @@ export default function Navbar() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width: 600px)");
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setScrolled(true);
-        window.removeEventListener("scroll", handleScroll);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 30) {
+  //       setScrolled(true);
+  //       window.removeEventListener("scroll", handleScroll);
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <div className="navbar">
