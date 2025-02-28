@@ -21,6 +21,14 @@ export default function useAxiosInterceptor(
           console.log("doing setModalOpen", location.pathname);
           setModalOpen(true);
           // toast.error("Session expired. Please log in again.");
+        } else {
+          console.log(
+            "test",
+            error.response.status,
+            error.response,
+            !publicPages.includes(location.pathname),
+            location.pathname
+          );
         }
         return Promise.reject(error);
       }

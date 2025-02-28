@@ -1,3 +1,4 @@
+import { apiauth } from "@/utils/apiaxios";
 import React, {
   createContext,
   ReactNode,
@@ -49,19 +50,19 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = async () => {
     try {
-      // const response = await apiauth.post(
-      //   "/oauth/logout",
-      //   {},
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
+      await apiauth.post(
+        "/oauth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
       // if (response.status !== 200) throw new Error("Logout failed");
-      document.cookie =
-        "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie =
-        "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // document.cookie =
+      //   "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // document.cookie =
+      //   "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       setUser(null);
       toast.success("Successfully logged out!");
     } catch (error) {
@@ -77,21 +78,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     const { search } = location;
 
     if (search) {
-      const params = new URLSearchParams(search);
+      // const params = new URLSearchParams(search);
 
-      const accessToken = params.get("access_token");
-      const refreshToken = params.get("refresh_token");
+      // const accessToken = params.get("access_token");
+      // const refreshToken = params.get("refresh_token");
 
-      if (window.location.hostname === "localhost") {
-        document.cookie = `access_token=${accessToken}; Path=/;`;
-        document.cookie = `refresh_token=${refreshToken}; Path=/;`;
-      } else {
-        document.cookie = `access_token=${accessToken}; Path=/; Secure; SameSite=None`;
-        document.cookie = `refresh_token=${refreshToken}; Path=/; Secure; SameSite=None`;
-      }
+      // if (window.location.hostname === "localhost") {
+      //   document.cookie = `access_token=${accessToken}; Path=/;`;
+      //   document.cookie = `refresh_token=${refreshToken}; Path=/;`;
+      // } else {
+      //   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      //   const backendDomain = new URL(backendUrl).hostname;
 
-      params.delete("access_token");
-      params.delete("refresh_token");
+      //   document.cookie = `access_token=${accessToken}; Path=/; Domain=${backendDomain}; Secure; SameSite=None`;
+      //   document.cookie = `refresh_token=${refreshToken}; Path=/; Domain=${backendDomain}; Secure; SameSite=None`;
+      // }
+
+      // params.delete("access_token");
+      // params.delete("refresh_token");
 
       navigate("/c");
     }
