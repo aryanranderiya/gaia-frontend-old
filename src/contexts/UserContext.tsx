@@ -86,8 +86,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         document.cookie = `access_token=${accessToken}; Path=/;`;
         document.cookie = `refresh_token=${refreshToken}; Path=/;`;
       } else {
-        document.cookie = `access_token=${accessToken}; Path=/; Secure; HttpOnly; SameSite=None`;
-        document.cookie = `refresh_token=${refreshToken}; Path=/; Secure; HttpOnly; SameSite=None`;
+        document.cookie = `access_token=${accessToken}; Path=/; Secure; SameSite=None`;
+        document.cookie = `refresh_token=${refreshToken}; Path=/; Secure; SameSite=None`;
       }
 
       params.delete("access_token");

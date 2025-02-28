@@ -3,7 +3,7 @@ import { apiauth } from "@/utils/apiaxios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const authPages = ["/login", "/signup", "/get-started"];
+export const authPages = ["/login", "/signup", "/get-started", "/"];
 export const publicPages = [...authPages, "/terms", "/privacy", "/contact"];
 
 const useFetchUser = () => {
