@@ -35,7 +35,7 @@ export const mainRoutes = [
     ),
   },
   {
-    path: "email",
+    path: "mail",
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight />}>
         <Emails />

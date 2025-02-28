@@ -31,8 +31,7 @@ const useFetchUser = () => {
       // If the user is not logged in, display modal if not on one of these pages
       // if (!publicPages.includes(location.pathname) && !!setModalOpen)
       //   setModalOpen(true);
-
-      setUserData(null, null, null);
+      // setUserData(null, null, null);
     }
   };
 

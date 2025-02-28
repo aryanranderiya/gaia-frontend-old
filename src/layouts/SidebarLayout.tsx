@@ -1,30 +1,28 @@
-import { Tooltip } from "@heroui/tooltip";
-import { LegacyRef, useState } from "react";
+import { LegacyRef, ReactNode } from "react";
 
-import ComingSoonModal from "@/components/ComingSoon/ComingSoonModal";
 // import Hr from "@/components/HorizontalRuler";
-import ChatsList from "@/components/Sidebar/ChatsList";
+import { PencilSquareIcon } from "@/components/Misc/icons";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
 import UserContainer from "@/components/Sidebar/UserContainer";
 import { Button } from "@/components/ui/button";
-import useMediaQuery from "@/hooks/mediaQuery";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import useMediaQuery from "@/hooks/mediaQuery";
 import { useNavigate } from "react-router-dom";
-import { PencilSquareIcon } from "@/components/Misc/icons";
 
-export default function Sidebar({
+export default function SidebarLayout({
+  children,
   sidebarref,
   toggleSidebar,
   className = "",
   isSidebarVisible,
 }: {
+  children: ReactNode;
   sidebarref: LegacyRef<HTMLDivElement>;
   toggleSidebar: () => void;
   className?: string;
   isSidebarVisible: boolean;
 }) {
-  const [open, setOpen] = useState<boolean>(false);
   const isMobileScreen: boolean = useMediaQuery("(max-width: 600px)");
   const { resetMessages } = useConvo();
   const navigate = useNavigate();
@@ -42,16 +40,7 @@ export default function Sidebar({
         <div className="overflow-y-auto min-w-[250px]">
           <div className="p-4 pb-0 ">
             <div className="flex items-center justify-between mb-1">
-              <Tooltip
-                content="general artificial intelligence assistant"
-                offset={+0}
-                placement="bottom"
-              >
-                {/* <div className="flex gap-2 items-center p-2"> */}
-                {/* <GlobalIcon color="white" width="22" /> */}
-                <span className="font-medium text-2xl">gaia</span>
-                {/* </div> */}
-              </Tooltip>
+              <span className="font-medium text-2xl">gaia</span>
 
               <div className="flex items-center gap-1">
                 <Button
@@ -66,33 +55,19 @@ export default function Sidebar({
                 >
                   <PencilSquareIcon className="group-hover:text-white transition-all" />
                 </Button>
-
                 <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
               </div>
             </div>
-            {/* 
-            <div className="px-1">
-              <Button
-                variant="shadow"
-                color="primary"
-                className="w-full flex justify-between my-4 font-medium text-zinc-900"
-                onPress={() => setOpen(true)}
-              >
-                Coming Soon!
-                <StarsIcon color="zinc-900" fill="zinc-900" />
-              </Button>
-            </div> */}
 
             <SidebarTopButtons />
-            {/* <Hr /> */}
           </div>
 
-          <ChatsList />
+          <div className="pt-0 p-4 flex flex-col gap-1 max-h-[80vh] relative">
+            {children}
+          </div>
         </div>
         <UserContainer />
       </div>
-
-      <ComingSoonModal isOpen={open} setOpen={setOpen} />
     </>
   );
 }

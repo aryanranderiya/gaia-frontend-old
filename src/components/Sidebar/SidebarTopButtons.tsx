@@ -6,10 +6,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   CalendarIcon,
-  DiscoverCircleIcon,
+  Mail01Icon,
   PinIcon,
   Route02Icon,
-  StickyNote01Icon
+  StickyNote01Icon,
 } from "../Misc/icons";
 import SearchCommand from "../Search/SearchCommand";
 
@@ -19,45 +19,40 @@ export default function SidebarTopButtons() {
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
 
   const buttonData = [
-    // {
-    //   route: "/try/explore",
-    //   icon: <DiscoverCircleIcon width={27} height={27} />,
-    //   label: "Explore",
-    // },
     {
-      // route: "/try/search",
       icon: <SearchIcon height={26} width={26} />,
       label: "Search",
     },
-    // {
-    //   route: "/email",
-    //   icon: <Mail01Icon height={27} width={27} />,
-    //   label: "Email",
-    // },
-    {
-      route: "/explore",
-      icon: <DiscoverCircleIcon height={27} width={27} />,
-      label: "Explore",
-    },
-    {
-      route: "/pins",
-      icon: <PinIcon height={27} width={27} />,
-      label: "Pins",
-    },
+
     {
       route: "/calendar",
       icon: <CalendarIcon height={27} width={27} />,
       label: "Calendar",
     },
     {
+      route: "/goals",
+      icon: <Route02Icon height={27} width={27} />,
+      label: "Goals",
+    },
+    // {
+    //   route: "/mail",
+    //   icon: <Mail01Icon height={27} width={27} />,
+    //   label: "Mail",
+    // },
+    {
       route: "/notes",
       icon: <StickyNote01Icon height={27} width={27} />,
       label: "Notes",
     },
+    // {
+    //   route: "/explore",
+    //   icon: <DiscoverCircleIcon height={27} width={27} />,
+    //   label: "Explore",
+    // },
     {
-      route: "/goals",
-      icon: <Route02Icon height={27} width={27} />,
-      label: "Goals",
+      route: "/pins",
+      icon: <PinIcon height={27} width={27} />,
+      label: "Pins",
     },
   ];
 

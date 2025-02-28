@@ -1,5 +1,5 @@
 import { Suspense, useRef, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import {
   BubbleConversationChatIcon,
@@ -15,10 +15,12 @@ import { useConversationList } from "@/contexts/ConversationList";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import useMediaQuery from "@/hooks/mediaQuery";
-import Sidebar from "@/layouts/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import EmailSidebar from "@/components/Sidebar/EmailSidebar";
 
 export default function MainInterface() {
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const contentContainerRef = useRef<HTMLDivElement | null>(null);
@@ -40,14 +42,17 @@ export default function MainInterface() {
           <Suspense fallback={<SuspenseLoader />}>
             <NotLoggedIn />
           </Suspense>
+          {/* Sidebar Layout */}
           <Suspense fallback={<SuspenseLoader />}>
-            {/* Sidebar layout */}
-            <Sidebar
+            <SidebarLayout
               isSidebarVisible={isSidebarVisible}
               sidebarref={sidebarRef}
               toggleSidebar={toggleSidebar}
-            />
+            >
+              {location.pathname == "/mail" ? <EmailSidebar /> : <Sidebar />}
+            </SidebarLayout>
           </Suspense>
+
           <div ref={contentContainerRef} className="main_chat transition-all">
             <div
               className={`sm:left-4 sm:px-0 pb-3 top-0 rounded-xl transition-opacity flex w-full justify-between z-10`}
