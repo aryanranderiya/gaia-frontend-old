@@ -2,7 +2,7 @@ import { useUser } from "@/contexts/UserContext";
 import useMediaQuery from "@/hooks/mediaQuery";
 import { Button } from "@heroui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   BubbleConversationChatIcon,
