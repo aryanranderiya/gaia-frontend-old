@@ -6,7 +6,7 @@ import {
   PinIcon,
 } from "@/components/Misc/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LandingPage1Layout from "@/layouts/LandingPage1";
+import LandingSectionLayout from "@/layouts/LandingSectionLayout";
 import { PinCard } from "@/pages/Pins";
 
 const dummyMessages = [
@@ -257,7 +257,7 @@ export function SidebarComponent() {
 }
 export default function Section_ConvoManagement() {
   return (
-    <LandingPage1Layout
+    <LandingSectionLayout
       heading={"Advanced Conversation Management"}
       icon={
         <BubbleChatIcon
@@ -300,6 +300,6 @@ export default function Section_ConvoManagement() {
           </div>
         </TabsContent>
       </Tabs>
-    </LandingPage1Layout>
+    </LandingSectionLayout>
   );
 }

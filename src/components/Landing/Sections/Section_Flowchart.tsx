@@ -13,7 +13,7 @@ import {
   Task01Icon,
   TaskDone01Icon,
 } from "@/components/Misc/icons";
-import LandingPage1Layout from "@/layouts/LandingPage1";
+import LandingSectionLayout from "@/layouts/LandingSectionLayout";
 
 mermaid.initialize({});
 
@@ -76,7 +76,7 @@ const FlowchartDemo = () => {
         y: e.clientY - position.y,
       });
     },
-    [position],
+    [position]
   );
 
   const handleMouseMove = useCallback(
@@ -88,7 +88,7 @@ const FlowchartDemo = () => {
         });
       }
     },
-    [isDragging, startPosition],
+    [isDragging, startPosition]
   );
 
   const handleMouseUp = () => setIsDragging(false);
@@ -97,7 +97,7 @@ const FlowchartDemo = () => {
     if (!mermaidRef.current) return;
 
     const svgData = new XMLSerializer().serializeToString(
-      mermaidRef.current.querySelector("svg")!,
+      mermaidRef.current.querySelector("svg")!
     );
     const svgBlob = new Blob([svgData], {
       type: "image/svg+xml;charset=utf-8",
@@ -132,7 +132,7 @@ const FlowchartDemo = () => {
   }, [handleWheel]);
 
   return (
-    <LandingPage1Layout
+    <LandingSectionLayout
       heading={"Create flowcharts"}
       icon={
         <FlowchartIcon className="sm:size-[30px] size-[30px]" color="#9b9b9b" />
@@ -218,7 +218,7 @@ const FlowchartDemo = () => {
       </SimpleChatBubbleBot>
       {/* </div> */}
       {/* // </div> */}
-    </LandingPage1Layout>
+    </LandingSectionLayout>
   );
 };
 

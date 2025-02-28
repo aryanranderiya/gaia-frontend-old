@@ -6,10 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   CalendarIcon,
-  Mail01Icon,
   PinIcon,
   Route02Icon,
-  StickyNote01Icon,
+  StickyNote01Icon
 } from "../Misc/icons";
 import SearchCommand from "../Search/SearchCommand";
 

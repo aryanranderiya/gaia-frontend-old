@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { SimpleChatBubbleUser } from "../../Chat/ChatBubbles/SimpleChatBubbles";
 import { AiImageIcon } from "../../Misc/icons";
 
-import LandingPage1Layout from "@/layouts/LandingPage1";
+import LandingSectionLayout from "@/layouts/LandingSectionLayout";
 
 const imageOptions = [
   {
@@ -64,19 +64,16 @@ export default function ImageGeneration() {
 
   useEffect(() => {
     imageOptions.forEach((option, index) => {
-      setTimeout(
-        () => {
-          const img = new Image();
+      setTimeout(() => {
+        const img = new Image();
 
-          img.src = option.src;
-        },
-        1000 * (index + 1),
-      );
+        img.src = option.src;
+      }, 1000 * (index + 1));
     });
   }, []);
 
   return (
-    <LandingPage1Layout
+    <LandingSectionLayout
       extraHeading={
         <div className="flex flex-wrap gap-2">
           {imageOptions.map((option, index) => (
@@ -104,6 +101,6 @@ export default function ImageGeneration() {
         </SimpleChatBubbleUser>
         <GeneratedImageChatBubble selectedOption={selectedOption} />
       </div>
-    </LandingPage1Layout>
+    </LandingSectionLayout>
   );
 }

@@ -1,9 +1,9 @@
 import { StickyNote01Icon } from "@/components/Misc/icons";
-import LandingPage1Layout from "@/layouts/LandingPage1";
+import LandingSectionLayout from "@/layouts/LandingSectionLayout";
 
 export default function Section_Notes() {
   return (
-    <LandingPage1Layout
+    <LandingSectionLayout
       className="col-span-2"
       heading="Your AI Assistant that remembers"
       icon={
@@ -15,6 +15,6 @@ export default function Section_Notes() {
       subheading="Take Notes & Memories for the assistant to remember important details"
     >
       hey there
-    </LandingPage1Layout>
+    </LandingSectionLayout>
   );
 }
