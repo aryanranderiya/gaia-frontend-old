@@ -1,14 +1,13 @@
-/* eslint-disable prettier/prettier */
 import { BrainCircuitIcon } from "lucide-react";
 import { useState } from "react";
 
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
-} from "../../Chat/ChatBubbles/SimpleChatBubbles";
+} from "../Dummy/SimpleChatBubbles";
 import { AiBrowserIcon, GlobalSearchIcon } from "../../Misc/icons";
-import { AnimatedSection } from "../AnimatedSection";
-import { SectionHeading } from "../SectionHeading";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
+import { SectionHeading } from "../../../layouts/LandingSectionHeading";
 
 function SearchWeb() {
   return (

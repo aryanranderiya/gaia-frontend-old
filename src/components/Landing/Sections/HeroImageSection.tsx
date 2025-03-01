@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { AnimatedSection } from "../AnimatedSection";
-import DummySearchbar from "../DummySearchbar";
-import { GeneratedImageChatBubble } from "./Section_GenerateImage";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
+import DummySearchbar from "../Dummy/DummySearchbar";
+import { GeneratedImageChatBubble } from "./ImageGenerationSection";
 import { Safari } from "@/components/ui/safari";
 import { ShineBorder } from "@/components/ui/shine-border";
 

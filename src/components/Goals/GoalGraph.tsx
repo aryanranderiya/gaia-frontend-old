@@ -1,12 +1,12 @@
-// GoalGraph.tsx
-import React from "react";
+import { EdgeType, NodeData } from "@/types/goalTypes";
 import {
-  ReactFlow,
   ConnectionLineType,
+  Edge,
+  Node,
+  ReactFlow,
   ReactFlowInstance,
 } from "@xyflow/react";
-import { Node, Edge } from "@xyflow/react";
-import { NodeData, EdgeType } from "@/pages/Goal";
+import React from "react";
 
 interface GoalGraphProps {
   nodes: Node<NodeData>[];

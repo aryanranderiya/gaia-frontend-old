@@ -1,4 +1,4 @@
-import { AnimatedSection } from "../AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 
 import {
   BlushBrush02Icon,

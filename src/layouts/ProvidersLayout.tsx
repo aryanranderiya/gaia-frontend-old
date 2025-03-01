@@ -5,11 +5,7 @@ import UIProviderLayout from "@/layouts/UIProviderLayout";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ReactNode } from "react";
 
-interface ProvidersLayoutProps {
-  children: ReactNode;
-}
-
-export default function ProvidersLayout({ children }: ProvidersLayoutProps) {
+export default function ProvidersLayout({ children }: { children: ReactNode }) {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <UserProvider>

@@ -3,8 +3,6 @@ import { useRoutes } from "react-router-dom";
 
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import LandingPage from "@/pages/Landing";
-import AudioTranscription from "@/pages/RecordAudio";
-
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const PrivacyPolicy = lazy(() => import("@/pages/Privacy"));
@@ -65,14 +63,14 @@ export default function LandingLayout({
         </Suspense>
       ),
     },
-    {
-      path: "audio",
-      element: (
-        <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
-          <AudioTranscription />
-        </Suspense>
-      ),
-    },
+    // {
+    //   path: "audio",
+    //   element: (
+    //     <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
+    //       <AudioTranscription />
+    //     </Suspense>
+    //   ),
+    // },
     {
       path: "pricing",
       element: (

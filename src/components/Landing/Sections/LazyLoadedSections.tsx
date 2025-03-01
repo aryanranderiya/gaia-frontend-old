@@ -1,88 +1,32 @@
-import { lazy, Suspense } from "react";
-
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
-
-const Section_Calendar = lazy(() => import("./Section_Calendar"));
-const Section_Memories = lazy(() => import("./Section_Memories"));
-
-const Section_Grid = lazy(
-  () => import("@/components/Landing/Sections/Section_Grid"),
-);
-
-// const FreePricing = lazy(
-//   () => import("@/components/Landing/Sections/Free_Pricing")
-// );
-
-const WhatCanYouDo = lazy(
-  () => import("@/components/Landing/Sections/Section_WhatCanYouDo"),
-);
-
-// const TargetAudience = lazy(
-//   () => import("@/components/LandingPage/Sections/Section_TargetAudience")
-// );
-
-const ComingSoon = lazy(
-  () => import("@/components/Landing/Sections/Section_ComingSoon"),
-);
-
+import { lazy, Suspense } from "react";
 const Footer = lazy(() => import("@/components/Landing/Footer"));
 
-const GoalSection = lazy(
-  () => import("@/components/Landing/Sections/Section_Goal"),
-);
-
-const Internet = lazy(
-  () => import("@/components/Landing/Sections/Section_Internet"),
-);
-
-const FinalSection = lazy(
-  () => import("@/components/Landing/Sections/FinalSection"),
-);
+const sections = [
+  { name: "GoalSection", path: "GoalSection" },
+  { name: "CalendarSection", path: "CalendarSection" },
+  { name: "MemoriesSection", path: "MemoriesSection" },
+  { name: "InternetSection", path: "InternetSection" },
+  { name: "GridSection", path: "GridSection" },
+  { name: "CapabilitiesSection", path: "CapabilitiesSection" },
+  { name: "ComingSoonSection", path: "ComingSoonSection" },
+  { name: "FinalSection", path: "ClosingSection" },
+];
 
 export default function LazyLoadedSections() {
   return (
     <div className="sm:space-y-[15rem] space-y-[5rem] sm:mt-[18rem] mt-[12rem]">
-      <Suspense fallback={<SuspenseLoader />}>
-        <GoalSection />
-      </Suspense>
+      {sections.map(({ name, path }) => {
+        const SectionComponent = lazy(
+          () => import(`@/components/Landing/Sections/${path}`)
+        );
 
-      <Suspense fallback={<SuspenseLoader />}>
-        <Section_Calendar />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Section_Memories />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Internet />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Section_Grid />
-      </Suspense>
-      {/* 
-      <Suspense fallback={<SuspenseLoader />}>
-        <AllFeatures />
-      </Suspense> */}
-      {/* 
-      <Suspense fallback={<SuspenseLoader />}>
-        <TargetAudience />
-      </Suspense> */}
-
-      {/* <FreePricing /> */}
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <WhatCanYouDo />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <ComingSoon />
-      </Suspense>
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <FinalSection />
-      </Suspense>
+        return (
+          <Suspense key={name} fallback={<SuspenseLoader />}>
+            <SectionComponent />
+          </Suspense>
+        );
+      })}
 
       <Suspense fallback={<SuspenseLoader />}>
         <Footer />

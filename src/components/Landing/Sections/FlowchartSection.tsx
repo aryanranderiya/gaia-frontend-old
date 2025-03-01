@@ -7,7 +7,7 @@ import React, { Key, useCallback, useEffect, useRef, useState } from "react";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
-} from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
+} from "@/components/Landing/Dummy/SimpleChatBubbles";
 import {
   FlowchartIcon,
   Task01Icon,

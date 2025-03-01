@@ -8,6 +8,5 @@ export default function UIProviderLayout({
   children: ReactNode;
 }) {
   const navigate = useNavigate();
-
   return <HeroUIProvider navigate={navigate}>{children}</HeroUIProvider>;
 }

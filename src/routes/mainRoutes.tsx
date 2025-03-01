@@ -1,10 +1,7 @@
-// src/routes/mainRoutes.tsx
 import { Suspense, lazy } from "react";
-
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
-import Emails from "@/pages/Email";
-
-const MainChat = lazy(() => import("@/pages/MainChat"));
+const MainChat = lazy(() => import("@/pages/Chat"));
+const Email = lazy(() => import("@/pages/Email"));
 const Explore = lazy(() => import("@/pages/Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
 const Pins = lazy(() => import("@/pages/Pins"));
@@ -13,7 +10,6 @@ const NotesAdd = lazy(() => import("@/pages/Note"));
 const Goals = lazy(() => import("@/pages/Goals"));
 const GoalPage = lazy(() => import("@/pages/Goal"));
 const Search = lazy(() => import("@/components/Search/Search"));
-// const LandingLayout = lazy(() => import("@/layouts/LandingLayout"));
 
 export const mainRoutes = [
   { path: "c/:convoIdParam", element: <MainChat /> },
@@ -38,7 +34,7 @@ export const mainRoutes = [
     path: "mail",
     element: (
       <Suspense fallback={<SuspenseLoader fullHeight />}>
-        <Emails />
+        <Email />
       </Suspense>
     ),
   },

@@ -1,5 +1,4 @@
-
-import { AnimatedSection } from "../AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 
 // import GradualSpacing from "../MagicUI/gradual-spacing";
 // import WaitlistOnlyInput from "./WaitListIOnlyInput";

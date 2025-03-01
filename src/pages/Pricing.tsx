@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";

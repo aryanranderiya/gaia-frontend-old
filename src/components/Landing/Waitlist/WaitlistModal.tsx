@@ -10,13 +10,13 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import {
   ArrowUpRight01Icon,
   Calendar01Icon,
   Cancel01Icon,
   Mail01Icon,
-} from "../Misc/icons";
+} from "../../Misc/icons";
 
 import PartySmiley from "@/components/Smileys/20.webp";
 import createConfetti from "@/hooks/createConfetti";

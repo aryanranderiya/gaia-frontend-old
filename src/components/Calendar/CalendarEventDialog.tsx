@@ -12,7 +12,6 @@ import {
 import React, { useState } from "react";
 import Twemoji from "react-twemoji";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import {
   Accordion,
   AccordionContent,
@@ -20,10 +19,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  CalendarEventDialogProps,
-  GoogleCalendarEvent,
+  CalendarEventDialogProps
 } from "@/types/calendarTypes";
 import { formatEventDate, getEventIcon } from "@/utils/calendarUtils";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 export default function CalendarEventDialog({
   event,

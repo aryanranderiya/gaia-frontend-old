@@ -3,14 +3,14 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Send } from "lucide-react";
 
-import { AnimatedSection } from "../AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 
 import {
   CheckmarkSquare03Icon,
   FlowchartIcon1,
   Target02Icon,
 } from "@/components/Misc/icons";
-import StaticSidebar from "@/components/Goals/StaticSidebar";
+import StaticSidebar from "@/components/Landing/Dummy/StaticSidebar";
 
 interface Step {
   icon: React.ReactNode;
@@ -45,7 +45,7 @@ export default function GoalSection(): JSX.Element {
     },
   ];
   const [selectedImage, setSelectedImage] = useState<string>(
-    steps[selectedStep].image,
+    steps[selectedStep].image
   );
 
   useEffect(() => {
@@ -113,7 +113,7 @@ function GoalSteps({
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     if (goalSectionRef.current) {

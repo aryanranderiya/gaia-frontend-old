@@ -16,7 +16,7 @@ import {
   ImageUploadIcon,
   PlusSignIcon,
   SentIcon,
-} from "../Misc/icons";
+} from "../../Misc/icons";
 
 import {
   Dialog,

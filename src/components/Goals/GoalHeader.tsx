@@ -1,9 +1,8 @@
-// GoalHeader.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { GoalData } from "@/pages/Goal";
+import { GoalData } from "@/types/goalTypes";
 
 interface GoalHeaderProps {
   goalData: GoalData | null;

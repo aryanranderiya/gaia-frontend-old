@@ -3,7 +3,7 @@
 import { Chip } from "@heroui/chip";
 import { useEffect, useState } from "react";
 
-import { SimpleChatBubbleUser } from "../../Chat/ChatBubbles/SimpleChatBubbles";
+import { SimpleChatBubbleUser } from "../Dummy/SimpleChatBubbles";
 import { AiImageIcon } from "../../Misc/icons";
 
 import LandingSectionLayout from "@/layouts/LandingSectionLayout";
@@ -25,7 +25,6 @@ const imageOptions = [
     prompt: "abstract, vibrant colors, geometric shapes",
     src: "/generated/abstract.webp",
   },
-  // { title: "Husky", prompt: "cute, husky", src: "/generated/husky.webp" },
 ];
 
 export function GeneratedImageChatBubble({

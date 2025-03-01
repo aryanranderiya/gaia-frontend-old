@@ -3,7 +3,7 @@ import { Chip } from "@heroui/chip";
 import { Clock } from "lucide-react";
 import React from "react";
 
-import { BookIcon1 } from "../Misc/icons";
+import { BookIcon1 } from "../../Misc/icons";
 
 const StaticSidebar = ({
   // hover1,

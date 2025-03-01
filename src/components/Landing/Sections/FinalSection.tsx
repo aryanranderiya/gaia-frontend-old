@@ -1,4 +1,4 @@
-import { AnimatedSection } from "../AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 import GetStartedButton from "../GetStartedButton";
 
 export default function FinalSection() {

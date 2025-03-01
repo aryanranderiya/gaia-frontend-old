@@ -1,4 +1,3 @@
-// App.jsx
 import LoginModal from "@/components/Login/LoginModal";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import useAxiosInterceptor from "@/hooks/useAxiosInterceptor";
@@ -8,7 +7,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 
-const MainInterface = lazy(() => import("./pages/MainInterface"));
+const MainInterface = lazy(() => import("./layouts/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
 
 export default function App() {

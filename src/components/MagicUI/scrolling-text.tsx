@@ -1,4 +1,4 @@
-import { VelocityScroll } from "../MagicUI/scroll-based-velocity";
+import { VelocityScroll } from "./scroll-based-velocity";
 
 export default function ScrollingText() {
   return (

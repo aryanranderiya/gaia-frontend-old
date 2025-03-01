@@ -1,27 +1,21 @@
 import { Suspense, lazy } from "react";
-
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
-import { AnimatedSection } from "../AnimatedSection";
-// import { AnimatedSection } from "../misc/AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
-  () => import("@/components/Landing/Sections/Sections_ConvoManagement")
+  () => import("@/components/Landing/Sections/ConversationManagementSection")
 );
 
 const Section_Document = lazy(
-  () => import("@/components/Landing/Sections/Section_Documents")
+  () => import("@/components/Landing/Sections/DocumentsSection")
 );
 
-// const Section_Notes = lazy(
-//   () => import("@/components/LandingPage/Sections/Section_Notes")
-// );
-
 const FlowchartDemo = lazy(
-  () => import("@/components/Landing/Sections/Section_Flowchart")
+  () => import("@/components/Landing/Sections/FlowchartSection")
 );
 
 const ImageGeneration = lazy(
-  () => import("@/components/Landing/Sections/Section_GenerateImage")
+  () => import("@/components/Landing/Sections/ImageGenerationSection")
 );
 
 export default function Section_Grid() {
@@ -43,10 +37,6 @@ export default function Section_Grid() {
         </div>
 
         <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
-          {/* <Suspense fallback={<SuspenseLoader />}> */}
-          {/* <Section_Notes /> */}
-          {/* </Suspense> */}
-
           <Suspense fallback={<SuspenseLoader />}>
             <ImageGeneration />
           </Suspense>

@@ -1,7 +1,6 @@
 import debounce from "lodash.debounce";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-
 import ChatRenderer from "@/components/Chat/ChatRenderer";
 import MainSearchbar from "@/components/Chat/SearchBar/MainSearchbar";
 

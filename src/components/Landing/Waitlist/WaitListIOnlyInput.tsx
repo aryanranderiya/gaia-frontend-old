@@ -3,7 +3,7 @@ import { Input } from "@heroui/input";
 import * as React from "react";
 import { toast } from "sonner";
 
-import { CheckmarkCircle02Icon } from "../Misc/icons.js";
+import { CheckmarkCircle02Icon } from "../../Misc/icons.js";
 
 import CreateConfetti from "@/hooks/createConfetti";
 import api from "@/utils/apiaxios";

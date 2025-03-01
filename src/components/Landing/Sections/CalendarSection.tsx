@@ -1,75 +1,16 @@
-/* eslint-disable prettier/prettier */
-import { Button } from "@heroui/button";
-import { Clock } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
-import { toast } from "sonner";
-
-import { AnimatedSection } from "../AnimatedSection";
-import { SectionHeading } from "../SectionHeading";
-
-import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 import {
   BubbleConversationChatIcon,
   Calendar01Icon,
   CalendarAdd01Icon,
   GoogleCalendar,
 } from "@/components/Misc/icons";
+import { AnimatedSection } from "@/layouts/AnimatedSection";
+import { SectionHeading } from "@/layouts/LandingSectionHeading";
+import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
-
-export function CalendarBotMessage({
-  dummyAddToCalendar,
-}: {
-  dummyAddToCalendar: () => void;
-}) {
-  return (
-    <div>
-      <AnimatedSection className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit">
-        <div className="">
-          Would you like to add this event to your Calendar?
-        </div>
-
-        <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
-          <GoogleCalendar height={35} width={25} />
-          <div className="flex flex-col gap-1">
-            <div>
-              <div className="font-medium">Meeting with Sarah</div>
-              <div className="text-sm">Scheduled meeting with Sarah</div>
-            </div>
-            <div className="text-xs text-foreground-500">Fri Feb 14 2025</div>
-          </div>
-        </div>
-
-        <Button className="w-full" color="primary" onPress={dummyAddToCalendar}>
-          Add Event
-        </Button>
-      </AnimatedSection>
-    </div>
-  );
-}
-
-function CalendarAddChat({
-  setAddedToCalendar,
-}: {
-  setAddedToCalendar: Dispatch<SetStateAction<boolean>>;
-}) {
-  const dummyAddToCalendar = () => {
-    setAddedToCalendar((prev: boolean) => {
-      if (!prev) return true;
-      return prev;
-    });
-    toast.success("Event has been added to Calendar!");
-  };
-
-  return (
-    <div className="flex flex-col gap-3">
-      <SimpleChatBubbleUser>
-        Schedule a meeting with Sarah on Friday at 3 PM.
-      </SimpleChatBubbleUser>
-
-      <CalendarBotMessage dummyAddToCalendar={dummyAddToCalendar} />
-    </div>
-  );
-}
+import { Clock } from "lucide-react";
+import { useState } from "react";
+import CalendarMessages from "../Dummy/CalendarMessages";
 
 export default function Section_Calendar() {
   const [addedToCalendar, setAddedToCalendar] = useState(false);
@@ -109,14 +50,6 @@ export default function Section_Calendar() {
         />
 
         <div className="w-full sm:px-10 px-2 !m-0 !mt-0">
-          {/* <Tabs
-            aria-label="Calendar Options"
-            className="w-full"
-            defaultValue="chat"
-            color="primary"
-            radius="full"
-          >
-           */}
           <Tabs
             aria-label="GAIA Calendar Options"
             className="w-full"
@@ -140,7 +73,7 @@ export default function Section_Calendar() {
               }
             >
               <div className="w-full h-[300px] overflow-hidden bg-gradient-to-bl sm:px-10 rounded-3xl z-[1]">
-                <CalendarAddChat setAddedToCalendar={setAddedToCalendar} />
+                <CalendarMessages setAddedToCalendar={setAddedToCalendar} />
               </div>
             </Tab>
 

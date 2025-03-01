@@ -1,5 +1,5 @@
-import HeroImage from "@/components/Landing/Sections/Hero_Image";
-import HeroSection from "@/components/Landing/Sections/Hero_Section";
+import HeroImage from "@/components/Landing/Sections/HeroImageSection";
+import HeroSection from "@/components/Landing/Sections/HeroSection";
 import { Dispatch, lazy, SetStateAction, useEffect } from "react";
 const LazyLoadedSections = lazy(
   () => import("@/components/Landing/Sections/LazyLoadedSections")

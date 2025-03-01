@@ -1,7 +1,6 @@
-// CustomNode.tsx
-import React from "react";
+import { NodeData } from "@/types/goalTypes";
 import { Handle, Position } from "@xyflow/react";
-import { NodeData } from "@/pages/Goal";
+import React from "react";
 
 interface CustomNodeProps {
   data: NodeData;

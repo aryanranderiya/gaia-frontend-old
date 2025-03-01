@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 
 import {
@@ -8,7 +7,7 @@ import {
   MoneyBag02Icon,
   VoiceIcon,
 } from "../../Misc/icons";
-import { AnimatedSection } from "../AnimatedSection";
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
 
 const list: {
   icon?: React.ReactNode;
