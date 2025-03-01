@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { GlobeIcon } from "lucide-react";
-import { Tooltip } from "@heroui/tooltip";
 import { useLoading } from "@/contexts/LoadingContext";
 import api from "@/utils/apiaxios";
+import { Tooltip } from "@heroui/tooltip";
+import { GlobeIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-interface CustomAnchorProps {
-  props: any;
-}
-
-const CustomAnchor: React.FC<CustomAnchorProps> = ({ props }) => {
+const CustomAnchor = ({ props }: { props?: any }) => {
   const { isLoading } = useLoading();
   const [metadata, setMetadata] = useState({
     title: "",
@@ -93,6 +89,7 @@ const CustomAnchor: React.FC<CustomAnchorProps> = ({ props }) => {
         href={props.href}
         rel="noopener noreferrer"
         target="_blank"
+        {...props}
       >
         {props.children}
       </a>
