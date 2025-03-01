@@ -214,7 +214,7 @@ export default function GoalPage() {
     reactFlowInstance.setViewport({
       ...viewport,
       x: viewport.x + 75,
-      y: -50,
+      y: 0,
       zoom: 1,
     });
   };

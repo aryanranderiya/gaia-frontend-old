@@ -19,7 +19,7 @@ mermaid.initialize({});
 
 const FlowchartDemo = () => {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("code");
+  const [activeTab, setActiveTab] = useState("preview");
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -163,6 +163,11 @@ const FlowchartDemo = () => {
               }, 10);
             }}
           >
+            <Tab key="code" className="p-0" title="Code">
+              <div className="whitespace-pre-wrap !font-mono px-5 py-2 h-[320px] overflow-y-auto">
+                {flowchartCode}
+              </div>
+            </Tab>
             <Tab key="preview" className="p-0" title="Flowchart">
               <div className="p-4 bg-zinc-950 relative overflow-hidden h-[320px] ">
                 <div

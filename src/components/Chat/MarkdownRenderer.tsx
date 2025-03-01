@@ -2,10 +2,10 @@
 
 import type React from "react";
 
-import { Tab, Tabs } from "@heroui/tabs";
-import { Download, GlobeIcon, Move, ZoomIn, ZoomOut } from "lucide-react";
-import mermaid from "mermaid";
 import { Button } from "@heroui/button";
+import { Tab, Tabs } from "@heroui/tabs";
+import { Download, GlobeIcon, ZoomIn, ZoomOut } from "lucide-react";
+import mermaid from "mermaid";
 import {
   lazy,
   Suspense,
@@ -28,8 +28,8 @@ import remarkGfm from "remark-gfm";
 import { Task01Icon, TaskDone01Icon } from "../Misc/icons";
 import SuspenseLoader from "../Misc/SuspenseLoader";
 
-import api from "@/utils/apiaxios";
 import { useLoading } from "@/contexts/LoadingContext";
+import api from "@/utils/apiaxios";
 const ReactMarkdown = lazy(() => import("react-markdown"));
 const SyntaxHighlighter =
   PrismAsyncLight as any as React.FC<SyntaxHighlighterProps>;
@@ -66,7 +66,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     setTimeout(() => setCopied(false), 4000);
   };
 
-  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 4));
+  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 10));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
 
   const resetZoom = () => setScale(1.5);
@@ -116,10 +116,10 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
   };
 
   const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault(); // This will now work because we're using a non-passive event listener
+    e.preventDefault();
     const delta = e.deltaY * -0.01;
-
-    setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3));
+    // Increase max scale from 3 to 5
+    setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 10));
   }, []);
 
   useEffect(() => {
@@ -167,27 +167,32 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
               >
                 {String(children).replace(/\n$/, "")}
               </div>
-              <div className="absolute bottom-2 right-2 flex gap-2">
-                <Button size="sm" onClick={handleZoomIn}>
-                  <ZoomIn size={16} />
-                </Button>
-                <Button size="sm" onClick={handleZoomOut}>
-                  <ZoomOut size={16} />
-                </Button>
-                <Button size="sm" onClick={resetZoom}>
-                  Reset Zoom
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => setPosition({ x: -50, y: -50 })}
-                >
-                  {" "}
-                  {/* Update 3: Reset position */}
-                  <Move size={16} />
-                </Button>
-                <Button size="sm" onClick={handleDownload}>
-                  <Download size={16} />
-                </Button>
+              <div className="absolute bottom-2 right-2 flex gap-1 items-center">
+                <div className="bg- flex items-center p-1 !rounded-xl gap-1">
+                  <Tooltip content="Zoom Out">
+                    <Button size="sm" onPress={handleZoomOut} isIconOnly>
+                      <ZoomOut size={18} />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip content="Reset Zoom">
+                    <Button size="sm" onPress={resetZoom}>
+                      Reset
+                    </Button>
+                  </Tooltip>
+                  <Tooltip content="Zoom In">
+                    <Button size="sm" onPress={handleZoomIn} isIconOnly>
+                      <ZoomIn size={18} />
+                    </Button>
+                  </Tooltip>
+                </div>
+                {/* <Button size="sm" onPress={() => setPosition({ x: 0, y: -50 })}>
+                  <ResetIcon width={16} height={16} />
+                </Button> */}
+                <Tooltip content="Download Flowchart (.svg)">
+                  <Button size="sm" onPress={handleDownload} isIconOnly>
+                    <Download size={18} />
+                  </Button>
+                </Tooltip>
               </div>
             </div>
           </Tab>
