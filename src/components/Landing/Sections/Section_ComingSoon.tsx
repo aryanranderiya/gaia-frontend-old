@@ -8,6 +8,7 @@ import {
   MoneyBag02Icon,
   VoiceIcon,
 } from "../../Misc/icons";
+import { AnimatedSection } from "../AnimatedSection";
 
 const list: {
   icon?: React.ReactNode;
@@ -116,7 +117,7 @@ export default function Section_ComingSoon() {
       <div className="flex justify-center items-center sm:p-5 p-2 flex-col gap-1">
         <span className="font-medium text-3xl">Coming Soon!</span>
         <span>What are we working on next?</span>
-        <div className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 max-w-screen-xl h-fit items-center justify-center">
+        <AnimatedSection className="sm:rounded-3xl rounded-2xl bg-zinc-900 my-6 sm:p-10 py-3 px-2 sm:gap-2 sm:gap-y-5 grid gap-2 gap-y-2 sm:grid-cols-3 max-w-screen-xl h-fit items-center justify-center">
           {list.map((item, index) => (
             <Feature
               key={index}
@@ -126,7 +127,7 @@ export default function Section_ComingSoon() {
               title={item.title}
             />
           ))}
-        </div>
+        </AnimatedSection>
       </div>
     </div>
   );

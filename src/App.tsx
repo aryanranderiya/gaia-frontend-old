@@ -7,7 +7,6 @@ import { mainRoutes } from "@/routes/mainRoutes";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
-import "./index.css";
 
 const MainInterface = lazy(() => import("./pages/MainInterface"));
 const LandingLayout = lazy(() => import("./layouts/LandingLayout"));
@@ -18,6 +17,11 @@ export default function App() {
 
   useAxiosInterceptor(setLoginModalOpen);
   useFetchUser();
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/landing/hero_image_nosearchbar.webp";
+  }, []);
 
   useEffect(() => {
     const { pathname } = location;

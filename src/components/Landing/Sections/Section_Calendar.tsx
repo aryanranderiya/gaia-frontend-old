@@ -1,20 +1,20 @@
 /* eslint-disable prettier/prettier */
 import { Button } from "@heroui/button";
-import { toast } from "sonner";
-import { Dispatch, SetStateAction, useState } from "react";
 import { Clock } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "sonner";
 
 import { AnimatedSection } from "../AnimatedSection";
 import { SectionHeading } from "../SectionHeading";
 
-import { Tabs, Tab } from "@heroui/tabs";
+import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
 import {
   BubbleConversationChatIcon,
   Calendar01Icon,
   CalendarAdd01Icon,
   GoogleCalendar,
 } from "@/components/Misc/icons";
-import { SimpleChatBubbleUser } from "@/components/Chat/ChatBubbles/SimpleChatBubbles";
+import { Tab, Tabs } from "@heroui/tabs";
 
 export function CalendarBotMessage({
   dummyAddToCalendar,
@@ -23,7 +23,7 @@ export function CalendarBotMessage({
 }) {
   return (
     <div>
-      <div className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit">
+      <AnimatedSection className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit">
         <div className="">
           Would you like to add this event to your Calendar?
         </div>
@@ -42,7 +42,7 @@ export function CalendarBotMessage({
         <Button className="w-full" color="primary" onPress={dummyAddToCalendar}>
           Add Event
         </Button>
-      </div>
+      </AnimatedSection>
     </div>
   );
 }

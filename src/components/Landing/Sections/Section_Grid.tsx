@@ -1,14 +1,15 @@
 import { Suspense, lazy } from "react";
 
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
+import { AnimatedSection } from "../AnimatedSection";
 // import { AnimatedSection } from "../misc/AnimatedSection";
 
 const Section_ConvoManagement = lazy(
-  () => import("@/components/Landing/Sections/Sections_ConvoManagement"),
+  () => import("@/components/Landing/Sections/Sections_ConvoManagement")
 );
 
 const Section_Document = lazy(
-  () => import("@/components/Landing/Sections/Section_Documents"),
+  () => import("@/components/Landing/Sections/Section_Documents")
 );
 
 // const Section_Notes = lazy(
@@ -16,16 +17,16 @@ const Section_Document = lazy(
 // );
 
 const FlowchartDemo = lazy(
-  () => import("@/components/Landing/Sections/Section_Flowchart"),
+  () => import("@/components/Landing/Sections/Section_Flowchart")
 );
 
 const ImageGeneration = lazy(
-  () => import("@/components/Landing/Sections/Section_GenerateImage"),
+  () => import("@/components/Landing/Sections/Section_GenerateImage")
 );
 
 export default function Section_Grid() {
   return (
-    <div className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 flex-col p-5 gap-10">
+    <AnimatedSection className="w-screen flex justify-center min-h-screen items-center h-fit sm:pt-0 flex-col p-5 gap-10">
       <div className="space-y-2">
         <div className="font-medium text-5xl relative z-[1] text-center">
           Ditch all other chatbots!
@@ -41,7 +42,7 @@ export default function Section_Grid() {
           <div className="size-[500px] blur-[200px] bg-[#00bbff] z-[-1] relative top-[30vh]" />
         </div>
 
-        <div className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
+        <AnimatedSection className="grid w-screen max-w-screen-xl gap-4 sm:grid-cols-3 grid-cols-1 relative z-[0] sm:p-0 p-3">
           {/* <Suspense fallback={<SuspenseLoader />}> */}
           {/* <Section_Notes /> */}
           {/* </Suspense> */}
@@ -63,8 +64,8 @@ export default function Section_Grid() {
           <Suspense fallback={<SuspenseLoader />}>
             <Section_ConvoManagement />
           </Suspense>
-        </div>
+        </AnimatedSection>
       </div>
-    </div>
+    </AnimatedSection>
   );
 }

@@ -1,4 +1,4 @@
-import { Dispatch, lazy, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, lazy, SetStateAction, useEffect } from "react";
 
 import HeroImage from "@/components/Landing/Sections/Hero_Image";
 import HeroSection from "@/components/Landing/Sections/Hero_Section";
@@ -12,17 +12,7 @@ export default function LandingPage({
 }: {
   setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [load, setLoad] = useState(false);
-
   useEffect(() => {
-    const img = new Image();
-    img.src = "/landing/hero_image_nosearchbar.webp";
-    img.decode();
-
-    setTimeout(() => {
-      setLoad(true);
-    }, 200);
-
     document.documentElement.style.overflowY = "scroll";
 
     return () => {
@@ -37,7 +27,7 @@ export default function LandingPage({
       <HeroSection />
       <HeroImage setLoginModalOpen={setLoginModalOpen} />
 
-      {load && <LazyLoadedSections />}
+      <LazyLoadedSections />
     </div>
   );
 }

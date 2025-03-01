@@ -223,7 +223,7 @@ export default function Internet() {
           }
         />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
-          <div
+          <AnimatedSection
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover2 ? "opacity-40" : "opacity-100"
             }`}
@@ -247,13 +247,13 @@ export default function Internet() {
               </div>
             </div>
             <SearchWeb />
-          </div>
+          </AnimatedSection>
 
           {/* <div
           className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
             hover1 ? "opacity-40" : "opacity-100"
             }`} */}
-          <div
+          <AnimatedSection
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover1 ? "opacity-40" : "opacity-100"
             }`}
@@ -276,7 +276,7 @@ export default function Internet() {
               </div>
             </div>
             <FetchWebpage />
-          </div>
+          </AnimatedSection>
         </div>
       </div>
     </AnimatedSection>

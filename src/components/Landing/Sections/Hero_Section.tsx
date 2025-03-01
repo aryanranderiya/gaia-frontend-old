@@ -1,6 +1,3 @@
-import { Button } from "@heroui/button";
-import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 import { AnimatedSection } from "../AnimatedSection";
 
@@ -11,6 +8,7 @@ import { AnimatedSection } from "../AnimatedSection";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { cn } from "@/lib/utils";
+import GetStartedButton from "../GetStartedButton";
 // import { AnimatedShinyText } from "../../ui/animated-shiny-text";
 
 export default function HeroSection() {
@@ -35,11 +33,15 @@ export default function HeroSection() {
           </AnimatedShinyText>
         </div>
 
-        <div className="py-3">
-          <div className="sm:text-8xl text-5xl bg-gradient-to-b from-white bg-clip-text text-center font-medium leading-none text-transparent to-zinc-400 max-w-screen-lg sm:-my-2">
-            Your Personal AI Assistant awaits.
-          </div>
-        </div>
+        <AnimatedSection
+          className="sm:text-8xl text-5xl bg-gradient-to-b from-white bg-clip-text text-center font-medium leading-none text-transparent to-zinc-400 max-w-screen-lg sm:-my-2 py-3"
+          childClassName="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent inline-block px-3"
+        >
+          <span className="">Your </span>
+          <span className="">Personal </span>
+          <span className="">AI </span>
+          <span className="">Assistant awaits.</span>
+        </AnimatedSection>
 
         <div
           className="text-lg font-normal py-0 sm:px-0 px-4 leading-7 sm:text-xl
@@ -57,20 +59,7 @@ export default function HeroSection() {
             "GAIA is your all-in-one personal assistant to help organise your life."
           }
         /> */}
-        <Button
-          as={Link}
-          className="font-medium mt-8 outline outline-4 outline-[#75daff] hover:bg-[#75daff] border-none hover:scale-105 hover:outline-[#00bbff] hover:-translate-y-1 group"
-          color="primary"
-          radius="full"
-          size="lg"
-          to={"/get-started"}
-          variant="shadow"
-        >
-          <div className="flex items-center gap-1">
-            Get Started for Free
-            <ArrowUpRight />
-          </div>
-        </Button>
+        <GetStartedButton />
       </AnimatedSection>
     </div>
   );

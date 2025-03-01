@@ -28,8 +28,8 @@ function LocalNotecard({ plaintext }: { plaintext: string }) {
 
 export default function Section_Memories() {
   return (
-    <AnimatedSection className="w-screen justify-center items-center flex relative z-[1]">
-      <div className="max-w-screen-xl w-screen flex sm:flex-row flex-col justify-evenly items-start sm:space-x-10 space-x-5">
+    <div className="w-screen justify-center items-center flex relative z-[1]">
+      <AnimatedSection className="max-w-screen-xl w-screen flex sm:flex-row flex-col justify-evenly items-start sm:space-x-10 space-x-5">
         <SectionHeading
           className="w-full"
           heading={"An Assistant That Remembers"}
@@ -72,7 +72,7 @@ export default function Section_Memories() {
                 </div>
               }
             >
-              <div className="space-y-4">
+              <AnimatedSection className="space-y-4">
                 <SimpleChatBubbleUser>What is my name?</SimpleChatBubbleUser>
                 <SimpleChatBubbleBot>
                   Based on your saved notes, your name is Jake.
@@ -85,7 +85,7 @@ export default function Section_Memories() {
                   thought about pursuing a career in software engineering, data
                   science, or perhaps cybersecurity?
                 </SimpleChatBubbleBot>
-              </div>
+              </AnimatedSection>
             </Tab>
 
             <Tab
@@ -97,16 +97,16 @@ export default function Section_Memories() {
                 </div>
               }
             >
-              <div className="grid sm:grid-cols-2 grid-cols-1 gap-2">
+              <AnimatedSection className="grid sm:grid-cols-2 grid-cols-1 gap-2">
                 <LocalNotecard plaintext={"My name is Jake"} />
                 <LocalNotecard
                   plaintext={"Jake is a 3rd year Computer Science student"}
                 />
-              </div>
+              </AnimatedSection>
             </Tab>
           </Tabs>
         </div>
-      </div>
-    </AnimatedSection>
+      </AnimatedSection>
+    </div>
   );
 }

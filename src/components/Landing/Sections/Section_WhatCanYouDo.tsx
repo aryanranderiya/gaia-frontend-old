@@ -24,7 +24,7 @@ function FeatureCard({
       gradientTo="#00bbff"
       noRadius={true}
     >
-      <div className=" items-center flex justify-center flex-col min-w-full w-full p-3">
+      <AnimatedSection className=" items-center flex justify-center flex-col min-w-full w-full p-3">
         <div className="sm:py-3 py-2 bg-transparent !rounded-none">
           {feature.icon}
         </div>
@@ -32,7 +32,7 @@ function FeatureCard({
         <div className="text-foreground-600 text-center">
           {feature.description}
         </div>
-      </div>
+      </AnimatedSection>
     </MagicCard>
   );
 }
