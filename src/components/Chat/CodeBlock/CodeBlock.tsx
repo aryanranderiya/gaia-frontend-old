@@ -42,7 +42,7 @@ const CodeBlock: React.FC<any> = ({
 
   if (isMermaid) {
     return (
-      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[10px] w-[40vw] max-w-[35vw] overflow-x-visible">
+      <div className="relative flex flex-col gap-0 bg-zinc-900 !pb-0 !rounded-t-[10px] w-[40vw] max-w-[30vw] overflow-x-visible">
         <MermaidTabs
           activeTab={activeTab}
           onTabChange={(key) => {

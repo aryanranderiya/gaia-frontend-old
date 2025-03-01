@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Tooltip } from "@heroui/tooltip";
 import { Button } from "@heroui/button";
-import { Download, ZoomIn, ZoomOut } from "lucide-react";
+import { Download, Move, ZoomIn, ZoomOut } from "lucide-react";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 interface FlowchartPreviewProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ const FlowchartPreview: React.FC<FlowchartPreviewProps> = ({ children }) => {
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 10));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
   const resetZoom = () => setScale(1.5);
+  const resetPan = () => setPosition({ x: 0, y: 0 });
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -83,38 +85,56 @@ const FlowchartPreview: React.FC<FlowchartPreviewProps> = ({ children }) => {
   return (
     <div className="p-4 bg-white relative overflow-hidden h-[50vh] ">
       <div
-        ref={mermaidRef}
-        className="mermaid absolute select-none"
-        style={{
-          transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-          transformOrigin: "0 0",
-          cursor: isDragging ? "grabbing" : "grab",
-        }}
+        className={`h-full w-full absolute left-0 top-0 ${
+          isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {String(children).replace(/\n$/, "")}
-      </div>
-      <div className="absolute bottom-2 right-2 flex gap-1 items-center">
-        <div className="flex items-center p-1 !rounded-xl gap-1">
-          <Tooltip content="Zoom Out">
-            <Button size="sm" onPress={handleZoomOut} isIconOnly>
-              <ZoomOut size={18} />
-            </Button>
-          </Tooltip>
-          <Tooltip content="Reset Zoom">
-            <Button size="sm" onPress={resetZoom}>
-              Reset
-            </Button>
-          </Tooltip>
-          <Tooltip content="Zoom In">
-            <Button size="sm" onPress={handleZoomIn} isIconOnly>
-              <ZoomIn size={18} />
-            </Button>
-          </Tooltip>
+        <div
+          ref={mermaidRef}
+          className="mermaid absolute select-none"
+          style={{
+            transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+            transformOrigin: "0 0",
+            // cursor: isDragging ? "grabbing" : "grab",
+          }}
+        >
+          {String(children).replace(/\n$/, "")}
         </div>
+      </div>
+      <div className="absolute bottom-2 right-2 flex gap-1 items-center flex-col">
+        <Tooltip content="Zoom Out">
+          <Button size="sm" onPress={handleZoomOut} isIconOnly>
+            <ZoomOut size={18} />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Reset Zoom">
+          <Button size="sm" onPress={resetZoom} isIconOnly>
+            <MagnifyingGlassIcon width={22} height={22} />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Zoom In">
+          <Button size="sm" onPress={handleZoomIn} isIconOnly>
+            <ZoomIn size={18} />
+          </Button>
+        </Tooltip>
+
+        <Tooltip content="Reset Pan & Zoom">
+          <Button
+            size="sm"
+            onPress={() => {
+              resetPan();
+              resetZoom();
+            }}
+            isIconOnly
+          >
+            <Move size={18} />
+          </Button>
+        </Tooltip>
+
         <Tooltip content="Download Flowchart (.svg)">
           <Button size="sm" onPress={handleDownload} isIconOnly>
             <Download size={18} />
