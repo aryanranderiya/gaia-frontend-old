@@ -7,10 +7,10 @@ import AudioTranscription from "@/pages/RecordAudio";
 
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
-const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
+const PrivacyPolicy = lazy(() => import("@/pages/Privacy"));
+const TermsOfService = lazy(() => import("@/pages/Terms"));
 const Contact = lazy(() => import("@/pages/Contact"));
-const PageNotFound = lazy(() => import("@/pages/PageNotFound"));
+const PageNotFound = lazy(() => import("@/pages/404"));
 const LoginSignup = lazy(() => import("@/pages/LoginSignup"));
 
 export default function LandingLayout({

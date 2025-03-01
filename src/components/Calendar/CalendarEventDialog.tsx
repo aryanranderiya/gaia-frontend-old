@@ -19,15 +19,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { GoogleCalendarEvent } from "@/types/calendarTypes";
+import {
+  CalendarEventDialogProps,
+  GoogleCalendarEvent,
+} from "@/types/calendarTypes";
 import { formatEventDate, getEventIcon } from "@/utils/calendarUtils";
-
-interface CalendarEventDialogProps {
-  event?: GoogleCalendarEvent | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  mode?: "view" | "create";
-}
 
 export default function CalendarEventDialog({
   event,

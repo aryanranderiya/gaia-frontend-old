@@ -2,24 +2,15 @@ import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { StickyNote01Icon } from "@/components/Misc/icons";
 import NoteCard from "@/components/Notes/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiauth } from "@/utils/apiaxios";
-
-export interface Note {
-  id: string;
-  // title?: string;
-  // description?: string;
-  content: string;
-  auto_created?: boolean;
-  plaintext: string;
-}
+import { NoteType } from "@/types/allTypes";
 
 export default function Notes() {
   // const [openDialog, setOpenDialog] = useState(false);
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<NoteType[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchNotes = async () => {

@@ -17,7 +17,7 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { GoalData } from "@/pages/GoalPage";
+import { GoalData } from "@/pages/Goal";
 import { CalendarSimpleIcon, Target04Icon } from "@/components/Misc/icons";
 import { apiauth } from "@/utils/apiaxios";
 import { toast } from "sonner";

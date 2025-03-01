@@ -1,15 +1,12 @@
-// import { NoteDialog } from "@/components/Notes/NoteCardDialog";
 import { Chip } from "@heroui/chip";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import { Note } from "@/pages/Notes";
+import { NoteType } from "@/types/allTypes";
 
 export default function NoteCard({
   note,
 }: // onDelete,
 {
-  note: Note;
+  note: NoteType;
   onDelete?: (id: string) => void;
 }) {
   // const [openDialog, setOpenDialog] = useState(false);

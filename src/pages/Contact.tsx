@@ -10,7 +10,6 @@ const ContactPage = () => {
         </p>
         <a
           href="mailto:support@heygaia.io"
-          // className="inline-block mt-4 bg-primary text-white font-medium py-2 px-6 rounded-lg hover:bg-[#00bbff80] transition"
         >
           <Button
             className="mt-4"

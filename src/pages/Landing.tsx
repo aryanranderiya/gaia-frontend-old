@@ -1,8 +1,6 @@
-import { Dispatch, lazy, SetStateAction, useEffect } from "react";
-
 import HeroImage from "@/components/Landing/Sections/Hero_Image";
 import HeroSection from "@/components/Landing/Sections/Hero_Section";
-
+import { Dispatch, lazy, SetStateAction, useEffect } from "react";
 const LazyLoadedSections = lazy(
   () => import("@/components/Landing/Sections/LazyLoadedSections")
 );
@@ -23,10 +21,8 @@ export default function LandingPage({
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="fixed inset-0 bg-gradient-to-b bg-[#000000] z-[-1] top-0 h-screen" />
-
       <HeroSection />
       <HeroImage setLoginModalOpen={setLoginModalOpen} />
-
       <LazyLoadedSections />
     </div>
   );

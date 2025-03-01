@@ -9,9 +9,9 @@ const Explore = lazy(() => import("@/pages/Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
 const Pins = lazy(() => import("@/pages/Pins"));
 const Notes = lazy(() => import("@/pages/Notes"));
-const NotesAdd = lazy(() => import("@/pages/NotePage"));
+const NotesAdd = lazy(() => import("@/pages/Note"));
 const Goals = lazy(() => import("@/pages/Goals"));
-const GoalPage = lazy(() => import("@/pages/GoalPage"));
+const GoalPage = lazy(() => import("@/pages/Goal"));
 const Search = lazy(() => import("@/components/Search/Search"));
 // const LandingLayout = lazy(() => import("@/layouts/LandingLayout"));
 
