@@ -4,8 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 
 import { ScrollArea } from "../ui/scroll-area";
 
-import { ChatBubble_Actions_Image } from "./ChatBubbles/ChatBubble_Actions";
-import ChatBubbleBot from "./ChatBubbles/ChatBubbleBot";
+import ChatBubble_Actions_Image from "./ChatBubbles/Actions/ChatBubble_Actions_Image";
+import ChatBubbleBot from "./ChatBubbles/Bot/ChatBubbleBot";
 import ChatBubbleUser from "./ChatBubbles/ChatBubbleUser";
 
 import StarterText from "@/components/Chat/StarterText";

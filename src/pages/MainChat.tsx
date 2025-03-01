@@ -38,7 +38,7 @@ const MainChat = React.memo(function MainChat() {
   return (
     <>
       {/* <ScrollArea onScrollCapture={handleScroll}> */}
-      <div className="w-full flex justify-center overflow-y-scroll">
+      <div className="w-full flex justify-center overflow-y-auto">
         <div
           ref={convoRef}
           className="conversation_history max-w-screen-md w-full"

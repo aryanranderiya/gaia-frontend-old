@@ -1,16 +1,13 @@
 import { Button } from "@heroui/button";
-import { Tooltip } from "@heroui/tooltip";
-import { XIcon } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-import React from "react";
 
-import TextToSpeech from "../../Audio/TextToSpeechComponent";
-import { DownloadSquare01Icon, PinIcon, Task01Icon } from "../../Misc/icons";
+import TextToSpeech from "@/components/Audio/TextToSpeechComponent";
+import { PinIcon, Task01Icon } from "@/components/Misc/icons";
 
-import { ApiService } from "@/utils/chatUtils";
-import { apiauth } from "@/utils/apiaxios";
 import { useConvo } from "@/contexts/CurrentConvoMessages";
+import { apiauth } from "@/utils/apiaxios";
+import { ApiService } from "@/utils/chatUtils";
 
 interface ChatBubbleActionsProps {
   loading: boolean;
@@ -19,7 +16,7 @@ interface ChatBubbleActionsProps {
   message_id: string;
 }
 
-export function ChatBubble_Actions({
+export default function ChatBubble_Actions({
   message_id,
   loading,
   text,
@@ -126,106 +123,5 @@ export function ChatBubble_Actions({
         </div>
       )}
     </>
-  );
-}
-
-interface ChatBubbleActionsImageProps {
-  src: string;
-  imagePrompt: string | undefined;
-  fullWidth?: boolean;
-  setOpenImage?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export function ChatBubble_Actions_Image({
-  src,
-  imagePrompt,
-  fullWidth = false,
-  setOpenImage,
-}: ChatBubbleActionsImageProps): JSX.Element {
-  const downloadFromSrc = async () => {
-    try {
-      // Get current date and time for filename
-      const now = new Date();
-      const date = now.toISOString().split("T")[0];
-      const time = now.toTimeString().split(" ")[0].replace(/:/g, "-");
-
-      // Sanitize and truncate the prompt
-      const sanitizedPrompt = imagePrompt
-        ?.replace(/[^\w\s-]/g, "")
-        .slice(0, 50);
-      const fileName = `G.A.I.A ${date} ${time} ${sanitizedPrompt}.png`;
-
-      // Fetch the image as a blob
-      const response = await fetch(src);
-      const blob = await response.blob();
-
-      // Create URL from blob
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      // Create download link
-      const downloadLink = document.createElement("a");
-
-      downloadLink.href = blobUrl;
-      downloadLink.download = fileName;
-
-      // Trigger download
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-
-      // Cleanup
-      document.body.removeChild(downloadLink);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("Error downloading image:", error);
-      // You might want to show a toast notification here
-      toast.error("Failed to download image", {
-        description: "Please try again later",
-      });
-    }
-  };
-
-  return (
-    <div className="flex py-2 w-fit gap-2 items-center">
-      <Tooltip
-        className={`${fullWidth ? "hidden" : ""}`}
-        color="primary"
-        content="Download Image"
-        placement="right"
-        size="md"
-      >
-        <Button
-          className={`w-fit ${
-            fullWidth
-              ? "px-3 py-2 "
-              : "p-0 bg-transparent data-[hover=true]:bg-transparent"
-          } h-fit rounded-lg `}
-          color="primary"
-          isIconOnly={!fullWidth}
-          style={{ minWidth: "22px" }}
-          variant={fullWidth ? "solid" : "light"}
-          onPress={downloadFromSrc}
-        >
-          <DownloadSquare01Icon
-            className={`cursor-pointer ${fullWidth ? "text-black" : ""}`}
-            height="22"
-          />
-          <span className="text-black font-medium">
-            {fullWidth ? "Download" : ""}
-          </span>
-        </Button>
-      </Tooltip>
-      {fullWidth && setOpenImage ? (
-        <Button
-          color="danger"
-          variant="ghost"
-          onPress={() => setOpenImage(false)}
-        >
-          <XIcon height="22" />
-          <span className="font-medium">Cancel</span>
-        </Button>
-      ) : (
-        <></>
-      )}
-    </div>
   );
 }

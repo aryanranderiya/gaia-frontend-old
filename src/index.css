@@ -683,19 +683,26 @@ code {
   content: attr(data-placeholder);
 } */
 
+.sidebar {
+  scrollbar-gutter: both-edges;
+}
+
 .sidebar div::-webkit-scrollbar {
-  width: 7px;
-  border-radius: 100px;
+  width: 12px;
+  /* border-radius: 100px; */
 }
 
 .sidebar div::-webkit-scrollbar-track {
-  background: #00bbff40;
-  border-radius: 100px;
+  /* background: #00bbff40; */
+  background: rgb(30, 30, 30);
+  /* border-radius: 100px; */
 }
 
 .sidebar div::-webkit-scrollbar-thumb {
-  background: #00bbff;
-  border-radius: 100px;
+  background: rgb(94, 94, 94);
+
+  /* background: #00bbff; */
+  /* border-radius: 100px; */
 }
 
 .animate-bounce3 {
