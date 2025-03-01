@@ -13,7 +13,6 @@ import {
 
 import { parseDate } from "../../../utils/fetchDate";
 import { InternetIcon } from "../../Misc/icons";
-import { CustomAnchor } from "../MarkdownRenderer";
 
 import {
   ChatBubble_Actions,
@@ -23,6 +22,7 @@ import {
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import { ChatBubbleBotProps } from "@/types/chatBubbleTypes";
 import CalendarEventCard from "./CalendarEventCard";
+import CustomAnchor from "../CodeBlock/CustomAnchor";
 
 const MarkdownRenderer = lazy(() => import("../MarkdownRenderer"));
 

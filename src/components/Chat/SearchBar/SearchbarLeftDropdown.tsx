@@ -6,15 +6,15 @@ import {
 } from "@heroui/dropdown";
 import { useEffect, useRef, useState } from "react";
 
-import FileUpload from "../Documents/FileUpload";
+import FileUpload from "../../Documents/FileUpload";
 import {
   AiImageIcon,
   FileUploadIcon,
   ImageUploadIcon,
   PlusSignIcon,
-} from "../Misc/icons";
+} from "../../Misc/icons";
 
-import GenerateImage from "./GenerateImage";
+import GenerateImage from "../GenerateImage";
 
 export default function SearchbarLeftDropdown({
   loading,

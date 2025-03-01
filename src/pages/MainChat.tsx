@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import ChatRenderer from "@/components/Chat/ChatRenderer";
-import MainSearchbar from "@/components/Chat/MainSearchbar";
+import MainSearchbar from "@/components/Chat/SearchBar/MainSearchbar";
 
 const MainChat = React.memo(function MainChat() {
   const convoRef = useRef<HTMLDivElement>(null);

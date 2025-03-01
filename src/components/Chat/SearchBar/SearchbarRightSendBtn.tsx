@@ -1,8 +1,8 @@
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
 
-import { SentIcon } from "../Misc/icons";
-import AnimatedAudioTranscription from "../Audio/AnimatedAudioTranscription";
+import { SentIcon } from "../../Misc/icons";
+import AnimatedAudioTranscription from "../../Audio/AnimatedAudioTranscription";
 // import MicrophoneBtn from "../Audio/MicrophoneBtn";
 
 export default function SearchbarRightSendBtn({
