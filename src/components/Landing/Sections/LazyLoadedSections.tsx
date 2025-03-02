@@ -1,36 +1,40 @@
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import { lazy, Suspense } from "react";
-const Footer = lazy(() => import("@/components/Landing/Footer"));
 
-const sections = [
-  { name: "GoalSection", path: "GoalSection" },
-  { name: "CalendarSection", path: "CalendarSection" },
-  { name: "MemoriesSection", path: "MemoriesSection" },
-  { name: "InternetSection", path: "InternetSection" },
-  { name: "GridSection", path: "GridSection" },
-  { name: "CapabilitiesSection", path: "CapabilitiesSection" },
-  { name: "ComingSoonSection", path: "ComingSoonSection" },
-  { name: "FinalSection", path: "ClosingSection" },
-];
+const sections = {
+  GoalSection: lazy(() => import("@/components/Landing/Sections/GoalSection")),
+  CalendarSection: lazy(
+    () => import("@/components/Landing/Sections/CalendarSection")
+  ),
+  MemoriesSection: lazy(
+    () => import("@/components/Landing/Sections/MemoriesSection")
+  ),
+  InternetSection: lazy(
+    () => import("@/components/Landing/Sections/InternetSection")
+  ),
+  GridSection: lazy(
+    () => import("@/components/Landing/Sections/FeatureGridSection")
+  ),
+  CapabilitiesSection: lazy(
+    () => import("@/components/Landing/Sections/CapabilitiesSection")
+  ),
+  ComingSoonSection: lazy(
+    () => import("@/components/Landing/Sections/ComingSoonSection")
+  ),
+  FinalSection: lazy(
+    () => import("@/components/Landing/Sections/FinalSection")
+  ),
+  Footer: lazy(() => import("@/components/Landing/Footer")),
+};
 
 export default function LazyLoadedSections() {
   return (
     <div className="sm:space-y-[15rem] space-y-[5rem] sm:mt-[18rem] mt-[12rem]">
-      {sections.map(({ name, path }) => {
-        const SectionComponent = lazy(
-          () => import(`@/components/Landing/Sections/${path}`)
-        );
-
-        return (
-          <Suspense key={name} fallback={<SuspenseLoader />}>
-            <SectionComponent />
-          </Suspense>
-        );
-      })}
-
-      <Suspense fallback={<SuspenseLoader />}>
-        <Footer />
-      </Suspense>
+      {Object.entries(sections).map(([name, Component]) => (
+        <Suspense key={name} fallback={<SuspenseLoader />}>
+          <Component />
+        </Suspense>
+      ))}
     </div>
   );
 }
