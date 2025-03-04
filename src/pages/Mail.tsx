@@ -1,3 +1,4 @@
+import { EmailPayload } from "@/components/Mail/GmailBody";
 import { EmailFrom } from "@/components/Mail/MailFrom";
 import ViewEmail from "@/components/Mail/ViewMail";
 import { InboxIcon } from "@/components/Misc/icons";
@@ -20,6 +21,7 @@ export interface EmailData {
   body?: string;
   labelIds?: string[];
   headers: any;
+  payload: EmailPayload;
 }
 
 interface EmailsResponse {
@@ -96,20 +98,34 @@ export default function Email() {
     const email = emails[index];
     if (!email) return null;
 
+    const [title, setTitle] = useState("");
+    const [subtitle, setSubtitle] = useState("");
+
+    const fetchSummary = (isOpen: boolean) => {
+      if (isOpen && !title && !subtitle) {
+        setTitle(email.subject);
+        // email.snippet ? he.decode(email.snippet) : "No summary available"
+        setSubtitle(
+          "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos, commodi."
+        );
+      }
+    };
+
     return (
       <Tooltip
         showArrow
         placement="top"
         closeDelay={0}
+        onOpenChange={fetchSummary}
         content={
-          <div className="p-1 flex flex-col w-[200px]">
-            <div className="font-medium text-xl">Title</div>
-            <div>
-              Description Lorem, ipsum dolor sit amet consectetur adipisicing
-              elit. Rerum, quia?
-            </div>
+          <div className="p-1 flex flex-col w-[300px]">
+            <div className="font-medium text-lg leading-tight">{title}</div>
+            <div>{subtitle}</div>
           </div>
         }
+        onClose={() => {
+          return !!title && !!subtitle;
+        }}
         color="foreground"
         radius="sm"
       >
@@ -131,7 +147,6 @@ export default function Email() {
       </Tooltip>
     );
   };
-
   if (isLoading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
