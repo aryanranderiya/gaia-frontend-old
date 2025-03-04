@@ -1,6 +1,4 @@
 import { LegacyRef, ReactNode } from "react";
-
-// import Hr from "@/components/HorizontalRuler";
 import { PencilSquareIcon } from "@/components/Misc/icons";
 import CloseOpenSidebarBtn from "@/components/Sidebar/CloseOpenSidebar";
 import SidebarTopButtons from "@/components/Sidebar/SidebarTopButtons";
@@ -36,15 +34,14 @@ export default function SidebarLayout({
           : "sm:min-w-0 sm:max-w-0 sm:w-0 translate-x-0"
       } transition-all duration-100`}
     >
-      <div className="overflow-y-auto min-w-[250px]">
-        <div className="p-4 pb-0 ">
+      <div className="min-w-[250px] flex flex-col h-full">
+        <div className="p-2 pb-2 flex-none">
           <div className="flex items-center justify-between mb-1">
             <span className="font-medium text-2xl">gaia</span>
-
             <div className="flex items-center gap-1">
               <Button
                 aria-label="Create new chat"
-                className={`rounded-lg hover:bg-[#00bbff] group`}
+                className="rounded-lg hover:bg-[#00bbff] group"
                 size="icon"
                 variant={isMobileScreen ? "default" : "ghost"}
                 onClick={() => {
@@ -57,15 +54,19 @@ export default function SidebarLayout({
               <CloseOpenSidebarBtn toggleSidebar={toggleSidebar} />
             </div>
           </div>
-
           <SidebarTopButtons />
         </div>
 
-        <div className="pt-0 p-4 flex flex-col gap-1 max-h-[80vh] relative">
+        <div
+          className="flex-1 px-2 flex flex-col gap-1 relative overflow-y-auto pb-[50px]"
+          // style={{ scrollbarGutter: "stable both-edges" }}
+        >
           {children}
         </div>
       </div>
-      <UserContainer />
+      <div className="absolute w-full bottom-0 right-0">
+        <UserContainer />
+      </div>
     </div>
   );
 }

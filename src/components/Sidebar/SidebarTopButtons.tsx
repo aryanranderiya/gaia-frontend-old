@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   CalendarIcon,
+  Mail01Icon,
   PinIcon,
   Route02Icon,
-  StickyNote01Icon
+  StickyNote01Icon,
 } from "../Misc/icons";
 import SearchCommand from "../Search/SearchCommand";
 
@@ -33,11 +34,11 @@ export default function SidebarTopButtons() {
       icon: <Route02Icon height={27} width={27} />,
       label: "Goals",
     },
-    // {
-    //   route: "/mail",
-    //   icon: <Mail01Icon height={27} width={27} />,
-    //   label: "Mail",
-    // },
+    {
+      route: "/mail",
+      icon: <Mail01Icon height={27} width={27} />,
+      label: "Mail",
+    },
     {
       route: "/notes",
       icon: <StickyNote01Icon height={27} width={27} />,

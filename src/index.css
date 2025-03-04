@@ -124,7 +124,7 @@ main {
   /* min-width: 270px; */
   /* max-width: 270px; */
   background-color: #020202;
-  height: 100vh;
+  height: 100dvh;
   /* transform: translateX(0%); */
 }
 
@@ -159,7 +159,6 @@ main {
   display: flex;
   height: 100vh;
   align-items: center;
-  padding: 1rem 1rem;
   position: relative;
   overflow: hidden;
   flex-direction: column;
@@ -560,14 +559,13 @@ main {
 
 @media only screen and (max-width: 600px) {
   .sidebar {
-    min-width: 70vw !important;
+    min-width: 65vw !important;
   }
 
   .main_chat {
     position: fixed;
     left: 0;
     min-width: 100vw;
-    padding: 1em;
     height: 100%;
   }
 
@@ -688,21 +686,21 @@ code {
 }
 
 .sidebar div::-webkit-scrollbar {
-  width: 12px;
-  /* border-radius: 100px; */
+  width: 9px;
+  border-radius: 100px;
 }
 
 .sidebar div::-webkit-scrollbar-track {
   /* background: #00bbff40; */
   background: rgb(30, 30, 30);
-  /* border-radius: 100px; */
+  border-radius: 100px;
 }
 
 .sidebar div::-webkit-scrollbar-thumb {
   background: rgb(94, 94, 94);
 
   /* background: #00bbff; */
-  /* border-radius: 100px; */
+  border-radius: 100px;
 }
 
 .animate-bounce3 {

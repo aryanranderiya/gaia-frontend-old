@@ -55,7 +55,7 @@ export default function GoalSection(): JSX.Element {
   }, []);
 
   return (
-    <AnimatedSection className="flex w-screen flex-col items-center min-h-fit relative transition-all p-4 sm:mt-0 gap-5 ">
+    <AnimatedSection className="flex w-screen flex-col items-center min-h-fit transition-all p-4 sm:mt-0 gap-5 ">
       <GoalHeader />
       <GoalSteps
         selectedStep={selectedStep}
@@ -74,11 +74,11 @@ function GoalHeader(): JSX.Element {
       <h2 className="sm:text-5xl text-4xl font-bold flex items-center gap-4 mb-2 justify-center">
         Need help setting goals?
       </h2>
-      <p className="text-foreground-700 text-lg">
+      {/* <p className="text-foreground-700 text-lg">
         GAIA makes it easy by creating a step-by-step plan just for you. Enter
         your goal, and GAIA will break it down into clear actions with timelines
         and helpful resources to keep you on track.
-      </p>
+      </p> */}
     </div>
   );
 }
@@ -128,25 +128,27 @@ function GoalSteps({
   }, []);
 
   return (
-    <div ref={goalSectionRef} className="relative min-w-full">
-      <AnimatedSection className="grid w-screen max-w-screen-xl sm:grid-cols-3 items-center justify-center sm:gap-5">
-        {steps.map((step, index) => (
-          <GoalStep
-            key={index}
-            index={index + 1}
-            isSelected={selectedStep === index}
-            onClick={() => setSelectedStep(index)}
-            {...step}
-          />
-        ))}
-      </AnimatedSection>
+    <>
+      <div ref={goalSectionRef} className="min-w-full">
+        <AnimatedSection className="grid w-screen max-w-screen-xl sm:grid-cols-3 items-center justify-center sm:gap-5">
+          {steps.map((step, index) => (
+            <GoalStep
+              key={index}
+              index={index + 1}
+              isSelected={selectedStep === index}
+              onClick={() => setSelectedStep(index)}
+              {...step}
+            />
+          ))}
+        </AnimatedSection>
+      </div>
 
       <StaticSidebar
         isComplete={isComplete}
         isVisible={selectedStep === 2 && isVisible}
         setIsComplete={setIsComplete}
       />
-    </div>
+    </>
   );
 }
 
@@ -166,7 +168,7 @@ function GoalStep({
 }: GoalStepProps): JSX.Element {
   return (
     <div
-      className={`flex items-center gap-1 sm:p-5 p-2 sm:flex-col flex-row justify-center rounded-3xl cursor-pointer transition-all hover:opacity-100 ${
+      className={`flex items-start gap-1 sm:p-5 p-2 sm:flex-col flex-row justify-start rounded-3xl cursor-pointer transition-all hover:opacity-100 ${
         isSelected ? "opacity-100" : "sm:opacity-60"
       }`}
       onClick={onClick}
@@ -183,9 +185,9 @@ function GoalStep({
           {index}
         </div>
       </div>
-      <div className="flex flex-col sm:items-center items-start max-w-fit">
-        <h3 className="text-xl font-bold sm:text-center text-start">{title}</h3>
-        <p className="sm:text-center text-start text-foreground-500 w-full">
+      <div className="flex flex-col sm:items-start items-start max-w-fit">
+        <h3 className="text-xl font-bold sm:text-start text-start">{title}</h3>
+        <p className="sm:text-start text-start text-foreground-500 w-full">
           {description}
         </p>
       </div>

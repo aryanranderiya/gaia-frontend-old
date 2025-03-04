@@ -17,7 +17,7 @@ import { LoadingProvider } from "@/contexts/LoadingContext";
 import useMediaQuery from "@/hooks/mediaQuery";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import SidebarLayout from "@/layouts/SidebarLayout";
-import EmailSidebar from "@/components/Sidebar/EmailSidebar";
+import EmailSidebar from "@/components/Sidebar/MailSidebar";
 
 export default function MainInterface() {
   const location = useLocation();
@@ -53,7 +53,10 @@ export default function MainInterface() {
             </SidebarLayout>
           </Suspense>
 
-          <div ref={contentContainerRef} className="main_chat transition-all">
+          <div
+            ref={contentContainerRef}
+            className="main_chat sm:p-[1rem] p-2 transition-all"
+          >
             <div
               className={`sm:left-4 sm:px-0 pb-3 top-0 rounded-xl transition-opacity flex w-full justify-between z-10`}
             >

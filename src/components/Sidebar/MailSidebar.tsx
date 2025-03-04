@@ -1,11 +1,11 @@
 import { Button } from "@heroui/button";
 import {
-    InboxIcon,
-    LabelImportantIcon,
-    LicenseDraftIcon,
-    QuillWrite01Icon,
-    Sent02Icon,
-    TimeScheduleIcon
+  InboxIcon,
+  LabelImportantIcon,
+  LicenseDraftIcon,
+  QuillWrite01Icon,
+  Sent02Icon,
+  TimeScheduleIcon,
 } from "../Misc/icons";
 
 type MailItem = {
@@ -46,8 +46,8 @@ type MailContainerProps = {
 
 function MailContainer({ items }: MailContainerProps) {
   return (
-    <div className="flex h-full flex-col px-2">
-      <div className="text-sm text-foreground-500 px-1 font-medium pb-1">
+    <div className="flex h-full flex-col">
+      <div className="text-sm text-foreground-500 px-2 font-medium pb-1">
         Mail
       </div>
       {items.map((item, index) => (
@@ -60,7 +60,7 @@ function MailContainer({ items }: MailContainerProps) {
 export default function EmailSidebar() {
   return (
     <div className="flex h-full flex-col">
-      <div className="my-5 w-full">
+      <div className="mb-5 w-full">
         <Button
           className="w-full justify-start text-medium font-medium"
           color="primary"

@@ -147,7 +147,7 @@ export default function ChatsList() {
         </div>
       ) : (
         <>
-          <div className="mt-3 w-full">
+          <div className="mt- w-full">
             <Button
               className="w-full text-primary text-sm justify-start"
               color="primary"

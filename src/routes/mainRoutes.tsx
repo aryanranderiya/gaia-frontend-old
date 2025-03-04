@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 const MainChat = lazy(() => import("@/pages/Chat"));
-const Email = lazy(() => import("@/pages/Email"));
+const Email = lazy(() => import("@/pages/Mail"));
 const Explore = lazy(() => import("@/pages/Explore"));
 const Calendar = lazy(() => import("@/components/Calendar/Calendar"));
 const Pins = lazy(() => import("@/pages/Pins"));
