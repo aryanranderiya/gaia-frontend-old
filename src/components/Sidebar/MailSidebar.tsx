@@ -7,6 +7,8 @@ import {
   Sent02Icon,
   TimeScheduleIcon,
 } from "../Misc/icons";
+import MailCompose from "../Mail/MailCompose";
+import { useState } from "react";
 
 type MailItem = {
   label: string;
@@ -58,18 +60,24 @@ function MailContainer({ items }: MailContainerProps) {
 }
 
 export default function EmailSidebar() {
+  const [open, setOpen] = useState<boolean>(false);
+
   return (
-    <div className="flex h-full flex-col">
-      <div className="mb-5 w-full">
-        <Button
-          className="w-full justify-start text-medium font-medium"
-          color="primary"
-        >
-          <QuillWrite01Icon color={undefined} width={22} />
-          Compose
-        </Button>
+    <>
+      <div className="flex h-full flex-col">
+        <div className="mb-5 w-full">
+          <Button
+            className="w-full justify-start text-medium font-medium"
+            color="primary"
+            onPress={() => setOpen(true)}
+          >
+            <QuillWrite01Icon color={undefined} width={22} />
+            Compose
+          </Button>
+        </div>
+        <MailContainer items={mailItems} />
       </div>
-      <MailContainer items={mailItems} />
-    </div>
+      <MailCompose open={open} onOpenChange={setOpen} />
+    </>
   );
 }

@@ -3,6 +3,8 @@ import { useRoutes } from "react-router-dom";
 
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
 import LandingPage from "@/pages/Landing";
+import BlogList from "@/components/Blog/BlogList";
+import BlogPost from "@/components/Blog/BlogPost";
 const Navbar = lazy(() => import("@/components/Landing/Navbar"));
 const Pricing = lazy(() => import("@/pages/Pricing"));
 const PrivacyPolicy = lazy(() => import("@/pages/Privacy"));
@@ -36,6 +38,22 @@ export default function LandingLayout({
       element: (
         <Suspense fallback={<SuspenseLoader fullHeight fullWidth />}>
           <LoginSignup isLogin />
+        </Suspense>
+      ),
+    },
+    {
+      path: "blog",
+      element: (
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
+          <BlogList />
+        </Suspense>
+      ),
+    },
+    {
+      path: "blog/:blogPost",
+      element: (
+        <Suspense fallback={<SuspenseLoader fullHeight />}>
+          <BlogPost />
         </Suspense>
       ),
     },
