@@ -1,18 +1,22 @@
-import { Dropdown, DropdownItem } from "@heroui/dropdown";
-import { Input, Textarea } from "@heroui/input";
-import { Drawer } from "vaul";
 import { Button } from "@heroui/button";
-import { DropdownMenu, DropdownTrigger } from "@heroui/dropdown";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/dropdown";
+import { Input, Textarea } from "@heroui/input";
 import { ButtonGroup } from "@heroui/react";
+import { TagInput } from "emblor";
 import { ChevronDown, ChevronDownIcon, PaletteIcon } from "lucide-react";
+import { useState } from "react";
+import { Drawer } from "vaul";
 import {
   BrushIcon,
   Sent02Icon,
   SentIcon,
   TimeScheduleIcon,
 } from "../Misc/icons";
-import { useState } from "react";
-import { TagInput } from "emblor";
 
 interface MailComposeProps {
   open: boolean;
@@ -24,11 +28,13 @@ export default function MailCompose({
   onOpenChange,
 }: MailComposeProps): JSX.Element {
   // Use Emblor for the "From" field email chips.
-  const [fromEmails, setFromEmails] = useState<string[]>([
-    "aryanranderiya1478@gmail.com",
-  ]);
+  // const [fromEmails, setFromEmails] = useState<string[]>([
+  //   "aryanranderiya1478@gmail.com",
+  // ]);
 
-  // Writing style selection state.
+  const [toEmails, setToEmails] = useState([]);
+  const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
+
   const [writingStyle, setWritingStyle] = useState("formal");
   const writingStyles = [
     { id: "formal", label: "Formal" },
@@ -45,28 +51,54 @@ export default function MailCompose({
         <Drawer.Content className="bg-zinc-900 fixed right-0 bottom-0 w-[40vw] h-[60vh] z-[10] rounded-tl-xl p-4 flex flex-col gap-2">
           <Drawer.Title>New Message</Drawer.Title>
 
-          {/* From field using Emblor */}
-          <div>
-            <label className="text-sm text-foreground-500 mb-1 block">
-              From
-            </label>
-            <TagInput
-              value={fromEmails}
-              onChange={(emails: string[]) => setFromEmails(emails)}
-              placeholder="Add email..."
-              className="bg-zinc-800 rounded p-2"
-            />
-          </div>
-
           <Input
             variant="underlined"
             startContent={
               <div className="text-sm text-foreground-500 w-[50px] flex justify-center">
-                To
+                From
               </div>
             }
             className="bg-zinc-800"
           />
+
+          <TagInput
+            // classNames={{
+            //   inlineTagsContainer: "bg-red-500",
+            //   container: "bg-red-500",
+            // }}
+            styleClasses={{
+              // input: "border border-gray-300 p-2",
+              inlineTagsContainer:
+                "bg-transparent border-none !border-b p-2 rounded",
+              // tagPopover: {
+              //   popoverContent: "bg-white shadow-lg",
+              //   popoverTrigger: "text-blue-500 hover:text-blue-600",
+              // },
+              // tagList: {
+              //   container: "bg-red-100",
+              //   sortableList: "p-1",
+              // },
+              // autoComplete: {
+              //   command: "bg-blue-100",
+              //   popoverTrigger: "bg-green-200",
+              //   popoverContent: "p-4",
+              //   commandList: "list-none",
+              //   commandGroup: "font-bold",
+              //   commandItem: "cursor-pointer hover:bg-gray-100",
+              // },
+            }}
+            shape={"pill"}
+            animation={"fadeIn"}
+            placeholder="To"
+            tags={toEmails}
+            setTags={(newTags) => {
+              setToEmails(newTags);
+            }}
+            activeTagIndex={activeTagIndex}
+            setActiveTagIndex={setActiveTagIndex}
+            variant={"bordered"}
+          />
+
           <Input
             placeholder="Subject"
             variant="underlined"
@@ -90,7 +122,7 @@ export default function MailCompose({
                     color="primary"
                     className="font-medium text-[#00bbff] bg-[#00bbff40]"
                   >
-                    <BrushIcon width={20} height={20} />
+                    <BrushIcon width={20} height={20} color={undefined} />
                     Writing Style:{" "}
                     {writingStyles.find((ws) => ws.id === writingStyle)?.label}
                     <ChevronDown width={20} />
@@ -140,7 +172,7 @@ export default function MailCompose({
               startContent={<div className="pingspinner"></div>}
               endContent={
                 <Button isIconOnly color="primary" radius={"full"}>
-                  <SentIcon />
+                  <SentIcon color={undefined} />
                 </Button>
               }
             />
