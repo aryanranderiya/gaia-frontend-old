@@ -4,6 +4,9 @@ import { UserProvider } from "@/contexts/UserContext";
 import UIProviderLayout from "@/layouts/UIProviderLayout";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function ProvidersLayout({ children }: { children: ReactNode }) {
   return (
@@ -11,7 +14,9 @@ export default function ProvidersLayout({ children }: { children: ReactNode }) {
       <UserProvider>
         <UIProviderLayout>
           <ConvoProvider>
-            <ConversationListProvider>{children}</ConversationListProvider>
+            <QueryClientProvider client={queryClient}>
+              <ConversationListProvider>{children}</ConversationListProvider>
+            </QueryClientProvider>
           </ConvoProvider>
         </UIProviderLayout>
       </UserProvider>
