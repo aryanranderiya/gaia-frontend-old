@@ -33,9 +33,8 @@ const ReadMoreText = ({ children, maxHeight = 60 }) => {
     <div className="">
       <div
         ref={contentRef}
-        className={` ${
-          expanded ? "max-h-full" : `max-h-[${maxHeight}px] overflow-hidden`
-        }`}
+        style={{ maxHeight: expanded ? "100%" : `${maxHeight}px` }}
+        className={`overflow-hidden`}
       >
         {children}
       </div>

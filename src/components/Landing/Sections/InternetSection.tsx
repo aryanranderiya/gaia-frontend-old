@@ -214,16 +214,16 @@ export default function Internet() {
         <div>utilise the power of the web to</div> */}
 
         <SectionHeading
-          heading={"Smarter Answers, Always Up-to-Date"}
+          heading={"Smarter Answers"}
           icon={
             <BrainCircuitIcon
               className="sm:min-w-[40px] min-w-[35px] sm:min-h-[40px] min-h-[40px]"
               color="#9b9b9b"
             />
           }
-          subheading={
-            "GAIA doesn’t just rely on preloaded knowledge—it actively searches the web for the latest and most relevant information."
-          }
+          // subheading={
+          //   "GAIA doesn’t just rely on preloaded knowledge—it actively searches the web for the latest and most relevant information."
+          // }
         />
         <div className="sm:justify-around justify-start items-center flex gap-11 w-screen-md sm:flex-row flex-col">
           <AnimatedSection
@@ -242,11 +242,10 @@ export default function Internet() {
                 />
               </div>
               <div className="text-foreground-500">
-                {/* Use the Internet to fetch up-to-date answers */}
                 Most AI models have a knowledge cutoff, but GAIA can fetch
-                real-time updates from the internet. Whether it’s breaking news
-                or the latest industry trends you’ll always get the freshest
-                insights.
+                real-time updates from the internet. Whether it's breaking news
+                or the latest industry trends, you'll always have access to the
+                most up-to-date insights.
               </div>
             </div>
 
@@ -283,10 +282,9 @@ export default function Internet() {
                 />
               </div>
               <div className="text-foreground-500">
-                Ever Wished Your AI Assistant Could Read an Entire Webpage for
-                You? Now it can! GAIA fetches webpages and understands their
-                content, so you don’t have to waste time scrolling through
-                endless text.
+                Wish your AI assistant could access and read a whole webpage for
+                you? Now GAIA can! It fetches and understands web content, so
+                you don’t have to waste time scrolling through endless text.
               </div>
             </div>
 
@@ -301,8 +299,7 @@ export default function Internet() {
               </div>
               <div className="flex items-start gap-2">
                 <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
-                Get key insights instantly—no more scrolling through endless
-                text.
+                No more scrolling through endless text on websites.
               </div>
             </div>
             {/* <FetchWebpage /> */}
