@@ -2,7 +2,7 @@ import Footer from "@/components/Landing/Footer";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="flex w-screen items-center justify-center flex-col bg-custom-gradient">
+    <div className="flex w-screen items-center justify-center flex-col">
       <div className="privacy-policy p-6 pt-24 max-w-screen-xl ">
         <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
         <p className="mb-4">

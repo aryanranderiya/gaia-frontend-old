@@ -2,7 +2,7 @@ import Footer from "@/components/Landing/Footer";
 
 const TermsOfService = () => {
   return (
-    <div className="flex w-screen items-center justify-center flex-col bg-custom-gradient">
+    <div className="flex w-screen items-center justify-center flex-col">
       <div className="privacy-policy p-6 pt-24 max-w-screen-xl ">
         <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
         <p className="text-sm mb-4">Effective Date: 1st Feb 2025</p>

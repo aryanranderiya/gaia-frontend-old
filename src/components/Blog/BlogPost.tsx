@@ -1,12 +1,10 @@
-import { ArrowLeft, Calendar, ChevronLeft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarGroup } from "@heroui/avatar";
-
-import { Link, useParams } from "react-router-dom";
+import { Calendar, ChevronLeft } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
+import { Link, useParams } from "react-router-dom";
 
-// Sample blog data with multiple authors support.
 const blogs = [
   {
     slug: "introducing-our-new-api",

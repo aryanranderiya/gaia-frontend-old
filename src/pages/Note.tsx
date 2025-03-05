@@ -8,11 +8,12 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { convert } from "html-to-text";
-import { ArrowLeft, CircleX, Trash2, TriangleAlert } from "lucide-react";
+import { ChevronLeft, CircleX, Trash2, TriangleAlert } from "lucide-react";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
+import { SaveIcon } from "@/components/Misc/icons";
 import BubbleMenuComponent from "@/components/Notes/BubbleMenu";
 import { MenuBar } from "@/components/Notes/NotesMenuBar";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { apiauth } from "@/utils/apiaxios";
-import { SaveIcon } from "@/components/Misc/icons";
 
 interface Note {
   id: string;
@@ -207,7 +207,7 @@ export default function NotesAdd() {
             className="text-white w-fit gap-1 px-0 font-normal"
             variant={"link"}
           >
-            <ArrowLeft width={17} />
+            <ChevronLeft width={17} />
             All Notes
           </Button>
         </Link>

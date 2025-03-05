@@ -25,11 +25,11 @@ export default function Footer() {
                 Contact
               </Link>
             </div>
-            {/* <div>
-              <Link className="hover:underline hover:text-white" to="/faq">
-                FAQ
+            <div>
+              <Link className="hover:underline hover:text-white" to="/pricing">
+                Pricing
               </Link>
-            </div> */}
+            </div>
           </div>
 
           <div className="flex flex-col w-fit h-full text-foreground-500">

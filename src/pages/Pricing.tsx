@@ -227,7 +227,7 @@ export function PricingCards({ durationIsMonth = false }) {
             <span>What's Included?</span>
           </div>
         }
-        price={10}
+        price={20}
         discountPercentage={40}
         title="Pro"
         type="main"
