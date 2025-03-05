@@ -12,6 +12,7 @@ import { ChevronDown, ChevronDownIcon, PaletteIcon } from "lucide-react";
 import { useState } from "react";
 import { Drawer } from "vaul";
 import {
+  AiSearch02Icon,
   BrushIcon,
   Sent02Icon,
   SentIcon,
@@ -27,11 +28,6 @@ export default function MailCompose({
   open,
   onOpenChange,
 }: MailComposeProps): JSX.Element {
-  // Use Emblor for the "From" field email chips.
-  // const [fromEmails, setFromEmails] = useState<string[]>([
-  //   "aryanranderiya1478@gmail.com",
-  // ]);
-
   const [toEmails, setToEmails] = useState([]);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
@@ -58,46 +54,37 @@ export default function MailCompose({
                 From
               </div>
             }
-            className="bg-zinc-800"
+            className="bg-zinc-800 "
           />
 
-          <TagInput
-            // classNames={{
-            //   inlineTagsContainer: "bg-red-500",
-            //   container: "bg-red-500",
-            // }}
-            styleClasses={{
-              // input: "border border-gray-300 p-2",
-              inlineTagsContainer:
-                "bg-transparent border-none !border-b p-2 rounded",
-              // tagPopover: {
-              //   popoverContent: "bg-white shadow-lg",
-              //   popoverTrigger: "text-blue-500 hover:text-blue-600",
-              // },
-              // tagList: {
-              //   container: "bg-red-100",
-              //   sortableList: "p-1",
-              // },
-              // autoComplete: {
-              //   command: "bg-blue-100",
-              //   popoverTrigger: "bg-green-200",
-              //   popoverContent: "p-4",
-              //   commandList: "list-none",
-              //   commandGroup: "font-bold",
-              //   commandItem: "cursor-pointer hover:bg-gray-100",
-              // },
-            }}
-            shape={"pill"}
-            animation={"fadeIn"}
-            placeholder="To"
-            tags={toEmails}
-            setTags={(newTags) => {
-              setToEmails(newTags);
-            }}
-            activeTagIndex={activeTagIndex}
-            setActiveTagIndex={setActiveTagIndex}
-            variant={"bordered"}
-          />
+          <div className="relative">
+            <TagInput
+              styleClasses={{
+                inlineTagsContainer:
+                  "bg-zinc-800 border border-t-0 border-x-0 !border-b-zinc-600 border-b-2 p-2 rounded-none",
+                tag: { body: "bg-white/20 pl-3 border-none" },
+              }}
+              shape={"pill"}
+              animation={"fadeIn"}
+              placeholder="To"
+              tags={toEmails}
+              setTags={(newTags) => {
+                setToEmails(newTags);
+              }}
+              activeTagIndex={activeTagIndex}
+              setActiveTagIndex={setActiveTagIndex}
+              // variant={"bordered"}
+            />
+
+            <Button
+              isIconOnly
+              className="absolute right-[2px] top-[2px]"
+              size="sm"
+              color="primary"
+            >
+              <AiSearch02Icon className="" color={undefined} />
+            </Button>
+          </div>
 
           <Input
             placeholder="Subject"
@@ -198,8 +185,7 @@ export default function MailCompose({
                       key="squash"
                       color="primary"
                       classNames={{
-                        title:
-                          "flex items-center gap-2 p-0 w-fit justify-between",
+                        title: "flex items-center gap-2 p-0 w-fit justify-end",
                       }}
                     >
                       Schedule Send <TimeScheduleIcon className="text-black" />

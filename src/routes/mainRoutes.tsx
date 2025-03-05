@@ -1,7 +1,5 @@
-import { Suspense, lazy } from "react";
 import SuspenseLoader from "@/components/Misc/SuspenseLoader";
-import BlogList from "@/components/Blog/BlogList";
-import BlogPost from "@/components/Blog/BlogPost";
+import { Suspense, lazy } from "react";
 const MainChat = lazy(() => import("@/pages/Chat"));
 const Email = lazy(() => import("@/pages/Mail"));
 const Explore = lazy(() => import("@/pages/Explore"));

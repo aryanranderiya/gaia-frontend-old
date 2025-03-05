@@ -55,7 +55,7 @@ export default function MainInterface() {
 
           <div
             ref={contentContainerRef}
-            className="main_chat sm:p-[1rem] p-2 transition-all"
+            className="main_chat sm:p-[1rem] p-2 transition-all bg-custom-gradient"
           >
             <div
               className={`sm:left-4 sm:px-0 pb-3 top-0 rounded-xl transition-opacity flex w-full justify-between z-10`}

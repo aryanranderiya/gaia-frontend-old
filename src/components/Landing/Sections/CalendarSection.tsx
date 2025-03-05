@@ -11,10 +11,56 @@ import { Tab, Tabs } from "@heroui/tabs";
 import { Clock } from "lucide-react";
 import { useState } from "react";
 import CalendarMessages from "../Dummy/CalendarMessages";
+import { ScrollShadow } from "@heroui/scroll-shadow";
+
+interface Task {
+  title: string;
+  description: string;
+  time: string;
+}
 
 export default function Section_Calendar() {
-  const [addedToCalendar, setAddedToCalendar] = useState(false);
+  // Instead of a boolean, store an array of indices of added events
+  const [addedEvents, setAddedEvents] = useState<number[]>([]);
   const [openedCalendar, setOpenedCalendar] = useState(false);
+
+  const tasks: Task[] = [
+    {
+      title: "Finish Landing Page",
+      description: "Work on SaaS landing page design",
+      time: "Today, 9:00 AM - 11:00 AM",
+    },
+    {
+      title: "Write Marketing Blog Post",
+      description: "Work on content for marketing",
+      time: "Today, 11:30 AM - 1:00 PM",
+    },
+    {
+      title: "Gym Session",
+      description: "Workout and exercise",
+      time: "Today, 1:30 PM - 2:30 PM",
+    },
+    {
+      title: "Exam Preparation",
+      description: "Study for the upcoming exam",
+      time: "Today, 2:30 PM - 3:45 PM",
+    },
+    {
+      title: "Client Call",
+      description: "Meeting with client",
+      time: "Today, 4:00 PM - 5:00 PM",
+    },
+    {
+      title: "Solve 3 DSA Problems",
+      description: "Practice DSA for coding prep",
+      time: "Today, 5:30 PM - 6:30 PM",
+    },
+    {
+      title: "Client Call",
+      description: "Evening meeting with client",
+      time: "Today, 7:00 PM - 8:00 PM",
+    },
+  ];
 
   return (
     <AnimatedSection className="w-screen justify-center items-center flex z-[1] relative">
@@ -72,9 +118,15 @@ export default function Section_Calendar() {
                 </div>
               }
             >
-              <div className="w-full h-[300px] overflow-hidden bg-gradient-to-bl sm:px-10 rounded-3xl z-[1]">
-                <CalendarMessages setAddedToCalendar={setAddedToCalendar} />
-              </div>
+              <ScrollShadow className="h-[500px]">
+                <div className="w-full overflow-hidden bg-gradient-to-bl sm:px-10 rounded-3xl z-[1]">
+                  <CalendarMessages
+                    tasks={tasks}
+                    addedEvents={addedEvents}
+                    setAddedEvents={setAddedEvents}
+                  />
+                </div>
+              </ScrollShadow>
             </Tab>
 
             <Tab
@@ -83,62 +135,48 @@ export default function Section_Calendar() {
                 <div
                   className="flex items-center gap-2"
                   onClick={() => {
-                    if (addedToCalendar) setOpenedCalendar(true);
+                    if (addedEvents.length > 0) setOpenedCalendar(true);
                   }}
                 >
                   <Calendar01Icon className="mr-2" color={undefined} />
                   <div className="relative">
                     Your Calendar
-                    {addedToCalendar && !openedCalendar && (
+                    {addedEvents.length > 0 && !openedCalendar && (
                       <div className="bg-red-500 min-h-2 min-w-2 rounded-full absolute -right-2 -top-[2px]" />
                     )}
                   </div>
                 </div>
               }
             >
-              <div className="space-y-2 sm:px-10 px-4 h-[300px] overflow-hidden">
-                {addedToCalendar && (
-                  <div className="text-white bg-opacity-65 p-4 rounded-lg bg-yellow-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-                    <div className="min-h-[90%] min-w-1 bg-yellow-500 rounded-full absolute top-[5px] left-[8px]" />
-                    <div className="flex flex-col">
-                      <div className="flex items-center gap-2 relative z-[1]">
-                        <div className="font-bold text-lg">
-                          Meeting with Sarah
+              {addedEvents.length > 0 ? (
+                <ScrollShadow className="h-[500px] space-y-2">
+                  assadassd
+                  {tasks
+                    .map((task, index) => ({ ...task, index }))
+                    .filter(({ index }) => addedEvents.includes(index))
+                    .map(({ title, time, index }) => (
+                      <div
+                        key={index}
+                        className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6"
+                      >
+                        <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2 relative z-[1]">
+                            <div className="font-bold text-lg">{title}</div>
+                          </div>
+                          <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
+                            <Clock height={18} width={18} />
+                            {time}
+                          </div>
                         </div>
                       </div>
-                      <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-yellow-500">
-                        <Clock height={18} width={18} />
-                        Friday Feb 14 2025
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-                  <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2 relative z-[1]">
-                      <div className="font-bold text-lg">📅 Event 1</div>
-                    </div>
-                    <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
-                      <Clock height={18} width={18} />
-                      Friday Feb 14 2025
-                    </div>
-                  </div>
+                    ))}
+                </ScrollShadow>
+              ) : (
+                <div className="text-white flex justify-center items-center w-full p-5 h-[500px]">
+                  No events added yet.
                 </div>
-                <div className="text-white bg-opacity-65 p-4 rounded-lg bg-blue-500/30 shadow-md cursor-pointer w-full transition-colors duration-200 relative z-[1] overflow-hidden flex items-start gap-3 pl-6">
-                  <div className="min-h-[90%] min-w-1 bg-blue-500 rounded-full absolute top-[5px] left-[8px]" />
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2 relative z-[1]">
-                      <div className="font-bold text-lg">📅 Event 2</div>
-                    </div>
-                    <div className="text-sm mt-2 relative z-[1] flex items-center gap-1 text-blue-500">
-                      <Clock height={18} width={18} />
-                      Friday Feb 14 2025
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </Tab>
           </Tabs>
         </div>

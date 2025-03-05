@@ -23,7 +23,7 @@ export default function CalendarEventSection({
   }
 
   return (
-    <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col">
+    <div className="p-3 bg-zinc-800 rounded-2xl mt-2 flex gap-1 flex-col w-full">
       <div>
         Would you like to add{" "}
         {eventsArray.length === 1 ? "this event" : "these events"} to your

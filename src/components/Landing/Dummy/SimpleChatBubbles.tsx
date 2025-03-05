@@ -15,7 +15,7 @@ export function SimpleChatBubbleUser({
 
   return (
     <div className={`chat_bubble_container user ${className}`}>
-      <div className="chat_bubble user !select-none">
+      <div className="chat_bubble user !select-none whitespace-pre-wrap">
         {/* <div className="flex select-text text-wrap max-w-[30vw]"> */}
         {children}
         {/* </div> */}

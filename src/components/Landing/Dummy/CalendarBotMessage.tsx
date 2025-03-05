@@ -1,33 +1,62 @@
-import { GoogleCalendar } from "@/components/Misc/icons";
+import {
+  CalendarAdd01Icon,
+  GoogleCalendar,
+  Tick02Icon,
+} from "@/components/Misc/icons";
 import { AnimatedSection } from "@/layouts/AnimatedSection";
 import { Button } from "@heroui/button";
 
+interface Task {
+  title: string;
+  description: string;
+  time: string;
+}
+
+interface CalendarBotMessageProps {
+  tasks: Task[];
+  addedEvents: number[];
+  dummyAddToCalendar: (index: number) => void;
+}
+
 export function CalendarBotMessage({
+  tasks,
+  addedEvents,
   dummyAddToCalendar,
-}: {
-  dummyAddToCalendar: () => void;
-}) {
+}: CalendarBotMessageProps) {
   return (
     <div>
-      <AnimatedSection className="p-4 bg-zinc-800 rounded-2xl rounded-bl-none mt-1 flex gap-1 flex-col max-w-[400px] w-fit">
-        <div className="">
-          Would you like to add this event to your Calendar?
-        </div>
+      <AnimatedSection className="p-4 pt-3 bg-zinc-800 rounded-2xl rounded-bl-none flex flex-col gap-1 w-fit">
+        <div>Would you like to add these events to your Calendar?</div>
 
-        <div className="bg-zinc-900 p-3 flex flex-row rounded-xl items-start gap-3 ">
-          <GoogleCalendar height={35} width={25} />
-          <div className="flex flex-col gap-1">
-            <div>
-              <div className="font-medium">Meeting with Sarah</div>
-              <div className="text-sm">Scheduled meeting with Sarah</div>
+        {tasks.map((task, index) => (
+          <div
+            key={index}
+            className="bg-zinc-900 p-3 flex rounded-xl items-start gap-3 flex-col"
+          >
+            <div className="flex flex-row rounded-xl items-start gap-3">
+              <GoogleCalendar height={35} width={25} />
+              <div className="flex flex-col flex-1 gap-1">
+                <div className="font-medium leading-none">{task.title}</div>
+                <div className="text-sm">{task.description}</div>
+                <div className="text-xs text-foreground-500">{task.time}</div>
+              </div>
             </div>
-            <div className="text-xs text-foreground-500">Fri Feb 14 2025</div>
-          </div>
-        </div>
 
-        <Button className="w-full" color="primary" onPress={dummyAddToCalendar}>
-          Add Event
-        </Button>
+            <Button
+              className="w-full"
+              color="primary"
+              isDisabled={addedEvents.includes(index)}
+              onPress={() => dummyAddToCalendar(index)}
+            >
+              {addedEvents.includes(index) ? (
+                <Tick02Icon color={undefined} width={22} />
+              ) : (
+                <CalendarAdd01Icon color={undefined} width={22} />
+              )}
+              {addedEvents.includes(index) ? "Added Event" : "Add Event"}
+            </Button>
+          </div>
+        ))}
       </AnimatedSection>
     </div>
   );

@@ -116,7 +116,6 @@ export function PricingCard({
 
   return (
     <>
-      {/* bg-custom-gradients */}
       <div
         className={`w-full relative rounded-2xl ${className} ${
           type === "main"

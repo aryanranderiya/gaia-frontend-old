@@ -130,7 +130,7 @@ export default function Email() {
         radius="sm"
       >
         <div
-          className={`flex p-3 gap-5 items-center px-6 hover:bg-white/20 hover:text-white bg-black bg-opacity-45 transition-all duration-200 cursor-pointer ${
+          className={`flex p-3 gap-5 items-center px-6 hover:bg-primary/20 hover:text-primary bg-black bg-opacity-45 transition-all duration-200 cursor-pointer ${
             email?.labelIds.includes("UNREAD")
               ? "font-medium"
               : "font-normal text-foreground-400"

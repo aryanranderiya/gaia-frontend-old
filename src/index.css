@@ -166,12 +166,12 @@ main {
   transition: all 0.2s ease;
   -webkit-transition: all 0.2s ease;
 
-  background: rgb(0, 0, 0);
+  /* background: rgb(0, 0, 0);
   background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0) 20%,
     rgba(0, 187, 255, 0.3) 100%
-  );
+  ); */
 }
 
 .searchbar_container {
@@ -627,17 +627,17 @@ main {
   background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0) 31%,
-    rgba(0, 187, 255, 0.25) 100%
+    rgba(0, 187, 255, 0.5) 100%
   );
 }
 
 .bg-custom-gradient2 {
-  background: rgb(0, 0, 0);
+  /* background: rgb(0, 0, 0);
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0) 31%,
     rgba(0, 0, 0, 0.8) 100%
-  );
+  ); */
 }
 
 /* .whitespace-pre {
