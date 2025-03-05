@@ -114,7 +114,13 @@ export default function BlogPost() {
     <div className="pt-28 flex items-center justify-center w-screen min-h-screen h-fit overflow-y-auto">
       <div className="max-w-screen-md mx-auto">
         <div className="mb-8">
-          <Button variant="light" className="mb-4" as={Link} to="/blog">
+          <Button
+            variant="light"
+            className="mb-4 px-0 font-medium"
+            as={Link}
+            to="/blog"
+            size="sm"
+          >
             <ChevronLeft />
             Blog
           </Button>

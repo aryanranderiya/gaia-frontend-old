@@ -15,11 +15,11 @@ export default function Footer() {
 
           <div className="flex flex-col w-fit h-full text-foreground-500">
             <div className="text-xl font-medium text-white">Sitemap</div>
-            {/* <div>
+            <div>
               <Link className="hover:underline hover:text-white" to="/blog">
                 Blog
               </Link>
-            </div> */}
+            </div>
             <div>
               <Link className="hover:underline hover:text-white" to="/contact">
                 Contact

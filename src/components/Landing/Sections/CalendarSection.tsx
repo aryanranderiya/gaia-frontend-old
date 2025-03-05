@@ -150,7 +150,6 @@ export default function Section_Calendar() {
             >
               {addedEvents.length > 0 ? (
                 <ScrollShadow className="h-[500px] space-y-2">
-                  assadassd
                   {tasks
                     .map((task, index) => ({ ...task, index }))
                     .filter(({ index }) => addedEvents.includes(index))

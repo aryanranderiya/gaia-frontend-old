@@ -26,7 +26,7 @@ export function CalendarBotMessage({
   return (
     <div>
       <AnimatedSection className="p-4 pt-3 bg-zinc-800 rounded-2xl rounded-bl-none flex flex-col gap-1 w-fit">
-        <div>Would you like to add these events to your Calendar?</div>
+        <div>Want to add these events to your Calendar?</div>
 
         {tasks.map((task, index) => (
           <div
@@ -37,7 +37,7 @@ export function CalendarBotMessage({
               <GoogleCalendar height={35} width={25} />
               <div className="flex flex-col flex-1 gap-1">
                 <div className="font-medium leading-none">{task.title}</div>
-                <div className="text-sm">{task.description}</div>
+                {/* <div className="text-sm">{task.description}</div> */}
                 <div className="text-xs text-foreground-500">{task.time}</div>
               </div>
             </div>

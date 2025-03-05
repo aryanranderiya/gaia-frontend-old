@@ -5,6 +5,7 @@ import {
 import { Dispatch, SetStateAction, useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import { CalendarBotMessage } from "../Dummy/CalendarBotMessage";
+import { AnimatedSection } from "@/layouts/AnimatedSection";
 
 interface Task {
   title: string;
@@ -66,7 +67,7 @@ export default function CalendarMessages({
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <AnimatedSection className="flex flex-col gap-3">
       <SimpleChatBubbleUser>
         {`I’ve got a busy day—need to finish a landing page, write a blog, do some DSA, study for an exam, hit the gym, and take client calls at 4 and 7 PM. Can you help me plan my day?`}
       </SimpleChatBubbleUser>
@@ -84,6 +85,6 @@ Your client calls are at 4 PM and 7 PM, with a gym session in between (5:15 PM -
         addedEvents={addedEvents}
         dummyAddToCalendar={addToCalendar}
       />
-    </div>
+    </AnimatedSection>
   );
 }
