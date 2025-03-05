@@ -2602,7 +2602,7 @@ export const BubbleChatQuestionIcon: React.FC<IconProps> = (props) => (
 
 export const CheckmarkCircle02Icon: React.FC<IconProps> = (props) => (
   <svg
-    color={"#000000"}
+    color={undefined}
     fill={"none"}
     height={24}
     viewBox="0 0 24 24"

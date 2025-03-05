@@ -1,13 +1,17 @@
 import { BrainCircuitIcon } from "lucide-react";
 import { useState } from "react";
 
+import { AnimatedSection } from "../../../layouts/AnimatedSection";
+import { SectionHeading } from "../../../layouts/LandingSectionHeading";
+import {
+  AiBrowserIcon,
+  CheckmarkCircle02Icon,
+  GlobalSearchIcon,
+} from "../../Misc/icons";
 import {
   SimpleChatBubbleBot,
   SimpleChatBubbleUser,
 } from "../Dummy/SimpleChatBubbles";
-import { AiBrowserIcon, GlobalSearchIcon } from "../../Misc/icons";
-import { AnimatedSection } from "../../../layouts/AnimatedSection";
-import { SectionHeading } from "../../../layouts/LandingSectionHeading";
 
 function SearchWeb() {
   return (
@@ -229,7 +233,7 @@ export default function Internet() {
             onMouseOut={() => setHover1(false)}
             onMouseOver={() => setHover1(true)}
           >
-            <div className="mb-6 sm:p-2 space-y-2">
+            <div className="sm:p-2 space-y-2">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
                 Web Search
                 <GlobalSearchIcon
@@ -245,13 +249,24 @@ export default function Internet() {
                 insights.
               </div>
             </div>
-            <SearchWeb />
+
+            <div className="space-y-2 px-10">
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                Real-time answers, never outdated.
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                Instant fact-checking from live sources.
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                Goes beyond preloaded AI knowledge.
+              </div>
+            </div>
+            {/* <SearchWeb /> */}
           </AnimatedSection>
 
-          {/* <div
-          className={`w-[30vw] space-y-3 bg-black rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:w-[40vw] ${
-            hover1 ? "opacity-40" : "opacity-100"
-            }`} */}
           <AnimatedSection
             className={`sm:w-[35vw] w-[95%] space-y-3 bg-zinc-900 outline outline-zinc-800 hover:outline-primary rounded-3xl p-5 hover:bg-[#00bbff40] transition-all hover:scale-105 hover:sm:w-[40vw] min-h-fit flex justify-center flex-col relative z-[1] ${
               hover1 ? "opacity-40" : "opacity-100"
@@ -259,7 +274,7 @@ export default function Internet() {
             onMouseOut={() => setHover2(false)}
             onMouseOver={() => setHover2(true)}
           >
-            <div className="mb-6 p-2 space-y-2">
+            <div className="p-2 space-y-2 ">
               <div className="font-medium text-3xl flex items-center w-full justify-between">
                 Fetch Webpages
                 <AiBrowserIcon
@@ -274,7 +289,23 @@ export default function Internet() {
                 endless text.
               </div>
             </div>
-            <FetchWebpage />
+
+            <div className="space-y-2 px-10">
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                Summarizes any webpage in seconds, saving time.
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                One-click webpage analysis for instant understanding.
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckmarkCircle02Icon width={25} height={25} color="#00bbff" />
+                Get key insights instantly—no more scrolling through endless
+                text.
+              </div>
+            </div>
+            {/* <FetchWebpage /> */}
           </AnimatedSection>
         </div>
       </div>
